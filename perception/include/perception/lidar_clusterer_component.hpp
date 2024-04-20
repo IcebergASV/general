@@ -2,7 +2,9 @@
 #define COMPOSITION__LIDAR_CLUSTER_COMPONENT_HPP_
 
 #include "rclcpp/rclcpp.hpp"
-#include "geometry_msgs/msg/twist.hpp"
+#include "sensor_msgs/msg/laser_scan.hpp"
+
+using std::placeholders::_1;
 
 namespace perception
 {
@@ -13,11 +15,10 @@ public:
   explicit LidarClusterer(const rclcpp::NodeOptions & options);
 
 protected:
-  void on_timer();
+  void scanCallback(const sensor_msgs::msg::LaserScan::SharedPtr msg);
 
 private:
-  rclcpp::Publisher<geometry_msgs::msg::Twist>::SharedPtr pub_;
-  rclcpp::TimerBase::SharedPtr timer_;
+  rclcpp::Subscription<sensor_msgs::msg::LaserScan>::SharedPtr sub_;
 };
 
 }  // namespace composition
