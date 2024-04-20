@@ -7,6 +7,10 @@ endif()
 
 # find dependencies
 find_package(ament_cmake REQUIRED)
+find_package(rclcpp REQUIRED)
+find_package(rclcpp_components REQUIRED)
+find_package(composition REQUIRED)
+find_package(geometry_msgs REQUIRED)
 # uncomment the following section in order to fill in
 # further dependencies manually.
 # find_package(<dependency> REQUIRED)
@@ -22,5 +26,40 @@ if(BUILD_TESTING)
   set(ament_cmake_cpplint_FOUND TRUE)
   ament_lint_auto_find_test_dependencies()
 endif()
+
+include_directories(include)
+
+add_library(lidar_clusterer_component SHARED src/lidar_clusterer_component.cpp)
+target_compile_definitions(lidar_clusterer_component PRIVATE "COMPOSITION_BUILDING_DLL")
+ament_target_dependencies(lidar_clusterer_component
+  "rclcpp"
+  "rclcpp_components"
+  "geometry_msgs")
+rclcpp_components_register_nodes(lidar_clusterer_component "perception::LidarClusterer")
+set(node_plugins "${node_plugins}perception::LidarClusterer;$<TARGET_FILE:lidar_clusterer_component>\n")
+
+install(TARGETS
+  lidar_clusterer_component
+  ARCHIVE DESTINATION lib
+  LIBRARY DESTINATION lib
+  RUNTIME DESTINATION bin)
+
+
+# Install launch files.
+install(DIRECTORY
+  launch
+  DESTINATION share/${PROJECT_NAME}
+)
+
+add_executable(manual_composition
+  src/manual_composition.cpp)
+target_link_libraries(manual_composition
+  lidar_clusterer_component)
+ament_target_dependencies(manual_composition
+  "rclcpp")
+
+install(TARGETS
+  manual_composition
+  DESTINATION lib/${PROJECT_NAME})
 
 ament_package()
