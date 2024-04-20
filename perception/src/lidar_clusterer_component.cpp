@@ -6,31 +6,24 @@
 #include <utility>
 
 #include "rclcpp/rclcpp.hpp"
-#include "std_msgs/msg/string.hpp"
-#include "geometry_msgs/msg/twist.hpp"
+
 
 using namespace std::chrono_literals;
 
 namespace perception
 {
-LidarClusterer::LidarClusterer(const rclcpp::NodeOptions & options)
-: Node("lidar_clusterer", options)
-{
-  
-  pub_ = create_publisher<geometry_msgs::msg::Twist>("cmd_vel", 10);
+  LidarClusterer::LidarClusterer(const rclcpp::NodeOptions & options)
+  : Node("lidar_clusterer", options)
+  {
 
-  timer_ = create_wall_timer(1s, std::bind(&LidarClusterer::on_timer, this));
-}
+    sub_ = this->create_subscription<sensor_msgs::msg::LaserScan>("scan", 10, std::bind(&LidarClusterer::scanCallback, this, _1));
 
-void LidarClusterer::on_timer()
-{
-  auto msg = std::make_unique<geometry_msgs::msg::Twist>();
-  msg->linear.x = 0.3;
-  msg->angular.z = 0.3;
-  std::flush(std::cout);
+  }
 
-  pub_->publish(std::move(msg));
-}
+  void LidarClusterer::scanCallback(const sensor_msgs::msg::LaserScan::SharedPtr msg)
+  {
+    RCLCPP_INFO(this->get_logger(), "range min: '%f'", msg->range_min);
+  }
 
 }
 
