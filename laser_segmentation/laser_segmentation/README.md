@@ -7,6 +7,8 @@
 
 ## Overview
 
+This repo was obtained from [ajtudela/laser_segmentation](https://github.com/ajtudela/laser_segmentation) and adapted for use for Iceberg ASV.
+
 Implementation of differents algorithms for segmentation of laserscans, splitting them into subsets of beams, with a ROS2 interface. The currently implemented algorithm are:
 
 * **`Jump distance clustering:`** widely used method for 2D laser range data in mobile robotics. It's a simple and fast method to segment the scans: if the Euclidean distance between two adjacent beams exceeds a given threshold distance, a new segment is generated.
@@ -37,13 +39,7 @@ The laser_segmentation package has been tested under [ROS2] Humble on [Ubuntu] 2
 
 #### Building
 
-To build from source, clone the latest version from the main repository into your colcon workspace and compile the package using
-
-	cd colcon_workspace/src
-	git clone https://github.com/ajtudela/laser_segmentation.git -b humble
-	cd ../
-	rosdep install -i --from-path src --rosdistro humble -y
-	colcon build --symlink-install
+This package is adapted and meant to be run with instructions from the general repos. 
 
 ## Usage
 
