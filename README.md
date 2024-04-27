@@ -1,7 +1,7 @@
 # general
 
 ## Packages
-### [laser_segmentation](#laser_segmentation)
+### [laser_segmentation](https://github.com/IcebergASV/general/tree/main/laser_segmentation)
 
 Groups LiDAR data into segments and publishes segment array.
 
