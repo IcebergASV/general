@@ -1,7 +1,8 @@
 # general
 
 ## Packages
-[laser_segmentation](#laser_segmentation)
+### [laser_segmentation](#laser_segmentation)
+
 Groups LiDAR data into segments and publishes segment array.
 
 
