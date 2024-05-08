@@ -13,7 +13,8 @@
   <depend>rclcpp_components</depend>
   <depend>composition</depend>
   <depend>sensor_msgs</depend>
-  
+  <depend>slg_msgs</depend>
+
   <test_depend>ament_lint_auto</test_depend>
   <test_depend>ament_lint_common</test_depend>
 

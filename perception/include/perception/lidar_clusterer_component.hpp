@@ -2,7 +2,9 @@
 #define COMPOSITION__LIDAR_CLUSTER_COMPONENT_HPP_
 
 #include "rclcpp/rclcpp.hpp"
-#include "sensor_msgs/msg/laser_scan.hpp"
+#include "slg_msgs/msg/segment_array.hpp"
+#include "slg_msgs/msg/segment.hpp"
+#include "geometry_msgs/msgs/Point"
 
 using std::placeholders::_1;
 
@@ -15,10 +17,10 @@ public:
   explicit LidarClusterer(const rclcpp::NodeOptions & options);
 
 protected:
-  void scanCallback(const sensor_msgs::msg::LaserScan::SharedPtr msg);
+  void scanCallback(const slg_msgs::msg::SegmentArray::SharedPtr msg);
 
 private:
-  rclcpp::Subscription<sensor_msgs::msg::LaserScan>::SharedPtr sub_;
+  rclcpp::Subscription<slg_msgs::msg::SegmentArray>::SharedPtr sub_;
 };
 
 }  // namespace composition

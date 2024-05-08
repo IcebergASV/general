@@ -11,6 +11,7 @@ find_package(rclcpp REQUIRED)
 find_package(rclcpp_components REQUIRED)
 find_package(composition REQUIRED)
 find_package(sensor_msgs REQUIRED)
+find_package(slg_msgs REQUIRED)
 # uncomment the following section in order to fill in
 # further dependencies manually.
 # find_package(<dependency> REQUIRED)
@@ -34,7 +35,8 @@ target_compile_definitions(lidar_clusterer_component PRIVATE "COMPOSITION_BUILDI
 ament_target_dependencies(lidar_clusterer_component
   "rclcpp"
   "rclcpp_components"
-  "sensor_msgs")
+  "sensor_msgs"
+  "slg_msgs")
 rclcpp_components_register_nodes(lidar_clusterer_component "perception::LidarClusterer")
 set(node_plugins "${node_plugins}perception::LidarClusterer;$<TARGET_FILE:lidar_clusterer_component>\n")
 
