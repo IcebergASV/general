@@ -5,6 +5,8 @@
 #include "slg_msgs/msg/segment_array.hpp"
 #include "slg_msgs/msg/segment.hpp"
 #include "geometry_msgs/msgs/Point"
+#include "perception/msgs/BoundingCircle.hpp"
+#include "perception/msgs/BoundingCircleArray.hpp"
 
 using std::placeholders::_1;
 

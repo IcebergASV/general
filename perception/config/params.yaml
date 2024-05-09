@@ -1,0 +1,4 @@
+props_radii:
+  large_buoy: 10.0
+  small_buoy: 5.0
+  marker: 3.0
