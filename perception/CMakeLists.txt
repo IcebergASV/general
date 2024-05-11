@@ -51,7 +51,8 @@ ament_target_dependencies(lidar_clusterer_component
   "rclcpp"
   "rclcpp_components"
   "sensor_msgs"
-  "slg_msgs")
+  "slg_msgs"
+  "geometry_msgs")
 rclcpp_components_register_nodes(lidar_clusterer_component "perception::LidarClusterer")
 set(node_plugins "${node_plugins}perception::LidarClusterer;$<TARGET_FILE:lidar_clusterer_component>\n")
 

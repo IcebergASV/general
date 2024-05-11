@@ -4,9 +4,9 @@
 #include "rclcpp/rclcpp.hpp"
 #include "slg_msgs/msg/segment_array.hpp"
 #include "slg_msgs/msg/segment.hpp"
-#include "geometry_msgs/msgs/Point"
-#include "perception/msgs/BoundingCircle.hpp"
-#include "perception/msgs/BoundingCircleArray.hpp"
+#include "geometry_msgs/msg/Point"
+#include "perception/msg/BoundingCircle.hpp"
+#include "perception/msg/BoundingCircleArray.hpp"
 
 using std::placeholders::_1;
 
