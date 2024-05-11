@@ -64,40 +64,93 @@ namespace perception
   perception::msg::BoundingCircle createBoundingCircle(std::vector<geometrymsgs::point> points)
   {
     perception::msg::BoundingCircle circle;
-    circle.radius = calculateRadius(points);
-    circle.center = calculateCenter(points);
-    circle.label = findLabel(circle.radius);
-    circle.probability = calculateProbability(circle.radius);
+    calculateRadius(points, circle);
+    findClosestMatch(circle);
     return circle;
   }
 
-  float calculateRadius(std::vector<geometrymsgs::point> points)
+  // Best fit circle equation: (x − k)^2 + (y − m)^2 = r^2
+  // Where (k,m) is the center, and r is the radius
+  // Based off of https://goodcalculators.com/best-fit-circle-least-squares-calculator/
+  //
+  // circle is an output param
+  void calculateRadius(std::vector<geometrymsgs::point> points, perception::msg::BoundingCircle& circle)
   {
-    // todo
-    return 1;
+    std::vector<double> x_coords(points.size()) = extractCoordinates(std::vector<geometry_msgs::msg::Point> points, 'x');
+    std::vector<double> y_coords(points.size()) = extractCoordinates(std::vector<geometry_msgs::msg::Point> points, 'y');
+
+    for (size_t i = 0; i < points.size(); i++) {
+        x_coords[i] = points[i].getDistance() * std::cos(points[i].getAngle());
+        y_coords[i] = points[i].getDistance() * std::sin(points[i].getAngle());
+    }const std::vector<geometry_msgs::msg::Point>& points
+    
+    // calculate matrix A
+    Eigen::Matrix<double, 3, 3> matrixA;
+    double mA_11, mA_12, mA_13, mA_21, mA_22, mA_23, mA_31, mA_32, mA_33 = 0;
+    for (size_t i = 0; i < points.size(); i++) {
+        mA_11 = mA_11 + pow(x_coords[i], 2);
+        mA_12 = mA_12 + (x_coords[i]*y_coords[i]);
+        mA_13 = mA_13 + x_coords[i];
+        mA_22 = mA_22 + pow(y_coords[i], 2);
+        mA_23 = mA_23 + y_coords[i];
+    }
+    mA_21 = mA_12;
+    mA_31 = mA_13;
+    mA_32 = mA_23;
+    mA_33 = points.size();
+
+    matrixA << mA_11, mA_12, mA_13, mA_21, mA_22, mA_23, mA_31, mA_32, mA_33;
+
+    // calculate vector X
+    Eigen::Matrix<double, 3, 1> vectorX;
+    double vX_1, vX_2, vX_3 = 0;
+    for (size_t i = 0; i < points.size(); i++) {
+        vX_1 = vX_1 + x_coords[i]*(pow(x_coords[i], 2) + pow(y_coords[i], 2));
+        vX_2 = vX_2 + y_coords[i]*(pow(x_coords[i], 2) + pow(y_coords[i], 2));
+        vX_3 = vX_3 + (pow(x_coords[i], 2) + pow(y_coords[i], 2));
+    }
+
+    vectorX << vX_1, vX_2, vX_3;
+
+    Eigen::Matrix<double, 3, 1> result = matrixA.colPivHouseholderQr().solve(vectorX.cast<double>());
+
+    double a = result[0], b = result[1], c = result[3];
+
+    double k = a / 2;
+    double m = b / 2;
+
+    circle.radius = (sqrt(4*c + pow(a, 2) + pow(b, 2))) / 2;
+
+    circle.center.x = k;
+    circle.center.y = m;
+
+    return;
   }
 
-  geometry_msgs::msg::point calculateRadius(std::vector<geometrymsgs::point> points)
+  std::vector<double> extractCoordinates(std::vector<geometry_msgs::msg::Point> points, std::string coords_to_extract)
   {
-    // todo
-    geometry_msgs::msg::point p;
-    p.x = 1;
-    p.y = 2;
-    p.z = 3;
-    return 
+    std::vector<double> x_or_y_coordinates;
+    for (const auto& point : points) {
+        coords_to_extract == 'x' ? x_or_y_coordinates.push_back(point.x) : x_or_y_coordinates.push_back(point.y);
+    }
+    return x_or_y_coordinates;
   }
 
-  std::string findLabel(float radius)
+  void findClosestMatch(&perception::msg::BoundingCircle circle)
   {
-    double closest_radius_diff = std::numeric_limits<double>::max();
-    std::string closest_prop;
+    double abs_closest_match_diff = std::numeric_limits<double>::max();
+    double closest_match_diff = 0;
+    std::string closest_match = '';
     for (const auto& pair : props_radii_) {
-        double diff = std::abs(radius - pair.second);
-        if (diff < closest_radius_diff) {
-            closest_radius_diff = diff;
-            closest_option = pair.first;
+        double diff = std::abs(circle.radius - pair.second);
+        if (diff < abs_closest_match_diff){
+            abs_closest_match_diff = diff;
+            closest_match_diff = circle.radius = pair.second;
+            closest_match = pair.first;
         }
     }
+    circle.label = closest_match;
+    circle.radius_diff = closest_match_diff;
   }
 
 
