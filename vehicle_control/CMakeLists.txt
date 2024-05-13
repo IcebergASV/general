@@ -9,9 +9,18 @@ endif()
 find_package(ament_cmake REQUIRED)
 find_package(rclcpp REQUIRED)
 find_package(mavros_msgs REQUIRED)
+find_package(tf2 REQUIRED)
+find_package(tf2_geometry_msgs REQUIRED)
 # uncomment the following section in order to fill in
 # further dependencies manually.
 # find_package(<dependency> REQUIRED)
+
+
+# Include directories
+include_directories(
+    include
+    ${tf2_INCLUDE_DIRS}
+)
 
 if(BUILD_TESTING)
   find_package(ament_lint_auto REQUIRED)
@@ -25,11 +34,18 @@ if(BUILD_TESTING)
   ament_lint_auto_find_test_dependencies()
 endif()
 
-add_executable( pixhawk_status src/pixhawk_status.cpp)
-ament_target_dependencies(pixhawk_status rclcpp mavros_msgs)
+add_executable( waypoint_sender src/wp_sender.cpp)
+
+ament_target_dependencies(waypoint_sender
+  rclcpp
+  tf2
+  tf2_geometry_msgs
+  mavros_msgs
+)
+
 
 install(TARGETS
-  pixhawk_status
+  waypoint_sender
   DESTINATION lib/${PROJECT_NAME})
 
 ament_package()
