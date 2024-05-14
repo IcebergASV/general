@@ -23,7 +23,7 @@ class WaypointSender : public rclcpp::Node
 
 
         // Publisher to publish the calculated waypoint
-        waypoint_publisher = this->create_publisher<geometry_msgs::msg::PoseStamped>("setpoint_position/local", 10);
+        waypoint_publisher = this->create_publisher<geometry_msgs::msg::PoseStamped>("/mavros/setpoint_position/local", 10);
 
         in_guided_ = false;
         previous_guided_state_ = false;
