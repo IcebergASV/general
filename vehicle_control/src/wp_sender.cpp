@@ -48,7 +48,7 @@ class WaypointSender : public rclcpp::Node
         {
           RCLCPP_INFO(this->get_logger(), "Guided mode: true");
           in_guided_ = true;
-          calculateStraightAheadWaypoint();
+          // calculateStraightAheadWaypoint();
         }
         else
         {
@@ -59,35 +59,40 @@ class WaypointSender : public rclcpp::Node
 
     void poseCallback(const geometry_msgs::msg::PoseStamped::SharedPtr msg)
     {
-      // Get current position and heading
-      double x = msg->pose.position.x;
-      double y = msg->pose.position.y;
-      tf2::Quaternion orientation;
-      tf2::fromMsg(msg->pose.orientation, orientation);
+      if (in_guided_)
+      {
+        // Get current position and heading
+        double x = msg->pose.position.x;
+        double y = msg->pose.position.y;
+        tf2::Quaternion orientation;
+        tf2::fromMsg(msg->pose.orientation, orientation);
 
-      double roll, pitch, yaw;
-      tf2::Matrix3x3(orientation).getRPY(roll, pitch, yaw);
+        double roll, pitch, yaw;
+        tf2::Matrix3x3(orientation).getRPY(roll, pitch, yaw);
 
-      // Calculate new position
-      double new_x = x + 10.0 * cos(yaw);
-      double new_y = y + 10.0 * sin(yaw);
+        // Calculate new position
+        double new_x = x + 10.0 * cos(yaw);
+        double new_y = y + 10.0 * sin(yaw);
 
-      // Create a new waypoint
-      geometry_msgs::msg::PoseStamped waypoint;
-      waypoint.header = msg->header; //prob needs to be updated
-      waypoint.pose.position.x = new_x;
-      waypoint.pose.position.y = new_y;
-      waypoint.pose.orientation = tf2::toMsg(tf2::Quaternion(0, 0, yaw, 1));
+        // Create a new waypoint
+        geometry_msgs::msg::PoseStamped waypoint;
+        waypoint.header = msg->header; //prob needs to be updated
+        waypoint.pose.position.x = new_x;
+        waypoint.pose.position.y = new_y;
+        waypoint.pose.orientation = tf2::toMsg(tf2::Quaternion(0, 0, yaw, 1));
 
-      //publish waypoint
-      waypoint_publisher->publish(waypoint);
+        RCLCPP_INFO(this->get_logger(), "Current position: x=%f, y=%f, z=%f", current_local_position_.x, current_local_position_.y, current_local_position_.z);
+
+        //publish waypoint
+        waypoint_publisher->publish(waypoint);
+      }
 
     }
 
-    void calculateStraightAheadWaypoint()
-    {
-      RCLCPP_INFO(this->get_logger(), "Current position: x=%f, y=%f, z=%f", current_local_position_.x, current_local_position_.y, current_local_position_.z);
-    }
+    // void calculateStraightAheadWaypoint()
+    // {
+    //   RCLCPP_INFO(this->get_logger(), "Current position: x=%f, y=%f, z=%f", current_local_position_.x, current_local_position_.y, current_local_position_.z);
+    // }
 
     rclcpp::Subscription<mavros_msgs::msg::State>::SharedPtr state_subscriber_;
     rclcpp::Subscription<geometry_msgs::msg::PoseStamped>::SharedPtr pose_subscriber_;
