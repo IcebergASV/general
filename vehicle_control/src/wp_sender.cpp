@@ -19,7 +19,7 @@ class WaypointSender : public rclcpp::Node
             10, std::bind(&WaypointSender::stateCallback, this, std::placeholders::_1));
 
         pose_subscriber_ = this->create_subscription<geometry_msgs::msg::PoseStamped>(
-            "/mavros/local_position/pose", 10, std::bind(&WaypointSender::poseCallback, this, std::placeholders::_1));
+            "/mavros/local_position/pose", rclcpp::SensorDataQoS(), std::bind(&WaypointSender::poseCallback, this, std::placeholders::_1));
 
 
         // Publisher to publish the calculated waypoint
@@ -44,6 +44,7 @@ class WaypointSender : public rclcpp::Node
 
     void stateCallback(const mavros_msgs::msg::State::SharedPtr msg)
     {
+      RCLCPP_INFO(this->get_logger(), "State Callback");
         if (!previous_guided_state_ && msg->guided)
         {
           RCLCPP_INFO(this->get_logger(), "Guided mode: true");
@@ -59,6 +60,7 @@ class WaypointSender : public rclcpp::Node
 
     void poseCallback(const geometry_msgs::msg::PoseStamped::SharedPtr msg)
     {
+      RCLCPP_INFO(this->get_logger(), "Pose Callback");
       if (in_guided_)
       {
         // Get current position and heading
