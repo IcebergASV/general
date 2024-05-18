@@ -39,7 +39,8 @@ ament_target_dependencies(lidar_clusterer_component
   "rclcpp_components"
   "sensor_msgs"
   "slg_msgs"
-  "geometry_msgs")
+  "geometry_msgs"
+  "perception_interfaces")
 rclcpp_components_register_nodes(lidar_clusterer_component "perception::LidarClusterer")
 set(node_plugins "${node_plugins}perception::LidarClusterer;$<TARGET_FILE:lidar_clusterer_component>\n")
 
@@ -61,7 +62,7 @@ add_executable(manual_composition
 target_link_libraries(manual_composition
   lidar_clusterer_component)
 ament_target_dependencies(manual_composition
-  "rclcpp")
+  rclcpp perception_interfaces)
 
 install(TARGETS
   manual_composition

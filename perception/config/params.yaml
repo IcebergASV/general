@@ -1,4 +1,7 @@
-props_radii:
-  large_buoy: 10.0
-  small_buoy: 5.0
-  marker: 3.0
+parameters:
+  - name: props
+    type: string_array
+    value: [key1, key2, key3]
+  - name: radii
+    type: double_array
+    value: [1, 2, 3]
