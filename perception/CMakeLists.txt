@@ -44,6 +44,11 @@ ament_target_dependencies(lidar_clusterer_component
 rclcpp_components_register_nodes(lidar_clusterer_component "perception::LidarClusterer")
 set(node_plugins "${node_plugins}perception::LidarClusterer;$<TARGET_FILE:lidar_clusterer_component>\n")
 
+## Declare a C++ library
+add_library(liblidar_calculations
+  lib/lidar_calculations.cpp
+)
+
 install(TARGETS
   lidar_clusterer_component
   ARCHIVE DESTINATION lib
@@ -70,6 +75,7 @@ ament_target_dependencies(manual_composition
   rclcpp perception_interfaces)
 
 target_link_libraries(manual_composition ${YAML_CPP_LIBRARIES})
+target_link_libraries(manual_composition liblidar_calculations)
 
 install(TARGETS
   manual_composition

@@ -8,6 +8,8 @@
 
 #include "rclcpp/rclcpp.hpp"
 
+#include "perception/lib/lidar_calculations.hpp"
+
 
 using namespace std::chrono_literals;
 
@@ -182,7 +184,7 @@ namespace perception
   {
     RCLCPP_INFO(this->get_logger(), "help '%f'", msg->segments[0].points[0].x);
 
-    if (msg->segments.size() > 0)
+    if (msg->segments.size() > 0 && testFunction())
     {
       perception_interfaces::msg::BoundingCircleArray bounding_circle_array;
       for (slg_msgs::msg::Segment segment : msg->segments)
