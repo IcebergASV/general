@@ -1,7 +1,3 @@
-parameters:
-  - name: props
-    type: string_array
-    value: [key1, key2, key3]
-  - name: radii
-    type: double_array
-    value: [1, 2, 3]
+lidar_clusterer:
+  ros__parameters:
+    props_radii: "{key1: 1, key2: 2, key3: 3}"

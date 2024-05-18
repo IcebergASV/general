@@ -16,7 +16,7 @@ find_package(rosidl_default_generators REQUIRED)
 find_package(geometry_msgs REQUIRED)
 find_package(std_msgs REQUIRED)
 find_package(perception_interfaces REQUIRED)
-
+find_package(YAML-cpp REQUIRED)
 
 if(BUILD_TESTING)
   find_package(ament_lint_auto REQUIRED)
@@ -57,12 +57,19 @@ install(DIRECTORY
   DESTINATION share/${PROJECT_NAME}
 )
 
+install(DIRECTORY
+  config
+  DESTINATION share/${PROJECT_NAME}
+)
+
 add_executable(manual_composition
   src/manual_composition.cpp)
 target_link_libraries(manual_composition
   lidar_clusterer_component)
 ament_target_dependencies(manual_composition
   rclcpp perception_interfaces)
+
+target_link_libraries(manual_composition ${YAML_CPP_LIBRARIES})
 
 install(TARGETS
   manual_composition
