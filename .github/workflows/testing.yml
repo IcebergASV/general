@@ -3,7 +3,7 @@ name: ROS 2 CI
 on:
   push:
     branches:
-      - jo-Actions
+      - main
 
 jobs:
   build-and-test:
@@ -23,18 +23,21 @@ jobs:
 
       - name: Install dependencies
         run: |
-          sudo apt-get update
-          sudo apt-get install -y \
+          sudo apt-get update -qq
+          sudo apt-get install -y --no-install-recommends \
+            python3-pip \
             python3-colcon-common-extensions \
             python3-colcon-coveragepy-result \
             python3-colcon-mixin \
-            python3-vcstool
-          sudo rosdep init
-          rosdep update
+            python3-vcstool \
+            && sudo rosdep init \
+            && rosdep update
+        continue-on-error: true
 
       - name: Install Python packages
         run: |
           pip3 install colcon-lcov-result
+        continue-on-error: true
 
       - name: Build workspace
         run: |
@@ -50,4 +53,3 @@ jobs:
         run: |
           source /opt/ros/humble/setup.sh
           colcon test-result --verbose
-
