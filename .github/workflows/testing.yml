@@ -3,7 +3,7 @@ name: ROS 2 CI
 on:
   push:
     branches:
-      - main
+      - jo-Actions
 
 jobs:
   build-and-test:
