@@ -1,15 +1,52 @@
 name: ROS 2 CI
+
 on:
   push:
+    branches:
+      - main
+
 jobs:
   build-and-test:
     name: Build and Test
     runs-on: ubuntu-latest
+
     steps:
       - name: Checkout
         uses: actions/checkout@v4.0.0
         with:
           path: workspace
 
-      - name: Build and test workspace
-        uses: ichiro-its/ros2-ws-action@v1.0.0
+      - name: Set up ROS 2 Humble
+        uses: ros-tooling/setup-ros@v0.2
+        with:
+          required-ros-distributions: humble
+
+      - name: Install dependencies
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y \
+            python3-colcon-common-extensions \
+            python3-colcon-coveragepy-result \
+            python3-colcon-mixin \
+            python3-vcstool
+          sudo rosdep init
+          rosdep update
+
+      - name: Install Python packages
+        run: |
+          pip3 install colcon-lcov-result
+
+      - name: Build workspace
+        run: |
+          source /opt/ros/humble/setup.sh
+          colcon build --workspace workspace
+
+      - name: Run tests
+        run: |
+          source /opt/ros/humble/setup.sh
+          colcon test --workspace workspace
+
+      - name: Get test results
+        run: |
+          source /opt/ros/humble/setup.sh
+          colcon test-result --verbose
