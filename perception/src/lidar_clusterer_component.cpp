@@ -9,12 +9,25 @@
 #include "rclcpp/rclcpp.hpp"
 
 #include "perception/lib/lidar_calculations.hpp"
-
+#include <string>
+#include <sstream>
 
 using namespace std::chrono_literals;
 
 namespace perception
 {
+  std::string vectorToString(const std::vector<double>& vec) {
+  std::ostringstream oss;
+  oss << "[";
+  for (size_t i = 0; i < vec.size(); ++i) {
+    oss << vec[i];
+    if (i != vec.size() - 1) {
+      oss << ", ";
+    }
+  }
+  oss << "]";
+  return oss.str();
+}
 
   bool LidarClusterer::arePointsValidDistanceAway(std::vector<geometry_msgs::msg::Point> points)
   {
@@ -58,6 +71,10 @@ namespace perception
     std::vector<double> x_coords = this->extractCoordinates(points, "x");
     std::vector<double> y_coords = this->extractCoordinates(points, "y");
 
+    RCLCPP_INFO(this->get_logger(), "Vector: %s", vectorToString(x_coords).c_str());
+    RCLCPP_INFO(this->get_logger(), "Vector: %s", vectorToString(y_coords).c_str());
+
+
     if (!(x_coords.size() == y_coords.size()))
     {
       RCLCPP_ERROR(this->get_logger(), "X and Y coords don't match");
@@ -73,7 +90,7 @@ namespace perception
         mA_22 = mA_22 + pow(y_coords[i], 2);
         mA_23 = mA_23 + y_coords[i];
     }
-    RCLCPP_INFO(this->get_logger(), "Done calculating A");
+    //RCLCPP_INFO(this->get_logger(), "Done calculating A");
     mA_21 = mA_12;
     mA_31 = mA_13;
     mA_32 = mA_23;
@@ -90,13 +107,13 @@ namespace perception
         vX_3 = vX_3 + (pow(x_coords[i], 2) + pow(y_coords[i], 2));
     }
 
-    RCLCPP_INFO(this->get_logger(), "Done with Vector X");
+    //RCLCPP_INFO(this->get_logger(), "Done with Vector X");
 
     vectorX << vX_1, vX_2, vX_3;
 
     Eigen::Matrix<double, 3, 1> result = matrixA.colPivHouseholderQr().solve(vectorX.cast<double>());
 
-    RCLCPP_INFO(this->get_logger(), "calced result");
+    //RCLCPP_INFO(this->get_logger(), "calced result");
 
     double a = result[0], b = result[1], c = result[2];
 
@@ -108,11 +125,18 @@ namespace perception
     circle.center.x = k;
     circle.center.y = m;
 
+    RCLCPP_INFO(this->get_logger(), "Center: %f, %f, %f", result[0],  result[1], result[2]);
+
     return;
   }
   LidarClusterer::LidarClusterer(const rclcpp::NodeOptions & options)
   : Node("lidar_clusterer", options)
   {
+
+    RCLCPP_ERROR(this->get_logger(), "ERROR message");
+    RCLCPP_WARN(this->get_logger(), "WARN message");
+    RCLCPP_INFO(this->get_logger(), "INFO message");
+    RCLCPP_DEBUG(this->get_logger(), "DEBUG message");
 
     sub_ = this->create_subscription<slg_msgs::msg::SegmentArray>("segments", 10, std::bind(&LidarClusterer::scanCallback, this, _1));
     pub_ = this->create_publisher<perception_interfaces::msg::BoundingCircleArray>("lidar_bounding_circles", 10);
