@@ -61,6 +61,20 @@ namespace perception
     circle.label = closest_match;
     circle.radius_diff = closest_match_diff;
   }
+
+  std::string matrixToString(const Eigen::Matrix<double, 3, 3>& matrix)
+  {
+    std::ostringstream oss;
+    oss << matrix;
+    return oss.str();
+  }
+
+  std::string matrixToString(const Eigen::Matrix<double, 3, 1>& matrix)
+  {
+    std::ostringstream oss;
+    oss << matrix;
+    return oss.str();
+  }
     // Best fit circle equation: (x − k)^2 + (y − m)^2 = r^2
   // Where (k,m) is the center, and r is the radius
   // Based off of https://goodcalculators.com/best-fit-circle-least-squares-calculator/
@@ -70,9 +84,16 @@ namespace perception
   {
     std::vector<double> x_coords = this->extractCoordinates(points, "x");
     std::vector<double> y_coords = this->extractCoordinates(points, "y");
+    //std::vector<double> x_coords = {4.80557, 4.67838, 4.56137, 4.50859, 4.43956, 4.38436, 4.35054, 4.30989, 4.28185, 4.25125, 4.22883, 4.21141, 4.19268, 4.18308, 4.18066, 4.16897, 4.17878, 4.20319, 4.2517};
+    //std::vector<double> y_coords = {2.19073, 2.18857, 2.18875, 2.21822, 2.23875, 2.26526, 2.30226, 2.33528, 2.37484, 2.41283, 2.4554, 2.50097, 2.54594, 2.59675, 2.65255, 2.70299, 2.76809, 2.84412, 2.9383 };
 
-    RCLCPP_INFO(this->get_logger(), "Vector: %s", vectorToString(x_coords).c_str());
-    RCLCPP_INFO(this->get_logger(), "Vector: %s", vectorToString(y_coords).c_str());
+
+    RCLCPP_INFO(this->get_logger(), " X Vector: %s", vectorToString(x_coords).c_str());
+    RCLCPP_INFO(this->get_logger(), " Y Vector: %s", vectorToString(y_coords).c_str()); // same here
+    RCLCPP_INFO(this->get_logger(), " X vector size: %li", x_coords.size());
+
+
+    RCLCPP_INFO(this->get_logger(), " Y vector size: %li", y_coords.size());
 
 
     if (!(x_coords.size() == y_coords.size()))
@@ -82,7 +103,7 @@ namespace perception
     
     // calculate matrix A
     Eigen::Matrix<double, 3, 3> matrixA;
-    double mA_11, mA_12, mA_13, mA_21, mA_22, mA_23, mA_31, mA_32, mA_33 = 0;
+    double mA_11 = 0, mA_12 = 0, mA_13 = 0, mA_21 = 0, mA_22 = 0, mA_23 = 0, mA_31 = 0, mA_32 = 0, mA_33 = 0;
     for (size_t i = 0; i < x_coords.size(); i++) {
         mA_11 = mA_11 + pow(x_coords[i], 2);
         mA_12 = mA_12 + (x_coords[i]*y_coords[i]);
@@ -90,7 +111,7 @@ namespace perception
         mA_22 = mA_22 + pow(y_coords[i], 2);
         mA_23 = mA_23 + y_coords[i];
     }
-    //RCLCPP_INFO(this->get_logger(), "Done calculating A");
+
     mA_21 = mA_12;
     mA_31 = mA_13;
     mA_32 = mA_23;
@@ -98,24 +119,30 @@ namespace perception
 
     matrixA << mA_11, mA_12, mA_13, mA_21, mA_22, mA_23, mA_31, mA_32, mA_33;
 
+    std::string matrix_str = matrixToString(matrixA);
+    RCLCPP_INFO(this->get_logger(), "matrixA:\n%s", matrix_str.c_str());
+
     // calculate vector X
     Eigen::Matrix<double, 3, 1> vectorX;
-    double vX_1, vX_2, vX_3 = 0;
+    double vX_1 = 0, vX_2 = 0, vX_3 = 0;
     for (size_t i = 0; i < x_coords.size(); i++) {
         vX_1 = vX_1 + x_coords[i]*(pow(x_coords[i], 2) + pow(y_coords[i], 2));
         vX_2 = vX_2 + y_coords[i]*(pow(x_coords[i], 2) + pow(y_coords[i], 2));
         vX_3 = vX_3 + (pow(x_coords[i], 2) + pow(y_coords[i], 2));
     }
 
-    //RCLCPP_INFO(this->get_logger(), "Done with Vector X");
+
 
     vectorX << vX_1, vX_2, vX_3;
+
+    std::string matrix_str2 = matrixToString(vectorX);
+    RCLCPP_INFO(this->get_logger(), "matrixX:\n%s", matrix_str2.c_str());
 
     Eigen::Matrix<double, 3, 1> result = matrixA.colPivHouseholderQr().solve(vectorX.cast<double>());
 
     //RCLCPP_INFO(this->get_logger(), "calced result");
 
-    double a = result[0], b = result[1], c = result[2];
+    double a = result[0], b = result[1], c = result[2]; //different
 
     double k = a / 2;
     double m = b / 2;
@@ -125,7 +152,7 @@ namespace perception
     circle.center.x = k;
     circle.center.y = m;
 
-    RCLCPP_INFO(this->get_logger(), "Center: %f, %f, %f", result[0],  result[1], result[2]);
+    RCLCPP_INFO(this->get_logger(), "Center: %f, %f, %f", result[0],  result[1], result[2]); // different here
 
     return;
   }
