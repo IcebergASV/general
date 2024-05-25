@@ -9,6 +9,7 @@
 #include "rclcpp/rclcpp.hpp"
 
 #include "perception/lib/lidar_calculations.hpp"
+#include "perception/lib/helpers.hpp"
 #include <string>
 #include <sstream>
 
@@ -16,18 +17,7 @@ using namespace std::chrono_literals;
 
 namespace perception
 {
-  std::string vectorToString(const std::vector<double>& vec) {
-  std::ostringstream oss;
-  oss << "[";
-  for (size_t i = 0; i < vec.size(); ++i) {
-    oss << vec[i];
-    if (i != vec.size() - 1) {
-      oss << ", ";
-    }
-  }
-  oss << "]";
-  return oss.str();
-}
+
 
   bool LidarClusterer::arePointsValidDistanceAway(std::vector<geometry_msgs::msg::Point> points)
   {
@@ -70,20 +60,6 @@ namespace perception
     }
     circle.label = closest_match;
     circle.radius_diff = closest_match_diff;
-  }
-
-  std::string matrixToString(const Eigen::Matrix<double, 3, 3>& matrix)
-  {
-    std::ostringstream oss;
-    oss << matrix;
-    return oss.str();
-  }
-
-  std::string matrixToString(const Eigen::Matrix<double, 3, 1>& matrix)
-  {
-    std::ostringstream oss;
-    oss << matrix;
-    return oss.str();
   }
     // Best fit circle equation: (x − k)^2 + (y − m)^2 = r^2
   // Where (k,m) is the center, and r is the radius

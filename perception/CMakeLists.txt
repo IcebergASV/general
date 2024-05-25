@@ -49,6 +49,11 @@ add_library(liblidar_calculations
   lib/lidar_calculations.cpp
 )
 
+add_library(libhelpers
+  lib/helpers.cpp
+)
+
+
 install(TARGETS
   lidar_clusterer_component
   ARCHIVE DESTINATION lib
@@ -76,6 +81,7 @@ ament_target_dependencies(manual_composition
 
 target_link_libraries(manual_composition ${YAML_CPP_LIBRARIES})
 target_link_libraries(manual_composition liblidar_calculations)
+target_link_libraries(manual_composition libhelpers)
 
 install(TARGETS
   manual_composition
