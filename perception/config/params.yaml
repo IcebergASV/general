@@ -1,3 +1,5 @@
 lidar_clusterer:
   ros__parameters:
     props_radii: "{marker: 0.6, buoy: 0.15}"
+    min_lidar_dist: 0.1
+    max_lidar_dist: 29.0

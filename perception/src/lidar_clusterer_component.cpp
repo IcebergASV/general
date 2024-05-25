@@ -31,10 +31,17 @@ namespace perception
 
   bool LidarClusterer::arePointsValidDistanceAway(std::vector<geometry_msgs::msg::Point> points)
   {
-    //TODO - add debugging if false
-    RCLCPP_DEBUG(this->get_logger(), "hi %f",points[0].x);
+    for (const auto& point : points) {
+      double distance = std::sqrt(point.x * point.x + point.y * point.y);
+      if (distance < p_min_lidar_dist_ || distance > p_max_lidar_dist_) 
+      {
+        RCLCPP_DEBUG(this->get_logger(), "Points are not within lidar bounds");
+        return false;
+      }
+    }
     return true;
   }
+
   bool hasEnoughPoints(std::vector<geometry_msgs::msg::Point> points)
   {
     unsigned long min_points = 5; //make a param later
@@ -50,7 +57,7 @@ namespace perception
     double abs_closest_match_diff = std::numeric_limits<double>::max();
     double closest_match_diff = 0;
     std::string closest_match = "";
-    for (const auto& pair : this->prop_radii_) {
+    for (const auto& pair : this->p_prop_radii_) {
         double diff = std::abs(circle.radius - pair.second);
         if (diff < abs_closest_match_diff){
             abs_closest_match_diff = diff;
@@ -162,6 +169,14 @@ namespace perception
     pub_ = this->create_publisher<perception_interfaces::msg::BoundingCircleArray>("lidar_bounding_circles", 10);
 
     // Declare and get the parameter as a string
+    this->declare_parameter<double>("max_lidar_dist", 0.0);
+    this->get_parameter("max_lidar_dist", p_max_lidar_dist_);
+    RCLCPP_INFO(this->get_logger(), "max_lidar_dist: %f", p_max_lidar_dist_); 
+
+    this->declare_parameter<double>("min_lidar_dist", 0.0);
+    this->get_parameter("min_lidar_dist", p_min_lidar_dist_);
+    RCLCPP_INFO(this->get_logger(), "min_lidar_dist: %f", p_min_lidar_dist_); 
+
     this->declare_parameter<std::string>("props_radii", "{}");
     std::string map_string;
     this->get_parameter("props_radii", map_string);
@@ -172,11 +187,11 @@ namespace perception
       YAML::Node yaml_node = YAML::Load(map_string);
       for (YAML::const_iterator it = yaml_node.begin(); it != yaml_node.end(); ++it)
       {
-        prop_radii_[it->first.as<std::string>()] = it->second.as<double>();
+        p_prop_radii_[it->first.as<std::string>()] = it->second.as<double>();
       }
 
       // Print the map to verify
-      for (const auto &pair : prop_radii_)
+      for (const auto &pair : p_prop_radii_)
       {
         RCLCPP_INFO(this->get_logger(), "Key: %s, Value: %f", pair.first.c_str(), pair.second);
       }
@@ -206,7 +221,7 @@ namespace perception
     //  RCLCPP_ERROR(this->get_logger(), "Keys and values arrays have different sizes");
     //}
 //
-    //        prop_radii_ = {
+    //        p_prop_radii_ = {
     //        {"large_buoy", 1.0},
     //        {"small_buoy", 0.5},
     //        {"marker", 0.3}
@@ -216,11 +231,11 @@ namespace perception
     //this->declare_parameter<std::map<std::string, double>>("prop_radii", default_map, param_desc);
 
     //double prop_radii; // TODO Change to map
-    //if (!this->get_parameter("prop_radii", this->prop_radii_)) {
+    //if (!this->get_parameter("prop_radii", this->p_prop_radii_)) {
       //  RCLCPP_ERROR(this->get_logger(), "Failed to retrieve prop_radii parameter");
         // Handle the error case here, such as setting default values
        // prop_radii["default_key"] = 0.0;
-       //this->prop_radii_ = default_map;
+       //this->p_prop_radii_ = default_map;
     //}
   }
 
