@@ -39,7 +39,6 @@ class WaypointSender : public rclcpp::Node
 
     void stateCallback(const mavros_msgs::msg::State::SharedPtr msg)
     {
-      RCLCPP_INFO(this->get_logger(), "State Callback");
         if (!previous_guided_state_ && msg->guided)
         {
           RCLCPP_INFO(this->get_logger(), "Guided mode: true");
@@ -62,7 +61,7 @@ class WaypointSender : public rclcpp::Node
     {
       RCLCPP_INFO(this->get_logger(), "Waypoint Reached #%i", wp_reached_counter);
 
-      if (wp_reached_counter <= wp_reached_max_count && msg.wp_seq)
+      if (wp_reached_counter < wp_reached_max_count && msg.wp_seq == 0)
       {
         publishStraightAheadWaypoint();
         wp_reached_counter++;
