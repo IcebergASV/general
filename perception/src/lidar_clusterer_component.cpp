@@ -54,7 +54,7 @@ namespace perception
         double diff = std::abs(circle.radius - pair.second);
         if (diff < abs_closest_match_diff){
             abs_closest_match_diff = diff;
-            closest_match_diff = circle.radius = pair.second;
+            closest_match_diff = circle.radius - pair.second;
             closest_match = pair.first;
         }
     }
@@ -84,16 +84,9 @@ namespace perception
   {
     std::vector<double> x_coords = this->extractCoordinates(points, "x");
     std::vector<double> y_coords = this->extractCoordinates(points, "y");
-    //std::vector<double> x_coords = {4.80557, 4.67838, 4.56137, 4.50859, 4.43956, 4.38436, 4.35054, 4.30989, 4.28185, 4.25125, 4.22883, 4.21141, 4.19268, 4.18308, 4.18066, 4.16897, 4.17878, 4.20319, 4.2517};
-    //std::vector<double> y_coords = {2.19073, 2.18857, 2.18875, 2.21822, 2.23875, 2.26526, 2.30226, 2.33528, 2.37484, 2.41283, 2.4554, 2.50097, 2.54594, 2.59675, 2.65255, 2.70299, 2.76809, 2.84412, 2.9383 };
-
 
     RCLCPP_INFO(this->get_logger(), " X Vector: %s", vectorToString(x_coords).c_str());
     RCLCPP_INFO(this->get_logger(), " Y Vector: %s", vectorToString(y_coords).c_str()); // same here
-    RCLCPP_INFO(this->get_logger(), " X vector size: %li", x_coords.size());
-
-
-    RCLCPP_INFO(this->get_logger(), " Y vector size: %li", y_coords.size());
 
 
     if (!(x_coords.size() == y_coords.size()))
@@ -142,7 +135,7 @@ namespace perception
 
     //RCLCPP_INFO(this->get_logger(), "calced result");
 
-    double a = result[0], b = result[1], c = result[2]; //different
+    double a = result[0], b = result[1], c = result[2];
 
     double k = a / 2;
     double m = b / 2;
@@ -152,7 +145,7 @@ namespace perception
     circle.center.x = k;
     circle.center.y = m;
 
-    RCLCPP_INFO(this->get_logger(), "Center: %f, %f, %f", result[0],  result[1], result[2]); // different here
+    RCLCPP_INFO(this->get_logger(), "Center: %f, %f, %f", result[0],  result[1], result[2]);
 
     return;
   }

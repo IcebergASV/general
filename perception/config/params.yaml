@@ -1,3 +1,3 @@
 lidar_clusterer:
   ros__parameters:
-    props_radii: "{key1: 1, key2: 2, key3: 3}"
+    props_radii: "{marker: 0.6, buoy: 0.15}"
