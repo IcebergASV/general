@@ -48,6 +48,11 @@ set(node_plugins "${node_plugins}perception::LidarClusterer;$<TARGET_FILE:lidar_
 add_library(liblidar_calculations
   lib/lidar_calculations.cpp
 )
+ament_target_dependencies(liblidar_calculations
+  "geometry_msgs"
+  "rclcpp"
+  "perception_interfaces"
+)
 
 add_library(libhelpers
   lib/helpers.cpp

@@ -31,7 +31,6 @@ private:
   bool hasEnoughPoints(std::vector<geometry_msgs::msg::Point> points);
   perception_interfaces::msg::BoundingCircle createBoundingCircle(std::vector<geometry_msgs::msg::Point> points);
   void findClosestMatch(perception_interfaces::msg::BoundingCircle& circle);
-  void calculateRadius(std::vector<geometry_msgs::msg::Point> points, perception_interfaces::msg::BoundingCircle& circle);
   std::map<std::string, double> p_prop_radii_;
   double p_max_lidar_dist_;
   double p_min_lidar_dist_;
