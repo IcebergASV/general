@@ -2,6 +2,7 @@
 
 #include "rclcpp/rclcpp.hpp"
 #include "mavros_msgs/msg/state.hpp"
+#include "mavros_msgs/msg/waypoint_reached.hpp"
 #include "geometry_msgs/msg/pose_stamped.hpp"
 #include "tf2_geometry_msgs/tf2_geometry_msgs.hpp"
 #include <tf2/LinearMath/Quaternion.h>
@@ -22,6 +23,7 @@ class WaypointSender : public rclcpp::Node
         pose_subscriber_ = this->create_subscription<geometry_msgs::msg::PoseStamped>(
             "/mavros/local_position/pose", rclcpp::SensorDataQoS(), std::bind(&WaypointSender::poseCallback, this, std::placeholders::_1));
 
+        wp_reached_subscriber = this->create_subscription<mavros_msgs::msg::WaypointReached>("/mavros/mission/reached", 10, std::bind(&WaypointSender::wpReachedCallback, this, std::placeholders::_1));
 
         // Publisher to publish the calculated waypoint
         waypoint_publisher = this->create_publisher<geometry_msgs::msg::PoseStamped>("/mavros/setpoint_position/local", 10);
@@ -29,6 +31,8 @@ class WaypointSender : public rclcpp::Node
         in_guided_ = false;
         previous_guided_state_ = false;
 
+        wp_reached_counter = 0;
+        wp_reached_max_count = 2;
     }
 
   private:
@@ -54,9 +58,24 @@ class WaypointSender : public rclcpp::Node
       current_local_position_ = *msg;
     }
 
-    void publishStraightAheadWaypoint()
+    void wpReachedCallback(const mavros_msgs::msg::WaypointReached msg)
     {
-      // Get current position and heading
+      RCLCPP_INFO(this->get_logger(), "Waypoint Reached #%i", wp_reached_counter);
+
+      if (wp_reached_counter <= wp_reached_max_count && msg.wp_seq)
+      {
+        publishStraightAheadWaypoint();
+        wp_reached_counter++;
+      }
+      else
+      {
+        RCLCPP_INFO(this->get_logger(), "Max waypoints reached. Max: %i", wp_reached_max_count);
+      }
+    }
+
+    geometry_msgs::msg::PoseStamped calculateWaypointStraightAhead()
+    {
+            // Get current position and heading
       double x = current_local_position_.pose.position.x;
       double y = current_local_position_.pose.position.y;
       tf2::Quaternion orientation;
@@ -79,15 +98,26 @@ class WaypointSender : public rclcpp::Node
       RCLCPP_INFO(this->get_logger(), "Current position: x=%f, y=%f, z=%f", current_local_position_.pose.position.x, current_local_position_.pose.position.y, current_local_position_.pose.position.z);
       RCLCPP_INFO(this->get_logger(), "Waypoint position: x=%f, y=%f, z=%f", waypoint.pose.position.x, waypoint.pose.position.y, waypoint.pose.position.z);
 
+      return waypoint;
+    }
+
+    void publishStraightAheadWaypoint()
+    {
       //publish waypoint
-      waypoint_publisher->publish(waypoint);
+      waypoint_publisher->publish(calculateWaypointStraightAhead());
     }
 
     rclcpp::Subscription<mavros_msgs::msg::State>::SharedPtr state_subscriber_;
     rclcpp::Subscription<geometry_msgs::msg::PoseStamped>::SharedPtr pose_subscriber_;
+    rclcpp::Subscription<mavros_msgs::msg::WaypointReached>::SharedPtr wp_reached_subscriber;
+
     rclcpp::Publisher<geometry_msgs::msg::PoseStamped>::SharedPtr waypoint_publisher;
+
     bool in_guided_;
     bool previous_guided_state_;
+    int wp_reached_counter;
+    int wp_reached_max_count;
+
     geometry_msgs::msg::PoseStamped current_local_position_;
 };
 
