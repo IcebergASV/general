@@ -35,18 +35,21 @@ namespace perception
       double distance = std::sqrt(point.x * point.x + point.y * point.y);
       if (distance < p_min_lidar_dist_ || distance > p_max_lidar_dist_) 
       {
-        RCLCPP_DEBUG(this->get_logger(), "Points are not within lidar bounds");
+        RCLCPP_ERROR(this->get_logger(), "Points are not within lidar bounds of %f, to %f", p_min_lidar_dist_, p_max_lidar_dist_);
         return false;
       }
     }
     return true;
   }
 
-  bool hasEnoughPoints(std::vector<geometry_msgs::msg::Point> points)
+  bool LidarClusterer::hasEnoughPoints(std::vector<geometry_msgs::msg::Point> points)
   {
-    unsigned long min_points = 5; //make a param later
-    return points.size() > min_points;
-    // TODO add debugging if false
+    if (!(static_cast<int>(points.size()) >= p_min_points_in_segment_))
+    {
+      RCLCPP_ERROR(this->get_logger(), "Not enough points in segment. Requires at least %i, but only got %li.", p_min_points_in_segment_, points.size());
+      return false;
+    }
+    return true;
   }
   bool LidarClusterer::isSegmentValid(slg_msgs::msg::Segment segment)
   {
@@ -177,6 +180,14 @@ namespace perception
     this->get_parameter("min_lidar_dist", p_min_lidar_dist_);
     RCLCPP_INFO(this->get_logger(), "min_lidar_dist: %f", p_min_lidar_dist_); 
 
+    this->declare_parameter<int>("min_points_in_segment", 0);
+    this->get_parameter("min_points_in_segment", p_min_points_in_segment_);
+    RCLCPP_INFO(this->get_logger(), "min_points_in_segment: %i", p_min_points_in_segment_); 
+    
+    this->declare_parameter<double>("max_radius_diff", 0.0);
+    this->get_parameter("max_radius_diff", p_max_radius_diff_);
+    RCLCPP_INFO(this->get_logger(), "max_radius_diff: %f", p_max_radius_diff_); 
+
     this->declare_parameter<std::string>("props_radii", "{}");
     std::string map_string;
     this->get_parameter("props_radii", map_string);
@@ -251,9 +262,13 @@ namespace perception
         if (isSegmentValid(segment))
         {
           perception_interfaces::msg::BoundingCircle bounding_circle = createBoundingCircle(segment.points);
-          if (bounding_circle.radius_diff < 4) //todo make param
+          if (bounding_circle.radius_diff < p_max_radius_diff_)
           {
             bounding_circle_array.bounding_circles.push_back(bounding_circle);
+          }
+          else
+          {
+            RCLCPP_ERROR(this->get_logger(), "Calculated radius diff of %f is too large, should be less than %f to be considered a prop", bounding_circle.radius_diff, p_max_radius_diff_);
           }
         }
       }

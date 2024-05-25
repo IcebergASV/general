@@ -28,12 +28,15 @@ private:
   std::vector<double> extractCoordinates(std::vector<geometry_msgs::msg::Point> points, std::string coords_to_extract);
   bool arePointsValidDistanceAway(std::vector<geometry_msgs::msg::Point> points);
   bool isSegmentValid(slg_msgs::msg::Segment segment);
+  bool hasEnoughPoints(std::vector<geometry_msgs::msg::Point> points);
   perception_interfaces::msg::BoundingCircle createBoundingCircle(std::vector<geometry_msgs::msg::Point> points);
   void findClosestMatch(perception_interfaces::msg::BoundingCircle& circle);
   void calculateRadius(std::vector<geometry_msgs::msg::Point> points, perception_interfaces::msg::BoundingCircle& circle);
   std::map<std::string, double> p_prop_radii_;
   double p_max_lidar_dist_;
   double p_min_lidar_dist_;
+  int p_min_points_in_segment_;
+  double p_max_radius_diff_;
 };
 
 }  // namespace composition
