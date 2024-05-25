@@ -60,6 +60,7 @@ namespace perception
     }
     circle.label = closest_match;
     circle.radius_diff = closest_match_diff;
+    return;
   }
     // Best fit circle equation: (x − k)^2 + (y − m)^2 = r^2
   // Where (k,m) is the center, and r is the radius
@@ -68,8 +69,8 @@ namespace perception
   // circle is an output param
   void LidarClusterer::calculateRadius(std::vector<geometry_msgs::msg::Point> points, perception_interfaces::msg::BoundingCircle& circle)
   {
-    std::vector<double> x_coords = this->extractCoordinates(points, "x");
-    std::vector<double> y_coords = this->extractCoordinates(points, "y");
+    std::vector<double> x_coords = this->extractXorYCoordsToVector(points, "x");
+    std::vector<double> y_coords = this->extractXorYCoordsToVector(points, "y");
 
     RCLCPP_INFO(this->get_logger(), " X Vector: %s", vectorToString(x_coords).c_str());
     RCLCPP_INFO(this->get_logger(), " Y Vector: %s", vectorToString(y_coords).c_str()); // same here
@@ -187,43 +188,6 @@ namespace perception
     {
       RCLCPP_ERROR(this->get_logger(), "Failed to parse YAML: %s", e.what());
     }
-
-    //this->declare_parameter<std::vector<std::string>>("props");
-    //this->declare_parameter<std::vector<double>>("radii");
-//
-    //std::map<std::string, double> prop_radii;
-    //std::vector<std::string> props;
-    //std::vector<double> radii;
-    //this->get_parameter("props", props);
-    //this->get_parameter("radii", radii);
-    //if (props.size() == radii.size())
-    //{
-    //  for (size_t i = 0; i < props.size(); ++i)
-    //  {
-    //    prop_radii[props[i]] = radii[i];
-    //  }
-    //}
-    //else
-    //{
-    //  RCLCPP_ERROR(this->get_logger(), "Keys and values arrays have different sizes");
-    //}
-//
-    //        p_prop_radii_ = {
-    //        {"large_buoy", 1.0},
-    //        {"small_buoy", 0.5},
-    //        {"marker", 0.3}
-    //    };
-    //auto param_desc = rcl_interfaces::msg::ParameterDescriptor{}; //todo add callback
-    //param_desc.description = "Sets the expected radii for props";
-    //this->declare_parameter<std::map<std::string, double>>("prop_radii", default_map, param_desc);
-
-    //double prop_radii; // TODO Change to map
-    //if (!this->get_parameter("prop_radii", this->p_prop_radii_)) {
-      //  RCLCPP_ERROR(this->get_logger(), "Failed to retrieve prop_radii parameter");
-        // Handle the error case here, such as setting default values
-       // prop_radii["default_key"] = 0.0;
-       //this->p_prop_radii_ = default_map;
-    //}
   }
 
   void LidarClusterer::scanCallback(const slg_msgs::msg::SegmentArray::SharedPtr msg)
@@ -268,19 +232,6 @@ namespace perception
     this->findClosestMatch(circle);
     return circle;
   }
-
-
-
-  std::vector<double> LidarClusterer::extractCoordinates(std::vector<geometry_msgs::msg::Point> points, std::string coords_to_extract)
-  {
-    std::vector<double> x_or_y_coordinates;
-    for (const auto& point : points) {
-        coords_to_extract == "x" ? x_or_y_coordinates.push_back(point.x) : x_or_y_coordinates.push_back(point.y);
-    }
-    return x_or_y_coordinates;
-  }
-
-
 
 
 
