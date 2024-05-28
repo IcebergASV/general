@@ -1,19 +1,6 @@
 #include "perception/lidar_clusterer_component.hpp"
 
-#include <chrono>
-#include <iostream>
-#include <memory>
-#include <utility>
-#include <yaml-cpp/yaml.h>
-
-#include "rclcpp/rclcpp.hpp"
-
 #include "perception/lib/lidar_calculations.hpp"
-#include "perception/lib/helpers.hpp"
-#include <string>
-#include <sstream>
-
-using namespace std::chrono_literals;
 
 namespace perception
 {

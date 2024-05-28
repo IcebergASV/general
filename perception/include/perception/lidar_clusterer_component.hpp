@@ -1,13 +1,8 @@
 #ifndef COMPOSITION__LIDAR_CLUSTER_COMPONENT_HPP_
 #define COMPOSITION__LIDAR_CLUSTER_COMPONENT_HPP_
 
-#include <chrono>
-#include <iostream>
-#include <memory>
-#include <utility>
 #include <yaml-cpp/yaml.h>
 #include <string>
-#include <sstream>
 #include <eigen3/Eigen/Dense>
 
 #include "rclcpp/rclcpp.hpp"
@@ -16,8 +11,6 @@
 #include "geometry_msgs/msg/point.hpp"
 #include "perception_interfaces/msg/bounding_circle.hpp"
 #include "perception_interfaces/msg/bounding_circle_array.hpp"
-
-#include "perception/lib/helpers.hpp"
 
 using std::placeholders::_1;
 
@@ -80,7 +73,6 @@ private:
         param[it->first.as<std::string>()] = it->second.as<double>();
       }
 
-      // Print the map to verify
       for (const auto &pair : param)
       {
         RCLCPP_INFO(this->get_logger(), "Prop: %s, Expected Radius: %f", pair.first.c_str(), pair.second);
