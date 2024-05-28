@@ -10,9 +10,8 @@
 
 rclcpp::Logger logger = rclcpp::get_logger("lidar_calculations_logger");
 
-bool testFunction();
-
 std::vector<double> extractXorYCoordsToVector(std::vector<geometry_msgs::msg::Point> points, std::string coords_to_extract);
 void calculateRadius(std::vector<geometry_msgs::msg::Point> points, perception_interfaces::msg::BoundingCircle& circle);
-
+bool arePointsValidDistanceAway(std::vector<geometry_msgs::msg::Point> points, double min_dist, double max_dist);
+bool hasEnoughPoints(int points_size, int min_points);
 #endif // LIDARCALCULATIONS_H

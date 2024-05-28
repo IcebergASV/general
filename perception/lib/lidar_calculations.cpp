@@ -1,10 +1,5 @@
 #include "perception/lib/lidar_calculations.hpp"
 
-bool testFunction()
-{
-  return true;
-}
-
 std::vector<double> extractXorYCoordsToVector(std::vector<geometry_msgs::msg::Point> points, std::string coords_to_extract)
 {
   std::vector<double> x_or_y_coordinates;
@@ -64,4 +59,27 @@ void calculateRadius(std::vector<geometry_msgs::msg::Point> points, perception_i
   circle.center.y = m;
 
   return;
+}
+
+bool arePointsValidDistanceAway(std::vector<geometry_msgs::msg::Point> points, double min_dist, double max_dist)
+{
+  for (const auto& point : points) {
+    double distance = std::sqrt(point.x * point.x + point.y * point.y);
+    if (distance < min_dist || distance > max_dist) 
+    {
+      RCLCPP_ERROR(logger, "Points are not within lidar bounds of %f, to %f", min_dist, max_dist);
+      return false;
+    }
+  }
+  return true;
+}
+
+bool hasEnoughPoints(int points_size, int min_points)
+{
+  if (!(points_size >= min_points))
+  {
+    RCLCPP_ERROR(logger, "Not enough points in segment. Requires at least %i, but only got %i.", min_points, points_size);
+    return false;
+  }
+  return true;
 }
