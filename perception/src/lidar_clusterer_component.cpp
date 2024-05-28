@@ -1,6 +1,6 @@
 #include "perception/lidar_clusterer_component.hpp"
 
-#include "perception/lib/lidar_calculations.hpp"
+#include "perception/lib/lidar_calculations.hpp" // TODO figure out why this can't go in header file
 
 namespace perception
 {
