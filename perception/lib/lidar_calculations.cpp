@@ -14,7 +14,7 @@ std::vector<double> extractXorYCoordsToVector(std::vector<geometry_msgs::msg::Po
 // Based off of https://goodcalculators.com/best-fit-circle-least-squares-calculator/
 //
 // circle is an output param
-void calculateRadius(std::vector<geometry_msgs::msg::Point> points, perception_interfaces::msg::BoundingCircle& circle)
+void calculateRadius(std::vector<geometry_msgs::msg::Point> points, perception_interfaces::msg::LidarDetectedProp& prop)
 {
   std::vector<double> x_coords= extractXorYCoordsToVector(points, "x");
   std::vector<double> y_coords= extractXorYCoordsToVector(points, "y");
@@ -54,9 +54,9 @@ void calculateRadius(std::vector<geometry_msgs::msg::Point> points, perception_i
   double a = result[0], b = result[1], c = result[2];
   double k = a / 2;
   double m = b / 2;
-  circle.radius = (sqrt(4*c + pow(a, 2) + pow(b, 2))) / 2;
-  circle.center.x = k;
-  circle.center.y = m;
+  prop.radius = (sqrt(4*c + pow(a, 2) + pow(b, 2))) / 2;
+  prop.center.x = k;
+  prop.center.y = m;
 
   return;
 }

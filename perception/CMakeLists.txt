@@ -26,17 +26,17 @@ endif()
 
 include_directories(include)
 
-add_library(lidar_clusterer_component SHARED src/lidar_clusterer_component.cpp)
-target_compile_definitions(lidar_clusterer_component PRIVATE "COMPOSITION_BUILDING_DLL")
-ament_target_dependencies(lidar_clusterer_component
+add_library(lidar_prop_detector_component SHARED src/lidar_prop_detector_component.cpp)
+target_compile_definitions(lidar_prop_detector_component PRIVATE "COMPOSITION_BUILDING_DLL")
+ament_target_dependencies(lidar_prop_detector_component
   "rclcpp"
   "rclcpp_components"
   "sensor_msgs"
   "slg_msgs"
   "geometry_msgs"
   "perception_interfaces")
-rclcpp_components_register_nodes(lidar_clusterer_component "perception::LidarClusterer")
-set(node_plugins "${node_plugins}perception::LidarClusterer;$<TARGET_FILE:lidar_clusterer_component>\n")
+rclcpp_components_register_nodes(lidar_prop_detector_component "perception::LidarPropDetector")
+set(node_plugins "${node_plugins}perception::LidarPropDetector;$<TARGET_FILE:lidar_prop_detector_component>\n")
 
 ## Declare a C++ library
 add_library(liblidar_calculations
@@ -54,7 +54,7 @@ add_library(libhelpers
 
 
 install(TARGETS
-  lidar_clusterer_component
+  lidar_prop_detector_component
   ARCHIVE DESTINATION lib
   LIBRARY DESTINATION lib
   RUNTIME DESTINATION bin)
@@ -74,7 +74,7 @@ install(DIRECTORY
 add_executable(manual_composition
   src/manual_composition.cpp)
 target_link_libraries(manual_composition
-  lidar_clusterer_component)
+  lidar_prop_detector_component)
 ament_target_dependencies(manual_composition
   rclcpp perception_interfaces)
 
