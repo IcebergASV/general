@@ -42,12 +42,7 @@ namespace perception
 
   bool LidarPropDetector::isSegmentValid(slg_msgs::msg::Segment segment)
   {
-    return hasEnoughPoints(segment.points.size(), p_min_points_in_segment_) && arePointsValidDistanceAway(segment.points, p_min_lidar_dist_, p_max_lidar_dist_);
-  }
-
-  bool LidarPropDetector::measuredRadiusIsCloseToExpected(double radius_diff)
-  {
-    return radius_diff < p_max_radius_diff_;
+    return lidar_calculations::hasEnoughPoints(segment.points.size(), p_min_points_in_segment_) && lidar_calculations::arePointsValidDistanceAway(segment.points, p_min_lidar_dist_, p_max_lidar_dist_);
   }
 
   void LidarPropDetector::attemptToCreateAndAddLidarDetectedProp(std::vector<geometry_msgs::msg::Point> points, perception_interfaces::msg::LidarDetectedPropArray& lidar_detected_prop_array)
@@ -66,11 +61,16 @@ namespace perception
   perception_interfaces::msg::LidarDetectedProp LidarPropDetector::createLidarDetectedProp(std::vector<geometry_msgs::msg::Point> points)
   {
     perception_interfaces::msg::LidarDetectedProp prop;
-    calculateRadius(points, prop);
+    lidar_calculations::calculateRadius(points, prop);
     this->findClosestMatchAndSetRadiusDiff(prop);
     return prop;
   }
 
+  bool LidarPropDetector::measuredRadiusIsCloseToExpected(double radius_diff)
+  {
+    return radius_diff < p_max_radius_diff_;
+  }
+  
   void LidarPropDetector::findClosestMatchAndSetRadiusDiff(perception_interfaces::msg::LidarDetectedProp& prop)
   {
     double abs_closest_match_diff = std::numeric_limits<double>::max();

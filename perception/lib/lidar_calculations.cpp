@@ -1,5 +1,8 @@
 #include "perception/lib/lidar_calculations.hpp"
 
+namespace lidar_calculations
+{
+
 std::vector<double> extractXorYCoordsToVector(std::vector<geometry_msgs::msg::Point> points, std::string coords_to_extract)
 {
   std::vector<double> x_or_y_coordinates;
@@ -82,4 +85,5 @@ bool hasEnoughPoints(int points_size, int min_points)
     return false;
   }
   return true;
+}
 }

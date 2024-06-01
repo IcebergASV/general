@@ -26,21 +26,24 @@ protected:
   void scanCallback(const slg_msgs::msg::SegmentArray::SharedPtr msg);
 
 private:
+  std::map<std::string, double> p_prop_radii_;
+  double p_max_lidar_dist_;
+  double p_min_lidar_dist_;
+  int p_min_points_in_segment_;
+  double p_max_radius_diff_;
   rclcpp::Subscription<slg_msgs::msg::SegmentArray>::SharedPtr sub_;
   rclcpp::Publisher<perception_interfaces::msg::LidarDetectedPropArray>::SharedPtr pub_;
+  
   std::vector<double> extractCoordinates(std::vector<geometry_msgs::msg::Point> points, std::string coords_to_extract);
   void attemptToCreateAndAddLidarDetectedProp(std::vector<geometry_msgs::msg::Point> points, perception_interfaces::msg::LidarDetectedPropArray& prop_array);
   bool isSegmentValid(slg_msgs::msg::Segment segment);
   perception_interfaces::msg::LidarDetectedProp createLidarDetectedProp(std::vector<geometry_msgs::msg::Point> points);
   void findClosestMatchAndSetRadiusDiff(perception_interfaces::msg::LidarDetectedProp& circle);
   bool measuredRadiusIsCloseToExpected(double radius_diff);
-  std::map<std::string, double> p_prop_radii_;
-  double p_max_lidar_dist_;
-  double p_min_lidar_dist_;
-  int p_min_points_in_segment_;
-  double p_max_radius_diff_;
 
-  // TODO - figure out how to move this to a library and pass in a reference to the node calling it
+
+
+  // TODO - figure out how to move this to a library and pass in a reference to the node calling it or make a subclass of rclcpp
   template <typename T>
   void getParam(std::string param_str, T& param, T default_value, std::string desc)
   {
@@ -55,7 +58,7 @@ private:
     return;
   }
 
-  // TODO - figure out how to move this to a library and pass in a reference to the node calling it
+  // TODO - figure out how to move this to a library and pass in a reference to the node calling it or make a subclass of rclcpp
   template <typename T>
   void getStringParamConvertToMap(std::string param_str, std::map<std::string, T>& param, std::string default_value, std::string desc)
   {

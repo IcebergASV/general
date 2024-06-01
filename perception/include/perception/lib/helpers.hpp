@@ -6,14 +6,17 @@
 #include <vector>
 #include <eigen3/Eigen/Dense>
 
-std::string vectorToString(const std::vector<double>& vec);
-
-template <typename T>
-std::string matrixToString(const Eigen::MatrixBase<T>& matrix) 
+namespace helpers
 {
-    std::ostringstream oss;
-    oss << matrix;
-    return oss.str();
-};
+    std::string vectorToString(const std::vector<double>& vec);
+
+    template <typename T>
+    std::string matrixToString(const Eigen::MatrixBase<T>& matrix) 
+    {
+        std::ostringstream oss;
+        oss << matrix;
+        return oss.str();
+    };
+}
 
 #endif // HELPERS_H
