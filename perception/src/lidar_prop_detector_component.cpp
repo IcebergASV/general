@@ -54,7 +54,7 @@ namespace perception
     }
     else
     {
-      RCLCPP_ERROR(this->get_logger(), "Calculated radius diff of %f is too large, should be less than %f to be considered a prop", lidar_detected_prop.radius_diff, p_max_radius_diff_);
+      RCLCPP_ERROR_THROTTLE(this->get_logger(), *this->get_clock(), 10000, "Calculated radius diff of %f is too large, should be less than %f to be considered a prop", lidar_detected_prop.radius_diff, p_max_radius_diff_);
     }
   }
 

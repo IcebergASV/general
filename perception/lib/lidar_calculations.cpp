@@ -68,9 +68,10 @@ bool arePointsValidDistanceAway(std::vector<geometry_msgs::msg::Point> points, d
 {
   for (const auto& point : points) {
     double distance = std::sqrt(point.x * point.x + point.y * point.y);
+    //RCLCPP_ERROR_THROTTLE(logger,  *node->get_clock(), 1000, "DISTANCE %f, bounds of %f, to %f", distance, min_dist, max_dist);
     if (distance < min_dist || distance > max_dist) 
     {
-      RCLCPP_ERROR(logger, "Points are not within lidar bounds of %f, to %f", min_dist, max_dist);
+      RCLCPP_ERROR(logger, "Point with distance: %f is not within lidar bounds of %f, to %f", distance, min_dist, max_dist);
       return false;
     }
   }

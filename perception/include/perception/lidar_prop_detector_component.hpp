@@ -33,6 +33,7 @@ private:
   double p_max_radius_diff_;
   rclcpp::Subscription<slg_msgs::msg::SegmentArray>::SharedPtr sub_;
   rclcpp::Publisher<perception_interfaces::msg::LidarDetectedPropArray>::SharedPtr pub_;
+  rclcpp::node_interfaces::OnSetParametersCallbackHandle::SharedPtr on_set_parameters_callback_handle_;
   
   std::vector<double> extractCoordinates(std::vector<geometry_msgs::msg::Point> points, std::string coords_to_extract);
   void attemptToCreateAndAddLidarDetectedProp(std::vector<geometry_msgs::msg::Point> points, perception_interfaces::msg::LidarDetectedPropArray& prop_array);
@@ -45,18 +46,44 @@ private:
 
   // TODO - figure out how to move this to a library and pass in a reference to the node calling it or make a subclass of rclcpp
   template <typename T>
-  void getParam(std::string param_str, T& param, T default_value, std::string desc)
+  void getParam(std::string param_name, T& param, T default_value, std::string desc)
   {
     auto param_desc = rcl_interfaces::msg::ParameterDescriptor{};
     param_desc.description = desc;
-    this->declare_parameter<T>(param_str, default_value, param_desc);
-    this->get_parameter(param_str, param);
+    this->declare_parameter<T>(param_name, default_value, param_desc);
+    this->get_parameter(param_name, param);
+    on_set_parameters_callback_handle_ = this->add_on_set_parameters_callback(std::bind(&LidarPropDetector::test_callback<T>, this, std::placeholders::_1, param_name, param));
 
-    std::string param_log_output = param_str + ": " + std::to_string(param);
+    std::string param_log_output = param_name + ": " + std::to_string(param);
     RCLCPP_INFO(this->get_logger(), param_log_output.c_str()); 
 
     return;
   }
+
+  template <typename T>
+  rcl_interfaces::msg::SetParametersResult test_callback(const std::vector<rclcpp::Parameter> &params, std::string param_name, T& param)
+    {
+      RCLCPP_ERROR(this->get_logger(), param_name.c_str());
+      for (const auto &p : params)
+      {
+        RCLCPP_ERROR(this->get_logger(), "for loop");
+          if (p.get_name() == param_name)
+          {
+            RCLCPP_ERROR(this->get_logger(), p.get_name().c_str());
+            RCLCPP_ERROR(this->get_logger(), "equals param name");
+            if (p.get_type() == rclcpp::ParameterType::PARAMETER_DOUBLE)
+            {
+              RCLCPP_ERROR(this->get_logger(), "type matches");
+              param = p.as_double();
+            }
+             
+              RCLCPP_INFO(this->get_logger(), "my_parameter changed to: %d", param);
+          }
+      }
+      rcl_interfaces::msg::SetParametersResult result;
+      result.successful = true;
+      return result;
+    }
 
   // TODO - figure out how to move this to a library and pass in a reference to the node calling it or make a subclass of rclcpp
   template <typename T>
