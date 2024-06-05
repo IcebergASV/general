@@ -12,8 +12,8 @@ int main(int argc, char *argv[])
   rclcpp::executors::SingleThreadedExecutor exec;
   rclcpp::NodeOptions options;
 
-  auto lidar_clusterer = std::make_shared<perception::LidarPropDetector>(options);
-  exec.add_node(lidar_clusterer);
+  auto lidar_prop_detector = std::make_shared<perception::LidarPropDetector>(options);
+  exec.add_node(lidar_prop_detector);
   exec.spin();
 
   rclcpp::shutdown();

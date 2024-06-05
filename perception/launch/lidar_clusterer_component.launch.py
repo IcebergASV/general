@@ -14,7 +14,7 @@ def generate_launch_description():
                 ComposableNode(
                     package='perception',
                     plugin='perception::LidarClusterer',
-                    name='lidar_clusterer'),
+                    name='lidar_prop_detector'),
             ],
             output='screen',
     )
