@@ -43,52 +43,43 @@ private:
   bool measuredRadiusIsCloseToExpected(double radius_diff);
 
 
-  rcl_interfaces::msg::SetParametersResult min_lidar_dist_callback(const std::vector<rclcpp::Parameter> &params, std::string param_name, double& param)
-    {
-      RCLCPP_ERROR(this->get_logger(), ("min_lidar_dist_callback"));
-      RCLCPP_ERROR(this->get_logger(), param_name.c_str());
-      RCLCPP_ERROR_STREAM(this->get_logger(), "length of params:" << static_cast<double>(params.size()));
-      RCLCPP_ERROR(this->get_logger(), params[0].get_name().c_str());
-      //RCLCPP_ERROR_STREAM(this->get_logger(), "value : " << params[0].get_value());
-      RCLCPP_ERROR_STREAM(this->get_logger(), "current value: " << static_cast<double>(param));
-    // Check the type of the parameter and get its value accordingly
+  rcl_interfaces::msg::SetParametersResult min_lidar_dist_callback(const std::vector<rclcpp::Parameter> &params)
+  {
+    RCLCPP_ERROR(this->get_logger(), "min_lidar_dist_callback");
+    RCLCPP_ERROR(this->get_logger(), params[0].get_name().c_str());
+
+    
     if (params[0].get_type() == rclcpp::ParameterType::PARAMETER_INTEGER) {
-        int value = params[0].as_int();
+      int value = params[0].as_int();
         RCLCPP_INFO(this->get_logger(), "Value of 'my_params[0]' (int): %d", value);
     } else if (params[0].get_type() == rclcpp::ParameterType::PARAMETER_DOUBLE) {
         double value = params[0].as_double();
 
-        param = value;
+        //param = value;
         RCLCPP_INFO(this->get_logger(), "Value of 'my_params[0]' (double): %f", value);
-        RCLCPP_ERROR_STREAM(this->get_logger(), "current value: " << static_cast<double>(param));
+        //RCLCPP_ERROR_STREAM(this->get_logger(), "current value: " << static_cast<double>(param));
     } else if (params[0].get_type() == rclcpp::ParameterType::PARAMETER_STRING) {
         std::string value = params[0].as_string();
         RCLCPP_INFO(this->get_logger(), "Value of 'my_params[0]' (string): %s", value.c_str());
     } else {
         RCLCPP_ERROR(this->get_logger(), "Unsupported params[0] type");
     }
-      //for (const auto &p : params)
-      //{
-      //  RCLCPP_ERROR(this->get_logger(), "for loop");
-      //    if (p.get_name() == param_name)
-      //    {
-      //      RCLCPP_ERROR(this->get_logger(), p.get_name().c_str());
-      //      RCLCPP_ERROR(this->get_logger(), "equals param name");
-      //      if (p.get_type() == rclcpp::ParameterType::PARAMETER_DOUBLE)
-      //      {
-      //        RCLCPP_ERROR(this->get_logger(), "type matches");
-      //        param = p.as_double();
-      //      }
-      //       
-      //        RCLCPP_INFO(this->get_logger(), "my_parameter changed to: %d", static_cast<double>(param));
-      //    }
-      rcl_interfaces::msg::SetParametersResult result;
-      result.successful = true;
-      return result;
+
+
+    if (params[0].get_name().c_str() == "min_lidar_dist") // TODO finish implementing and test
+    {
+      p_min_lidar_dist_ = params[0].as_double();
+    }
+    else if (params[0].get_name().c_str() == "max_lidar_dist")
+    {
+      p_max_lidar_dist_ = params[0].as_double();
     }
 
-
- 
+    rcl_interfaces::msg::SetParametersResult result;
+    result.successful = true;
+    return result;
+  }
+  
 
   // TODO - figure out how to move this to a library and pass in a reference to the node calling it or make a subclass of rclcpp
   template <typename T>
@@ -98,69 +89,11 @@ private:
     param_desc.description = desc;
     this->declare_parameter<T>(param_name, default_value, param_desc);
     this->get_parameter(param_name, param);
-
-    //if (func != nullptr)
-    //{
-     // on_set_parameters_callback_handle_ = this->add_on_set_parameters_callback(std::bind(&LidarPropDetector::test_callback<T>, this, std::placeholders::_1, param_name, param));
-    //}
-
     std::string param_log_output = param_name + ": " + std::to_string(param);
     RCLCPP_INFO(this->get_logger(), param_log_output.c_str()); 
 
     return;
   }
-  //template <typename T>
-  //void getParam(std::string param_name, T& param, T default_value, std::string desc)
-  //{
-  //  auto param_desc = rcl_interfaces::msg::ParameterDescriptor{};
-  //  param_desc.description = desc;
-  //  this->declare_parameter<T>(param_name, default_value, param_desc);
-  //  this->get_parameter(param_name, param);
-//
-  //  
-//
-  //  std::string param_log_output = param_name + ": " + std::to_string(param);
-  //  RCLCPP_INFO(this->get_logger(), param_log_output.c_str()); 
-//
-  //  return;
-  //}
-//
-  //auto cb = (const rclcpp::Parameter & p) {
-  //      RCLCPP_INFO(
-  //        this->get_logger(), "cb: Received an update to parameter \"%s\" of type %s: \"%d\"",
-  //        p.get_name().c_str(),
-  //        p.get_type_name().c_str(),
-  //        p.as_int());
-  //};
-
-    template <typename T>
-    rcl_interfaces::msg::SetParametersResult test_callback(const std::vector<rclcpp::Parameter> &params, std::string param_name, T& param)
-    {
-      //RCLCPP_ERROR(this->get_logger(), ("test callback"));
-      //RCLCPP_ERROR(this->get_logger(), param_name.c_str());
-      //RCLCPP_ERROR_STREAM(this->get_logger(), "length of params:" << static_cast<double>(params.size()));
-
-      //RCLCPP_ERROR_STREAM(this->get_logger(), "value: " << static_cast<double>(param));
-      for (const auto &p : params)
-      {
-        //RCLCPP_ERROR(this->get_logger(), "for loop");
-          if (p.get_name() == param_name)
-          {
-            RCLCPP_ERROR(this->get_logger(), p.get_name().c_str());
-            RCLCPP_ERROR(this->get_logger(), "equals param name");
-            if (p.get_type() == rclcpp::ParameterType::PARAMETER_DOUBLE)
-            {
-              RCLCPP_ERROR(this->get_logger(), "type matches");
-              param = p.as_double();
-            }
-             
-              RCLCPP_INFO(this->get_logger(), "my_parameter changed to: %d", static_cast<double>(param));
-          }
-      }
-      rcl_interfaces::msg::SetParametersResult result;
-      result.successful = true;
-      return result;
-    }
 
   // TODO - figure out how to move this to a library and pass in a reference to the node calling it or make a subclass of rclcpp
   template <typename T>

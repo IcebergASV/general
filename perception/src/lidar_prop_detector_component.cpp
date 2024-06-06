@@ -12,12 +12,11 @@ namespace perception
     pub_ = this->create_publisher<perception_interfaces::msg::LidarDetectedPropArray>("perception/lidar_detected_props", 10);
 
     LidarPropDetector::getParam<double>("max_lidar_dist", p_max_lidar_dist_, 0.0, "Maximum accepted range of lidar readings in m");
-    
     LidarPropDetector::getParam<double>("min_lidar_dist", p_min_lidar_dist_, 0.0, "Minimum accepted range of lidar readings in m");
-    on_set_parameters_callback_handle_ = this->add_on_set_parameters_callback(std::bind(&LidarPropDetector::min_lidar_dist_callback, this, std::placeholders::_1, "min_lidar_dist", p_min_lidar_dist_));
     LidarPropDetector::getParam<int>("min_points_in_segment", p_min_points_in_segment_, 0, "Minimum accepted points in a laser_segment");
     LidarPropDetector::getParam<double>("max_radius_diff", p_max_radius_diff_, 0.0, "Maximum difference between measured and expected prop radii to consider a laser_segment a prop, in m");
     LidarPropDetector::getStringParamConvertToMap<double>("props_radii", p_prop_radii_, "{}", "List of prop radii in m");
+    on_set_parameters_callback_handle_ = this->add_on_set_parameters_callback(std::bind(&LidarPropDetector::min_lidar_dist_callback, this, std::placeholders::_1));
   }
 
   void LidarPropDetector::scanCallback(const slg_msgs::msg::SegmentArray::SharedPtr msg)
