@@ -16,6 +16,7 @@ namespace perception
     LidarPropDetector::getParam<int>("min_points_in_segment", p_min_points_in_segment_, 0, "Minimum accepted points in a laser_segment");
     LidarPropDetector::getParam<double>("max_radius_diff", p_max_radius_diff_, 0.0, "Maximum difference between measured and expected prop radii to consider a laser_segment a prop, in m");
     LidarPropDetector::getStringParamConvertToMap<double>("props_radii", p_prop_radii_, "{}", "List of prop radii in m");
+    LidarPropDetector::getParam<double>("lidar_fov", p_lidar_fov_, 0.0, "Lidar fov in degrees");
     on_set_parameters_callback_handle_ = this->add_on_set_parameters_callback(std::bind(&LidarPropDetector::param_callback, this, std::placeholders::_1));
   }
 
@@ -27,6 +28,7 @@ namespace perception
     else if (params[0].get_name() == "max_lidar_dist") { p_max_lidar_dist_ = params[0].as_double(); }
     else if (params[0].get_name() == "min_points_in_segment") { p_min_points_in_segment_ = params[0].as_int(); }
     else if (params[0].get_name() == "max_radius_diff") { p_max_radius_diff_ = params[0].as_double(); }
+    else if (params[0].get_name() == "lidar_fov") { p_lidar_fov_ = params[0].as_double(); }
     else {
       RCLCPP_ERROR(this->get_logger(), "Invalid Param");
       result.successful = false;
@@ -44,9 +46,11 @@ namespace perception
       perception_interfaces::msg::LidarDetectedPropArray lidar_detected_prop_array;
       for (slg_msgs::msg::Segment segment : msg->segments)
       {
-        if (isSegmentValid(segment))
+        std::vector<geometry_msgs::msg::Point> filtered_points = lidar_calculations::getPointsWithinBounds(segment.points, p_min_lidar_dist_, p_max_lidar_dist_, p_lidar_fov_);
+
+        if (lidar_calculations::hasEnoughPoints(filtered_points.size(), p_min_points_in_segment_))
         {
-          attemptToCreateAndAddLidarDetectedProp(segment.points, lidar_detected_prop_array);
+          attemptToCreateAndAddLidarDetectedProp(filtered_points, lidar_detected_prop_array);
         }
       }
       if (lidar_detected_prop_array.lidar_detected_props.size() > 0)
@@ -58,11 +62,6 @@ namespace perception
     {
       RCLCPP_DEBUG(this->get_logger(), "No segments detected");
     }
-  }
-
-  bool LidarPropDetector::isSegmentValid(slg_msgs::msg::Segment segment)
-  {
-    return lidar_calculations::hasEnoughPoints(segment.points.size(), p_min_points_in_segment_) && lidar_calculations::arePointsValidDistanceAway(segment.points, p_min_lidar_dist_, p_max_lidar_dist_);
   }
 
   void LidarPropDetector::attemptToCreateAndAddLidarDetectedProp(std::vector<geometry_msgs::msg::Point> points, perception_interfaces::msg::LidarDetectedPropArray& lidar_detected_prop_array)

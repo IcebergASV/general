@@ -16,5 +16,7 @@ namespace lidar_calculations
     void calculateRadius(std::vector<geometry_msgs::msg::Point> points, perception_interfaces::msg::LidarDetectedProp& prop);
     bool arePointsValidDistanceAway(std::vector<geometry_msgs::msg::Point> points, double min_dist, double max_dist);
     bool hasEnoughPoints(int points_size, int min_points);
+    std::vector<geometry_msgs::msg::Point> getPointsWithinBounds(std::vector<geometry_msgs::msg::Point> points, double min_dist, double max_dist, double fov);
+    bool checkFOV(geometry_msgs::msg::Point point, double fov);
 }
 #endif // LIDARCALCULATIONS_H

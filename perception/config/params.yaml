@@ -5,3 +5,4 @@ lidar_prop_detector:
     max_lidar_dist: 29.0
     min_points_in_segment: 6
     max_radius_diff: 0.1
+    lidar_fov: 90.0

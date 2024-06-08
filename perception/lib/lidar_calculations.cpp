@@ -78,6 +78,63 @@ bool arePointsValidDistanceAway(std::vector<geometry_msgs::msg::Point> points, d
   return true;
 }
 
+std::vector<geometry_msgs::msg::Point> getPointsWithinBounds(std::vector<geometry_msgs::msg::Point> points, double min_dist, double max_dist, double fov)
+{
+  std::vector<geometry_msgs::msg::Point> cleaned_points;
+
+  for (const auto& point : points) {
+    double distance = std::sqrt(point.x * point.x + point.y * point.y);
+    //RCLCPP_ERROR_THROTTLE(logger,  *node->get_clock(), 1000, "DISTANCE %f, bounds of %f, to %f", distance, min_dist, max_dist);
+    if (distance < min_dist || distance > max_dist || !checkFOV(point, fov)) 
+    {
+      RCLCPP_DEBUG(logger, "Point with distance: %f is not within lidar bounds of %f, to %f, and fov %f", distance, min_dist, max_dist, fov);
+    }
+    else 
+    {
+      cleaned_points.push_back(point);
+    }
+  }
+  return cleaned_points;
+}
+
+bool checkFOV(geometry_msgs::msg::Point point, double fov) // This whole function is stupid but I got too frustrated to figure out a better way, it works for now
+{
+  double x = -point.y; // TODO THIS IS ONLY FOR SIM
+  double y = point.x; // TODO THIS IS ONLY FOR SIM
+
+  double angle_from_straight;
+
+  if ( x > 0 && y > 0) // Q1
+  {
+    angle_from_straight = (M_PI/2) - atan(-point.x / point.y);
+  }
+
+  if ( x < 0 && y > 0) // Q2
+  {
+    angle_from_straight = atan(-point.x / point.y) + (M_PI/2);
+  }
+
+  if ( x < 0 && y < 0) // Q3
+  {
+    angle_from_straight = atan(-point.x / point.y) + (M_PI/2);
+  }
+
+  if ( x > 0 && y < 0) // Q4
+  {
+    angle_from_straight = (M_PI/2) - atan(-point.x / point.y);
+  }
+
+  RCLCPP_DEBUG(logger, "Angle from straight %f", angle_from_straight);
+
+  double fov_rad = fov*M_PI/180;
+  if (angle_from_straight < fov_rad)
+  {
+    return true;
+  }
+  RCLCPP_DEBUG(logger, "Point %f rad from straight not within Lidar FOV of %f", angle_from_straight, fov_rad);
+  return false;
+}
+
 bool hasEnoughPoints(int points_size, int min_points)
 {
   if (!(points_size >= min_points))

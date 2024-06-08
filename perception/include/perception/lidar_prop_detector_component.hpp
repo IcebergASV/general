@@ -31,6 +31,7 @@ private:
   double p_min_lidar_dist_;
   int p_min_points_in_segment_;
   double p_max_radius_diff_;
+  double p_lidar_fov_;
   rclcpp::Subscription<slg_msgs::msg::SegmentArray>::SharedPtr sub_;
   rclcpp::Publisher<perception_interfaces::msg::LidarDetectedPropArray>::SharedPtr pub_;
   rclcpp::node_interfaces::OnSetParametersCallbackHandle::SharedPtr on_set_parameters_callback_handle_;
