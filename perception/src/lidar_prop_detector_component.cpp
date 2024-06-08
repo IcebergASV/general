@@ -60,7 +60,7 @@ namespace perception
     }
     else
     {
-      RCLCPP_DEBUG(this->get_logger(), "No segments detected");
+      RCLCPP_WARN(this->get_logger(), "No segments in message");
     }
   }
 
@@ -73,7 +73,7 @@ namespace perception
     }
     else
     {
-      RCLCPP_ERROR_THROTTLE(this->get_logger(), *this->get_clock(), 10000, "Calculated radius diff of %f is too large, should be less than %f to be considered a prop", lidar_detected_prop.radius_diff, p_max_radius_diff_);
+      RCLCPP_INFO_THROTTLE(this->get_logger(), *this->get_clock(), 10000, "Calculated radius diff of %f is too large, should be less than %f to be considered a prop", lidar_detected_prop.radius_diff, p_max_radius_diff_);
     }
   }
 

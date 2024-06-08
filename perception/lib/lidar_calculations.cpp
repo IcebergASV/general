@@ -68,10 +68,9 @@ bool arePointsValidDistanceAway(std::vector<geometry_msgs::msg::Point> points, d
 {
   for (const auto& point : points) {
     double distance = std::sqrt(point.x * point.x + point.y * point.y);
-    //RCLCPP_ERROR_THROTTLE(logger,  *node->get_clock(), 1000, "DISTANCE %f, bounds of %f, to %f", distance, min_dist, max_dist);
     if (distance < min_dist || distance > max_dist) 
     {
-      RCLCPP_ERROR(logger, "Point with distance: %f is not within lidar bounds of %f, to %f", distance, min_dist, max_dist);
+      RCLCPP_INFO(logger, "Point with distance: %f is not within lidar bounds of %f, to %f", distance, min_dist, max_dist);
       return false;
     }
   }
@@ -84,7 +83,7 @@ std::vector<geometry_msgs::msg::Point> getPointsWithinBounds(std::vector<geometr
 
   for (const auto& point : points) {
     double distance = std::sqrt(point.x * point.x + point.y * point.y);
-    //RCLCPP_ERROR_THROTTLE(logger,  *node->get_clock(), 1000, "DISTANCE %f, bounds of %f, to %f", distance, min_dist, max_dist);
+
     if (distance < min_dist || distance > max_dist || !checkFOV(point, fov)) 
     {
       RCLCPP_DEBUG(logger, "Point with distance: %f is not within lidar bounds of %f, to %f, and fov %f", distance, min_dist, max_dist, fov);
@@ -139,7 +138,7 @@ bool hasEnoughPoints(int points_size, int min_points)
 {
   if (!(points_size >= min_points))
   {
-    RCLCPP_ERROR(logger, "Not enough points in segment. Requires at least %i, but only got %i.", min_points, points_size);
+    RCLCPP_DEBUG(logger, "Not enough points in segment. Requires at least %i, but only got %i.", min_points, points_size);
     return false;
   }
   return true;
