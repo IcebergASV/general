@@ -1,0 +1,4 @@
+waypoint_sender:
+  ros_parameters:
+    // wp_max = 1; send two waypoints
+    wp_max: 1
