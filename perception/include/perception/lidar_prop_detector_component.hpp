@@ -41,45 +41,7 @@ private:
   perception_interfaces::msg::LidarDetectedProp createLidarDetectedProp(std::vector<geometry_msgs::msg::Point> points);
   void findClosestMatchAndSetRadiusDiff(perception_interfaces::msg::LidarDetectedProp& circle);
   bool measuredRadiusIsCloseToExpected(double radius_diff);
-
-
-  rcl_interfaces::msg::SetParametersResult min_lidar_dist_callback(const std::vector<rclcpp::Parameter> &params)
-  {
-    RCLCPP_ERROR(this->get_logger(), "min_lidar_dist_callback");
-    RCLCPP_ERROR(this->get_logger(), params[0].get_name().c_str());
-
-    
-    if (params[0].get_type() == rclcpp::ParameterType::PARAMETER_INTEGER) {
-      int value = params[0].as_int();
-        RCLCPP_INFO(this->get_logger(), "Value of 'my_params[0]' (int): %d", value);
-    } else if (params[0].get_type() == rclcpp::ParameterType::PARAMETER_DOUBLE) {
-        double value = params[0].as_double();
-
-        //param = value;
-        RCLCPP_INFO(this->get_logger(), "Value of 'my_params[0]' (double): %f", value);
-        //RCLCPP_ERROR_STREAM(this->get_logger(), "current value: " << static_cast<double>(param));
-    } else if (params[0].get_type() == rclcpp::ParameterType::PARAMETER_STRING) {
-        std::string value = params[0].as_string();
-        RCLCPP_INFO(this->get_logger(), "Value of 'my_params[0]' (string): %s", value.c_str());
-    } else {
-        RCLCPP_ERROR(this->get_logger(), "Unsupported params[0] type");
-    }
-
-
-    if (params[0].get_name().c_str() == "min_lidar_dist") // TODO finish implementing and test
-    {
-      p_min_lidar_dist_ = params[0].as_double();
-    }
-    else if (params[0].get_name().c_str() == "max_lidar_dist")
-    {
-      p_max_lidar_dist_ = params[0].as_double();
-    }
-
-    rcl_interfaces::msg::SetParametersResult result;
-    result.successful = true;
-    return result;
-  }
-  
+  rcl_interfaces::msg::SetParametersResult param_callback(const std::vector<rclcpp::Parameter> &params);
 
   // TODO - figure out how to move this to a library and pass in a reference to the node calling it or make a subclass of rclcpp
   template <typename T>

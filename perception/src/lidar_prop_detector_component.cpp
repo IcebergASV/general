@@ -16,7 +16,25 @@ namespace perception
     LidarPropDetector::getParam<int>("min_points_in_segment", p_min_points_in_segment_, 0, "Minimum accepted points in a laser_segment");
     LidarPropDetector::getParam<double>("max_radius_diff", p_max_radius_diff_, 0.0, "Maximum difference between measured and expected prop radii to consider a laser_segment a prop, in m");
     LidarPropDetector::getStringParamConvertToMap<double>("props_radii", p_prop_radii_, "{}", "List of prop radii in m");
-    on_set_parameters_callback_handle_ = this->add_on_set_parameters_callback(std::bind(&LidarPropDetector::min_lidar_dist_callback, this, std::placeholders::_1));
+    on_set_parameters_callback_handle_ = this->add_on_set_parameters_callback(std::bind(&LidarPropDetector::param_callback, this, std::placeholders::_1));
+  }
+
+  rcl_interfaces::msg::SetParametersResult LidarPropDetector::param_callback(const std::vector<rclcpp::Parameter> &params)
+  {
+    rcl_interfaces::msg::SetParametersResult result;
+
+    if (params[0].get_name() == "min_lidar_dist") { p_min_lidar_dist_ = params[0].as_double(); }
+    else if (params[0].get_name() == "max_lidar_dist") { p_max_lidar_dist_ = params[0].as_double(); }
+    else if (params[0].get_name() == "min_points_in_segment") { p_min_points_in_segment_ = params[0].as_int(); }
+    else if (params[0].get_name() == "max_radius_diff") { p_max_radius_diff_ = params[0].as_double(); }
+    else {
+      RCLCPP_ERROR(this->get_logger(), "Invalid Param");
+      result.successful = false;
+      return result;
+    }
+
+    result.successful = true;
+    return result;
   }
 
   void LidarPropDetector::scanCallback(const slg_msgs::msg::SegmentArray::SharedPtr msg)
