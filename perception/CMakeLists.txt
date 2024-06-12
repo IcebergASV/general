@@ -38,6 +38,18 @@ ament_target_dependencies(lidar_prop_detector_component
 rclcpp_components_register_nodes(lidar_prop_detector_component "perception::LidarPropDetector")
 set(node_plugins "${node_plugins}perception::LidarPropDetector;$<TARGET_FILE:lidar_prop_detector_component>\n")
 
+add_library(coord_finder_component SHARED src/coord_finder_component.cpp)
+target_compile_definitions(coord_finder_component PRIVATE "COMPOSITION_BUILDING_DLL")
+ament_target_dependencies(coord_finder_component
+  "rclcpp"
+  "rclcpp_components"
+  "sensor_msgs"
+  "slg_msgs"
+  "geometry_msgs"
+  "perception_interfaces")
+rclcpp_components_register_nodes(coord_finder_component "perception::CoordFinder")
+set(node_plugins "${node_plugins}perception::CoordFinder;$<TARGET_FILE:coord_finder_component>\n")
+
 ## Declare a C++ library
 add_library(liblidar_calculations
   lib/lidar_calculations.cpp
@@ -71,21 +83,29 @@ install(DIRECTORY
   DESTINATION share/${PROJECT_NAME}
 )
 
-add_executable(manual_composition
-  src/manual_composition.cpp)
-target_link_libraries(manual_composition
+add_executable(lidar_prop_detector_composition
+  src/lidar_prop_detector_composition.cpp)
+target_link_libraries(lidar_prop_detector_composition
   lidar_prop_detector_component)
-ament_target_dependencies(manual_composition
+ament_target_dependencies(lidar_prop_detector_composition
   rclcpp perception_interfaces)
 
-target_link_libraries(manual_composition
+add_executable(coord_finder_composition
+  src/coord_finder_composition.cpp)
+target_link_libraries(coord_finder_composition
+  coord_finder_component)
+ament_target_dependencies(coord_finder_composition
+  rclcpp perception_interfaces)
+
+target_link_libraries(lidar_prop_detector_composition
   ${YAML_CPP_LIBRARIES}
   liblidar_calculations
   libhelpers
 )
 
 install(TARGETS
-  manual_composition
+  lidar_prop_detector_composition
+  coord_finder_composition
   DESTINATION lib/${PROJECT_NAME})
 
 ament_package()
