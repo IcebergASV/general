@@ -1,0 +1,10 @@
+# Goal: list of waypoints
+geometry_msgs/PoseStamped[] wp_list
+---
+# Result: Last waypoint(index) reached
+int32 wp_reached
+---
+# Feedback: Next waypoint(index)
+int32 next_wp
+
+# No particular reason why int32 was chosen.
