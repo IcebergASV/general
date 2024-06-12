@@ -23,7 +23,7 @@ public:
   explicit LidarPropDetector(const rclcpp::NodeOptions & options);
 
 protected:
-  void scanCallback(const slg_msgs::msg::SegmentArray::SharedPtr msg);
+  void laserSegmentCallback(const slg_msgs::msg::SegmentArray::SharedPtr msg);
 
 private:
   std::map<std::string, double> p_prop_radii_;
