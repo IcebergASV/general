@@ -3,6 +3,8 @@
 
 #include "rclcpp/rclcpp.hpp"
 #include "geometry_msgs/msg/point.hpp"
+#include "geometry_msgs/msg/pose_stamped.hpp"
+#include "geometry_msgs/msg/quaternion.hpp"
 #include "perception_interfaces/msg/lidar_detected_prop.hpp"
 #include "perception_interfaces/msg/lidar_detected_prop_array.hpp"
 
@@ -17,18 +19,18 @@ public:
   explicit CoordFinder(const rclcpp::NodeOptions & options);
 
 protected:
-  void scanCallback(const perception_interfaces::msg::LidarDetectedPropArray::SharedPtr msg);
+  void poseCallback(const geometry_msgs::msg::PoseStamped::SharedPtr msg);
+  void propCallback(const perception_interfaces::msg::LidarDetectedProp::SharedPtr msg);
 
 private:
-  std::map<std::string, double> p_prop_radii_;
-  double p_max_lidar_dist_;
-  double p_min_lidar_dist_;
-  int p_min_points_in_segment_;
-  double p_max_radius_diff_;
-  double p_lidar_fov_;
-  rclcpp::Subscription<perception_interfaces::msg::LidarDetectedPropArray>::SharedPtr sub_;
+  geometry_msgs::msg::PoseStamped pose_msg_;
+  perception_interfaces::msg::LidarDetectedProp prop_msg_;
+
+  rclcpp::Subscription<perception_interfaces::msg::LidarDetectedProp>::SharedPtr prop_sub_;
+  rclcpp::Subscription<geometry_msgs::msg::PoseStamped>::SharedPtr pose_sub_;
   //rclcpp::Publisher<perception_interfaces::msg::Prop>::SharedPtr pub_;
   rclcpp::node_interfaces::OnSetParametersCallbackHandle::SharedPtr on_set_parameters_callback_handle_;
+  bool isValidLabel(std::string label);
   
   rcl_interfaces::msg::SetParametersResult param_callback(const std::vector<rclcpp::Parameter> &params);
 
