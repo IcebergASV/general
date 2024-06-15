@@ -67,6 +67,7 @@ add_library(libhelpers
 
 install(TARGETS
   lidar_prop_detector_component
+  coord_finder_component
   ARCHIVE DESTINATION lib
   LIBRARY DESTINATION lib
   RUNTIME DESTINATION bin)
