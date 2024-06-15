@@ -1,4 +1,4 @@
-# YOLOv5 + ROS2 : YOu can Leverage On ROS2
+# YOLOv5 + ROS2 : You can Leverage On ROS2
 State-of-the-art object detection technique, [YOLOv5](https://github.com/ultralytics/yolov5) is now compatible with ROS2<br>
 ![YOLOv5-ROS2-graph](yolov5_ros2/yolov5_ros2_graph.png). The code was taken originally from the [YOLOv5_ROS2-YOu-can-Leverage-On-ROS2](https://github.com/moksh-401-511/YOLOv5_ROS2-YOu-can-Leverage-On-ROS2) repository and has been modified.
 
