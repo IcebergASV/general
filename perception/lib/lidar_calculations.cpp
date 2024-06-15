@@ -58,8 +58,8 @@ void calculateRadius(std::vector<geometry_msgs::msg::Point> points, perception_i
   double k = a / 2;
   double m = b / 2;
   prop.radius = (sqrt(4*c + pow(a, 2) + pow(b, 2))) / 2;
-  prop.center.x = k;
-  prop.center.y = m;
+  prop.center.x = -m;
+  prop.center.y = k;
 
   return;
 }
