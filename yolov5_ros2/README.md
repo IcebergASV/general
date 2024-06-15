@@ -1,6 +1,6 @@
 # YOLOv5 + ROS2 : YOu can Leverage On ROS2
 State-of-the-art object detection technique, [YOLOv5](https://github.com/ultralytics/yolov5) is now compatible with ROS2<br>
-![YOLOv5-ROS2-graph](yolov5_ros2/yolov5_ros2_graph.png)
+![YOLOv5-ROS2-graph](yolov5_ros2/yolov5_ros2_graph.png). The code was taken originally from the [YOLOv5_ROS2-YOu-can-Leverage-On-ROS2](https://github.com/moksh-401-511/YOLOv5_ROS2-YOu-can-Leverage-On-ROS2) repository and has been modified.
 
 **Subscribed Topic**: 
   - Input image-stream ```sensor_msgs/msg/Image```<br>
@@ -20,29 +20,14 @@ Run the following command in terminal for [yolov5_strict_requirements.txt](yolov
 ```
 pip install -r yolov5_strict_requirements.txt
 ```
-### 1.2 Setting-up workspace
-Run the following commands in terminal:
-```
-# clone repo
-git clone https://github.com/moksh-401-511/YOLOv5-ROS2-YOu-can-Leverage-On-ROS2.git
-
-# create directory
-mkdir -p ~/yolo_ws/src
-
-# paste the sub-directories (yolov5_ros2, boundingboxes) from cloned repo in src folder
-
-# build workspace
-cd ~/yolo_ws
-colcon build
-```
 ## 2. Running Object Detection
 ### 2.1 Video input
 Here we are using webcam for testing purpose. You can also use any other video source (like Intel d435).
 Open terminal shell and run the following command to initialize webcam node:
 ```
-ros2 run image_tools cam2image
+ros2 launch realsense2_camera rs_launch.py
 ```
-**Note:** the above command will start publishing image-stream with topic name '/image'
+**Note:** the above command will start publishing image-stream with topic name '/camera/color/image_raw'
 
 ### 2.2 YOLOv5 node
 Now we will start our yolov5_ros2 node to perform object detection on input image-stream
