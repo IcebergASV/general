@@ -21,10 +21,17 @@ def generate_launch_description():
         log_level_launch_arg,
         Node(
             package='perception',
-            executable='manual_composition',
+            executable='lidar_prop_detector_composition',
             namespace='',
             output='screen',
             parameters=[config], 
+            arguments=['--ros-args', '--log-level', LaunchConfiguration('log_level')]
+        ),
+        Node(
+            package='perception',
+            executable='coord_finder_composition',
+            namespace='',
+            output='screen',
             arguments=['--ros-args', '--log-level', LaunchConfiguration('log_level')]
         ),
     ])

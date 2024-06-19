@@ -1,6 +1,6 @@
 #include <memory>
 
-#include "perception/lidar_prop_detector_component.hpp"
+#include "perception/coord_finder_component.h"
 #include "rclcpp/rclcpp.hpp"
 
 int main(int argc, char *argv[]) 
@@ -12,8 +12,9 @@ int main(int argc, char *argv[])
   rclcpp::executors::SingleThreadedExecutor exec;
   rclcpp::NodeOptions options;
 
-  auto lidar_prop_detector = std::make_shared<perception::LidarPropDetector>(options);
-  exec.add_node(lidar_prop_detector);
+  auto coord_finder = std::make_shared<perception::CoordFinder>(options);
+  
+  exec.add_node(coord_finder);
   exec.spin();
 
   rclcpp::shutdown();

@@ -8,7 +8,7 @@ namespace perception
   LidarPropDetector::LidarPropDetector(const rclcpp::NodeOptions & options)
   : Node("lidar_prop_detector", options)
   {
-    sub_ = this->create_subscription<slg_msgs::msg::SegmentArray>("segments", 10, std::bind(&LidarPropDetector::scanCallback, this, _1));
+    sub_ = this->create_subscription<slg_msgs::msg::SegmentArray>("segments", 10, std::bind(&LidarPropDetector::laserSegmentCallback, this, _1));
     pub_ = this->create_publisher<perception_interfaces::msg::LidarDetectedPropArray>("perception/lidar_detected_props", 10);
 
     LidarPropDetector::getParam<double>("max_lidar_dist", p_max_lidar_dist_, 0.0, "Maximum accepted range of lidar readings in m");
@@ -39,7 +39,7 @@ namespace perception
     return result;
   }
 
-  void LidarPropDetector::scanCallback(const slg_msgs::msg::SegmentArray::SharedPtr msg)
+  void LidarPropDetector::laserSegmentCallback(const slg_msgs::msg::SegmentArray::SharedPtr msg)
   {
     if (msg->segments.size() > 0)
     {
