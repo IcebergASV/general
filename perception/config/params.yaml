@@ -1,0 +1,8 @@
+lidar_prop_detector:
+  ros__parameters:
+    props_radii: "{marker: 0.6, buoy: 0.15}"
+    min_lidar_dist: 0.1
+    max_lidar_dist: 29.0
+    min_points_in_segment: 6
+    max_radius_diff: 0.1
+    lidar_fov: 90.0
