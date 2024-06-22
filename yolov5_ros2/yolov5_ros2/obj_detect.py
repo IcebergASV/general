@@ -165,7 +165,7 @@ class ImageStreamSubscriber(Node):
                     single_bbox.ymax = int(xyxy[3].item())
                     single_bbox.probability = conf.item()
                     #single_bbox.id = c
-                    #single_bbox.class_id = self.names[c]
+                    single_bbox.class_id = self.names[c]
                     
                     bboxes.bounding_boxes.append(single_bbox)
         
