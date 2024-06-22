@@ -9,8 +9,8 @@ State-of-the-art object detection technique, [YOLOv5](https://github.com/ultraly
   - Input image-stream ```/camera/color/image_raw```<br>
 
 **Published Topic**: 
-  - Image-stream with bounding box around detected objects ```sensor_msgs/msg/Image```<br>
-  - Bounding boxes (manually created message type) ```boundingboxes/msg/BoundingBoxes```
+  - Image-stream with bounding box around detected objects ```/yolov5_ros2/image```<br>
+  - Bounding boxes (manually created message type) ```/yolov5_ros2/bounding_boxes```
 
 **Note:** Published image and boundingbox topics are assigned same time-stamp as that of subscribed image topic, so that input and output can be matched frame-by-frame if required for further processing.
 
@@ -42,3 +42,8 @@ Open another shell in terminal and run the following commands:
 ros2 launch yolov5_ros2 yolov5_ros2_node.launch.py sub_topic:='/camera/color/image_raw' weights:='yolov5s.pt'
 
 ```
+### Visualize Output
+As mentioned the output willbe published ```sensor_msgs/msg/Image```. To observe the image stream with bounding boxes do the following:
+1. Run ```rqt``
+2. Select Plugin -> Image Viewer
+3. Select the topic to be visualize. In our case it will be ```/yolov5_ros2/image```
