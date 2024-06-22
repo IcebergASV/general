@@ -47,3 +47,21 @@ As mentioned the output willbe published ```sensor_msgs/msg/Image```. To observe
 1. Run ```rqt``
 2. Select Plugin -> Image Viewer
 3. Select the topic to be visualize. In our case it will be ```/yolov5_ros2/image```
+
+### 2.4 Sample Published Message
+![image](https://github.com/IcebergASV/general/assets/92492748/39688af0-d8d8-4cfe-981d-7bd21a52fd23)
+
+The following is the message composition:
+```
+uint16 xmin
+uint16 ymin
+uint16 xmax
+uint16 ymax
+uint16 id
+
+float32 probability
+
+string class_id
+```
+
+
