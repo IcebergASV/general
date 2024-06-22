@@ -42,7 +42,7 @@ Open another shell in terminal and run the following commands:
 ros2 launch yolov5_ros2 yolov5_ros2_node.launch.py sub_topic:='/camera/color/image_raw' weights:='yolov5s.pt'
 
 ```
-### Visualize Output
+### 2.3 Visualize Output
 As mentioned the output willbe published ```sensor_msgs/msg/Image```. To observe the image stream with bounding boxes do the following:
 1. Run ```rqt``
 2. Select Plugin -> Image Viewer
