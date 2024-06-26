@@ -26,6 +26,18 @@ endif()
 
 include_directories(include)
 
+add_library(lidar_camera_fuser_component SHARED src/lidar_camera_fuser_component.cpp)
+target_compile_definitions(lidar_camera_fuser_component PRIVATE "COMPOSITION_BUILDING_DLL")
+ament_target_dependencies(lidar_camera_fuser_component
+  "rclcpp"
+  "rclcpp_components"
+  "sensor_msgs"
+  "slg_msgs"
+  "geometry_msgs"
+  "perception_interfaces")
+rclcpp_components_register_nodes(lidar_camera_fuser_component "perception::LidarCameraFuser")
+set(node_plugins "${node_plugins}perception::LidarCameraFuser;$<TARGET_FILE:lidar_camera_fuser_component>\n")
+
 add_library(lidar_prop_detector_component SHARED src/lidar_prop_detector_component.cpp)
 target_compile_definitions(lidar_prop_detector_component PRIVATE "COMPOSITION_BUILDING_DLL")
 ament_target_dependencies(lidar_prop_detector_component
@@ -68,6 +80,7 @@ add_library(libhelpers
 install(TARGETS
   lidar_prop_detector_component
   coord_finder_component
+  lidar_camera_fuser_component
   ARCHIVE DESTINATION lib
   LIBRARY DESTINATION lib
   RUNTIME DESTINATION bin)
@@ -98,7 +111,20 @@ target_link_libraries(coord_finder_composition
 ament_target_dependencies(coord_finder_composition
   rclcpp perception_interfaces)
 
+add_executable(lidar_camera_fuser_composition
+  src/lidar_camera_fuser_composition.cpp)
+target_link_libraries(lidar_camera_fuser_composition
+lidar_camera_fuser_component)
+ament_target_dependencies(lidar_camera_fuser_composition
+  rclcpp perception_interfaces)
+
 target_link_libraries(lidar_prop_detector_composition
+  ${YAML_CPP_LIBRARIES}
+  liblidar_calculations
+  libhelpers
+)
+
+target_link_libraries(lidar_camera_fuser_composition
   ${YAML_CPP_LIBRARIES}
   liblidar_calculations
   libhelpers
@@ -107,6 +133,7 @@ target_link_libraries(lidar_prop_detector_composition
 install(TARGETS
   lidar_prop_detector_composition
   coord_finder_composition
+  lidar_camera_fuser_composition
   DESTINATION lib/${PROJECT_NAME})
 
 ament_package()
