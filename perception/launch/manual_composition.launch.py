@@ -39,6 +39,7 @@ def generate_launch_description():
             executable='lidar_camera_fuser_composition',
             namespace='',
             output='screen',
+            parameters=[config], 
             arguments=['--ros-args', '--log-level', LaunchConfiguration('log_level')]
         ),
     ])

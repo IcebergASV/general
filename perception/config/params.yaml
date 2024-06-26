@@ -6,3 +6,7 @@ lidar_prop_detector:
     min_points_in_segment: 6
     max_radius_diff: 0.1
     lidar_fov: 90.0
+lidar_camera_fuser:
+  ros__parameters:
+    dist_between_markers: 5.0
+    dist_between_markers_err: 1.0
