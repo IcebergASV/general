@@ -33,31 +33,44 @@ namespace perception
 
   void LidarCameraFuser::lidarBBoxCallback(const perception_interfaces::msg::LidarDetectedPropArray::SharedPtr msg)
   {
-    //if (msg->segments.size() > 0)
-    //{
-    //  perception_interfaces::msg::LidarDetectedPropArray lidar_detected_prop_array;
-    //  for (slg_msgs::msg::Segment segment : msg->segments)
-    //  {
-    //    std::vector<geometry_msgs::msg::Point> filtered_points;// = lidar_calculations::getPointsWithinBounds(segment.points, p_min_lidar_dist_, p_max_lidar_dist_, p_lidar_fov_);
-//
-    //    if (true)
-    //    {
-    //      attemptToCreateAndAddLidarDetectedProp(filtered_points, lidar_detected_prop_array);
-    //    }
-    //  }
-    //  if (lidar_detected_prop_array.lidar_detected_props.size() > 0)
-    //  {
-    //    pub_->publish(lidar_detected_prop_array);
-    //  }
-    //}
-    //else
-    //{
-    //  RCLCPP_WARN(this->get_logger(), "No segments in message");
-    //}
+    if (msg->lidar_detected_props.size() > 0)
+    {
+      if (haveDetectedGateWithCamera_)
+      {
+        perception_interfaces::msg::BoundingBoxes b1;
+        perception_interfaces::msg::BoundingBoxes b2;
+        getLargestRedAndGreenBoundingBoxes(bounding_boxes, b1, b2);
+        b1_angle = getAngleFromCamBBox(b1);
+        b2_angle = getAngleFromCamBBox(b2);
+
+        props = getLidarPropsWithinRange(b1, msg->lidar_detected_props);
+        prop = closestProp(props);
+
+        props = getLidarPropsWithinRange(b2, msg->lidar_detected_props);
+        prop = closestProp(props);
+
+        if (propsWithinBounds(p1, p2))
+        {
+          pub_->
+        }
+        haveDetectedGateWithCamera_ = false;
+      }
+      
+    }
+    else
+    {
+      RCLCPP_WARN(this->get_logger(), "No lidar detected props in message");
+    }
   }
   
   void LidarCameraFuser::cameraBBoxCallback(const perception_interfaces::msg::BoundingBoxes::SharedPtr msg)
   {
+
+    if (includesARedAndGreen(msg))
+    {
+      bounding_boxes_ = msg;
+      haveDetectedGateWithCamera_ = true;
+    }
     return;
   }
 

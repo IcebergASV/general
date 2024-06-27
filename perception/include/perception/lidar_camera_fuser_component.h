@@ -32,6 +32,7 @@ protected:
 private:
   double p_dist_between_markers_;
   double p_dist_between_markers_err_;
+  bool haveDetectedGateWithCamera_;
 
   rclcpp::Subscription<perception_interfaces::msg::LidarDetectedPropArray>::SharedPtr lidar_sub_;
   rclcpp::Subscription<perception_interfaces::msg::BoundingBoxes>::SharedPtr camera_sub_;
