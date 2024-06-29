@@ -12,6 +12,7 @@ find_package(rosidl_default_generators REQUIRED)
 
 set(msg_files
   "msg/Prop.msg"
+  "msg/PropArray.msg"
   "msg/LidarDetectedProp.msg"
   "msg/LidarDetectedPropArray.msg"
   "msg/BoundingBox.msg"
