@@ -14,8 +14,10 @@
 #include "perception_interfaces/msg/gate.hpp"
 #include "perception_interfaces/msg/bounding_box.hpp"
 #include "perception_interfaces/msg/bounding_boxes.hpp"
+#include "perception_interfaces/msg/prop.hpp"
+#include "perception_interfaces/msg/prop_array.hpp"
 
-using std::placeholders::_1,
+using std::placeholders::_1;
 
 namespace perception
 {
@@ -39,7 +41,7 @@ private:
   bool haveDetectedGateWithCamera_;
 
 
-  vector<perception_interfaces::msg::BoundingBox> bounding_boxes_;
+  std::vector<perception_interfaces::msg::BoundingBox> bounding_boxes_;
 
   rclcpp::Subscription<perception_interfaces::msg::PropArray>::SharedPtr lidar_sub_;
   rclcpp::Subscription<perception_interfaces::msg::BoundingBoxes>::SharedPtr camera_sub_;
@@ -47,9 +49,9 @@ private:
   rclcpp::Publisher<perception_interfaces::msg::Gate>::SharedPtr pub_;
   rclcpp::node_interfaces::OnSetParametersCallbackHandle::SharedPtr on_set_parameters_callback_handle_;
 
-  perception_interfaces::msg::Prop getClosestLidarPropWithinBBoxRange(perception_interfaces::msg::BoundingBox b_box, vector<perception_interfaces::msg::Prop> lidar_props);
+  perception_interfaces::msg::Prop getClosestLidarPropWithinBBoxRange(perception_interfaces::msg::BoundingBox b_box, std::vector<perception_interfaces::msg::Prop> lidar_props);
   bool propFallsWithinAngles(perception_interfaces::msg::Prop prop, double smaller_angle, double larger_angle);
-  perception_interfaces::msg::Prop getClosestProp(vector<perception_interfaces::msg::Prop> props);
+  perception_interfaces::msg::Prop getClosestProp(std::vector<perception_interfaces::msg::Prop> props);
   bool propsWithinBounds(perception_interfaces::msg::Prop p1, perception_interfaces::msg::Prop p2);
 
   rcl_interfaces::msg::SetParametersResult param_callback(const std::vector<rclcpp::Parameter> &params);

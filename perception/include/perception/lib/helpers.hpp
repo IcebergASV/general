@@ -19,6 +19,8 @@ namespace helpers
         oss << matrix;
         return oss.str();
     };
+
+    double distTwoPoints(double x1, double y1, double x2, double y2);
 }
 
 #endif // HELPERS_H

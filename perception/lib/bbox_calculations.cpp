@@ -2,7 +2,7 @@
 
 namespace bbox_calculations
 {
-    void getLargestRedAndGreenBoundingBox(std::vector<perception_interfaces::msg::BoundingBox>& bounding_boxes_, perception_interfaces::msg::BoundingBox& left_box, perception_interfaces::msg::BoundingBox& right_box){
+    void getLargestRedAndGreenBoundingBox(const std::vector<perception_interfaces::msg::BoundingBox>& bboxes, perception_interfaces::msg::BoundingBox& left_box, perception_interfaces::msg::BoundingBox& right_box){
         perception_interfaces::msg::BoundingBox temp_red;
         temp_red.xmin = 0.0;
         temp_red.xmax = 0.0;
@@ -13,7 +13,7 @@ namespace bbox_calculations
         temp_green.xmax = 0.0;
         temp_green.ymin = 0.0;
         temp_green.ymax = 0.0;
-        for (perception_interfaces::msg::BoundingBox box : bounding_boxes_)
+        for (perception_interfaces::msg::BoundingBox box : bboxes)
         {
             replaceIfLarger("red_marker", temp_red, box);
             replaceIfLarger("green_marker", temp_green, box);
@@ -42,18 +42,18 @@ namespace bbox_calculations
         }
     }
   
-    double getBoxArea(perception_interfaces::msg::BoundingBox b_box)
+    double getBoxArea(perception_interfaces::msg::BoundingBox bbox)
     {
-        double width = b_box.xmax - b_box.xmin; 
-        double height = b_box.ymax - b_box.ymin;
+        double width = bbox.xmax - bbox.xmin; 
+        double height = bbox.ymax - bbox.ymin;
         return width * height; 
     }
 
-    geometry_msgs::msg::Point getBoxCenter(perception_interfaces::msg::BoundingBox b_box)
+    geometry_msgs::msg::Point getBoxCenter(perception_interfaces::msg::BoundingBox bbox)
     {
         geometry_msgs::msg::Point center;
-        center.x = (b_box.xmax - b_box.xmin)/2 + b_box.xmin; 
-        center.y = (b_box.ymax - b_box.ymin)/2 + b_box.ymin; 
+        center.x = (bbox.xmax - bbox.xmin)/2 + bbox.xmin; 
+        center.y = (bbox.ymax - bbox.ymin)/2 + bbox.ymin; 
 
         return center; 
     }

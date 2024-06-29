@@ -1,6 +1,6 @@
 #include <memory>
 
-#include "perception/lidar_camera_fuser_component.h"
+#include "perception/lidar_camera_fuser_component.hpp"
 #include "rclcpp/rclcpp.hpp"
 
 int main(int argc, char *argv[]) 
