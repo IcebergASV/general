@@ -133,6 +133,7 @@ target_link_libraries(lidar_prop_detector_composition
   ${YAML_CPP_LIBRARIES}
   liblidar_calculations
   libhelpers
+  libbbox_calculations
 )
 
 target_link_libraries(lidar_camera_fuser_composition
