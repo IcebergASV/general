@@ -1,12 +1,14 @@
-#include "perception/lidar_camera_fuser_component.h"
+#include "perception/lidar_camera_fuser_component.hpp"
 
+#include "perception/lib/bbox_calculations.hpp"
+#include "perception/lib/helpers.hpp"
 namespace perception
 {
 
   LidarCameraFuser::LidarCameraFuser(const rclcpp::NodeOptions & options)
   : Node("lidar_camera_fuser", options)
   {
-    lidar_sub_ = this->create_subscription<perception_interfaces::msg::LidarDetectedPropArray>("/perception/lidar_detected_props", 10, std::bind(&LidarCameraFuser::lidarBBoxCallback, this, _1));
+    lidar_sub_ = this->create_subscription<perception_interfaces::msg::PropArray>("/perception/lidar_detected_props", 10, std::bind(&LidarCameraFuser::lidarBBoxCallback, this, _1));
     camera_sub_ = this->create_subscription<perception_interfaces::msg::BoundingBoxes>("/perception/fake_cam_bboxes", 10, std::bind(&LidarCameraFuser::cameraBBoxCallback, this, _1));
     pub_ = this->create_publisher<perception_interfaces::msg::Gate>("perception/relative_gates", 10);
 
@@ -36,7 +38,7 @@ namespace perception
     return result;
   }
 
-  void LidarCameraFuser::lidarBBoxCallback(const perception_interfaces::msg::LidarDetectedPropArray::SharedPtr msg)
+  void LidarCameraFuser::lidarBBoxCallback(const perception_interfaces::msg::PropArray::SharedPtr msg)
   {
     if (msg->lidar_detected_props.size() > 0)
     {
@@ -44,14 +46,14 @@ namespace perception
       {
         perception_interfaces::msg::BoundingBox left_box;
         perception_interfaces::msg::BoundingBox right_box;
-        getLargestRedAndGreenBoundingBox(bounding_boxes, left_box, right_box);
+        bbox_calculations::getLargestRedAndGreenBoundingBox(bounding_boxes, left_box, right_box);
 
         p1 = getClosestLidarPropWithinRange(left_box, msg->lidar_detected_props);
         p2 = getClosestLidarPropWithinRange(right_box, msg->lidar_detected_props);
 
         if (propsWithinBounds(p1, p2))
         {
-          perception_interfaces::msg::Gate gate = createGate(p1, p2)
+          perception_interfaces::msg::Gate gate = helpers::createGate(p1, p2)
           pub_->publish(gate); 
         }
         haveDetectedGateWithCamera_ = false;
@@ -67,7 +69,7 @@ namespace perception
   void LidarCameraFuser::cameraBBoxCallback(const perception_interfaces::msg::BoundingBoxes::SharedPtr msg)
   {
 
-    if (includesARedAndGreen(msg))
+    if (bbox_calculations::includesARedAndGreen(msg))
     {
       bounding_boxes_ = msg->bounding_boxes;
       haveDetectedGateWithCamera_ = true;
@@ -75,94 +77,94 @@ namespace perception
     return;
   }
 
-  void LidarCameraFuser::getLargestRedAndGreenBoundingBox(vector<perception_interfaces::msg::BoundingBox>& bounding_boxes_, perception_interfaces::msg::BoundingBox& left_box, perception_interfaces::msg::BoundingBox& right_box){
-    perception_interfaces::msg::BoundingBox temp_red;
-    temp_red.xmin = 0.0;
-    temp_red.xmax = 0.0;
-    temp_red.ymin = 0.0;
-    temp_red.ymax = 0.0;
-    perception_interfaces::msg::BoundingBox temp_green;
-    temp_green.xmin = 0.0;
-    temp_green.xmax = 0.0;
-    temp_green.ymin = 0.0;
-    temp_green.ymax = 0.0;
+  //void LidarCameraFuser::getLargestRedAndGreenBoundingBox(vector<perception_interfaces::msg::BoundingBox>& bounding_boxes_, perception_interfaces::msg::BoundingBox& left_box, perception_interfaces::msg::BoundingBox& right_box){
+  //  perception_interfaces::msg::BoundingBox temp_red;
+  //  temp_red.xmin = 0.0;
+  //  temp_red.xmax = 0.0;
+  //  temp_red.ymin = 0.0;
+  //  temp_red.ymax = 0.0;
+  //  perception_interfaces::msg::BoundingBox temp_green;
+  //  temp_green.xmin = 0.0;
+  //  temp_green.xmax = 0.0;
+  //  temp_green.ymin = 0.0;
+  //  temp_green.ymax = 0.0;
+//
+  //  for (perception_interfaces::msg::BoundingBox box : bounding_boxes_)
+  //  {
+  //    replaceIfLarger("red_marker", temp_red, box);
+  //    replaceIfLarger("green_marker", temp_green, box);
+  //  }
+//
+  //  if (getBoxCenter(temp_red) > getBoxCenter(temp_green))
+  //  {
+  //    left_box = temp_green;
+  //    right_box = temp_red;
+  //  }
+  //  else 
+  //  {
+  //    left_box = temp_red;
+  //    right_box = temp_green;
+  //  }
+//
+  //  return;
+  //}
 
-    for (perception_interfaces::msg::BoundingBox box : bounding_boxes_)
-    {
-      replaceIfLarger("red_marker", temp_red, box);
-      replaceIfLarger("green_marker", temp_green, box);
-    }
+  //void replaceIfLarger(string label, perception_interfaces::msg::BoundingBox& box_to_be_replaced, perception_interfaces::msg::BoundingBox box_to_do_the_replacing)
+  //{
+  //    if (box.class_id == label)
+  //    {
+  //      if (getBoxArea(box_to_do_the_replacing) > getBoxArea(box_to_be_replaced))
+  //      {
+  //        box_to_be_replaced = box_to_do_the_replacing;
+  //      }
+  //    }
+  //}
+//
+  //double LidarCameraFuser::getBoxArea(perception_interfaces::msg::BoundingBox b_box)
+  //{
+  //  double width = b_box.x_max - b_box.x_min; 
+  //  double height = b_box.y_max - b_box.y_min;
+  //  return width * height; 
+  //}
+//
+  //geometry_msgs::msg::Point LidarCameraFuser::getBoxCenter(perception_interfaces::msg::BoundingBox b_box)
+  //{
+  //  geometry_msgs::msg::Point center;
+  //  center.x = (b_box.x_max - b_box.x_min)/2 + x_min; 
+  //  center.y = (b_box.y_max - b_box.y_min)/2 + y_min; 
+//
+  //  return center; 
+  //}
+//
+  //void getCamBBoxAngle(perception_interfaces::msg::BoundingBox bbox, double& smaller_angle, double& larger_angle)
+  //{
+  //  fov_end = (M_PI / 2) + (p_camera_fov_ / 2 );
+  //  double smaller_angle = fov_end - ((bbox.x_max / p_camera_res_x_) * p_camera_fov_); 
+  //  double larger_angle = fov_end - ((bbox.x_min / p_camera_res_x_) * p_camera_fov_);
+  //  return;
+  //}
 
-    if (getBoxCenter(temp_red) > getBoxCenter(temp_green))
-    {
-      left_box = temp_green;
-      right_box = temp_red;
-    }
-    else 
-    {
-      left_box = temp_red;
-      right_box = temp_green;
-    }
-
-    return;
-  }
-
-  void replaceIfLarger(string label, perception_interfaces::msg::BoundingBox& box_to_be_replaced, perception_interfaces::msg::BoundingBox box_to_do_the_replacing)
-  {
-      if (box.class_id == label)
-      {
-        if (getBoxArea(box_to_do_the_replacing) > getBoxArea(box_to_be_replaced))
-        {
-          box_to_be_replaced = box_to_do_the_replacing;
-        }
-      }
-  }
-
-  double LidarCameraFuser::getBoxArea(perception_interfaces::msg::BoundingBox b_box)
-  {
-    double width = b_box.x_max - b_box.x_min; 
-    double height = b_box.y_max - b_box.y_min;
-    return width * height; 
-  }
-
-  geometry_msgs::msg::Point LidarCameraFuser::getBoxCenter(perception_interfaces::msg::BoundingBox b_box)
-  {
-    geometry_msgs::msg::Point center;
-    center.x = (b_box.x_max - b_box.x_min)/2 + x_min; 
-    center.y = (b_box.y_max - b_box.y_min)/2 + y_min; 
-
-    return center; 
-  }
-
-  void getCamBBoxAngle(perception_interfaces::msg::BoundingBox bbox, double& smaller_angle, double& larger_angle)
-  {
-    fov_end = (M_PI / 2) + (p_camera_fov_ / 2 );
-    double smaller_angle = fov_end - ((bbox.x_max / p_camera_res_x_) * p_camera_fov_); 
-    double larger_angle = fov_end - ((bbox.x_min / p_camera_res_x_) * p_camera_fov_);
-    return;
-  }
-
-  perception_interfaces::msg::Prop LidarCameraFuser::getLidarPropsWithinRange(perception_interfaces::msg::BoundingBox b_box, vector<perception_interfaces::msg::LidarDetectedProp> lidar_props)
+  perception_interfaces::msg::Prop LidarCameraFuser::getClosestLidarPropWithinBBoxRange(perception_interfaces::msg::BoundingBox b_box, vector<perception_interfaces::msg::Prop> lidar_props)
   {
     double smaller_angle, larger_angle;
-    getCamBBoxAngle(b_box, smaller_angle, larger_angle);
+    bbox_calculations::getCamBBoxAngle(b_box, smaller_angle, larger_angle, p_camera_fov_, p_camera_res_x_);
 
-    vector<perception_interfaces::msg::LidarDetectedProp> props_in_range;
+    vector<perception_interfaces::msg::Prop> props_in_range;
 
-    for (perception_interfaces::msg::LidarDetectedProp prop : props)
+    for (perception_interfaces::msg::Prop prop : props)
     {
-      if (!propFallsWithinAngle(prop))
+      if (!propFallsWithinAngles(prop, smaller_angle, larger_angle))
       {
         props_in_range.push_back(prop);
       }
     }
 
-    perception_interfaces::msg::LidarDetectedProp closest_prop_in_range = getClosestProp(props_in_range);
+    perception_interfaces::msg::Prop closest_prop_in_range = getClosestProp(props_in_range);
 
     return closest_prop_in_range;
   }
 
-  bool propFallsWithinAngles(perception_interfaces::msg::LidarDetectedProp prop, double smaller_angle, double larger_angle)
+  bool LidarCameraFuser::propFallsWithinAngles(perception_interfaces::msg::Prop prop, double smaller_angle, double larger_angle)
   {
     double prop_angle = std::atan2(prop.y, prop.x);
 
@@ -174,6 +176,50 @@ namespace perception
     return false;
   }
 
+  perception_interfaces::msg::Prop LidarCameraFuser::getClosestProp(vector<perception_interfaces::msg::Prop> props)
+  {
+    perception_interfaces::msg::Prop closest_prop;
+    double dist = 1000; // a large number that should be bigger than the distance of all props
+    for (perception_interfaces::msg::Prop prop : props)
+    {
+      if (hypot(prop) < dist)
+      {
+        dist = hypot(prop);
+        closest_prop = prop;
+      }
+    }
+
+    return closest_prop;
+  }
+
+  bool LidarCameraFuser::propsWithinBounds(perception_interfaces::msg::Prop p1, perception_interfaces::msg::Prop p2)
+  {
+    double dist = distTwoPoints(p1.x,p1.y,p2.x,p2.y);
+    double max_dist = p_dist_between_markers_ +  p_dist_between_markers_err_;
+    double min_dist = p_dist_between_markers_ -  p_dist_between_markers_err_;
+    if ((dist < max_dist) && (dist > min_dist))
+    {
+      return true;
+    }
+    return false;
+  }
+
+  //perception_interfaces::msg::Gate createGate(perception_interfaces::msg::Prop p1, perception_interfaces::msg::Prop p2)
+  //{
+  //  perception_interfaces::msg::Gate gate;
+  //  if (p1.label = "red_marker")
+  //  {
+  //    gate.red_marker = p1;
+  //    gate.green_marker = p2;
+  //  } 
+  //  else 
+  //  {
+  //    gate.red_marker = p2;
+  //    gate.green_marker = p3;
+  //  }
+  //  return gate;
+  //}
+  
 }
 
 #include "rclcpp_components/register_node_macro.hpp"

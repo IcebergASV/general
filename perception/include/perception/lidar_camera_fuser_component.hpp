@@ -1,5 +1,5 @@
-#ifndef COMPOSITION__LIDAR_CAMERA_FUSER_COMPONENT_H_
-#define COMPOSITION__LIDAR_CAMERA_FUSER_COMPONENT_H_
+#ifndef COMPOSITION__LIDAR_CAMERA_FUSER_COMPONENT_HPP_
+#define COMPOSITION__LIDAR_CAMERA_FUSER_COMPONENT_HPP_
 
 #include <yaml-cpp/yaml.h>
 #include <string>
@@ -26,7 +26,7 @@ public:
   explicit LidarCameraFuser(const rclcpp::NodeOptions & options);
 
 protected:
-  void lidarBBoxCallback(const perception_interfaces::msg::LidarDetectedPropArray::SharedPtr msg);
+  void lidarBBoxCallback(const perception_interfaces::msg::PropArray::SharedPtr msg);
   void cameraBBoxCallback(const perception_interfaces::msg::BoundingBoxes::SharedPtr msg);
 
 private:
@@ -34,18 +34,24 @@ private:
   double p_dist_between_markers_err_;
   double p_camera_res_x_;
   double p_camera_fov_;
+  double p_bbox_angle_err_;
   
   bool haveDetectedGateWithCamera_;
 
 
   vector<perception_interfaces::msg::BoundingBox> bounding_boxes_;
 
-  rclcpp::Subscription<perception_interfaces::msg::LidarDetectedPropArray>::SharedPtr lidar_sub_;
+  rclcpp::Subscription<perception_interfaces::msg::PropArray>::SharedPtr lidar_sub_;
   rclcpp::Subscription<perception_interfaces::msg::BoundingBoxes>::SharedPtr camera_sub_;
 
   rclcpp::Publisher<perception_interfaces::msg::Gate>::SharedPtr pub_;
   rclcpp::node_interfaces::OnSetParametersCallbackHandle::SharedPtr on_set_parameters_callback_handle_;
-  
+
+  perception_interfaces::msg::Prop getClosestLidarPropWithinBBoxRange(perception_interfaces::msg::BoundingBox b_box, vector<perception_interfaces::msg::Prop> lidar_props);
+  bool propFallsWithinAngles(perception_interfaces::msg::Prop prop, double smaller_angle, double larger_angle);
+  perception_interfaces::msg::Prop getClosestProp(vector<perception_interfaces::msg::Prop> props);
+  bool propsWithinBounds(perception_interfaces::msg::Prop p1, perception_interfaces::msg::Prop p2);
+
   rcl_interfaces::msg::SetParametersResult param_callback(const std::vector<rclcpp::Parameter> &params);
 
   // TODO - figure out how to move this to a library and pass in a reference to the node calling it or make a subclass of rclcpp
@@ -65,4 +71,4 @@ private:
 
 }  // namespace perception
 
-#endif  // COMPOSITION__LIDAR_CAMERA_FUSER_COMPONENT_H_
+#endif  // COMPOSITION__LIDAR_CAMERA_FUSER_COMPONENT_HPP_

@@ -17,4 +17,20 @@ namespace helpers
     return oss.str();
   }
 
+  perception_interfaces::msg::Gate createGate(perception_interfaces::msg::Prop p1, perception_interfaces::msg::Prop p2)
+  {
+    perception_interfaces::msg::Gate gate;
+    if (p1.label == "red_marker")
+    {
+      gate.red_marker = p1;
+      gate.green_marker = p2;
+    } 
+    else 
+    {
+      gate.red_marker = p2;
+      gate.green_marker = p1;
+    }
+    return gate;
+  }
+
 }

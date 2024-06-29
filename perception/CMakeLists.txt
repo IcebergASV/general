@@ -75,7 +75,18 @@ ament_target_dependencies(liblidar_calculations
 add_library(libhelpers
   lib/helpers.cpp
 )
+ament_target_dependencies(libhelpers
+  "perception_interfaces"
+)
 
+add_library(libbbox_calculations
+  lib/bbox_calculations.cpp
+)
+ament_target_dependencies(libbbox_calculations
+  "geometry_msgs"
+  "rclcpp"
+  "perception_interfaces"
+)
 
 install(TARGETS
   lidar_prop_detector_component
@@ -128,6 +139,7 @@ target_link_libraries(lidar_camera_fuser_composition
   ${YAML_CPP_LIBRARIES}
   liblidar_calculations
   libhelpers
+  libbbox_calculations
 )
 
 install(TARGETS
