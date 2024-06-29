@@ -15,7 +15,7 @@
 #include "perception_interfaces/msg/bounding_box.hpp"
 #include "perception_interfaces/msg/bounding_boxes.hpp"
 
-using std::placeholders::_1;
+using std::placeholders::_1,
 
 namespace perception
 {
@@ -32,7 +32,13 @@ protected:
 private:
   double p_dist_between_markers_;
   double p_dist_between_markers_err_;
+  double p_camera_res_x_;
+  double p_camera_fov_;
+  
   bool haveDetectedGateWithCamera_;
+
+
+  vector<perception_interfaces::msg::BoundingBox> bounding_boxes_;
 
   rclcpp::Subscription<perception_interfaces::msg::LidarDetectedPropArray>::SharedPtr lidar_sub_;
   rclcpp::Subscription<perception_interfaces::msg::BoundingBoxes>::SharedPtr camera_sub_;
