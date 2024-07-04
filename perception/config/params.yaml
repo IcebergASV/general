@@ -10,3 +10,9 @@ lidar_camera_fuser:
   ros__parameters:
     dist_between_markers: 5.0
     dist_between_markers_err: 1.0
+mock_bbox_pub:
+  ros__parameters:
+    xmin: 1
+    xmax: 5
+    ymin: 1
+    ymax: 5

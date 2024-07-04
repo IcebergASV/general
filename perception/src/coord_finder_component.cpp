@@ -27,7 +27,6 @@ namespace perception
 
   void CoordFinder::propCallback(const perception_interfaces::msg::LidarDetectedPropArray::SharedPtr msg)
   {
-    RCLCPP_ERROR(this->get_logger(), "prop callback");
     if (msg->lidar_detected_props.size() >0)
       prop_msg_ = *msg;
     new_prop_ = true;
@@ -36,7 +35,6 @@ namespace perception
   void CoordFinder::poseCallback(const geometry_msgs::msg::PoseStamped::SharedPtr msg)
   {
     // check that the prop msg has been set before publishing a prop
-    RCLCPP_ERROR(this->get_logger(), "pose callback");
     if (!new_prop_)
     {
       return;

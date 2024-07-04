@@ -9,7 +9,7 @@ namespace perception
   : Node("lidar_camera_fuser", options)
   {
     lidar_sub_ = this->create_subscription<perception_interfaces::msg::PropArray>("/perception/lidar_detected_props", 10, std::bind(&LidarCameraFuser::lidarBBoxCallback, this, _1));
-    camera_sub_ = this->create_subscription<perception_interfaces::msg::BoundingBoxes>("/perception/fake_cam_bboxes", 10, std::bind(&LidarCameraFuser::cameraBBoxCallback, this, _1));
+    camera_sub_ = this->create_subscription<perception_interfaces::msg::BoundingBoxes>("/perception/mock_bboxes", 10, std::bind(&LidarCameraFuser::cameraBBoxCallback, this, _1));
     pub_ = this->create_publisher<perception_interfaces::msg::Gate>("perception/relative_gates", 10);
 
     LidarCameraFuser::getParam<double>("dist_between_markers", p_dist_between_markers_, 0.0, "Distance between markers in a gate");
@@ -73,6 +73,7 @@ namespace perception
     {
       bounding_boxes_ = msg->bounding_boxes;
       haveDetectedGateWithCamera_ = true;
+      RCLCPP_INFO(this->get_logger(), "Red and green markers detected");
     }
     return;
   }
