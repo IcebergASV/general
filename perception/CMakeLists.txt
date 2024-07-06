@@ -110,3 +110,19 @@ install(TARGETS
   DESTINATION lib/${PROJECT_NAME})
 
 ament_package()
+
+add_library(mock_coord_pub_component SHARED src/mock_coord_pub_component.cpp)
+target_compile_definitions(mock_coord_pub_component PRIVATE "COMPOSITION_BUILDING_DLL")
+ament_target_dependencies(mock_coord_pub_component
+  "rclcpp"
+  "rclcpp_components"
+  "perception_interfaces")
+rclcpp_components_register_nodes(mock_coord_pub_component "perception::MockCoordPub")
+set(node_plugins "${node_plugins}perception::MockCoordPub;$<TARGET_FILE:mock_coord_pub_component>\n")
+
+add_executable(mock_coord_pub_composition
+  src/mock_coord_pub_composition.cpp)
+target_link_libraries(mock_coord_pub_composition
+mock_coord_pub_component)
+ament_target_dependencies(mock_coord_pub_composition
+  rclcpp perception_interfaces)
