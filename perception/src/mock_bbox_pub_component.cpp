@@ -40,19 +40,19 @@ namespace perception
     perception_interfaces::msg::BoundingBoxes boxes;
 
     perception_interfaces::msg::BoundingBox box;
-    box.xmin = p_xmin_;
-    box.xmax = p_xmax_;
-    box.ymin = p_ymin_;
-    box.ymax = p_ymax_;
+    box.xmin = 20;
+    box.xmax = 940;
+    box.ymin = 30;
+    box.ymax = 59;
     box.probability = 0.99;
     box.class_id = "green_marker";
 
     boxes.bounding_boxes.push_back(box);
 
-    box.xmin = 8;
-    box.xmax = 12;
-    box.ymin = 8;
-    box.ymax = 12;
+    box.xmin = 980;
+    box.xmax = 1900;
+    box.ymin = 4;
+    box.ymax = 10;
     box.probability = 0.99;
     box.class_id = "red_marker";
 

@@ -32,8 +32,8 @@ protected:
 private:
   double p_dist_between_markers_;
   double p_dist_between_markers_err_;
-  double p_camera_res_x_;
-  double p_camera_fov_;
+  int p_camera_res_x_;
+  int p_camera_fov_;
   double p_bbox_angle_err_;
   
   bool haveDetectedGateWithCamera_;
@@ -47,7 +47,7 @@ private:
   rclcpp::Publisher<perception_interfaces::msg::Gate>::SharedPtr pub_;
   rclcpp::node_interfaces::OnSetParametersCallbackHandle::SharedPtr on_set_parameters_callback_handle_;
 
-  perception_interfaces::msg::Prop getClosestLidarPropWithinBBoxRange(perception_interfaces::msg::BoundingBox b_box, std::vector<perception_interfaces::msg::Prop> lidar_props);
+  bool getClosestLidarPropWithinBBoxRange(perception_interfaces::msg::BoundingBox b_box, std::vector<perception_interfaces::msg::Prop> lidar_props, perception_interfaces::msg::Prop& closest_prop);
   bool propFallsWithinAngles(perception_interfaces::msg::Prop prop, double smaller_angle, double larger_angle);
   perception_interfaces::msg::Prop getClosestProp(std::vector<perception_interfaces::msg::Prop> props);
   bool propsWithinBounds(perception_interfaces::msg::Prop p1, perception_interfaces::msg::Prop p2);
