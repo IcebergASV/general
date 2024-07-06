@@ -9,8 +9,6 @@
 #include "slg_msgs/msg/segment_array.hpp"
 #include "slg_msgs/msg/segment.hpp"
 #include "geometry_msgs/msg/point.hpp"
-#include "perception_interfaces/msg/lidar_detected_prop.hpp"
-#include "perception_interfaces/msg/lidar_detected_prop_array.hpp"
 #include "perception_interfaces/msg/gate.hpp"
 #include "perception_interfaces/msg/bounding_box.hpp"
 #include "perception_interfaces/msg/bounding_boxes.hpp"

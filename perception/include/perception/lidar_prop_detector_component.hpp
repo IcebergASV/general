@@ -9,8 +9,8 @@
 #include "slg_msgs/msg/segment_array.hpp"
 #include "slg_msgs/msg/segment.hpp"
 #include "geometry_msgs/msg/point.hpp"
-#include "perception_interfaces/msg/lidar_detected_prop.hpp"
-#include "perception_interfaces/msg/lidar_detected_prop_array.hpp"
+#include "perception_interfaces/msg/prop.hpp"
+#include "perception_interfaces/msg/prop_array.hpp"
 
 using std::placeholders::_1;
 
@@ -33,15 +33,15 @@ private:
   double p_max_radius_diff_;
   double p_lidar_fov_;
   rclcpp::Subscription<slg_msgs::msg::SegmentArray>::SharedPtr sub_;
-  rclcpp::Publisher<perception_interfaces::msg::LidarDetectedPropArray>::SharedPtr pub_;
+  rclcpp::Publisher<perception_interfaces::msg::PropArray>::SharedPtr pub_;
   rclcpp::node_interfaces::OnSetParametersCallbackHandle::SharedPtr on_set_parameters_callback_handle_;
   
   std::vector<double> extractCoordinates(std::vector<geometry_msgs::msg::Point> points, std::string coords_to_extract);
-  void attemptToCreateAndAddLidarDetectedProp(std::vector<geometry_msgs::msg::Point> points, perception_interfaces::msg::LidarDetectedPropArray& prop_array);
+  void attemptToCreateAndAddLidarDetectedProp(std::vector<geometry_msgs::msg::Point> points, perception_interfaces::msg::PropArray& prop_array);
   bool isSegmentValid(slg_msgs::msg::Segment segment);
-  perception_interfaces::msg::LidarDetectedProp createLidarDetectedProp(std::vector<geometry_msgs::msg::Point> points);
-  void findClosestMatchAndSetRadiusDiff(perception_interfaces::msg::LidarDetectedProp& circle);
-  bool measuredRadiusIsCloseToExpected(double radius_diff);
+  perception_interfaces::msg::Prop createLidarDetectedProp(std::vector<geometry_msgs::msg::Point> points);
+  void findClosestMatchAndSetRadiusDiff(perception_interfaces::msg::Prop& circle);
+  bool measuredRadiusIsCloseToExpected(const perception_interfaces::msg::Prop& prop);
   rcl_interfaces::msg::SetParametersResult param_callback(const std::vector<rclcpp::Parameter> &params);
 
   // TODO - figure out how to move this to a library and pass in a reference to the node calling it or make a subclass of rclcpp

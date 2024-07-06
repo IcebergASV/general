@@ -9,7 +9,7 @@ namespace perception
   : Node("lidar_prop_detector", options)
   {
     sub_ = this->create_subscription<slg_msgs::msg::SegmentArray>("segments", 10, std::bind(&LidarPropDetector::laserSegmentCallback, this, _1));
-    pub_ = this->create_publisher<perception_interfaces::msg::LidarDetectedPropArray>("perception/lidar_detected_props", 10);
+    pub_ = this->create_publisher<perception_interfaces::msg::PropArray>("perception/lidar_detected_props", 10);
 
     LidarPropDetector::getParam<double>("max_lidar_dist", p_max_lidar_dist_, 0.0, "Maximum accepted range of lidar readings in m");
     LidarPropDetector::getParam<double>("min_lidar_dist", p_min_lidar_dist_, 0.0, "Minimum accepted range of lidar readings in m");
@@ -43,7 +43,7 @@ namespace perception
   {
     if (msg->segments.size() > 0)
     {
-      perception_interfaces::msg::LidarDetectedPropArray lidar_detected_prop_array;
+      perception_interfaces::msg::PropArray lidar_detected_prop_array;
       for (slg_msgs::msg::Segment segment : msg->segments)
       {
         std::vector<geometry_msgs::msg::Point> filtered_points = lidar_calculations::getPointsWithinBounds(segment.points, p_min_lidar_dist_, p_max_lidar_dist_, p_lidar_fov_);
@@ -53,7 +53,7 @@ namespace perception
           attemptToCreateAndAddLidarDetectedProp(filtered_points, lidar_detected_prop_array);
         }
       }
-      if (lidar_detected_prop_array.lidar_detected_props.size() > 0)
+      if (lidar_detected_prop_array.props.size() > 0)
       {
         pub_->publish(lidar_detected_prop_array);
       }
@@ -64,47 +64,46 @@ namespace perception
     }
   }
 
-  void LidarPropDetector::attemptToCreateAndAddLidarDetectedProp(std::vector<geometry_msgs::msg::Point> points, perception_interfaces::msg::LidarDetectedPropArray& lidar_detected_prop_array)
+  void LidarPropDetector::attemptToCreateAndAddLidarDetectedProp(std::vector<geometry_msgs::msg::Point> points, perception_interfaces::msg::PropArray& lidar_detected_prop_array)
   {
-    perception_interfaces::msg::LidarDetectedProp lidar_detected_prop = createLidarDetectedProp(points);
-    if (measuredRadiusIsCloseToExpected(lidar_detected_prop.radius_diff))
+    perception_interfaces::msg::Prop lidar_detected_prop = createLidarDetectedProp(points);
+    if (measuredRadiusIsCloseToExpected(lidar_detected_prop))
     {
-      lidar_detected_prop_array.lidar_detected_props.push_back(lidar_detected_prop);
+      lidar_detected_prop_array.props.push_back(lidar_detected_prop);
     }
     else
     {
-      RCLCPP_INFO_THROTTLE(this->get_logger(), *this->get_clock(), 10000, "Calculated radius diff of %f is too large, should be less than %f to be considered a prop", lidar_detected_prop.radius_diff, p_max_radius_diff_);
+      RCLCPP_INFO_THROTTLE(this->get_logger(), *this->get_clock(), 10000, "Calculated radius diff is too large, should be less than %f to be considered a prop", p_max_radius_diff_);
     }
   }
 
-  perception_interfaces::msg::LidarDetectedProp LidarPropDetector::createLidarDetectedProp(std::vector<geometry_msgs::msg::Point> points)
+  perception_interfaces::msg::Prop LidarPropDetector::createLidarDetectedProp(std::vector<geometry_msgs::msg::Point> points)
   {
-    perception_interfaces::msg::LidarDetectedProp prop;
+    perception_interfaces::msg::Prop prop;
     lidar_calculations::calculateRadius(points, prop);
     this->findClosestMatchAndSetRadiusDiff(prop);
     return prop;
   }
 
-  bool LidarPropDetector::measuredRadiusIsCloseToExpected(double radius_diff)
+  bool LidarPropDetector::measuredRadiusIsCloseToExpected(const perception_interfaces::msg::Prop& prop)
   {
-    return radius_diff < p_max_radius_diff_;
+    double expected_radius = this->p_prop_radii_[prop.label];
+    double radius_diff = expected_radius - prop.radius;
+    return abs(radius_diff) < p_max_radius_diff_;
   }
   
-  void LidarPropDetector::findClosestMatchAndSetRadiusDiff(perception_interfaces::msg::LidarDetectedProp& prop)
+  void LidarPropDetector::findClosestMatchAndSetRadiusDiff(perception_interfaces::msg::Prop& prop)
   {
     double abs_closest_match_diff = std::numeric_limits<double>::max();
-    double closest_match_diff = 0;
     std::string closest_match = "";
     for (const auto& pair : this->p_prop_radii_) {
         double diff = std::abs(prop.radius - pair.second);
         if (diff < abs_closest_match_diff){
             abs_closest_match_diff = diff;
-            closest_match_diff = prop.radius - pair.second;
             closest_match = pair.first;
         }
     }
     prop.label = closest_match;
-    prop.radius_diff = closest_match_diff;
     return;
   }
 }

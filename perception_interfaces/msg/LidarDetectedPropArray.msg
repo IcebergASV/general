@@ -1,1 +1,0 @@
-LidarDetectedProp[] 				lidar_detected_props

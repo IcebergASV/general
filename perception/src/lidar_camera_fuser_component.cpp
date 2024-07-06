@@ -75,6 +75,9 @@ namespace perception
       haveDetectedGateWithCamera_ = true;
       RCLCPP_INFO(this->get_logger(), "Red and green markers detected");
     }
+    else{
+      RCLCPP_INFO(this->get_logger(), "Red AND green markers NOT detected");
+    }
     return;
   }
 
@@ -134,8 +137,10 @@ namespace perception
     double min_dist = p_dist_between_markers_ -  p_dist_between_markers_err_;
     if ((dist < max_dist) && (dist > min_dist))
     {
+      RCLCPP_INFO(this->get_logger(), "Props detected within bounds");
       return true;
     }
+    RCLCPP_INFO(this->get_logger(), "Props detected but NOT within bounds");
     return false;
   }
 

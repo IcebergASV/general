@@ -9,10 +9,10 @@ namespace perception
       timer_ = this->create_wall_timer(100ms, std::bind(&MockBBoxPub::timer_callback, this));    
       pub_ = this->create_publisher<perception_interfaces::msg::BoundingBoxes>("perception/mock_bboxes", 10);
 
-    MockBBoxPub::getParam<int>("xmin", p_xmin_, 0.0, "minimum x value of bounding box");
-    MockBBoxPub::getParam<int>("xmax", p_xmax_, 0.0, "maxiumum x value of bounding box");
+    MockBBoxPub::getParam<int>("xmin", p_xmin_, 0, "minimum x value of bounding box");
+    MockBBoxPub::getParam<int>("xmax", p_xmax_, 0, "maxiumum x value of bounding box");
     MockBBoxPub::getParam<int>("ymin", p_ymin_, 0, "minimum y value of bounding box");
-    MockBBoxPub::getParam<int>("ymax", p_ymax_, 0.0, "maximum y value of bounding box");
+    MockBBoxPub::getParam<int>("ymax", p_ymax_, 0, "maximum y value of bounding box");
     on_set_parameters_callback_handle_ = this->add_on_set_parameters_callback(std::bind(&MockBBoxPub::param_callback, this, std::placeholders::_1));
   }
 
