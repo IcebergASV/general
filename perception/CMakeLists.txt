@@ -86,6 +86,7 @@ add_library(libhelpers
 )
 ament_target_dependencies(libhelpers
   "perception_interfaces"
+  "rclcpp"
 )
 
 add_library(libbbox_calculations

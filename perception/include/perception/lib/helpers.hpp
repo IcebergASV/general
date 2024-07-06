@@ -6,9 +6,10 @@
 #include <vector>
 #include <eigen3/Eigen/Dense>
 #include "perception_interfaces/msg/gate.hpp"
-
+#include <rclcpp/logging.hpp>
 namespace helpers
 {
+    rclcpp::Logger logger = rclcpp::get_logger("helpers_logger");
     std::string vectorToString(const std::vector<double>& vec);
     perception_interfaces::msg::Gate createGate(perception_interfaces::msg::Prop p1, perception_interfaces::msg::Prop p2);
 

@@ -36,6 +36,7 @@ namespace helpers
   double distTwoPoints(double x1, double y1, double x2, double y2) {
     double dx = x2 - x1;
     double dy = y2 - y1;
+    RCLCPP_INFO(logger, "prop 1: (%f,%f), prop 2: (%f,%f)", x1, y1, x2, y2);
     return std::sqrt(dx * dx + dy * dy);
   }
 
