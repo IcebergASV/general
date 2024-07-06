@@ -1,15 +1,18 @@
 lidar_prop_detector:
   ros__parameters:
-    props_radii: "{marker: 0.6, buoy: 0.15}"
+    props_radii: "{marker: 0.5, buoy: 0.15}"
     min_lidar_dist: 0.1
     max_lidar_dist: 29.0
     min_points_in_segment: 6
     max_radius_diff: 0.1
-    lidar_fov: 90.0
+    lidar_fov: 120.0
 lidar_camera_fuser:
   ros__parameters:
     dist_between_markers: 5.0
     dist_between_markers_err: 1.0
+    camera_res_x: 1920
+    camera_fov: 70
+    bbox_angle_err: 0.0
 mock_bbox_pub:
   ros__parameters:
     xmin: 1
