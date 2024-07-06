@@ -7,8 +7,8 @@
 
 #include "rclcpp/rclcpp.hpp"
 
-#include "perception_interfaces/msg/coordinates.hpp"
-#include "perception_interfaces/msg/coordinates.hpp"
+#include "perception_interfaces/msg/bounding_box.hpp"
+#include "perception_interfaces/msg/bounding_boxes.hpp"
 
 using std::placeholders::_1;
 using namespace std::chrono_literals;

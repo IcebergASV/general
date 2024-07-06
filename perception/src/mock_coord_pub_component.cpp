@@ -30,27 +30,9 @@ namespace perception
 
   void MockCoordPub::timer_callback()
   {
-    //auto message = std_msgs::msg::String();
-    perception_interfaces::msg::Coordinates coords;
 
-    perception_interfaces::msg::Coordinates coords;
-    coord.xmin = p_xmin_;
-    coord.xmax = p_xmax_;
-    coord.ymin = p_ymin_;
-    coord.ymax = p_ymax_;
-    coord.probability = 0.99;
-    coord.class_id = "green_marker";
+    perception_interfaces::msg::Prop coords;
 
-    coords.coordinates.push_back(coord);
-
-    coord.xmin = 8;
-    coord.xmax = 12;
-    coord.ymin = 8;
-    coord.ymax = 12;
-    coord.probability = 0.99;
-    coord.class_id = "red_marker";
-
-    coords.coordinates.push_back(coord);
 
 
     pub_->publish(coords);
