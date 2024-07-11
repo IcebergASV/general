@@ -3,7 +3,7 @@
 namespace lidar_calculations
 {
 
-std::vector<double> extractXorYCoordsToVector(std::vector<geometry_msgs::msg::Point> points, std::string coords_to_extract)
+std::vector<double> extractXorYCoordsToVector(const std::vector<geometry_msgs::msg::Point>& points, std::string coords_to_extract)
 {
   std::vector<double> x_or_y_coordinates;
   for (const auto& point : points) {
@@ -17,7 +17,7 @@ std::vector<double> extractXorYCoordsToVector(std::vector<geometry_msgs::msg::Po
 // Based off of https://goodcalculators.com/best-fit-circle-least-squares-calculator/
 //
 // circle is an output param
-void calculateRadius(std::vector<geometry_msgs::msg::Point> points, perception_interfaces::msg::LidarDetectedProp& prop)
+void calculateRadius(const std::vector<geometry_msgs::msg::Point>& points, perception_interfaces::msg::Prop& prop)
 {
   std::vector<double> x_coords= extractXorYCoordsToVector(points, "x");
   std::vector<double> y_coords= extractXorYCoordsToVector(points, "y");
@@ -58,13 +58,13 @@ void calculateRadius(std::vector<geometry_msgs::msg::Point> points, perception_i
   double k = a / 2;
   double m = b / 2;
   prop.radius = (sqrt(4*c + pow(a, 2) + pow(b, 2))) / 2;
-  prop.center.x = -m;
-  prop.center.y = k;
+  prop.point.x = -m;
+  prop.point.y = k;
 
   return;
 }
 
-bool arePointsValidDistanceAway(std::vector<geometry_msgs::msg::Point> points, double min_dist, double max_dist)
+bool arePointsValidDistanceAway(const std::vector<geometry_msgs::msg::Point>& points, double min_dist, double max_dist)
 {
   for (const auto& point : points) {
     double distance = std::sqrt(point.x * point.x + point.y * point.y);
@@ -77,7 +77,7 @@ bool arePointsValidDistanceAway(std::vector<geometry_msgs::msg::Point> points, d
   return true;
 }
 
-std::vector<geometry_msgs::msg::Point> getPointsWithinBounds(std::vector<geometry_msgs::msg::Point> points, double min_dist, double max_dist, double fov)
+std::vector<geometry_msgs::msg::Point> getPointsWithinBounds(const std::vector<geometry_msgs::msg::Point>& points, double min_dist, double max_dist, double fov)
 {
   std::vector<geometry_msgs::msg::Point> cleaned_points;
 

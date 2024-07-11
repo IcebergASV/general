@@ -20,15 +20,14 @@ namespace perception
     rmw_qos_profile_t qos_profile = rmw_qos_profile_sensor_data;
     auto qos = rclcpp::QoS(rclcpp::QoSInitialization(qos_profile.history, 5), qos_profile);
 
-    prop_sub_ = this->create_subscription<perception_interfaces::msg::LidarDetectedPropArray>("/perception/lidar_detected_props", 10, std::bind(&CoordFinder::propCallback, this, _1));
+    prop_sub_ = this->create_subscription<perception_interfaces::msg::PropArray>("/perception/lidar_detected_props", 10, std::bind(&CoordFinder::propCallback, this, _1));
     pose_sub_ = this->create_subscription<geometry_msgs::msg::PoseStamped>("/mavros/local_position/pose", qos, std::bind(&CoordFinder::poseCallback, this, _1));
     prop_coords_pub_ = this->create_publisher<perception_interfaces::msg::Prop>("perception/prop_coords", 10);
   }
 
-  void CoordFinder::propCallback(const perception_interfaces::msg::LidarDetectedPropArray::SharedPtr msg)
+  void CoordFinder::propCallback(const perception_interfaces::msg::PropArray::SharedPtr msg)
   {
-    RCLCPP_ERROR(this->get_logger(), "prop callback");
-    if (msg->lidar_detected_props.size() >0)
+    if (msg->props.size() >0)
       prop_msg_ = *msg;
     new_prop_ = true;
   }
@@ -36,20 +35,19 @@ namespace perception
   void CoordFinder::poseCallback(const geometry_msgs::msg::PoseStamped::SharedPtr msg)
   {
     // check that the prop msg has been set before publishing a prop
-    RCLCPP_ERROR(this->get_logger(), "pose callback");
     if (!new_prop_)
     {
       return;
     }
-    for (perception_interfaces::msg::LidarDetectedProp prop : prop_msg_.lidar_detected_props)
+    for (perception_interfaces::msg::Prop prop : prop_msg_.props)
     {
       RCLCPP_ERROR(this->get_logger(), "label: %s", prop.label.c_str());
       if (isValidLabel(prop.label))
       {
           pose_msg_ = *msg;
           RCLCPP_ERROR(this->get_logger(), "heading: %f", getGazeboHeading(pose_msg_.pose.orientation)*(180/M_PI));
-          double radius = std::sqrt(prop.center.y * prop.center.y + prop.center.x * prop.center.x);
-          double angle = std::atan2(prop.center.y, prop.center.x);
+          double radius = std::sqrt(prop.point.y * prop.point.y + prop.point.x * prop.point.x);
+          double angle = std::atan2(prop.point.y, prop.point.x);
 
           // Convert relative coordinates to local coordinates 
           double heading = getGazeboHeading(pose_msg_.pose.orientation);
