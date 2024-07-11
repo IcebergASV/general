@@ -21,15 +21,15 @@ namespace msg
 namespace builder
 {
 
-class Init_Coordinate_class_id
+class Init_Coordinate_probability
 {
 public:
-  explicit Init_Coordinate_class_id(::perception_interfaces::msg::Coordinate & msg)
+  explicit Init_Coordinate_probability(::perception_interfaces::msg::Coordinate & msg)
   : msg_(msg)
   {}
-  ::perception_interfaces::msg::Coordinate class_id(::perception_interfaces::msg::Coordinate::_class_id_type arg)
+  ::perception_interfaces::msg::Coordinate probability(::perception_interfaces::msg::Coordinate::_probability_type arg)
   {
-    msg_.class_id = std::move(arg);
+    msg_.probability = std::move(arg);
     return std::move(msg_);
   }
 
@@ -37,16 +37,48 @@ private:
   ::perception_interfaces::msg::Coordinate msg_;
 };
 
-class Init_Coordinate_probability
+class Init_Coordinate_radius
 {
 public:
-  explicit Init_Coordinate_probability(::perception_interfaces::msg::Coordinate & msg)
+  explicit Init_Coordinate_radius(::perception_interfaces::msg::Coordinate & msg)
   : msg_(msg)
   {}
-  Init_Coordinate_class_id probability(::perception_interfaces::msg::Coordinate::_probability_type arg)
+  Init_Coordinate_probability radius(::perception_interfaces::msg::Coordinate::_radius_type arg)
   {
-    msg_.probability = std::move(arg);
-    return Init_Coordinate_class_id(msg_);
+    msg_.radius = std::move(arg);
+    return Init_Coordinate_probability(msg_);
+  }
+
+private:
+  ::perception_interfaces::msg::Coordinate msg_;
+};
+
+class Init_Coordinate_point
+{
+public:
+  explicit Init_Coordinate_point(::perception_interfaces::msg::Coordinate & msg)
+  : msg_(msg)
+  {}
+  Init_Coordinate_radius point(::perception_interfaces::msg::Coordinate::_point_type arg)
+  {
+    msg_.point = std::move(arg);
+    return Init_Coordinate_radius(msg_);
+  }
+
+private:
+  ::perception_interfaces::msg::Coordinate msg_;
+};
+
+class Init_Coordinate_label
+{
+public:
+  explicit Init_Coordinate_label(::perception_interfaces::msg::Coordinate & msg)
+  : msg_(msg)
+  {}
+  Init_Coordinate_point label(::perception_interfaces::msg::Coordinate::_label_type arg)
+  {
+    msg_.label = std::move(arg);
+    return Init_Coordinate_point(msg_);
   }
 
 private:
@@ -56,77 +88,13 @@ private:
 class Init_Coordinate_id
 {
 public:
-  explicit Init_Coordinate_id(::perception_interfaces::msg::Coordinate & msg)
-  : msg_(msg)
-  {}
-  Init_Coordinate_probability id(::perception_interfaces::msg::Coordinate::_id_type arg)
-  {
-    msg_.id = std::move(arg);
-    return Init_Coordinate_probability(msg_);
-  }
-
-private:
-  ::perception_interfaces::msg::Coordinate msg_;
-};
-
-class Init_Coordinate_ymax
-{
-public:
-  explicit Init_Coordinate_ymax(::perception_interfaces::msg::Coordinate & msg)
-  : msg_(msg)
-  {}
-  Init_Coordinate_id ymax(::perception_interfaces::msg::Coordinate::_ymax_type arg)
-  {
-    msg_.ymax = std::move(arg);
-    return Init_Coordinate_id(msg_);
-  }
-
-private:
-  ::perception_interfaces::msg::Coordinate msg_;
-};
-
-class Init_Coordinate_xmax
-{
-public:
-  explicit Init_Coordinate_xmax(::perception_interfaces::msg::Coordinate & msg)
-  : msg_(msg)
-  {}
-  Init_Coordinate_ymax xmax(::perception_interfaces::msg::Coordinate::_xmax_type arg)
-  {
-    msg_.xmax = std::move(arg);
-    return Init_Coordinate_ymax(msg_);
-  }
-
-private:
-  ::perception_interfaces::msg::Coordinate msg_;
-};
-
-class Init_Coordinate_ymin
-{
-public:
-  explicit Init_Coordinate_ymin(::perception_interfaces::msg::Coordinate & msg)
-  : msg_(msg)
-  {}
-  Init_Coordinate_xmax ymin(::perception_interfaces::msg::Coordinate::_ymin_type arg)
-  {
-    msg_.ymin = std::move(arg);
-    return Init_Coordinate_xmax(msg_);
-  }
-
-private:
-  ::perception_interfaces::msg::Coordinate msg_;
-};
-
-class Init_Coordinate_xmin
-{
-public:
-  Init_Coordinate_xmin()
+  Init_Coordinate_id()
   : msg_(::rosidl_runtime_cpp::MessageInitialization::SKIP)
   {}
-  Init_Coordinate_ymin xmin(::perception_interfaces::msg::Coordinate::_xmin_type arg)
+  Init_Coordinate_label id(::perception_interfaces::msg::Coordinate::_id_type arg)
   {
-    msg_.xmin = std::move(arg);
-    return Init_Coordinate_ymin(msg_);
+    msg_.id = std::move(arg);
+    return Init_Coordinate_label(msg_);
   }
 
 private:
@@ -144,7 +112,7 @@ template<>
 inline
 auto build<::perception_interfaces::msg::Coordinate>()
 {
-  return perception_interfaces::msg::builder::Init_Coordinate_xmin();
+  return perception_interfaces::msg::builder::Init_Coordinate_id();
 }
 
 }  // namespace perception_interfaces

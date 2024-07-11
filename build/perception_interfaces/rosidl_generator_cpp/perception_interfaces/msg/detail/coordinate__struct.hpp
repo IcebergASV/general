@@ -15,6 +15,10 @@
 #include "rosidl_runtime_cpp/message_initialization.hpp"
 
 
+// Include directives for member types
+// Member 'point'
+#include "geometry_msgs/msg/detail/point__struct.hpp"
+
 #ifndef _WIN32
 # define DEPRECATED__perception_interfaces__msg__Coordinate __attribute__((deprecated))
 #else
@@ -34,100 +38,78 @@ struct Coordinate_
   using Type = Coordinate_<ContainerAllocator>;
 
   explicit Coordinate_(rosidl_runtime_cpp::MessageInitialization _init = rosidl_runtime_cpp::MessageInitialization::ALL)
+  : point(_init)
   {
     if (rosidl_runtime_cpp::MessageInitialization::ALL == _init ||
       rosidl_runtime_cpp::MessageInitialization::ZERO == _init)
     {
-      this->xmin = 0;
-      this->ymin = 0;
-      this->xmax = 0;
-      this->ymax = 0;
-      this->id = 0;
+      this->id = 0l;
+      this->label = "";
+      this->radius = 0.0f;
       this->probability = 0.0f;
-      this->class_id = "";
     }
   }
 
   explicit Coordinate_(const ContainerAllocator & _alloc, rosidl_runtime_cpp::MessageInitialization _init = rosidl_runtime_cpp::MessageInitialization::ALL)
-  : class_id(_alloc)
+  : label(_alloc),
+    point(_alloc, _init)
   {
     if (rosidl_runtime_cpp::MessageInitialization::ALL == _init ||
       rosidl_runtime_cpp::MessageInitialization::ZERO == _init)
     {
-      this->xmin = 0;
-      this->ymin = 0;
-      this->xmax = 0;
-      this->ymax = 0;
-      this->id = 0;
+      this->id = 0l;
+      this->label = "";
+      this->radius = 0.0f;
       this->probability = 0.0f;
-      this->class_id = "";
     }
   }
 
   // field types and members
-  using _xmin_type =
-    uint16_t;
-  _xmin_type xmin;
-  using _ymin_type =
-    uint16_t;
-  _ymin_type ymin;
-  using _xmax_type =
-    uint16_t;
-  _xmax_type xmax;
-  using _ymax_type =
-    uint16_t;
-  _ymax_type ymax;
   using _id_type =
-    uint16_t;
+    int32_t;
   _id_type id;
+  using _label_type =
+    std::basic_string<char, std::char_traits<char>, typename std::allocator_traits<ContainerAllocator>::template rebind_alloc<char>>;
+  _label_type label;
+  using _point_type =
+    geometry_msgs::msg::Point_<ContainerAllocator>;
+  _point_type point;
+  using _radius_type =
+    float;
+  _radius_type radius;
   using _probability_type =
     float;
   _probability_type probability;
-  using _class_id_type =
-    std::basic_string<char, std::char_traits<char>, typename std::allocator_traits<ContainerAllocator>::template rebind_alloc<char>>;
-  _class_id_type class_id;
 
   // setters for named parameter idiom
-  Type & set__xmin(
-    const uint16_t & _arg)
-  {
-    this->xmin = _arg;
-    return *this;
-  }
-  Type & set__ymin(
-    const uint16_t & _arg)
-  {
-    this->ymin = _arg;
-    return *this;
-  }
-  Type & set__xmax(
-    const uint16_t & _arg)
-  {
-    this->xmax = _arg;
-    return *this;
-  }
-  Type & set__ymax(
-    const uint16_t & _arg)
-  {
-    this->ymax = _arg;
-    return *this;
-  }
   Type & set__id(
-    const uint16_t & _arg)
+    const int32_t & _arg)
   {
     this->id = _arg;
+    return *this;
+  }
+  Type & set__label(
+    const std::basic_string<char, std::char_traits<char>, typename std::allocator_traits<ContainerAllocator>::template rebind_alloc<char>> & _arg)
+  {
+    this->label = _arg;
+    return *this;
+  }
+  Type & set__point(
+    const geometry_msgs::msg::Point_<ContainerAllocator> & _arg)
+  {
+    this->point = _arg;
+    return *this;
+  }
+  Type & set__radius(
+    const float & _arg)
+  {
+    this->radius = _arg;
     return *this;
   }
   Type & set__probability(
     const float & _arg)
   {
     this->probability = _arg;
-    return *this;
-  }
-  Type & set__class_id(
-    const std::basic_string<char, std::char_traits<char>, typename std::allocator_traits<ContainerAllocator>::template rebind_alloc<char>> & _arg)
-  {
-    this->class_id = _arg;
     return *this;
   }
 
@@ -173,25 +155,19 @@ struct Coordinate_
   // comparison operators
   bool operator==(const Coordinate_ & other) const
   {
-    if (this->xmin != other.xmin) {
-      return false;
-    }
-    if (this->ymin != other.ymin) {
-      return false;
-    }
-    if (this->xmax != other.xmax) {
-      return false;
-    }
-    if (this->ymax != other.ymax) {
-      return false;
-    }
     if (this->id != other.id) {
       return false;
     }
-    if (this->probability != other.probability) {
+    if (this->label != other.label) {
       return false;
     }
-    if (this->class_id != other.class_id) {
+    if (this->point != other.point) {
+      return false;
+    }
+    if (this->radius != other.radius) {
+      return false;
+    }
+    if (this->probability != other.probability) {
       return false;
     }
     return true;

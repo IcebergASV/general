@@ -12,8 +12,10 @@
 
 
 // Include directives for member types
-// Member `class_id`
+// Member `label`
 #include "rosidl_runtime_c/string_functions.h"
+// Member `point`
+#include "geometry_msgs/msg/detail/point__functions.h"
 
 bool
 perception_interfaces__msg__Coordinate__init(perception_interfaces__msg__Coordinate * msg)
@@ -21,17 +23,19 @@ perception_interfaces__msg__Coordinate__init(perception_interfaces__msg__Coordin
   if (!msg) {
     return false;
   }
-  // xmin
-  // ymin
-  // xmax
-  // ymax
   // id
-  // probability
-  // class_id
-  if (!rosidl_runtime_c__String__init(&msg->class_id)) {
+  // label
+  if (!rosidl_runtime_c__String__init(&msg->label)) {
     perception_interfaces__msg__Coordinate__fini(msg);
     return false;
   }
+  // point
+  if (!geometry_msgs__msg__Point__init(&msg->point)) {
+    perception_interfaces__msg__Coordinate__fini(msg);
+    return false;
+  }
+  // radius
+  // probability
   return true;
 }
 
@@ -41,14 +45,13 @@ perception_interfaces__msg__Coordinate__fini(perception_interfaces__msg__Coordin
   if (!msg) {
     return;
   }
-  // xmin
-  // ymin
-  // xmax
-  // ymax
   // id
+  // label
+  rosidl_runtime_c__String__fini(&msg->label);
+  // point
+  geometry_msgs__msg__Point__fini(&msg->point);
+  // radius
   // probability
-  // class_id
-  rosidl_runtime_c__String__fini(&msg->class_id);
 }
 
 bool
@@ -57,34 +60,28 @@ perception_interfaces__msg__Coordinate__are_equal(const perception_interfaces__m
   if (!lhs || !rhs) {
     return false;
   }
-  // xmin
-  if (lhs->xmin != rhs->xmin) {
-    return false;
-  }
-  // ymin
-  if (lhs->ymin != rhs->ymin) {
-    return false;
-  }
-  // xmax
-  if (lhs->xmax != rhs->xmax) {
-    return false;
-  }
-  // ymax
-  if (lhs->ymax != rhs->ymax) {
-    return false;
-  }
   // id
   if (lhs->id != rhs->id) {
     return false;
   }
-  // probability
-  if (lhs->probability != rhs->probability) {
+  // label
+  if (!rosidl_runtime_c__String__are_equal(
+      &(lhs->label), &(rhs->label)))
+  {
     return false;
   }
-  // class_id
-  if (!rosidl_runtime_c__String__are_equal(
-      &(lhs->class_id), &(rhs->class_id)))
+  // point
+  if (!geometry_msgs__msg__Point__are_equal(
+      &(lhs->point), &(rhs->point)))
   {
+    return false;
+  }
+  // radius
+  if (lhs->radius != rhs->radius) {
+    return false;
+  }
+  // probability
+  if (lhs->probability != rhs->probability) {
     return false;
   }
   return true;
@@ -98,24 +95,24 @@ perception_interfaces__msg__Coordinate__copy(
   if (!input || !output) {
     return false;
   }
-  // xmin
-  output->xmin = input->xmin;
-  // ymin
-  output->ymin = input->ymin;
-  // xmax
-  output->xmax = input->xmax;
-  // ymax
-  output->ymax = input->ymax;
   // id
   output->id = input->id;
-  // probability
-  output->probability = input->probability;
-  // class_id
+  // label
   if (!rosidl_runtime_c__String__copy(
-      &(input->class_id), &(output->class_id)))
+      &(input->label), &(output->label)))
   {
     return false;
   }
+  // point
+  if (!geometry_msgs__msg__Point__copy(
+      &(input->point), &(output->point)))
+  {
+    return false;
+  }
+  // radius
+  output->radius = input->radius;
+  // probability
+  output->probability = input->probability;
   return true;
 }
 

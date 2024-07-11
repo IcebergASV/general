@@ -14,6 +14,10 @@
 #include "perception_interfaces/msg/detail/coordinate__struct.hpp"
 #include "rosidl_runtime_cpp/traits.hpp"
 
+// Include directives for member types
+// Member 'point'
+#include "geometry_msgs/msg/detail/point__traits.hpp"
+
 namespace perception_interfaces
 {
 
@@ -25,34 +29,6 @@ inline void to_flow_style_yaml(
   std::ostream & out)
 {
   out << "{";
-  // member: xmin
-  {
-    out << "xmin: ";
-    rosidl_generator_traits::value_to_yaml(msg.xmin, out);
-    out << ", ";
-  }
-
-  // member: ymin
-  {
-    out << "ymin: ";
-    rosidl_generator_traits::value_to_yaml(msg.ymin, out);
-    out << ", ";
-  }
-
-  // member: xmax
-  {
-    out << "xmax: ";
-    rosidl_generator_traits::value_to_yaml(msg.xmax, out);
-    out << ", ";
-  }
-
-  // member: ymax
-  {
-    out << "ymax: ";
-    rosidl_generator_traits::value_to_yaml(msg.ymax, out);
-    out << ", ";
-  }
-
   // member: id
   {
     out << "id: ";
@@ -60,17 +36,31 @@ inline void to_flow_style_yaml(
     out << ", ";
   }
 
+  // member: label
+  {
+    out << "label: ";
+    rosidl_generator_traits::value_to_yaml(msg.label, out);
+    out << ", ";
+  }
+
+  // member: point
+  {
+    out << "point: ";
+    to_flow_style_yaml(msg.point, out);
+    out << ", ";
+  }
+
+  // member: radius
+  {
+    out << "radius: ";
+    rosidl_generator_traits::value_to_yaml(msg.radius, out);
+    out << ", ";
+  }
+
   // member: probability
   {
     out << "probability: ";
     rosidl_generator_traits::value_to_yaml(msg.probability, out);
-    out << ", ";
-  }
-
-  // member: class_id
-  {
-    out << "class_id: ";
-    rosidl_generator_traits::value_to_yaml(msg.class_id, out);
   }
   out << "}";
 }  // NOLINT(readability/fn_size)
@@ -79,46 +69,6 @@ inline void to_block_style_yaml(
   const Coordinate & msg,
   std::ostream & out, size_t indentation = 0)
 {
-  // member: xmin
-  {
-    if (indentation > 0) {
-      out << std::string(indentation, ' ');
-    }
-    out << "xmin: ";
-    rosidl_generator_traits::value_to_yaml(msg.xmin, out);
-    out << "\n";
-  }
-
-  // member: ymin
-  {
-    if (indentation > 0) {
-      out << std::string(indentation, ' ');
-    }
-    out << "ymin: ";
-    rosidl_generator_traits::value_to_yaml(msg.ymin, out);
-    out << "\n";
-  }
-
-  // member: xmax
-  {
-    if (indentation > 0) {
-      out << std::string(indentation, ' ');
-    }
-    out << "xmax: ";
-    rosidl_generator_traits::value_to_yaml(msg.xmax, out);
-    out << "\n";
-  }
-
-  // member: ymax
-  {
-    if (indentation > 0) {
-      out << std::string(indentation, ' ');
-    }
-    out << "ymax: ";
-    rosidl_generator_traits::value_to_yaml(msg.ymax, out);
-    out << "\n";
-  }
-
   // member: id
   {
     if (indentation > 0) {
@@ -129,6 +79,35 @@ inline void to_block_style_yaml(
     out << "\n";
   }
 
+  // member: label
+  {
+    if (indentation > 0) {
+      out << std::string(indentation, ' ');
+    }
+    out << "label: ";
+    rosidl_generator_traits::value_to_yaml(msg.label, out);
+    out << "\n";
+  }
+
+  // member: point
+  {
+    if (indentation > 0) {
+      out << std::string(indentation, ' ');
+    }
+    out << "point:\n";
+    to_block_style_yaml(msg.point, out, indentation + 2);
+  }
+
+  // member: radius
+  {
+    if (indentation > 0) {
+      out << std::string(indentation, ' ');
+    }
+    out << "radius: ";
+    rosidl_generator_traits::value_to_yaml(msg.radius, out);
+    out << "\n";
+  }
+
   // member: probability
   {
     if (indentation > 0) {
@@ -136,16 +115,6 @@ inline void to_block_style_yaml(
     }
     out << "probability: ";
     rosidl_generator_traits::value_to_yaml(msg.probability, out);
-    out << "\n";
-  }
-
-  // member: class_id
-  {
-    if (indentation > 0) {
-      out << std::string(indentation, ' ');
-    }
-    out << "class_id: ";
-    rosidl_generator_traits::value_to_yaml(msg.class_id, out);
     out << "\n";
   }
 }  // NOLINT(readability/fn_size)

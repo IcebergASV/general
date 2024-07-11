@@ -2,23 +2,20 @@
 // with input from perception_interfaces/msg/Coordinate.msg
 // generated code does not contain a copyright notice
 
+#include "geometry_msgs/msg/Point.idl"
 
 module perception_interfaces {
   module msg {
     struct Coordinate {
-      uint16 xmin;
+      int32 id;
 
-      uint16 ymin;
+      string label;
 
-      uint16 xmax;
+      geometry_msgs::msg::Point point;
 
-      uint16 ymax;
-
-      uint16 id;
+      float radius;
 
       float probability;
-
-      string class_id;
     };
   };
 };

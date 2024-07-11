@@ -18,19 +18,19 @@ extern "C"
 // Constants defined in the message
 
 // Include directives for member types
-// Member 'class_id'
+// Member 'label'
 #include "rosidl_runtime_c/string.h"
+// Member 'point'
+#include "geometry_msgs/msg/detail/point__struct.h"
 
 /// Struct defined in msg/Coordinate in the package perception_interfaces.
 typedef struct perception_interfaces__msg__Coordinate
 {
-  uint16_t xmin;
-  uint16_t ymin;
-  uint16_t xmax;
-  uint16_t ymax;
-  uint16_t id;
+  int32_t id;
+  rosidl_runtime_c__String label;
+  geometry_msgs__msg__Point point;
+  float radius;
   float probability;
-  rosidl_runtime_c__String class_id;
 } perception_interfaces__msg__Coordinate;
 
 // Struct for a sequence of perception_interfaces__msg__Coordinate.

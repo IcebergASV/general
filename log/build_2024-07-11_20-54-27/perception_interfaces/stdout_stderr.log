@@ -1,0 +1,90 @@
+[35m[1mConsolidate compiler generated dependencies of target perception_interfaces__rosidl_generator_c[0m
+[  1%] Built target perception_interfaces__cpp
+[  2%] [32mBuilding C object CMakeFiles/perception_interfaces__rosidl_generator_c.dir/rosidl_generator_c/perception_interfaces/msg/detail/coordinates__functions.c.o[0m
+[  2%] Built target ament_cmake_python_copy_perception_interfaces
+[ 13%] Built target perception_interfaces__rosidl_typesupport_cpp
+[35m[1mConsolidate compiler generated dependencies of target perception_interfaces__rosidl_typesupport_fastrtps_cpp[0m
+[ 25%] Built target perception_interfaces__rosidl_typesupport_fastrtps_cpp
+In file included from [01m[K/home/parallels/ros2_ws/src/general/build/perception_interfaces/rosidl_generator_c/perception_interfaces/msg/detail/coordinates__functions.h:19[m[K,
+                 from [01m[K/home/parallels/ros2_ws/src/general/build/perception_interfaces/rosidl_generator_c/perception_interfaces/msg/detail/coordinates__functions.c:4[m[K:
+[01m[K/home/parallels/ros2_ws/src/general/build/perception_interfaces/rosidl_generator_c/perception_interfaces/msg/detail/coordinates__struct.h:27:3:[m[K [01;31m[Kerror: [m[Kunknown type name ‘[01m[Kperception_interfaces__msg__Coordinates__Sequence[m[K’
+   27 |   [01;31m[Kperception_interfaces__msg__Coordinates__Sequence[m[K coordinates;
+      |   [01;31m[K^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~[m[K
+[01m[K/home/parallels/ros2_ws/src/general/build/perception_interfaces/rosidl_generator_c/perception_interfaces/msg/detail/coordinates__functions.c:[m[K In function ‘[01m[Kperception_interfaces__msg__Coordinates__init[m[K’:
+[01m[K/home/parallels/ros2_ws/src/general/build/perception_interfaces/rosidl_generator_c/perception_interfaces/msg/detail/coordinates__functions.c:26:64:[m[K [01;35m[Kwarning: [m[Kpassing argument 1 of ‘[01m[Kperception_interfaces__msg__Coordinates__Sequence__init[m[K’ from incompatible pointer type [[01;35m[K-Wincompatible-pointer-types[m[K]
+   26 |   if (!perception_interfaces__msg__Coordinates__Sequence__init([01;35m[K&msg->coordinates[m[K, 0)) {
+      |                                                                [01;35m[K^~~~~~~~~~~~~~~~~[m[K
+      |                                                                [01;35m[K|[m[K
+      |                                                                [01;35m[Kint *[m[K
+In file included from [01m[K/home/parallels/ros2_ws/src/general/build/perception_interfaces/rosidl_generator_c/perception_interfaces/msg/detail/coordinates__functions.c:4[m[K:
+[01m[K/home/parallels/ros2_ws/src/general/build/perception_interfaces/rosidl_generator_c/perception_interfaces/msg/detail/coordinates__functions.h:109:109:[m[K [01;36m[Knote: [m[Kexpected ‘[01m[Kperception_interfaces__msg__Coordinates__Sequence *[m[K’ but argument is of type ‘[01m[Kint *[m[K’
+  109 | perception_interfaces__msg__Coordinates__Sequence__init([01;36m[Kperception_interfaces__msg__Coordinates__Sequence * array[m[K, size_t size);
+      |                                                         [01;36m[K~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^~~~~[m[K
+[01m[K/home/parallels/ros2_ws/src/general/build/perception_interfaces/rosidl_generator_c/perception_interfaces/msg/detail/coordinates__functions.c:[m[K In function ‘[01m[Kperception_interfaces__msg__Coordinates__fini[m[K’:
+[01m[K/home/parallels/ros2_ws/src/general/build/perception_interfaces/rosidl_generator_c/perception_interfaces/msg/detail/coordinates__functions.c:40:59:[m[K [01;35m[Kwarning: [m[Kpassing argument 1 of ‘[01m[Kperception_interfaces__msg__Coordinates__Sequence__fini[m[K’ from incompatible pointer type [[01;35m[K-Wincompatible-pointer-types[m[K]
+   40 |   perception_interfaces__msg__Coordinates__Sequence__fini([01;35m[K&msg->coordinates[m[K);
+      |                                                           [01;35m[K^~~~~~~~~~~~~~~~~[m[K
+      |                                                           [01;35m[K|[m[K
+      |                                                           [01;35m[Kint *[m[K
+In file included from [01m[K/home/parallels/ros2_ws/src/general/build/perception_interfaces/rosidl_generator_c/perception_interfaces/msg/detail/coordinates__functions.c:4[m[K:
+[01m[K/home/parallels/ros2_ws/src/general/build/perception_interfaces/rosidl_generator_c/perception_interfaces/msg/detail/coordinates__functions.h:121:109:[m[K [01;36m[Knote: [m[Kexpected ‘[01m[Kperception_interfaces__msg__Coordinates__Sequence *[m[K’ but argument is of type ‘[01m[Kint *[m[K’
+  121 | perception_interfaces__msg__Coordinates__Sequence__fini([01;36m[Kperception_interfaces__msg__Coordinates__Sequence * array[m[K);
+      |                                                         [01;36m[K~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^~~~~[m[K
+[01m[K/home/parallels/ros2_ws/src/general/build/perception_interfaces/rosidl_generator_c/perception_interfaces/msg/detail/coordinates__functions.c:[m[K In function ‘[01m[Kperception_interfaces__msg__Coordinates__are_equal[m[K’:
+[01m[K/home/parallels/ros2_ws/src/general/build/perception_interfaces/rosidl_generator_c/perception_interfaces/msg/detail/coordinates__functions.c:51:7:[m[K [01;35m[Kwarning: [m[Kpassing argument 1 of ‘[01m[Kperception_interfaces__msg__Coordinates__Sequence__are_equal[m[K’ from incompatible pointer type [[01;35m[K-Wincompatible-pointer-types[m[K]
+   51 |       [01;35m[K&(lhs->coordinates)[m[K, &(rhs->coordinates)))
+      |       [01;35m[K^~~~~~~~~~~~~~~~~~~[m[K
+      |       [01;35m[K|[m[K
+      |       [01;35m[Kconst int *[m[K
+In file included from [01m[K/home/parallels/ros2_ws/src/general/build/perception_interfaces/rosidl_generator_c/perception_interfaces/msg/detail/coordinates__functions.c:4[m[K:
+[01m[K/home/parallels/ros2_ws/src/general/build/perception_interfaces/rosidl_generator_c/perception_interfaces/msg/detail/coordinates__functions.h:154:120:[m[K [01;36m[Knote: [m[Kexpected ‘[01m[Kconst perception_interfaces__msg__Coordinates__Sequence *[m[K’ but argument is of type ‘[01m[Kconst int *[m[K’
+  154 | perception_interfaces__msg__Coordinates__Sequence__are_equal([01;36m[Kconst perception_interfaces__msg__Coordinates__Sequence * lhs[m[K, const perception_interfaces__msg__Coordinates__Sequence * rhs);
+      |                                                              [01;36m[K~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^~~[m[K
+[01m[K/home/parallels/ros2_ws/src/general/build/perception_interfaces/rosidl_generator_c/perception_interfaces/msg/detail/coordinates__functions.c:51:28:[m[K [01;35m[Kwarning: [m[Kpassing argument 2 of ‘[01m[Kperception_interfaces__msg__Coordinates__Sequence__are_equal[m[K’ from incompatible pointer type [[01;35m[K-Wincompatible-pointer-types[m[K]
+   51 |       &(lhs->coordinates), [01;35m[K&(rhs->coordinates)[m[K))
+      |                            [01;35m[K^~~~~~~~~~~~~~~~~~~[m[K
+      |                            [01;35m[K|[m[K
+      |                            [01;35m[Kconst int *[m[K
+In file included from [01m[K/home/parallels/ros2_ws/src/general/build/perception_interfaces/rosidl_generator_c/perception_interfaces/msg/detail/coordinates__functions.c:4[m[K:
+[01m[K/home/parallels/ros2_ws/src/general/build/perception_interfaces/rosidl_generator_c/perception_interfaces/msg/detail/coordinates__functions.h:154:183:[m[K [01;36m[Knote: [m[Kexpected ‘[01m[Kconst perception_interfaces__msg__Coordinates__Sequence *[m[K’ but argument is of type ‘[01m[Kconst int *[m[K’
+  154 | perception_interfaces__msg__Coordinates__Sequence__are_equal(const perception_interfaces__msg__Coordinates__Sequence * lhs, [01;36m[Kconst perception_interfaces__msg__Coordinates__Sequence * rhs[m[K);
+      |                                                                                                                             [01;36m[K~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^~~[m[K
+[01m[K/home/parallels/ros2_ws/src/general/build/perception_interfaces/rosidl_generator_c/perception_interfaces/msg/detail/coordinates__functions.c:[m[K In function ‘[01m[Kperception_interfaces__msg__Coordinates__copy[m[K’:
+[01m[K/home/parallels/ros2_ws/src/general/build/perception_interfaces/rosidl_generator_c/perception_interfaces/msg/detail/coordinates__functions.c:68:7:[m[K [01;35m[Kwarning: [m[Kpassing argument 1 of ‘[01m[Kperception_interfaces__msg__Coordinates__Sequence__copy[m[K’ from incompatible pointer type [[01;35m[K-Wincompatible-pointer-types[m[K]
+   68 |       [01;35m[K&(input->coordinates)[m[K, &(output->coordinates)))
+      |       [01;35m[K^~~~~~~~~~~~~~~~~~~~~[m[K
+      |       [01;35m[K|[m[K
+      |       [01;35m[Kconst int *[m[K
+In file included from [01m[K/home/parallels/ros2_ws/src/general/build/perception_interfaces/rosidl_generator_c/perception_interfaces/msg/detail/coordinates__functions.c:4[m[K:
+[01m[K/home/parallels/ros2_ws/src/general/build/perception_interfaces/rosidl_generator_c/perception_interfaces/msg/detail/coordinates__functions.h:170:61:[m[K [01;36m[Knote: [m[Kexpected ‘[01m[Kconst perception_interfaces__msg__Coordinates__Sequence *[m[K’ but argument is of type ‘[01m[Kconst int *[m[K’
+  170 |   [01;36m[Kconst perception_interfaces__msg__Coordinates__Sequence * input[m[K,
+      |   [01;36m[K~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^~~~~[m[K
+[01m[K/home/parallels/ros2_ws/src/general/build/perception_interfaces/rosidl_generator_c/perception_interfaces/msg/detail/coordinates__functions.c:68:30:[m[K [01;35m[Kwarning: [m[Kpassing argument 2 of ‘[01m[Kperception_interfaces__msg__Coordinates__Sequence__copy[m[K’ from incompatible pointer type [[01;35m[K-Wincompatible-pointer-types[m[K]
+   68 |       &(input->coordinates), [01;35m[K&(output->coordinates)[m[K))
+      |                              [01;35m[K^~~~~~~~~~~~~~~~~~~~~~[m[K
+      |                              [01;35m[K|[m[K
+      |                              [01;35m[Kint *[m[K
+In file included from [01m[K/home/parallels/ros2_ws/src/general/build/perception_interfaces/rosidl_generator_c/perception_interfaces/msg/detail/coordinates__functions.c:4[m[K:
+[01m[K/home/parallels/ros2_ws/src/general/build/perception_interfaces/rosidl_generator_c/perception_interfaces/msg/detail/coordinates__functions.h:171:55:[m[K [01;36m[Knote: [m[Kexpected ‘[01m[Kperception_interfaces__msg__Coordinates__Sequence *[m[K’ but argument is of type ‘[01m[Kint *[m[K’
+  171 |   [01;36m[Kperception_interfaces__msg__Coordinates__Sequence * output[m[K);
+      |   [01;36m[K~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^~~~~~[m[K
+gmake[2]: *** [CMakeFiles/perception_interfaces__rosidl_generator_c.dir/build.make:377: CMakeFiles/perception_interfaces__rosidl_generator_c.dir/rosidl_generator_c/perception_interfaces/msg/detail/coordinates__functions.c.o] Error 1
+gmake[1]: *** [CMakeFiles/Makefile2:213: CMakeFiles/perception_interfaces__rosidl_generator_c.dir/all] Error 2
+gmake[1]: *** Waiting for unfinished jobs....
+[ 26%] [34m[1mGenerating C++ introspection for ROS interfaces[0m
+[35m[1mConsolidate compiler generated dependencies of target perception_interfaces__rosidl_typesupport_introspection_cpp[0m
+[ 27%] [32mBuilding CXX object CMakeFiles/perception_interfaces__rosidl_typesupport_introspection_cpp.dir/rosidl_typesupport_introspection_cpp/perception_interfaces/msg/detail/prop_array__type_support.cpp.o[0m
+[ 28%] [32mBuilding CXX object CMakeFiles/perception_interfaces__rosidl_typesupport_introspection_cpp.dir/rosidl_typesupport_introspection_cpp/perception_interfaces/msg/detail/prop__type_support.cpp.o[0m
+[ 29%] [32mBuilding CXX object CMakeFiles/perception_interfaces__rosidl_typesupport_introspection_cpp.dir/rosidl_typesupport_introspection_cpp/perception_interfaces/msg/detail/bounding_boxes__type_support.cpp.o[0m
+[ 31%] [32mBuilding CXX object CMakeFiles/perception_interfaces__rosidl_typesupport_introspection_cpp.dir/rosidl_typesupport_introspection_cpp/perception_interfaces/msg/detail/bounding_box__type_support.cpp.o[0m
+[ 33%] [32mBuilding CXX object CMakeFiles/perception_interfaces__rosidl_typesupport_introspection_cpp.dir/rosidl_typesupport_introspection_cpp/perception_interfaces/msg/detail/gate_array__type_support.cpp.o[0m
+[ 33%] [32mBuilding CXX object CMakeFiles/perception_interfaces__rosidl_typesupport_introspection_cpp.dir/rosidl_typesupport_introspection_cpp/perception_interfaces/msg/detail/gate__type_support.cpp.o[0m
+[ 34%] [32mBuilding CXX object CMakeFiles/perception_interfaces__rosidl_typesupport_introspection_cpp.dir/rosidl_typesupport_introspection_cpp/perception_interfaces/msg/detail/coordinate__type_support.cpp.o[0m
+[ 35%] [32mBuilding CXX object CMakeFiles/perception_interfaces__rosidl_typesupport_introspection_cpp.dir/rosidl_typesupport_introspection_cpp/perception_interfaces/msg/detail/coordinates__type_support.cpp.o[0m
+[01m[K/home/parallels/ros2_ws/src/general/build/perception_interfaces/rosidl_typesupport_introspection_cpp/perception_interfaces/msg/detail/coordinates__type_support.cpp:134:74:[m[K [01;31m[Kerror: [m[Kspecialization of ‘[01m[Kconst rosidl_message_type_support_t* rosidl_typesupport_introspection_cpp::get_message_type_support_handle() [with T = perception_interfaces::msg::Coordinates_<std::allocator<void> >; rosidl_message_type_support_t = rosidl_message_type_support_t][m[K’ after instantiation
+  134 | get_message_type_support_handle<perception_interfaces::msg::Coordinates>([01;31m[K)[m[K
+      |                                                                          [01;31m[K^[m[K
+gmake[2]: *** [CMakeFiles/perception_interfaces__rosidl_typesupport_introspection_cpp.dir/build.make:300: CMakeFiles/perception_interfaces__rosidl_typesupport_introspection_cpp.dir/rosidl_typesupport_introspection_cpp/perception_interfaces/msg/detail/coordinates__type_support.cpp.o] Error 1
+gmake[2]: *** Waiting for unfinished jobs....
+gmake[1]: *** [CMakeFiles/Makefile2:369: CMakeFiles/perception_interfaces__rosidl_typesupport_introspection_cpp.dir/all] Error 2
+gmake: *** [Makefile:146: all] Error 2
