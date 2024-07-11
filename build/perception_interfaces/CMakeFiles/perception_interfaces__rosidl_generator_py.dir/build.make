@@ -153,6 +153,34 @@ CMakeFiles/perception_interfaces__rosidl_generator_py.dir/rosidl_generator_py/pe
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling C source to assembly CMakeFiles/perception_interfaces__rosidl_generator_py.dir/rosidl_generator_py/perception_interfaces/msg/_gate_array_s.c.s"
 	/usr/lib/ccache/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S /home/parallels/ros2_ws/src/general/build/perception_interfaces/rosidl_generator_py/perception_interfaces/msg/_gate_array_s.c -o CMakeFiles/perception_interfaces__rosidl_generator_py.dir/rosidl_generator_py/perception_interfaces/msg/_gate_array_s.c.s
 
+CMakeFiles/perception_interfaces__rosidl_generator_py.dir/rosidl_generator_py/perception_interfaces/msg/_coordinate_s.c.o: CMakeFiles/perception_interfaces__rosidl_generator_py.dir/flags.make
+CMakeFiles/perception_interfaces__rosidl_generator_py.dir/rosidl_generator_py/perception_interfaces/msg/_coordinate_s.c.o: rosidl_generator_py/perception_interfaces/msg/_coordinate_s.c
+CMakeFiles/perception_interfaces__rosidl_generator_py.dir/rosidl_generator_py/perception_interfaces/msg/_coordinate_s.c.o: CMakeFiles/perception_interfaces__rosidl_generator_py.dir/compiler_depend.ts
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/parallels/ros2_ws/src/general/build/perception_interfaces/CMakeFiles --progress-num=$(CMAKE_PROGRESS_7) "Building C object CMakeFiles/perception_interfaces__rosidl_generator_py.dir/rosidl_generator_py/perception_interfaces/msg/_coordinate_s.c.o"
+	/usr/lib/ccache/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -MD -MT CMakeFiles/perception_interfaces__rosidl_generator_py.dir/rosidl_generator_py/perception_interfaces/msg/_coordinate_s.c.o -MF CMakeFiles/perception_interfaces__rosidl_generator_py.dir/rosidl_generator_py/perception_interfaces/msg/_coordinate_s.c.o.d -o CMakeFiles/perception_interfaces__rosidl_generator_py.dir/rosidl_generator_py/perception_interfaces/msg/_coordinate_s.c.o -c /home/parallels/ros2_ws/src/general/build/perception_interfaces/rosidl_generator_py/perception_interfaces/msg/_coordinate_s.c
+
+CMakeFiles/perception_interfaces__rosidl_generator_py.dir/rosidl_generator_py/perception_interfaces/msg/_coordinate_s.c.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing C source to CMakeFiles/perception_interfaces__rosidl_generator_py.dir/rosidl_generator_py/perception_interfaces/msg/_coordinate_s.c.i"
+	/usr/lib/ccache/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E /home/parallels/ros2_ws/src/general/build/perception_interfaces/rosidl_generator_py/perception_interfaces/msg/_coordinate_s.c > CMakeFiles/perception_interfaces__rosidl_generator_py.dir/rosidl_generator_py/perception_interfaces/msg/_coordinate_s.c.i
+
+CMakeFiles/perception_interfaces__rosidl_generator_py.dir/rosidl_generator_py/perception_interfaces/msg/_coordinate_s.c.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling C source to assembly CMakeFiles/perception_interfaces__rosidl_generator_py.dir/rosidl_generator_py/perception_interfaces/msg/_coordinate_s.c.s"
+	/usr/lib/ccache/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S /home/parallels/ros2_ws/src/general/build/perception_interfaces/rosidl_generator_py/perception_interfaces/msg/_coordinate_s.c -o CMakeFiles/perception_interfaces__rosidl_generator_py.dir/rosidl_generator_py/perception_interfaces/msg/_coordinate_s.c.s
+
+CMakeFiles/perception_interfaces__rosidl_generator_py.dir/rosidl_generator_py/perception_interfaces/msg/_coordinates_s.c.o: CMakeFiles/perception_interfaces__rosidl_generator_py.dir/flags.make
+CMakeFiles/perception_interfaces__rosidl_generator_py.dir/rosidl_generator_py/perception_interfaces/msg/_coordinates_s.c.o: rosidl_generator_py/perception_interfaces/msg/_coordinates_s.c
+CMakeFiles/perception_interfaces__rosidl_generator_py.dir/rosidl_generator_py/perception_interfaces/msg/_coordinates_s.c.o: CMakeFiles/perception_interfaces__rosidl_generator_py.dir/compiler_depend.ts
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/parallels/ros2_ws/src/general/build/perception_interfaces/CMakeFiles --progress-num=$(CMAKE_PROGRESS_8) "Building C object CMakeFiles/perception_interfaces__rosidl_generator_py.dir/rosidl_generator_py/perception_interfaces/msg/_coordinates_s.c.o"
+	/usr/lib/ccache/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -MD -MT CMakeFiles/perception_interfaces__rosidl_generator_py.dir/rosidl_generator_py/perception_interfaces/msg/_coordinates_s.c.o -MF CMakeFiles/perception_interfaces__rosidl_generator_py.dir/rosidl_generator_py/perception_interfaces/msg/_coordinates_s.c.o.d -o CMakeFiles/perception_interfaces__rosidl_generator_py.dir/rosidl_generator_py/perception_interfaces/msg/_coordinates_s.c.o -c /home/parallels/ros2_ws/src/general/build/perception_interfaces/rosidl_generator_py/perception_interfaces/msg/_coordinates_s.c
+
+CMakeFiles/perception_interfaces__rosidl_generator_py.dir/rosidl_generator_py/perception_interfaces/msg/_coordinates_s.c.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing C source to CMakeFiles/perception_interfaces__rosidl_generator_py.dir/rosidl_generator_py/perception_interfaces/msg/_coordinates_s.c.i"
+	/usr/lib/ccache/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E /home/parallels/ros2_ws/src/general/build/perception_interfaces/rosidl_generator_py/perception_interfaces/msg/_coordinates_s.c > CMakeFiles/perception_interfaces__rosidl_generator_py.dir/rosidl_generator_py/perception_interfaces/msg/_coordinates_s.c.i
+
+CMakeFiles/perception_interfaces__rosidl_generator_py.dir/rosidl_generator_py/perception_interfaces/msg/_coordinates_s.c.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling C source to assembly CMakeFiles/perception_interfaces__rosidl_generator_py.dir/rosidl_generator_py/perception_interfaces/msg/_coordinates_s.c.s"
+	/usr/lib/ccache/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S /home/parallels/ros2_ws/src/general/build/perception_interfaces/rosidl_generator_py/perception_interfaces/msg/_coordinates_s.c -o CMakeFiles/perception_interfaces__rosidl_generator_py.dir/rosidl_generator_py/perception_interfaces/msg/_coordinates_s.c.s
+
 # Object files for target perception_interfaces__rosidl_generator_py
 perception_interfaces__rosidl_generator_py_OBJECTS = \
 "CMakeFiles/perception_interfaces__rosidl_generator_py.dir/rosidl_generator_py/perception_interfaces/msg/_prop_s.c.o" \
@@ -160,7 +188,9 @@ perception_interfaces__rosidl_generator_py_OBJECTS = \
 "CMakeFiles/perception_interfaces__rosidl_generator_py.dir/rosidl_generator_py/perception_interfaces/msg/_bounding_box_s.c.o" \
 "CMakeFiles/perception_interfaces__rosidl_generator_py.dir/rosidl_generator_py/perception_interfaces/msg/_bounding_boxes_s.c.o" \
 "CMakeFiles/perception_interfaces__rosidl_generator_py.dir/rosidl_generator_py/perception_interfaces/msg/_gate_s.c.o" \
-"CMakeFiles/perception_interfaces__rosidl_generator_py.dir/rosidl_generator_py/perception_interfaces/msg/_gate_array_s.c.o"
+"CMakeFiles/perception_interfaces__rosidl_generator_py.dir/rosidl_generator_py/perception_interfaces/msg/_gate_array_s.c.o" \
+"CMakeFiles/perception_interfaces__rosidl_generator_py.dir/rosidl_generator_py/perception_interfaces/msg/_coordinate_s.c.o" \
+"CMakeFiles/perception_interfaces__rosidl_generator_py.dir/rosidl_generator_py/perception_interfaces/msg/_coordinates_s.c.o"
 
 # External object files for target perception_interfaces__rosidl_generator_py
 perception_interfaces__rosidl_generator_py_EXTERNAL_OBJECTS =
@@ -171,6 +201,8 @@ rosidl_generator_py/perception_interfaces/libperception_interfaces__rosidl_gener
 rosidl_generator_py/perception_interfaces/libperception_interfaces__rosidl_generator_py.so: CMakeFiles/perception_interfaces__rosidl_generator_py.dir/rosidl_generator_py/perception_interfaces/msg/_bounding_boxes_s.c.o
 rosidl_generator_py/perception_interfaces/libperception_interfaces__rosidl_generator_py.so: CMakeFiles/perception_interfaces__rosidl_generator_py.dir/rosidl_generator_py/perception_interfaces/msg/_gate_s.c.o
 rosidl_generator_py/perception_interfaces/libperception_interfaces__rosidl_generator_py.so: CMakeFiles/perception_interfaces__rosidl_generator_py.dir/rosidl_generator_py/perception_interfaces/msg/_gate_array_s.c.o
+rosidl_generator_py/perception_interfaces/libperception_interfaces__rosidl_generator_py.so: CMakeFiles/perception_interfaces__rosidl_generator_py.dir/rosidl_generator_py/perception_interfaces/msg/_coordinate_s.c.o
+rosidl_generator_py/perception_interfaces/libperception_interfaces__rosidl_generator_py.so: CMakeFiles/perception_interfaces__rosidl_generator_py.dir/rosidl_generator_py/perception_interfaces/msg/_coordinates_s.c.o
 rosidl_generator_py/perception_interfaces/libperception_interfaces__rosidl_generator_py.so: CMakeFiles/perception_interfaces__rosidl_generator_py.dir/build.make
 rosidl_generator_py/perception_interfaces/libperception_interfaces__rosidl_generator_py.so: /usr/lib/aarch64-linux-gnu/libpython3.10.so
 rosidl_generator_py/perception_interfaces/libperception_interfaces__rosidl_generator_py.so: libperception_interfaces__rosidl_typesupport_c.so
@@ -188,7 +220,7 @@ rosidl_generator_py/perception_interfaces/libperception_interfaces__rosidl_gener
 rosidl_generator_py/perception_interfaces/libperception_interfaces__rosidl_generator_py.so: /opt/ros/humble/lib/librosidl_runtime_c.so
 rosidl_generator_py/perception_interfaces/libperception_interfaces__rosidl_generator_py.so: /opt/ros/humble/lib/librcutils.so
 rosidl_generator_py/perception_interfaces/libperception_interfaces__rosidl_generator_py.so: CMakeFiles/perception_interfaces__rosidl_generator_py.dir/link.txt
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=/home/parallels/ros2_ws/src/general/build/perception_interfaces/CMakeFiles --progress-num=$(CMAKE_PROGRESS_7) "Linking C shared library rosidl_generator_py/perception_interfaces/libperception_interfaces__rosidl_generator_py.so"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=/home/parallels/ros2_ws/src/general/build/perception_interfaces/CMakeFiles --progress-num=$(CMAKE_PROGRESS_9) "Linking C shared library rosidl_generator_py/perception_interfaces/libperception_interfaces__rosidl_generator_py.so"
 	$(CMAKE_COMMAND) -E cmake_link_script CMakeFiles/perception_interfaces__rosidl_generator_py.dir/link.txt --verbose=$(VERBOSE)
 
 # Rule to build all files generated by this target.

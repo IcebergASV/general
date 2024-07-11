@@ -88,6 +88,8 @@ rosidl_generator_c/perception_interfaces/msg/prop.h: rosidl_adapter/perception_i
 rosidl_generator_c/perception_interfaces/msg/prop.h: rosidl_adapter/perception_interfaces/msg/BoundingBoxes.idl
 rosidl_generator_c/perception_interfaces/msg/prop.h: rosidl_adapter/perception_interfaces/msg/Gate.idl
 rosidl_generator_c/perception_interfaces/msg/prop.h: rosidl_adapter/perception_interfaces/msg/GateArray.idl
+rosidl_generator_c/perception_interfaces/msg/prop.h: rosidl_adapter/perception_interfaces/msg/Coordinate.idl
+rosidl_generator_c/perception_interfaces/msg/prop.h: rosidl_adapter/perception_interfaces/msg/Coordinates.idl
 rosidl_generator_c/perception_interfaces/msg/prop.h: /opt/ros/humble/share/std_msgs/msg/Bool.idl
 rosidl_generator_c/perception_interfaces/msg/prop.h: /opt/ros/humble/share/std_msgs/msg/Byte.idl
 rosidl_generator_c/perception_interfaces/msg/prop.h: /opt/ros/humble/share/std_msgs/msg/ByteMultiArray.idl
@@ -222,6 +224,30 @@ rosidl_generator_c/perception_interfaces/msg/detail/gate_array__struct.h: rosidl
 rosidl_generator_c/perception_interfaces/msg/detail/gate_array__type_support.h: rosidl_generator_c/perception_interfaces/msg/prop.h
 	@$(CMAKE_COMMAND) -E touch_nocreate rosidl_generator_c/perception_interfaces/msg/detail/gate_array__type_support.h
 
+rosidl_generator_c/perception_interfaces/msg/coordinate.h: rosidl_generator_c/perception_interfaces/msg/prop.h
+	@$(CMAKE_COMMAND) -E touch_nocreate rosidl_generator_c/perception_interfaces/msg/coordinate.h
+
+rosidl_generator_c/perception_interfaces/msg/detail/coordinate__functions.h: rosidl_generator_c/perception_interfaces/msg/prop.h
+	@$(CMAKE_COMMAND) -E touch_nocreate rosidl_generator_c/perception_interfaces/msg/detail/coordinate__functions.h
+
+rosidl_generator_c/perception_interfaces/msg/detail/coordinate__struct.h: rosidl_generator_c/perception_interfaces/msg/prop.h
+	@$(CMAKE_COMMAND) -E touch_nocreate rosidl_generator_c/perception_interfaces/msg/detail/coordinate__struct.h
+
+rosidl_generator_c/perception_interfaces/msg/detail/coordinate__type_support.h: rosidl_generator_c/perception_interfaces/msg/prop.h
+	@$(CMAKE_COMMAND) -E touch_nocreate rosidl_generator_c/perception_interfaces/msg/detail/coordinate__type_support.h
+
+rosidl_generator_c/perception_interfaces/msg/coordinates.h: rosidl_generator_c/perception_interfaces/msg/prop.h
+	@$(CMAKE_COMMAND) -E touch_nocreate rosidl_generator_c/perception_interfaces/msg/coordinates.h
+
+rosidl_generator_c/perception_interfaces/msg/detail/coordinates__functions.h: rosidl_generator_c/perception_interfaces/msg/prop.h
+	@$(CMAKE_COMMAND) -E touch_nocreate rosidl_generator_c/perception_interfaces/msg/detail/coordinates__functions.h
+
+rosidl_generator_c/perception_interfaces/msg/detail/coordinates__struct.h: rosidl_generator_c/perception_interfaces/msg/prop.h
+	@$(CMAKE_COMMAND) -E touch_nocreate rosidl_generator_c/perception_interfaces/msg/detail/coordinates__struct.h
+
+rosidl_generator_c/perception_interfaces/msg/detail/coordinates__type_support.h: rosidl_generator_c/perception_interfaces/msg/prop.h
+	@$(CMAKE_COMMAND) -E touch_nocreate rosidl_generator_c/perception_interfaces/msg/detail/coordinates__type_support.h
+
 rosidl_generator_c/perception_interfaces/msg/detail/prop__functions.c: rosidl_generator_c/perception_interfaces/msg/prop.h
 	@$(CMAKE_COMMAND) -E touch_nocreate rosidl_generator_c/perception_interfaces/msg/detail/prop__functions.c
 
@@ -239,6 +265,12 @@ rosidl_generator_c/perception_interfaces/msg/detail/gate__functions.c: rosidl_ge
 
 rosidl_generator_c/perception_interfaces/msg/detail/gate_array__functions.c: rosidl_generator_c/perception_interfaces/msg/prop.h
 	@$(CMAKE_COMMAND) -E touch_nocreate rosidl_generator_c/perception_interfaces/msg/detail/gate_array__functions.c
+
+rosidl_generator_c/perception_interfaces/msg/detail/coordinate__functions.c: rosidl_generator_c/perception_interfaces/msg/prop.h
+	@$(CMAKE_COMMAND) -E touch_nocreate rosidl_generator_c/perception_interfaces/msg/detail/coordinate__functions.c
+
+rosidl_generator_c/perception_interfaces/msg/detail/coordinates__functions.c: rosidl_generator_c/perception_interfaces/msg/prop.h
+	@$(CMAKE_COMMAND) -E touch_nocreate rosidl_generator_c/perception_interfaces/msg/detail/coordinates__functions.c
 
 CMakeFiles/perception_interfaces__rosidl_generator_c.dir/rosidl_generator_c/perception_interfaces/msg/detail/prop__functions.c.o: CMakeFiles/perception_interfaces__rosidl_generator_c.dir/flags.make
 CMakeFiles/perception_interfaces__rosidl_generator_c.dir/rosidl_generator_c/perception_interfaces/msg/detail/prop__functions.c.o: rosidl_generator_c/perception_interfaces/msg/detail/prop__functions.c
@@ -324,6 +356,34 @@ CMakeFiles/perception_interfaces__rosidl_generator_c.dir/rosidl_generator_c/perc
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling C source to assembly CMakeFiles/perception_interfaces__rosidl_generator_c.dir/rosidl_generator_c/perception_interfaces/msg/detail/gate_array__functions.c.s"
 	/usr/lib/ccache/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S /home/parallels/ros2_ws/src/general/build/perception_interfaces/rosidl_generator_c/perception_interfaces/msg/detail/gate_array__functions.c -o CMakeFiles/perception_interfaces__rosidl_generator_c.dir/rosidl_generator_c/perception_interfaces/msg/detail/gate_array__functions.c.s
 
+CMakeFiles/perception_interfaces__rosidl_generator_c.dir/rosidl_generator_c/perception_interfaces/msg/detail/coordinate__functions.c.o: CMakeFiles/perception_interfaces__rosidl_generator_c.dir/flags.make
+CMakeFiles/perception_interfaces__rosidl_generator_c.dir/rosidl_generator_c/perception_interfaces/msg/detail/coordinate__functions.c.o: rosidl_generator_c/perception_interfaces/msg/detail/coordinate__functions.c
+CMakeFiles/perception_interfaces__rosidl_generator_c.dir/rosidl_generator_c/perception_interfaces/msg/detail/coordinate__functions.c.o: CMakeFiles/perception_interfaces__rosidl_generator_c.dir/compiler_depend.ts
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/parallels/ros2_ws/src/general/build/perception_interfaces/CMakeFiles --progress-num=$(CMAKE_PROGRESS_8) "Building C object CMakeFiles/perception_interfaces__rosidl_generator_c.dir/rosidl_generator_c/perception_interfaces/msg/detail/coordinate__functions.c.o"
+	/usr/lib/ccache/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -MD -MT CMakeFiles/perception_interfaces__rosidl_generator_c.dir/rosidl_generator_c/perception_interfaces/msg/detail/coordinate__functions.c.o -MF CMakeFiles/perception_interfaces__rosidl_generator_c.dir/rosidl_generator_c/perception_interfaces/msg/detail/coordinate__functions.c.o.d -o CMakeFiles/perception_interfaces__rosidl_generator_c.dir/rosidl_generator_c/perception_interfaces/msg/detail/coordinate__functions.c.o -c /home/parallels/ros2_ws/src/general/build/perception_interfaces/rosidl_generator_c/perception_interfaces/msg/detail/coordinate__functions.c
+
+CMakeFiles/perception_interfaces__rosidl_generator_c.dir/rosidl_generator_c/perception_interfaces/msg/detail/coordinate__functions.c.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing C source to CMakeFiles/perception_interfaces__rosidl_generator_c.dir/rosidl_generator_c/perception_interfaces/msg/detail/coordinate__functions.c.i"
+	/usr/lib/ccache/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E /home/parallels/ros2_ws/src/general/build/perception_interfaces/rosidl_generator_c/perception_interfaces/msg/detail/coordinate__functions.c > CMakeFiles/perception_interfaces__rosidl_generator_c.dir/rosidl_generator_c/perception_interfaces/msg/detail/coordinate__functions.c.i
+
+CMakeFiles/perception_interfaces__rosidl_generator_c.dir/rosidl_generator_c/perception_interfaces/msg/detail/coordinate__functions.c.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling C source to assembly CMakeFiles/perception_interfaces__rosidl_generator_c.dir/rosidl_generator_c/perception_interfaces/msg/detail/coordinate__functions.c.s"
+	/usr/lib/ccache/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S /home/parallels/ros2_ws/src/general/build/perception_interfaces/rosidl_generator_c/perception_interfaces/msg/detail/coordinate__functions.c -o CMakeFiles/perception_interfaces__rosidl_generator_c.dir/rosidl_generator_c/perception_interfaces/msg/detail/coordinate__functions.c.s
+
+CMakeFiles/perception_interfaces__rosidl_generator_c.dir/rosidl_generator_c/perception_interfaces/msg/detail/coordinates__functions.c.o: CMakeFiles/perception_interfaces__rosidl_generator_c.dir/flags.make
+CMakeFiles/perception_interfaces__rosidl_generator_c.dir/rosidl_generator_c/perception_interfaces/msg/detail/coordinates__functions.c.o: rosidl_generator_c/perception_interfaces/msg/detail/coordinates__functions.c
+CMakeFiles/perception_interfaces__rosidl_generator_c.dir/rosidl_generator_c/perception_interfaces/msg/detail/coordinates__functions.c.o: CMakeFiles/perception_interfaces__rosidl_generator_c.dir/compiler_depend.ts
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/parallels/ros2_ws/src/general/build/perception_interfaces/CMakeFiles --progress-num=$(CMAKE_PROGRESS_9) "Building C object CMakeFiles/perception_interfaces__rosidl_generator_c.dir/rosidl_generator_c/perception_interfaces/msg/detail/coordinates__functions.c.o"
+	/usr/lib/ccache/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -MD -MT CMakeFiles/perception_interfaces__rosidl_generator_c.dir/rosidl_generator_c/perception_interfaces/msg/detail/coordinates__functions.c.o -MF CMakeFiles/perception_interfaces__rosidl_generator_c.dir/rosidl_generator_c/perception_interfaces/msg/detail/coordinates__functions.c.o.d -o CMakeFiles/perception_interfaces__rosidl_generator_c.dir/rosidl_generator_c/perception_interfaces/msg/detail/coordinates__functions.c.o -c /home/parallels/ros2_ws/src/general/build/perception_interfaces/rosidl_generator_c/perception_interfaces/msg/detail/coordinates__functions.c
+
+CMakeFiles/perception_interfaces__rosidl_generator_c.dir/rosidl_generator_c/perception_interfaces/msg/detail/coordinates__functions.c.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing C source to CMakeFiles/perception_interfaces__rosidl_generator_c.dir/rosidl_generator_c/perception_interfaces/msg/detail/coordinates__functions.c.i"
+	/usr/lib/ccache/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E /home/parallels/ros2_ws/src/general/build/perception_interfaces/rosidl_generator_c/perception_interfaces/msg/detail/coordinates__functions.c > CMakeFiles/perception_interfaces__rosidl_generator_c.dir/rosidl_generator_c/perception_interfaces/msg/detail/coordinates__functions.c.i
+
+CMakeFiles/perception_interfaces__rosidl_generator_c.dir/rosidl_generator_c/perception_interfaces/msg/detail/coordinates__functions.c.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling C source to assembly CMakeFiles/perception_interfaces__rosidl_generator_c.dir/rosidl_generator_c/perception_interfaces/msg/detail/coordinates__functions.c.s"
+	/usr/lib/ccache/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S /home/parallels/ros2_ws/src/general/build/perception_interfaces/rosidl_generator_c/perception_interfaces/msg/detail/coordinates__functions.c -o CMakeFiles/perception_interfaces__rosidl_generator_c.dir/rosidl_generator_c/perception_interfaces/msg/detail/coordinates__functions.c.s
+
 # Object files for target perception_interfaces__rosidl_generator_c
 perception_interfaces__rosidl_generator_c_OBJECTS = \
 "CMakeFiles/perception_interfaces__rosidl_generator_c.dir/rosidl_generator_c/perception_interfaces/msg/detail/prop__functions.c.o" \
@@ -331,7 +391,9 @@ perception_interfaces__rosidl_generator_c_OBJECTS = \
 "CMakeFiles/perception_interfaces__rosidl_generator_c.dir/rosidl_generator_c/perception_interfaces/msg/detail/bounding_box__functions.c.o" \
 "CMakeFiles/perception_interfaces__rosidl_generator_c.dir/rosidl_generator_c/perception_interfaces/msg/detail/bounding_boxes__functions.c.o" \
 "CMakeFiles/perception_interfaces__rosidl_generator_c.dir/rosidl_generator_c/perception_interfaces/msg/detail/gate__functions.c.o" \
-"CMakeFiles/perception_interfaces__rosidl_generator_c.dir/rosidl_generator_c/perception_interfaces/msg/detail/gate_array__functions.c.o"
+"CMakeFiles/perception_interfaces__rosidl_generator_c.dir/rosidl_generator_c/perception_interfaces/msg/detail/gate_array__functions.c.o" \
+"CMakeFiles/perception_interfaces__rosidl_generator_c.dir/rosidl_generator_c/perception_interfaces/msg/detail/coordinate__functions.c.o" \
+"CMakeFiles/perception_interfaces__rosidl_generator_c.dir/rosidl_generator_c/perception_interfaces/msg/detail/coordinates__functions.c.o"
 
 # External object files for target perception_interfaces__rosidl_generator_c
 perception_interfaces__rosidl_generator_c_EXTERNAL_OBJECTS =
@@ -342,6 +404,8 @@ libperception_interfaces__rosidl_generator_c.so: CMakeFiles/perception_interface
 libperception_interfaces__rosidl_generator_c.so: CMakeFiles/perception_interfaces__rosidl_generator_c.dir/rosidl_generator_c/perception_interfaces/msg/detail/bounding_boxes__functions.c.o
 libperception_interfaces__rosidl_generator_c.so: CMakeFiles/perception_interfaces__rosidl_generator_c.dir/rosidl_generator_c/perception_interfaces/msg/detail/gate__functions.c.o
 libperception_interfaces__rosidl_generator_c.so: CMakeFiles/perception_interfaces__rosidl_generator_c.dir/rosidl_generator_c/perception_interfaces/msg/detail/gate_array__functions.c.o
+libperception_interfaces__rosidl_generator_c.so: CMakeFiles/perception_interfaces__rosidl_generator_c.dir/rosidl_generator_c/perception_interfaces/msg/detail/coordinate__functions.c.o
+libperception_interfaces__rosidl_generator_c.so: CMakeFiles/perception_interfaces__rosidl_generator_c.dir/rosidl_generator_c/perception_interfaces/msg/detail/coordinates__functions.c.o
 libperception_interfaces__rosidl_generator_c.so: CMakeFiles/perception_interfaces__rosidl_generator_c.dir/build.make
 libperception_interfaces__rosidl_generator_c.so: /opt/ros/humble/lib/libgeometry_msgs__rosidl_generator_c.so
 libperception_interfaces__rosidl_generator_c.so: /opt/ros/humble/lib/libstd_msgs__rosidl_generator_c.so
@@ -349,7 +413,7 @@ libperception_interfaces__rosidl_generator_c.so: /opt/ros/humble/lib/libbuiltin_
 libperception_interfaces__rosidl_generator_c.so: /opt/ros/humble/lib/librosidl_runtime_c.so
 libperception_interfaces__rosidl_generator_c.so: /opt/ros/humble/lib/librcutils.so
 libperception_interfaces__rosidl_generator_c.so: CMakeFiles/perception_interfaces__rosidl_generator_c.dir/link.txt
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=/home/parallels/ros2_ws/src/general/build/perception_interfaces/CMakeFiles --progress-num=$(CMAKE_PROGRESS_8) "Linking C shared library libperception_interfaces__rosidl_generator_c.so"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=/home/parallels/ros2_ws/src/general/build/perception_interfaces/CMakeFiles --progress-num=$(CMAKE_PROGRESS_10) "Linking C shared library libperception_interfaces__rosidl_generator_c.so"
 	$(CMAKE_COMMAND) -E cmake_link_script CMakeFiles/perception_interfaces__rosidl_generator_c.dir/link.txt --verbose=$(VERBOSE)
 
 # Rule to build all files generated by this target.
@@ -362,6 +426,8 @@ CMakeFiles/perception_interfaces__rosidl_generator_c.dir/clean:
 
 CMakeFiles/perception_interfaces__rosidl_generator_c.dir/depend: rosidl_generator_c/perception_interfaces/msg/bounding_box.h
 CMakeFiles/perception_interfaces__rosidl_generator_c.dir/depend: rosidl_generator_c/perception_interfaces/msg/bounding_boxes.h
+CMakeFiles/perception_interfaces__rosidl_generator_c.dir/depend: rosidl_generator_c/perception_interfaces/msg/coordinate.h
+CMakeFiles/perception_interfaces__rosidl_generator_c.dir/depend: rosidl_generator_c/perception_interfaces/msg/coordinates.h
 CMakeFiles/perception_interfaces__rosidl_generator_c.dir/depend: rosidl_generator_c/perception_interfaces/msg/detail/bounding_box__functions.c
 CMakeFiles/perception_interfaces__rosidl_generator_c.dir/depend: rosidl_generator_c/perception_interfaces/msg/detail/bounding_box__functions.h
 CMakeFiles/perception_interfaces__rosidl_generator_c.dir/depend: rosidl_generator_c/perception_interfaces/msg/detail/bounding_box__struct.h
@@ -370,6 +436,14 @@ CMakeFiles/perception_interfaces__rosidl_generator_c.dir/depend: rosidl_generato
 CMakeFiles/perception_interfaces__rosidl_generator_c.dir/depend: rosidl_generator_c/perception_interfaces/msg/detail/bounding_boxes__functions.h
 CMakeFiles/perception_interfaces__rosidl_generator_c.dir/depend: rosidl_generator_c/perception_interfaces/msg/detail/bounding_boxes__struct.h
 CMakeFiles/perception_interfaces__rosidl_generator_c.dir/depend: rosidl_generator_c/perception_interfaces/msg/detail/bounding_boxes__type_support.h
+CMakeFiles/perception_interfaces__rosidl_generator_c.dir/depend: rosidl_generator_c/perception_interfaces/msg/detail/coordinate__functions.c
+CMakeFiles/perception_interfaces__rosidl_generator_c.dir/depend: rosidl_generator_c/perception_interfaces/msg/detail/coordinate__functions.h
+CMakeFiles/perception_interfaces__rosidl_generator_c.dir/depend: rosidl_generator_c/perception_interfaces/msg/detail/coordinate__struct.h
+CMakeFiles/perception_interfaces__rosidl_generator_c.dir/depend: rosidl_generator_c/perception_interfaces/msg/detail/coordinate__type_support.h
+CMakeFiles/perception_interfaces__rosidl_generator_c.dir/depend: rosidl_generator_c/perception_interfaces/msg/detail/coordinates__functions.c
+CMakeFiles/perception_interfaces__rosidl_generator_c.dir/depend: rosidl_generator_c/perception_interfaces/msg/detail/coordinates__functions.h
+CMakeFiles/perception_interfaces__rosidl_generator_c.dir/depend: rosidl_generator_c/perception_interfaces/msg/detail/coordinates__struct.h
+CMakeFiles/perception_interfaces__rosidl_generator_c.dir/depend: rosidl_generator_c/perception_interfaces/msg/detail/coordinates__type_support.h
 CMakeFiles/perception_interfaces__rosidl_generator_c.dir/depend: rosidl_generator_c/perception_interfaces/msg/detail/gate__functions.c
 CMakeFiles/perception_interfaces__rosidl_generator_c.dir/depend: rosidl_generator_c/perception_interfaces/msg/detail/gate__functions.h
 CMakeFiles/perception_interfaces__rosidl_generator_c.dir/depend: rosidl_generator_c/perception_interfaces/msg/detail/gate__struct.h

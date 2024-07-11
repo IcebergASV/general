@@ -380,6 +380,14 @@ if("x${CMAKE_INSTALL_COMPONENT}x" STREQUAL "xUnspecifiedx" OR NOT CMAKE_INSTALL_
 endif()
 
 if("x${CMAKE_INSTALL_COMPONENT}x" STREQUAL "xUnspecifiedx" OR NOT CMAKE_INSTALL_COMPONENT)
+  file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/share/perception_interfaces/msg" TYPE FILE FILES "/home/parallels/ros2_ws/src/general/build/perception_interfaces/rosidl_adapter/perception_interfaces/msg/Coordinate.idl")
+endif()
+
+if("x${CMAKE_INSTALL_COMPONENT}x" STREQUAL "xUnspecifiedx" OR NOT CMAKE_INSTALL_COMPONENT)
+  file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/share/perception_interfaces/msg" TYPE FILE FILES "/home/parallels/ros2_ws/src/general/build/perception_interfaces/rosidl_adapter/perception_interfaces/msg/Coordinates.idl")
+endif()
+
+if("x${CMAKE_INSTALL_COMPONENT}x" STREQUAL "xUnspecifiedx" OR NOT CMAKE_INSTALL_COMPONENT)
   file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/share/perception_interfaces/msg" TYPE FILE FILES "/home/parallels/ros2_ws/src/general/perception_interfaces/msg/Prop.msg")
 endif()
 
@@ -401,6 +409,14 @@ endif()
 
 if("x${CMAKE_INSTALL_COMPONENT}x" STREQUAL "xUnspecifiedx" OR NOT CMAKE_INSTALL_COMPONENT)
   file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/share/perception_interfaces/msg" TYPE FILE FILES "/home/parallels/ros2_ws/src/general/perception_interfaces/msg/GateArray.msg")
+endif()
+
+if("x${CMAKE_INSTALL_COMPONENT}x" STREQUAL "xUnspecifiedx" OR NOT CMAKE_INSTALL_COMPONENT)
+  file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/share/perception_interfaces/msg" TYPE FILE FILES "/home/parallels/ros2_ws/src/general/perception_interfaces/msg/Coordinate.msg")
+endif()
+
+if("x${CMAKE_INSTALL_COMPONENT}x" STREQUAL "xUnspecifiedx" OR NOT CMAKE_INSTALL_COMPONENT)
+  file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/share/perception_interfaces/msg" TYPE FILE FILES "/home/parallels/ros2_ws/src/general/perception_interfaces/msg/Coordinates.msg")
 endif()
 
 if("x${CMAKE_INSTALL_COMPONENT}x" STREQUAL "xUnspecifiedx" OR NOT CMAKE_INSTALL_COMPONENT)

@@ -75,6 +75,8 @@ perception_interfaces__py/CMakeFiles/perception_interfaces__py: rosidl_generator
 perception_interfaces__py/CMakeFiles/perception_interfaces__py: rosidl_generator_py/perception_interfaces/msg/_bounding_boxes.py
 perception_interfaces__py/CMakeFiles/perception_interfaces__py: rosidl_generator_py/perception_interfaces/msg/_gate.py
 perception_interfaces__py/CMakeFiles/perception_interfaces__py: rosidl_generator_py/perception_interfaces/msg/_gate_array.py
+perception_interfaces__py/CMakeFiles/perception_interfaces__py: rosidl_generator_py/perception_interfaces/msg/_coordinate.py
+perception_interfaces__py/CMakeFiles/perception_interfaces__py: rosidl_generator_py/perception_interfaces/msg/_coordinates.py
 perception_interfaces__py/CMakeFiles/perception_interfaces__py: rosidl_generator_py/perception_interfaces/msg/__init__.py
 perception_interfaces__py/CMakeFiles/perception_interfaces__py: rosidl_generator_py/perception_interfaces/msg/_prop_s.c
 perception_interfaces__py/CMakeFiles/perception_interfaces__py: rosidl_generator_py/perception_interfaces/msg/_prop_array_s.c
@@ -82,6 +84,8 @@ perception_interfaces__py/CMakeFiles/perception_interfaces__py: rosidl_generator
 perception_interfaces__py/CMakeFiles/perception_interfaces__py: rosidl_generator_py/perception_interfaces/msg/_bounding_boxes_s.c
 perception_interfaces__py/CMakeFiles/perception_interfaces__py: rosidl_generator_py/perception_interfaces/msg/_gate_s.c
 perception_interfaces__py/CMakeFiles/perception_interfaces__py: rosidl_generator_py/perception_interfaces/msg/_gate_array_s.c
+perception_interfaces__py/CMakeFiles/perception_interfaces__py: rosidl_generator_py/perception_interfaces/msg/_coordinate_s.c
+perception_interfaces__py/CMakeFiles/perception_interfaces__py: rosidl_generator_py/perception_interfaces/msg/_coordinates_s.c
 
 rosidl_generator_py/perception_interfaces/_perception_interfaces_s.ep.rosidl_typesupport_fastrtps_c.c: /opt/ros/humble/lib/rosidl_generator_py/rosidl_generator_py
 rosidl_generator_py/perception_interfaces/_perception_interfaces_s.ep.rosidl_typesupport_fastrtps_c.c: /opt/ros/humble/local/lib/python3.10/dist-packages/rosidl_generator_py/__init__.py
@@ -102,6 +106,8 @@ rosidl_generator_py/perception_interfaces/_perception_interfaces_s.ep.rosidl_typ
 rosidl_generator_py/perception_interfaces/_perception_interfaces_s.ep.rosidl_typesupport_fastrtps_c.c: rosidl_adapter/perception_interfaces/msg/BoundingBoxes.idl
 rosidl_generator_py/perception_interfaces/_perception_interfaces_s.ep.rosidl_typesupport_fastrtps_c.c: rosidl_adapter/perception_interfaces/msg/Gate.idl
 rosidl_generator_py/perception_interfaces/_perception_interfaces_s.ep.rosidl_typesupport_fastrtps_c.c: rosidl_adapter/perception_interfaces/msg/GateArray.idl
+rosidl_generator_py/perception_interfaces/_perception_interfaces_s.ep.rosidl_typesupport_fastrtps_c.c: rosidl_adapter/perception_interfaces/msg/Coordinate.idl
+rosidl_generator_py/perception_interfaces/_perception_interfaces_s.ep.rosidl_typesupport_fastrtps_c.c: rosidl_adapter/perception_interfaces/msg/Coordinates.idl
 rosidl_generator_py/perception_interfaces/_perception_interfaces_s.ep.rosidl_typesupport_fastrtps_c.c: /opt/ros/humble/share/std_msgs/msg/Bool.idl
 rosidl_generator_py/perception_interfaces/_perception_interfaces_s.ep.rosidl_typesupport_fastrtps_c.c: /opt/ros/humble/share/std_msgs/msg/Byte.idl
 rosidl_generator_py/perception_interfaces/_perception_interfaces_s.ep.rosidl_typesupport_fastrtps_c.c: /opt/ros/humble/share/std_msgs/msg/ByteMultiArray.idl
@@ -191,6 +197,12 @@ rosidl_generator_py/perception_interfaces/msg/_gate.py: rosidl_generator_py/perc
 rosidl_generator_py/perception_interfaces/msg/_gate_array.py: rosidl_generator_py/perception_interfaces/_perception_interfaces_s.ep.rosidl_typesupport_fastrtps_c.c
 	@$(CMAKE_COMMAND) -E touch_nocreate rosidl_generator_py/perception_interfaces/msg/_gate_array.py
 
+rosidl_generator_py/perception_interfaces/msg/_coordinate.py: rosidl_generator_py/perception_interfaces/_perception_interfaces_s.ep.rosidl_typesupport_fastrtps_c.c
+	@$(CMAKE_COMMAND) -E touch_nocreate rosidl_generator_py/perception_interfaces/msg/_coordinate.py
+
+rosidl_generator_py/perception_interfaces/msg/_coordinates.py: rosidl_generator_py/perception_interfaces/_perception_interfaces_s.ep.rosidl_typesupport_fastrtps_c.c
+	@$(CMAKE_COMMAND) -E touch_nocreate rosidl_generator_py/perception_interfaces/msg/_coordinates.py
+
 rosidl_generator_py/perception_interfaces/msg/__init__.py: rosidl_generator_py/perception_interfaces/_perception_interfaces_s.ep.rosidl_typesupport_fastrtps_c.c
 	@$(CMAKE_COMMAND) -E touch_nocreate rosidl_generator_py/perception_interfaces/msg/__init__.py
 
@@ -212,6 +224,12 @@ rosidl_generator_py/perception_interfaces/msg/_gate_s.c: rosidl_generator_py/per
 rosidl_generator_py/perception_interfaces/msg/_gate_array_s.c: rosidl_generator_py/perception_interfaces/_perception_interfaces_s.ep.rosidl_typesupport_fastrtps_c.c
 	@$(CMAKE_COMMAND) -E touch_nocreate rosidl_generator_py/perception_interfaces/msg/_gate_array_s.c
 
+rosidl_generator_py/perception_interfaces/msg/_coordinate_s.c: rosidl_generator_py/perception_interfaces/_perception_interfaces_s.ep.rosidl_typesupport_fastrtps_c.c
+	@$(CMAKE_COMMAND) -E touch_nocreate rosidl_generator_py/perception_interfaces/msg/_coordinate_s.c
+
+rosidl_generator_py/perception_interfaces/msg/_coordinates_s.c: rosidl_generator_py/perception_interfaces/_perception_interfaces_s.ep.rosidl_typesupport_fastrtps_c.c
+	@$(CMAKE_COMMAND) -E touch_nocreate rosidl_generator_py/perception_interfaces/msg/_coordinates_s.c
+
 perception_interfaces__py: perception_interfaces__py/CMakeFiles/perception_interfaces__py
 perception_interfaces__py: rosidl_generator_py/perception_interfaces/_perception_interfaces_s.ep.rosidl_typesupport_c.c
 perception_interfaces__py: rosidl_generator_py/perception_interfaces/_perception_interfaces_s.ep.rosidl_typesupport_fastrtps_c.c
@@ -221,6 +239,10 @@ perception_interfaces__py: rosidl_generator_py/perception_interfaces/msg/_boundi
 perception_interfaces__py: rosidl_generator_py/perception_interfaces/msg/_bounding_box_s.c
 perception_interfaces__py: rosidl_generator_py/perception_interfaces/msg/_bounding_boxes.py
 perception_interfaces__py: rosidl_generator_py/perception_interfaces/msg/_bounding_boxes_s.c
+perception_interfaces__py: rosidl_generator_py/perception_interfaces/msg/_coordinate.py
+perception_interfaces__py: rosidl_generator_py/perception_interfaces/msg/_coordinate_s.c
+perception_interfaces__py: rosidl_generator_py/perception_interfaces/msg/_coordinates.py
+perception_interfaces__py: rosidl_generator_py/perception_interfaces/msg/_coordinates_s.c
 perception_interfaces__py: rosidl_generator_py/perception_interfaces/msg/_gate.py
 perception_interfaces__py: rosidl_generator_py/perception_interfaces/msg/_gate_array.py
 perception_interfaces__py: rosidl_generator_py/perception_interfaces/msg/_gate_array_s.c

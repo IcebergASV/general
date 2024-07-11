@@ -4,3 +4,5 @@
 /home/parallels/ros2_ws/src/general/build/perception_interfaces/rosidl_adapter/perception_interfaces:msg/BoundingBoxes.idl
 /home/parallels/ros2_ws/src/general/build/perception_interfaces/rosidl_adapter/perception_interfaces:msg/Gate.idl
 /home/parallels/ros2_ws/src/general/build/perception_interfaces/rosidl_adapter/perception_interfaces:msg/GateArray.idl
+/home/parallels/ros2_ws/src/general/build/perception_interfaces/rosidl_adapter/perception_interfaces:msg/Coordinate.idl
+/home/parallels/ros2_ws/src/general/build/perception_interfaces/rosidl_adapter/perception_interfaces:msg/Coordinates.idl

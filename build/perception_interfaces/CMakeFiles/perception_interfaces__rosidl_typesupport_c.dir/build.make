@@ -81,6 +81,8 @@ rosidl_typesupport_c/perception_interfaces/msg/prop__type_support.cpp: rosidl_ad
 rosidl_typesupport_c/perception_interfaces/msg/prop__type_support.cpp: rosidl_adapter/perception_interfaces/msg/BoundingBoxes.idl
 rosidl_typesupport_c/perception_interfaces/msg/prop__type_support.cpp: rosidl_adapter/perception_interfaces/msg/Gate.idl
 rosidl_typesupport_c/perception_interfaces/msg/prop__type_support.cpp: rosidl_adapter/perception_interfaces/msg/GateArray.idl
+rosidl_typesupport_c/perception_interfaces/msg/prop__type_support.cpp: rosidl_adapter/perception_interfaces/msg/Coordinate.idl
+rosidl_typesupport_c/perception_interfaces/msg/prop__type_support.cpp: rosidl_adapter/perception_interfaces/msg/Coordinates.idl
 rosidl_typesupport_c/perception_interfaces/msg/prop__type_support.cpp: /opt/ros/humble/share/std_msgs/msg/Bool.idl
 rosidl_typesupport_c/perception_interfaces/msg/prop__type_support.cpp: /opt/ros/humble/share/std_msgs/msg/Byte.idl
 rosidl_typesupport_c/perception_interfaces/msg/prop__type_support.cpp: /opt/ros/humble/share/std_msgs/msg/ByteMultiArray.idl
@@ -160,6 +162,12 @@ rosidl_typesupport_c/perception_interfaces/msg/gate__type_support.cpp: rosidl_ty
 
 rosidl_typesupport_c/perception_interfaces/msg/gate_array__type_support.cpp: rosidl_typesupport_c/perception_interfaces/msg/prop__type_support.cpp
 	@$(CMAKE_COMMAND) -E touch_nocreate rosidl_typesupport_c/perception_interfaces/msg/gate_array__type_support.cpp
+
+rosidl_typesupport_c/perception_interfaces/msg/coordinate__type_support.cpp: rosidl_typesupport_c/perception_interfaces/msg/prop__type_support.cpp
+	@$(CMAKE_COMMAND) -E touch_nocreate rosidl_typesupport_c/perception_interfaces/msg/coordinate__type_support.cpp
+
+rosidl_typesupport_c/perception_interfaces/msg/coordinates__type_support.cpp: rosidl_typesupport_c/perception_interfaces/msg/prop__type_support.cpp
+	@$(CMAKE_COMMAND) -E touch_nocreate rosidl_typesupport_c/perception_interfaces/msg/coordinates__type_support.cpp
 
 CMakeFiles/perception_interfaces__rosidl_typesupport_c.dir/rosidl_typesupport_c/perception_interfaces/msg/prop__type_support.cpp.o: CMakeFiles/perception_interfaces__rosidl_typesupport_c.dir/flags.make
 CMakeFiles/perception_interfaces__rosidl_typesupport_c.dir/rosidl_typesupport_c/perception_interfaces/msg/prop__type_support.cpp.o: rosidl_typesupport_c/perception_interfaces/msg/prop__type_support.cpp
@@ -245,6 +253,34 @@ CMakeFiles/perception_interfaces__rosidl_typesupport_c.dir/rosidl_typesupport_c/
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/perception_interfaces__rosidl_typesupport_c.dir/rosidl_typesupport_c/perception_interfaces/msg/gate_array__type_support.cpp.s"
 	/usr/lib/ccache/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/parallels/ros2_ws/src/general/build/perception_interfaces/rosidl_typesupport_c/perception_interfaces/msg/gate_array__type_support.cpp -o CMakeFiles/perception_interfaces__rosidl_typesupport_c.dir/rosidl_typesupport_c/perception_interfaces/msg/gate_array__type_support.cpp.s
 
+CMakeFiles/perception_interfaces__rosidl_typesupport_c.dir/rosidl_typesupport_c/perception_interfaces/msg/coordinate__type_support.cpp.o: CMakeFiles/perception_interfaces__rosidl_typesupport_c.dir/flags.make
+CMakeFiles/perception_interfaces__rosidl_typesupport_c.dir/rosidl_typesupport_c/perception_interfaces/msg/coordinate__type_support.cpp.o: rosidl_typesupport_c/perception_interfaces/msg/coordinate__type_support.cpp
+CMakeFiles/perception_interfaces__rosidl_typesupport_c.dir/rosidl_typesupport_c/perception_interfaces/msg/coordinate__type_support.cpp.o: CMakeFiles/perception_interfaces__rosidl_typesupport_c.dir/compiler_depend.ts
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/parallels/ros2_ws/src/general/build/perception_interfaces/CMakeFiles --progress-num=$(CMAKE_PROGRESS_8) "Building CXX object CMakeFiles/perception_interfaces__rosidl_typesupport_c.dir/rosidl_typesupport_c/perception_interfaces/msg/coordinate__type_support.cpp.o"
+	/usr/lib/ccache/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/perception_interfaces__rosidl_typesupport_c.dir/rosidl_typesupport_c/perception_interfaces/msg/coordinate__type_support.cpp.o -MF CMakeFiles/perception_interfaces__rosidl_typesupport_c.dir/rosidl_typesupport_c/perception_interfaces/msg/coordinate__type_support.cpp.o.d -o CMakeFiles/perception_interfaces__rosidl_typesupport_c.dir/rosidl_typesupport_c/perception_interfaces/msg/coordinate__type_support.cpp.o -c /home/parallels/ros2_ws/src/general/build/perception_interfaces/rosidl_typesupport_c/perception_interfaces/msg/coordinate__type_support.cpp
+
+CMakeFiles/perception_interfaces__rosidl_typesupport_c.dir/rosidl_typesupport_c/perception_interfaces/msg/coordinate__type_support.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/perception_interfaces__rosidl_typesupport_c.dir/rosidl_typesupport_c/perception_interfaces/msg/coordinate__type_support.cpp.i"
+	/usr/lib/ccache/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/parallels/ros2_ws/src/general/build/perception_interfaces/rosidl_typesupport_c/perception_interfaces/msg/coordinate__type_support.cpp > CMakeFiles/perception_interfaces__rosidl_typesupport_c.dir/rosidl_typesupport_c/perception_interfaces/msg/coordinate__type_support.cpp.i
+
+CMakeFiles/perception_interfaces__rosidl_typesupport_c.dir/rosidl_typesupport_c/perception_interfaces/msg/coordinate__type_support.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/perception_interfaces__rosidl_typesupport_c.dir/rosidl_typesupport_c/perception_interfaces/msg/coordinate__type_support.cpp.s"
+	/usr/lib/ccache/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/parallels/ros2_ws/src/general/build/perception_interfaces/rosidl_typesupport_c/perception_interfaces/msg/coordinate__type_support.cpp -o CMakeFiles/perception_interfaces__rosidl_typesupport_c.dir/rosidl_typesupport_c/perception_interfaces/msg/coordinate__type_support.cpp.s
+
+CMakeFiles/perception_interfaces__rosidl_typesupport_c.dir/rosidl_typesupport_c/perception_interfaces/msg/coordinates__type_support.cpp.o: CMakeFiles/perception_interfaces__rosidl_typesupport_c.dir/flags.make
+CMakeFiles/perception_interfaces__rosidl_typesupport_c.dir/rosidl_typesupport_c/perception_interfaces/msg/coordinates__type_support.cpp.o: rosidl_typesupport_c/perception_interfaces/msg/coordinates__type_support.cpp
+CMakeFiles/perception_interfaces__rosidl_typesupport_c.dir/rosidl_typesupport_c/perception_interfaces/msg/coordinates__type_support.cpp.o: CMakeFiles/perception_interfaces__rosidl_typesupport_c.dir/compiler_depend.ts
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/parallels/ros2_ws/src/general/build/perception_interfaces/CMakeFiles --progress-num=$(CMAKE_PROGRESS_9) "Building CXX object CMakeFiles/perception_interfaces__rosidl_typesupport_c.dir/rosidl_typesupport_c/perception_interfaces/msg/coordinates__type_support.cpp.o"
+	/usr/lib/ccache/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/perception_interfaces__rosidl_typesupport_c.dir/rosidl_typesupport_c/perception_interfaces/msg/coordinates__type_support.cpp.o -MF CMakeFiles/perception_interfaces__rosidl_typesupport_c.dir/rosidl_typesupport_c/perception_interfaces/msg/coordinates__type_support.cpp.o.d -o CMakeFiles/perception_interfaces__rosidl_typesupport_c.dir/rosidl_typesupport_c/perception_interfaces/msg/coordinates__type_support.cpp.o -c /home/parallels/ros2_ws/src/general/build/perception_interfaces/rosidl_typesupport_c/perception_interfaces/msg/coordinates__type_support.cpp
+
+CMakeFiles/perception_interfaces__rosidl_typesupport_c.dir/rosidl_typesupport_c/perception_interfaces/msg/coordinates__type_support.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/perception_interfaces__rosidl_typesupport_c.dir/rosidl_typesupport_c/perception_interfaces/msg/coordinates__type_support.cpp.i"
+	/usr/lib/ccache/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/parallels/ros2_ws/src/general/build/perception_interfaces/rosidl_typesupport_c/perception_interfaces/msg/coordinates__type_support.cpp > CMakeFiles/perception_interfaces__rosidl_typesupport_c.dir/rosidl_typesupport_c/perception_interfaces/msg/coordinates__type_support.cpp.i
+
+CMakeFiles/perception_interfaces__rosidl_typesupport_c.dir/rosidl_typesupport_c/perception_interfaces/msg/coordinates__type_support.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/perception_interfaces__rosidl_typesupport_c.dir/rosidl_typesupport_c/perception_interfaces/msg/coordinates__type_support.cpp.s"
+	/usr/lib/ccache/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/parallels/ros2_ws/src/general/build/perception_interfaces/rosidl_typesupport_c/perception_interfaces/msg/coordinates__type_support.cpp -o CMakeFiles/perception_interfaces__rosidl_typesupport_c.dir/rosidl_typesupport_c/perception_interfaces/msg/coordinates__type_support.cpp.s
+
 # Object files for target perception_interfaces__rosidl_typesupport_c
 perception_interfaces__rosidl_typesupport_c_OBJECTS = \
 "CMakeFiles/perception_interfaces__rosidl_typesupport_c.dir/rosidl_typesupport_c/perception_interfaces/msg/prop__type_support.cpp.o" \
@@ -252,7 +288,9 @@ perception_interfaces__rosidl_typesupport_c_OBJECTS = \
 "CMakeFiles/perception_interfaces__rosidl_typesupport_c.dir/rosidl_typesupport_c/perception_interfaces/msg/bounding_box__type_support.cpp.o" \
 "CMakeFiles/perception_interfaces__rosidl_typesupport_c.dir/rosidl_typesupport_c/perception_interfaces/msg/bounding_boxes__type_support.cpp.o" \
 "CMakeFiles/perception_interfaces__rosidl_typesupport_c.dir/rosidl_typesupport_c/perception_interfaces/msg/gate__type_support.cpp.o" \
-"CMakeFiles/perception_interfaces__rosidl_typesupport_c.dir/rosidl_typesupport_c/perception_interfaces/msg/gate_array__type_support.cpp.o"
+"CMakeFiles/perception_interfaces__rosidl_typesupport_c.dir/rosidl_typesupport_c/perception_interfaces/msg/gate_array__type_support.cpp.o" \
+"CMakeFiles/perception_interfaces__rosidl_typesupport_c.dir/rosidl_typesupport_c/perception_interfaces/msg/coordinate__type_support.cpp.o" \
+"CMakeFiles/perception_interfaces__rosidl_typesupport_c.dir/rosidl_typesupport_c/perception_interfaces/msg/coordinates__type_support.cpp.o"
 
 # External object files for target perception_interfaces__rosidl_typesupport_c
 perception_interfaces__rosidl_typesupport_c_EXTERNAL_OBJECTS =
@@ -263,6 +301,8 @@ libperception_interfaces__rosidl_typesupport_c.so: CMakeFiles/perception_interfa
 libperception_interfaces__rosidl_typesupport_c.so: CMakeFiles/perception_interfaces__rosidl_typesupport_c.dir/rosidl_typesupport_c/perception_interfaces/msg/bounding_boxes__type_support.cpp.o
 libperception_interfaces__rosidl_typesupport_c.so: CMakeFiles/perception_interfaces__rosidl_typesupport_c.dir/rosidl_typesupport_c/perception_interfaces/msg/gate__type_support.cpp.o
 libperception_interfaces__rosidl_typesupport_c.so: CMakeFiles/perception_interfaces__rosidl_typesupport_c.dir/rosidl_typesupport_c/perception_interfaces/msg/gate_array__type_support.cpp.o
+libperception_interfaces__rosidl_typesupport_c.so: CMakeFiles/perception_interfaces__rosidl_typesupport_c.dir/rosidl_typesupport_c/perception_interfaces/msg/coordinate__type_support.cpp.o
+libperception_interfaces__rosidl_typesupport_c.so: CMakeFiles/perception_interfaces__rosidl_typesupport_c.dir/rosidl_typesupport_c/perception_interfaces/msg/coordinates__type_support.cpp.o
 libperception_interfaces__rosidl_typesupport_c.so: CMakeFiles/perception_interfaces__rosidl_typesupport_c.dir/build.make
 libperception_interfaces__rosidl_typesupport_c.so: libperception_interfaces__rosidl_generator_c.so
 libperception_interfaces__rosidl_typesupport_c.so: /opt/ros/humble/lib/libgeometry_msgs__rosidl_typesupport_c.so
@@ -275,7 +315,7 @@ libperception_interfaces__rosidl_typesupport_c.so: /opt/ros/humble/lib/libbuilti
 libperception_interfaces__rosidl_typesupport_c.so: /opt/ros/humble/lib/librosidl_runtime_c.so
 libperception_interfaces__rosidl_typesupport_c.so: /opt/ros/humble/lib/librcutils.so
 libperception_interfaces__rosidl_typesupport_c.so: CMakeFiles/perception_interfaces__rosidl_typesupport_c.dir/link.txt
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=/home/parallels/ros2_ws/src/general/build/perception_interfaces/CMakeFiles --progress-num=$(CMAKE_PROGRESS_8) "Linking CXX shared library libperception_interfaces__rosidl_typesupport_c.so"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=/home/parallels/ros2_ws/src/general/build/perception_interfaces/CMakeFiles --progress-num=$(CMAKE_PROGRESS_10) "Linking CXX shared library libperception_interfaces__rosidl_typesupport_c.so"
 	$(CMAKE_COMMAND) -E cmake_link_script CMakeFiles/perception_interfaces__rosidl_typesupport_c.dir/link.txt --verbose=$(VERBOSE)
 
 # Rule to build all files generated by this target.
@@ -288,6 +328,8 @@ CMakeFiles/perception_interfaces__rosidl_typesupport_c.dir/clean:
 
 CMakeFiles/perception_interfaces__rosidl_typesupport_c.dir/depend: rosidl_typesupport_c/perception_interfaces/msg/bounding_box__type_support.cpp
 CMakeFiles/perception_interfaces__rosidl_typesupport_c.dir/depend: rosidl_typesupport_c/perception_interfaces/msg/bounding_boxes__type_support.cpp
+CMakeFiles/perception_interfaces__rosidl_typesupport_c.dir/depend: rosidl_typesupport_c/perception_interfaces/msg/coordinate__type_support.cpp
+CMakeFiles/perception_interfaces__rosidl_typesupport_c.dir/depend: rosidl_typesupport_c/perception_interfaces/msg/coordinates__type_support.cpp
 CMakeFiles/perception_interfaces__rosidl_typesupport_c.dir/depend: rosidl_typesupport_c/perception_interfaces/msg/gate__type_support.cpp
 CMakeFiles/perception_interfaces__rosidl_typesupport_c.dir/depend: rosidl_typesupport_c/perception_interfaces/msg/gate_array__type_support.cpp
 CMakeFiles/perception_interfaces__rosidl_typesupport_c.dir/depend: rosidl_typesupport_c/perception_interfaces/msg/prop__type_support.cpp

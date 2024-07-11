@@ -1,0 +1,48 @@
+[0.013s] Invoking command in '/home/parallels/ros2_ws/src/general/build/laser_segmentation': AMENT_PREFIX_PATH=/home/parallels/ros2_ws/src/general/install/slg_msgs:${AMENT_PREFIX_PATH} CMAKE_PREFIX_PATH=/home/parallels/ros2_ws/src/general/install/slg_msgs:/opt/ros/humble LD_LIBRARY_PATH=/home/parallels/ros2_ws/src/general/install/slg_msgs/lib:${LD_LIBRARY_PATH} PYTHONPATH=/home/parallels/ros2_ws/src/general/install/slg_msgs/local/lib/python3.10/dist-packages:${PYTHONPATH} /usr/bin/cmake --build /home/parallels/ros2_ws/src/general/build/laser_segmentation -- -j2 -l2
+[0.076s] [ 11%] Built target gtest_main
+[0.080s] [ 41%] Built target laser_segmentation_component
+[0.091s] [ 52%] Built target gtest
+[0.098s] [ 64%] Built target laser_segmentation
+[0.111s] [ 76%] Built target test_segmentations
+[0.114s] [ 88%] Built target test_laser_segmentation
+[0.134s] [100%] Built target test_integration
+[0.139s] Invoked command in '/home/parallels/ros2_ws/src/general/build/laser_segmentation' returned '0': AMENT_PREFIX_PATH=/home/parallels/ros2_ws/src/general/install/slg_msgs:${AMENT_PREFIX_PATH} CMAKE_PREFIX_PATH=/home/parallels/ros2_ws/src/general/install/slg_msgs:/opt/ros/humble LD_LIBRARY_PATH=/home/parallels/ros2_ws/src/general/install/slg_msgs/lib:${LD_LIBRARY_PATH} PYTHONPATH=/home/parallels/ros2_ws/src/general/install/slg_msgs/local/lib/python3.10/dist-packages:${PYTHONPATH} /usr/bin/cmake --build /home/parallels/ros2_ws/src/general/build/laser_segmentation -- -j2 -l2
+[0.185s] Invoking command in '/home/parallels/ros2_ws/src/general/build/laser_segmentation': AMENT_PREFIX_PATH=/home/parallels/ros2_ws/src/general/install/slg_msgs:${AMENT_PREFIX_PATH} CMAKE_PREFIX_PATH=/home/parallels/ros2_ws/src/general/install/slg_msgs:/opt/ros/humble LD_LIBRARY_PATH=/home/parallels/ros2_ws/src/general/install/slg_msgs/lib:${LD_LIBRARY_PATH} PYTHONPATH=/home/parallels/ros2_ws/src/general/install/slg_msgs/local/lib/python3.10/dist-packages:${PYTHONPATH} /usr/bin/cmake --install /home/parallels/ros2_ws/src/general/build/laser_segmentation
+[0.191s] -- Install configuration: "Release"
+[0.192s] -- Up-to-date: /home/parallels/ros2_ws/src/general/install/laser_segmentation/lib/liblaser_segmentation_component.so
+[0.193s] -- Up-to-date: /home/parallels/ros2_ws/src/general/install/laser_segmentation/lib/laser_segmentation/laser_segmentation
+[0.193s] -- Up-to-date: /home/parallels/ros2_ws/src/general/install/laser_segmentation/include/laser_segmentation
+[0.194s] -- Up-to-date: /home/parallels/ros2_ws/src/general/install/laser_segmentation/include/laser_segmentation/parameter_handler.hpp
+[0.194s] -- Up-to-date: /home/parallels/ros2_ws/src/general/install/laser_segmentation/include/laser_segmentation/parula.hpp
+[0.194s] -- Up-to-date: /home/parallels/ros2_ws/src/general/install/laser_segmentation/include/laser_segmentation/laser_segmentation.hpp
+[0.195s] -- Up-to-date: /home/parallels/ros2_ws/src/general/install/laser_segmentation/include/laser_segmentation/segmentation
+[0.195s] -- Up-to-date: /home/parallels/ros2_ws/src/general/install/laser_segmentation/include/laser_segmentation/segmentation/segmentation.hpp
+[0.195s] -- Up-to-date: /home/parallels/ros2_ws/src/general/install/laser_segmentation/include/laser_segmentation/segmentation/jump_distance.hpp
+[0.196s] -- Up-to-date: /home/parallels/ros2_ws/src/general/install/laser_segmentation/include/laser_segmentation/segmentation/jump_distance_merge.hpp
+[0.196s] -- Up-to-date: /home/parallels/ros2_ws/src/general/install/laser_segmentation/share/laser_segmentation//launch
+[0.197s] -- Up-to-date: /home/parallels/ros2_ws/src/general/install/laser_segmentation/share/laser_segmentation//launch/segmentation.launch.py
+[0.197s] -- Up-to-date: /home/parallels/ros2_ws/src/general/install/laser_segmentation/share/laser_segmentation//params
+[0.197s] -- Up-to-date: /home/parallels/ros2_ws/src/general/install/laser_segmentation/share/laser_segmentation//params/default_params.yml
+[0.198s] -- Up-to-date: /home/parallels/ros2_ws/src/general/install/laser_segmentation/share/laser_segmentation//params/close_steps_detect.yml
+[0.198s] -- Up-to-date: /home/parallels/ros2_ws/src/general/install/laser_segmentation/share/laser_segmentation/environment/library_path.sh
+[0.198s] -- Up-to-date: /home/parallels/ros2_ws/src/general/install/laser_segmentation/share/laser_segmentation/environment/library_path.dsv
+[0.199s] -- Up-to-date: /home/parallels/ros2_ws/src/general/install/laser_segmentation/share/ament_index/resource_index/package_run_dependencies/laser_segmentation
+[0.199s] -- Up-to-date: /home/parallels/ros2_ws/src/general/install/laser_segmentation/share/ament_index/resource_index/parent_prefix_path/laser_segmentation
+[0.199s] -- Up-to-date: /home/parallels/ros2_ws/src/general/install/laser_segmentation/share/laser_segmentation/environment/ament_prefix_path.sh
+[0.199s] -- Up-to-date: /home/parallels/ros2_ws/src/general/install/laser_segmentation/share/laser_segmentation/environment/ament_prefix_path.dsv
+[0.200s] -- Up-to-date: /home/parallels/ros2_ws/src/general/install/laser_segmentation/share/laser_segmentation/environment/path.sh
+[0.200s] -- Up-to-date: /home/parallels/ros2_ws/src/general/install/laser_segmentation/share/laser_segmentation/environment/path.dsv
+[0.200s] -- Up-to-date: /home/parallels/ros2_ws/src/general/install/laser_segmentation/share/laser_segmentation/local_setup.bash
+[0.201s] -- Up-to-date: /home/parallels/ros2_ws/src/general/install/laser_segmentation/share/laser_segmentation/local_setup.sh
+[0.201s] -- Up-to-date: /home/parallels/ros2_ws/src/general/install/laser_segmentation/share/laser_segmentation/local_setup.zsh
+[0.201s] -- Up-to-date: /home/parallels/ros2_ws/src/general/install/laser_segmentation/share/laser_segmentation/local_setup.dsv
+[0.202s] -- Installing: /home/parallels/ros2_ws/src/general/install/laser_segmentation/share/laser_segmentation/package.dsv
+[0.203s] -- Up-to-date: /home/parallels/ros2_ws/src/general/install/laser_segmentation/share/ament_index/resource_index/packages/laser_segmentation
+[0.203s] -- Up-to-date: /home/parallels/ros2_ws/src/general/install/laser_segmentation/share/ament_index/resource_index/rclcpp_components/laser_segmentation
+[0.203s] -- Up-to-date: /home/parallels/ros2_ws/src/general/install/laser_segmentation/share/laser_segmentation/cmake/ament_cmake_export_include_directories-extras.cmake
+[0.204s] -- Up-to-date: /home/parallels/ros2_ws/src/general/install/laser_segmentation/share/laser_segmentation/cmake/ament_cmake_export_libraries-extras.cmake
+[0.204s] -- Up-to-date: /home/parallels/ros2_ws/src/general/install/laser_segmentation/share/laser_segmentation/cmake/ament_cmake_export_dependencies-extras.cmake
+[0.204s] -- Up-to-date: /home/parallels/ros2_ws/src/general/install/laser_segmentation/share/laser_segmentation/cmake/laser_segmentationConfig.cmake
+[0.205s] -- Up-to-date: /home/parallels/ros2_ws/src/general/install/laser_segmentation/share/laser_segmentation/cmake/laser_segmentationConfig-version.cmake
+[0.205s] -- Up-to-date: /home/parallels/ros2_ws/src/general/install/laser_segmentation/share/laser_segmentation/package.xml
+[0.206s] Invoked command in '/home/parallels/ros2_ws/src/general/build/laser_segmentation' returned '0': AMENT_PREFIX_PATH=/home/parallels/ros2_ws/src/general/install/slg_msgs:${AMENT_PREFIX_PATH} CMAKE_PREFIX_PATH=/home/parallels/ros2_ws/src/general/install/slg_msgs:/opt/ros/humble LD_LIBRARY_PATH=/home/parallels/ros2_ws/src/general/install/slg_msgs/lib:${LD_LIBRARY_PATH} PYTHONPATH=/home/parallels/ros2_ws/src/general/install/slg_msgs/local/lib/python3.10/dist-packages:${PYTHONPATH} /usr/bin/cmake --install /home/parallels/ros2_ws/src/general/build/laser_segmentation

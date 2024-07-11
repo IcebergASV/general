@@ -1,0 +1,13 @@
+// generated from rosidl_adapter/resource/msg.idl.em
+// with input from perception_interfaces/msg/Coordinates.msg
+// generated code does not contain a copyright notice
+
+#include "perception_interfaces/msg/Coordinates.idl"
+
+module perception_interfaces {
+  module msg {
+    struct Coordinates {
+      sequence<perception_interfaces::msg::Coordinates> coordinates;
+    };
+  };
+};

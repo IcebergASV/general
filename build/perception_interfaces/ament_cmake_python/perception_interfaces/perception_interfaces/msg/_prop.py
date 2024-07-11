@@ -64,6 +64,7 @@ class Prop(metaclass=Metaclass_Prop):
         '_id',
         '_label',
         '_point',
+        '_radius',
         '_probability',
     ]
 
@@ -71,6 +72,7 @@ class Prop(metaclass=Metaclass_Prop):
         'id': 'int32',
         'label': 'string',
         'point': 'geometry_msgs/Point',
+        'radius': 'float',
         'probability': 'float',
     }
 
@@ -78,6 +80,7 @@ class Prop(metaclass=Metaclass_Prop):
         rosidl_parser.definition.BasicType('int32'),  # noqa: E501
         rosidl_parser.definition.UnboundedString(),  # noqa: E501
         rosidl_parser.definition.NamespacedType(['geometry_msgs', 'msg'], 'Point'),  # noqa: E501
+        rosidl_parser.definition.BasicType('float'),  # noqa: E501
         rosidl_parser.definition.BasicType('float'),  # noqa: E501
     )
 
@@ -89,6 +92,7 @@ class Prop(metaclass=Metaclass_Prop):
         self.label = kwargs.get('label', str())
         from geometry_msgs.msg import Point
         self.point = kwargs.get('point', Point())
+        self.radius = kwargs.get('radius', float())
         self.probability = kwargs.get('probability', float())
 
     def __repr__(self):
@@ -125,6 +129,8 @@ class Prop(metaclass=Metaclass_Prop):
         if self.label != other.label:
             return False
         if self.point != other.point:
+            return False
+        if self.radius != other.radius:
             return False
         if self.probability != other.probability:
             return False
@@ -176,6 +182,21 @@ class Prop(metaclass=Metaclass_Prop):
                 isinstance(value, Point), \
                 "The 'point' field must be a sub message of type 'Point'"
         self._point = value
+
+    @builtins.property
+    def radius(self):
+        """Message field 'radius'."""
+        return self._radius
+
+    @radius.setter
+    def radius(self, value):
+        if __debug__:
+            assert \
+                isinstance(value, float), \
+                "The 'radius' field must be of type 'float'"
+            assert not (value < -3.402823466e+38 or value > 3.402823466e+38) or math.isinf(value), \
+                "The 'radius' field must be a float in [-3.402823466e+38, 3.402823466e+38]"
+        self._radius = value
 
     @builtins.property
     def probability(self):

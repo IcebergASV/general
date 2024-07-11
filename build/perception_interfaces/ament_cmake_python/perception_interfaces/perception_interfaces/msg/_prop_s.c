@@ -92,6 +92,15 @@ bool perception_interfaces__msg__prop__convert_from_py(PyObject * _pymsg, void *
     }
     Py_DECREF(field);
   }
+  {  // radius
+    PyObject * field = PyObject_GetAttrString(_pymsg, "radius");
+    if (!field) {
+      return false;
+    }
+    assert(PyFloat_Check(field));
+    ros_message->radius = (float)PyFloat_AS_DOUBLE(field);
+    Py_DECREF(field);
+  }
   {  // probability
     PyObject * field = PyObject_GetAttrString(_pymsg, "probability");
     if (!field) {
@@ -159,6 +168,17 @@ PyObject * perception_interfaces__msg__prop__convert_to_py(void * raw_ros_messag
     }
     {
       int rc = PyObject_SetAttrString(_pymessage, "point", field);
+      Py_DECREF(field);
+      if (rc) {
+        return NULL;
+      }
+    }
+  }
+  {  // radius
+    PyObject * field = NULL;
+    field = PyFloat_FromDouble(ros_message->radius);
+    {
+      int rc = PyObject_SetAttrString(_pymessage, "radius", field);
       Py_DECREF(field);
       if (rc) {
         return NULL;

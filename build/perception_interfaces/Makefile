@@ -453,6 +453,54 @@ rosidl_generator_c/perception_interfaces/msg/detail/bounding_boxes__functions.c.
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/perception_interfaces__rosidl_generator_c.dir/build.make CMakeFiles/perception_interfaces__rosidl_generator_c.dir/rosidl_generator_c/perception_interfaces/msg/detail/bounding_boxes__functions.c.s
 .PHONY : rosidl_generator_c/perception_interfaces/msg/detail/bounding_boxes__functions.c.s
 
+rosidl_generator_c/perception_interfaces/msg/detail/coordinate__functions.o: rosidl_generator_c/perception_interfaces/msg/detail/coordinate__functions.c.o
+.PHONY : rosidl_generator_c/perception_interfaces/msg/detail/coordinate__functions.o
+
+# target to build an object file
+rosidl_generator_c/perception_interfaces/msg/detail/coordinate__functions.c.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/perception_interfaces__rosidl_generator_c.dir/build.make CMakeFiles/perception_interfaces__rosidl_generator_c.dir/rosidl_generator_c/perception_interfaces/msg/detail/coordinate__functions.c.o
+.PHONY : rosidl_generator_c/perception_interfaces/msg/detail/coordinate__functions.c.o
+
+rosidl_generator_c/perception_interfaces/msg/detail/coordinate__functions.i: rosidl_generator_c/perception_interfaces/msg/detail/coordinate__functions.c.i
+.PHONY : rosidl_generator_c/perception_interfaces/msg/detail/coordinate__functions.i
+
+# target to preprocess a source file
+rosidl_generator_c/perception_interfaces/msg/detail/coordinate__functions.c.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/perception_interfaces__rosidl_generator_c.dir/build.make CMakeFiles/perception_interfaces__rosidl_generator_c.dir/rosidl_generator_c/perception_interfaces/msg/detail/coordinate__functions.c.i
+.PHONY : rosidl_generator_c/perception_interfaces/msg/detail/coordinate__functions.c.i
+
+rosidl_generator_c/perception_interfaces/msg/detail/coordinate__functions.s: rosidl_generator_c/perception_interfaces/msg/detail/coordinate__functions.c.s
+.PHONY : rosidl_generator_c/perception_interfaces/msg/detail/coordinate__functions.s
+
+# target to generate assembly for a file
+rosidl_generator_c/perception_interfaces/msg/detail/coordinate__functions.c.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/perception_interfaces__rosidl_generator_c.dir/build.make CMakeFiles/perception_interfaces__rosidl_generator_c.dir/rosidl_generator_c/perception_interfaces/msg/detail/coordinate__functions.c.s
+.PHONY : rosidl_generator_c/perception_interfaces/msg/detail/coordinate__functions.c.s
+
+rosidl_generator_c/perception_interfaces/msg/detail/coordinates__functions.o: rosidl_generator_c/perception_interfaces/msg/detail/coordinates__functions.c.o
+.PHONY : rosidl_generator_c/perception_interfaces/msg/detail/coordinates__functions.o
+
+# target to build an object file
+rosidl_generator_c/perception_interfaces/msg/detail/coordinates__functions.c.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/perception_interfaces__rosidl_generator_c.dir/build.make CMakeFiles/perception_interfaces__rosidl_generator_c.dir/rosidl_generator_c/perception_interfaces/msg/detail/coordinates__functions.c.o
+.PHONY : rosidl_generator_c/perception_interfaces/msg/detail/coordinates__functions.c.o
+
+rosidl_generator_c/perception_interfaces/msg/detail/coordinates__functions.i: rosidl_generator_c/perception_interfaces/msg/detail/coordinates__functions.c.i
+.PHONY : rosidl_generator_c/perception_interfaces/msg/detail/coordinates__functions.i
+
+# target to preprocess a source file
+rosidl_generator_c/perception_interfaces/msg/detail/coordinates__functions.c.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/perception_interfaces__rosidl_generator_c.dir/build.make CMakeFiles/perception_interfaces__rosidl_generator_c.dir/rosidl_generator_c/perception_interfaces/msg/detail/coordinates__functions.c.i
+.PHONY : rosidl_generator_c/perception_interfaces/msg/detail/coordinates__functions.c.i
+
+rosidl_generator_c/perception_interfaces/msg/detail/coordinates__functions.s: rosidl_generator_c/perception_interfaces/msg/detail/coordinates__functions.c.s
+.PHONY : rosidl_generator_c/perception_interfaces/msg/detail/coordinates__functions.s
+
+# target to generate assembly for a file
+rosidl_generator_c/perception_interfaces/msg/detail/coordinates__functions.c.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/perception_interfaces__rosidl_generator_c.dir/build.make CMakeFiles/perception_interfaces__rosidl_generator_c.dir/rosidl_generator_c/perception_interfaces/msg/detail/coordinates__functions.c.s
+.PHONY : rosidl_generator_c/perception_interfaces/msg/detail/coordinates__functions.c.s
+
 rosidl_generator_c/perception_interfaces/msg/detail/gate__functions.o: rosidl_generator_c/perception_interfaces/msg/detail/gate__functions.c.o
 .PHONY : rosidl_generator_c/perception_interfaces/msg/detail/gate__functions.o
 
@@ -669,6 +717,54 @@ rosidl_generator_py/perception_interfaces/msg/_bounding_boxes_s.c.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/perception_interfaces__rosidl_generator_py.dir/build.make CMakeFiles/perception_interfaces__rosidl_generator_py.dir/rosidl_generator_py/perception_interfaces/msg/_bounding_boxes_s.c.s
 .PHONY : rosidl_generator_py/perception_interfaces/msg/_bounding_boxes_s.c.s
 
+rosidl_generator_py/perception_interfaces/msg/_coordinate_s.o: rosidl_generator_py/perception_interfaces/msg/_coordinate_s.c.o
+.PHONY : rosidl_generator_py/perception_interfaces/msg/_coordinate_s.o
+
+# target to build an object file
+rosidl_generator_py/perception_interfaces/msg/_coordinate_s.c.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/perception_interfaces__rosidl_generator_py.dir/build.make CMakeFiles/perception_interfaces__rosidl_generator_py.dir/rosidl_generator_py/perception_interfaces/msg/_coordinate_s.c.o
+.PHONY : rosidl_generator_py/perception_interfaces/msg/_coordinate_s.c.o
+
+rosidl_generator_py/perception_interfaces/msg/_coordinate_s.i: rosidl_generator_py/perception_interfaces/msg/_coordinate_s.c.i
+.PHONY : rosidl_generator_py/perception_interfaces/msg/_coordinate_s.i
+
+# target to preprocess a source file
+rosidl_generator_py/perception_interfaces/msg/_coordinate_s.c.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/perception_interfaces__rosidl_generator_py.dir/build.make CMakeFiles/perception_interfaces__rosidl_generator_py.dir/rosidl_generator_py/perception_interfaces/msg/_coordinate_s.c.i
+.PHONY : rosidl_generator_py/perception_interfaces/msg/_coordinate_s.c.i
+
+rosidl_generator_py/perception_interfaces/msg/_coordinate_s.s: rosidl_generator_py/perception_interfaces/msg/_coordinate_s.c.s
+.PHONY : rosidl_generator_py/perception_interfaces/msg/_coordinate_s.s
+
+# target to generate assembly for a file
+rosidl_generator_py/perception_interfaces/msg/_coordinate_s.c.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/perception_interfaces__rosidl_generator_py.dir/build.make CMakeFiles/perception_interfaces__rosidl_generator_py.dir/rosidl_generator_py/perception_interfaces/msg/_coordinate_s.c.s
+.PHONY : rosidl_generator_py/perception_interfaces/msg/_coordinate_s.c.s
+
+rosidl_generator_py/perception_interfaces/msg/_coordinates_s.o: rosidl_generator_py/perception_interfaces/msg/_coordinates_s.c.o
+.PHONY : rosidl_generator_py/perception_interfaces/msg/_coordinates_s.o
+
+# target to build an object file
+rosidl_generator_py/perception_interfaces/msg/_coordinates_s.c.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/perception_interfaces__rosidl_generator_py.dir/build.make CMakeFiles/perception_interfaces__rosidl_generator_py.dir/rosidl_generator_py/perception_interfaces/msg/_coordinates_s.c.o
+.PHONY : rosidl_generator_py/perception_interfaces/msg/_coordinates_s.c.o
+
+rosidl_generator_py/perception_interfaces/msg/_coordinates_s.i: rosidl_generator_py/perception_interfaces/msg/_coordinates_s.c.i
+.PHONY : rosidl_generator_py/perception_interfaces/msg/_coordinates_s.i
+
+# target to preprocess a source file
+rosidl_generator_py/perception_interfaces/msg/_coordinates_s.c.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/perception_interfaces__rosidl_generator_py.dir/build.make CMakeFiles/perception_interfaces__rosidl_generator_py.dir/rosidl_generator_py/perception_interfaces/msg/_coordinates_s.c.i
+.PHONY : rosidl_generator_py/perception_interfaces/msg/_coordinates_s.c.i
+
+rosidl_generator_py/perception_interfaces/msg/_coordinates_s.s: rosidl_generator_py/perception_interfaces/msg/_coordinates_s.c.s
+.PHONY : rosidl_generator_py/perception_interfaces/msg/_coordinates_s.s
+
+# target to generate assembly for a file
+rosidl_generator_py/perception_interfaces/msg/_coordinates_s.c.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/perception_interfaces__rosidl_generator_py.dir/build.make CMakeFiles/perception_interfaces__rosidl_generator_py.dir/rosidl_generator_py/perception_interfaces/msg/_coordinates_s.c.s
+.PHONY : rosidl_generator_py/perception_interfaces/msg/_coordinates_s.c.s
+
 rosidl_generator_py/perception_interfaces/msg/_gate_array_s.o: rosidl_generator_py/perception_interfaces/msg/_gate_array_s.c.o
 .PHONY : rosidl_generator_py/perception_interfaces/msg/_gate_array_s.o
 
@@ -812,6 +908,54 @@ rosidl_typesupport_c/perception_interfaces/msg/bounding_boxes__type_support.s: r
 rosidl_typesupport_c/perception_interfaces/msg/bounding_boxes__type_support.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/perception_interfaces__rosidl_typesupport_c.dir/build.make CMakeFiles/perception_interfaces__rosidl_typesupport_c.dir/rosidl_typesupport_c/perception_interfaces/msg/bounding_boxes__type_support.cpp.s
 .PHONY : rosidl_typesupport_c/perception_interfaces/msg/bounding_boxes__type_support.cpp.s
+
+rosidl_typesupport_c/perception_interfaces/msg/coordinate__type_support.o: rosidl_typesupport_c/perception_interfaces/msg/coordinate__type_support.cpp.o
+.PHONY : rosidl_typesupport_c/perception_interfaces/msg/coordinate__type_support.o
+
+# target to build an object file
+rosidl_typesupport_c/perception_interfaces/msg/coordinate__type_support.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/perception_interfaces__rosidl_typesupport_c.dir/build.make CMakeFiles/perception_interfaces__rosidl_typesupport_c.dir/rosidl_typesupport_c/perception_interfaces/msg/coordinate__type_support.cpp.o
+.PHONY : rosidl_typesupport_c/perception_interfaces/msg/coordinate__type_support.cpp.o
+
+rosidl_typesupport_c/perception_interfaces/msg/coordinate__type_support.i: rosidl_typesupport_c/perception_interfaces/msg/coordinate__type_support.cpp.i
+.PHONY : rosidl_typesupport_c/perception_interfaces/msg/coordinate__type_support.i
+
+# target to preprocess a source file
+rosidl_typesupport_c/perception_interfaces/msg/coordinate__type_support.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/perception_interfaces__rosidl_typesupport_c.dir/build.make CMakeFiles/perception_interfaces__rosidl_typesupport_c.dir/rosidl_typesupport_c/perception_interfaces/msg/coordinate__type_support.cpp.i
+.PHONY : rosidl_typesupport_c/perception_interfaces/msg/coordinate__type_support.cpp.i
+
+rosidl_typesupport_c/perception_interfaces/msg/coordinate__type_support.s: rosidl_typesupport_c/perception_interfaces/msg/coordinate__type_support.cpp.s
+.PHONY : rosidl_typesupport_c/perception_interfaces/msg/coordinate__type_support.s
+
+# target to generate assembly for a file
+rosidl_typesupport_c/perception_interfaces/msg/coordinate__type_support.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/perception_interfaces__rosidl_typesupport_c.dir/build.make CMakeFiles/perception_interfaces__rosidl_typesupport_c.dir/rosidl_typesupport_c/perception_interfaces/msg/coordinate__type_support.cpp.s
+.PHONY : rosidl_typesupport_c/perception_interfaces/msg/coordinate__type_support.cpp.s
+
+rosidl_typesupport_c/perception_interfaces/msg/coordinates__type_support.o: rosidl_typesupport_c/perception_interfaces/msg/coordinates__type_support.cpp.o
+.PHONY : rosidl_typesupport_c/perception_interfaces/msg/coordinates__type_support.o
+
+# target to build an object file
+rosidl_typesupport_c/perception_interfaces/msg/coordinates__type_support.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/perception_interfaces__rosidl_typesupport_c.dir/build.make CMakeFiles/perception_interfaces__rosidl_typesupport_c.dir/rosidl_typesupport_c/perception_interfaces/msg/coordinates__type_support.cpp.o
+.PHONY : rosidl_typesupport_c/perception_interfaces/msg/coordinates__type_support.cpp.o
+
+rosidl_typesupport_c/perception_interfaces/msg/coordinates__type_support.i: rosidl_typesupport_c/perception_interfaces/msg/coordinates__type_support.cpp.i
+.PHONY : rosidl_typesupport_c/perception_interfaces/msg/coordinates__type_support.i
+
+# target to preprocess a source file
+rosidl_typesupport_c/perception_interfaces/msg/coordinates__type_support.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/perception_interfaces__rosidl_typesupport_c.dir/build.make CMakeFiles/perception_interfaces__rosidl_typesupport_c.dir/rosidl_typesupport_c/perception_interfaces/msg/coordinates__type_support.cpp.i
+.PHONY : rosidl_typesupport_c/perception_interfaces/msg/coordinates__type_support.cpp.i
+
+rosidl_typesupport_c/perception_interfaces/msg/coordinates__type_support.s: rosidl_typesupport_c/perception_interfaces/msg/coordinates__type_support.cpp.s
+.PHONY : rosidl_typesupport_c/perception_interfaces/msg/coordinates__type_support.s
+
+# target to generate assembly for a file
+rosidl_typesupport_c/perception_interfaces/msg/coordinates__type_support.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/perception_interfaces__rosidl_typesupport_c.dir/build.make CMakeFiles/perception_interfaces__rosidl_typesupport_c.dir/rosidl_typesupport_c/perception_interfaces/msg/coordinates__type_support.cpp.s
+.PHONY : rosidl_typesupport_c/perception_interfaces/msg/coordinates__type_support.cpp.s
 
 rosidl_typesupport_c/perception_interfaces/msg/gate__type_support.o: rosidl_typesupport_c/perception_interfaces/msg/gate__type_support.cpp.o
 .PHONY : rosidl_typesupport_c/perception_interfaces/msg/gate__type_support.o
@@ -957,6 +1101,54 @@ rosidl_typesupport_cpp/perception_interfaces/msg/bounding_boxes__type_support.cp
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/perception_interfaces__rosidl_typesupport_cpp.dir/build.make CMakeFiles/perception_interfaces__rosidl_typesupport_cpp.dir/rosidl_typesupport_cpp/perception_interfaces/msg/bounding_boxes__type_support.cpp.s
 .PHONY : rosidl_typesupport_cpp/perception_interfaces/msg/bounding_boxes__type_support.cpp.s
 
+rosidl_typesupport_cpp/perception_interfaces/msg/coordinate__type_support.o: rosidl_typesupport_cpp/perception_interfaces/msg/coordinate__type_support.cpp.o
+.PHONY : rosidl_typesupport_cpp/perception_interfaces/msg/coordinate__type_support.o
+
+# target to build an object file
+rosidl_typesupport_cpp/perception_interfaces/msg/coordinate__type_support.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/perception_interfaces__rosidl_typesupport_cpp.dir/build.make CMakeFiles/perception_interfaces__rosidl_typesupport_cpp.dir/rosidl_typesupport_cpp/perception_interfaces/msg/coordinate__type_support.cpp.o
+.PHONY : rosidl_typesupport_cpp/perception_interfaces/msg/coordinate__type_support.cpp.o
+
+rosidl_typesupport_cpp/perception_interfaces/msg/coordinate__type_support.i: rosidl_typesupport_cpp/perception_interfaces/msg/coordinate__type_support.cpp.i
+.PHONY : rosidl_typesupport_cpp/perception_interfaces/msg/coordinate__type_support.i
+
+# target to preprocess a source file
+rosidl_typesupport_cpp/perception_interfaces/msg/coordinate__type_support.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/perception_interfaces__rosidl_typesupport_cpp.dir/build.make CMakeFiles/perception_interfaces__rosidl_typesupport_cpp.dir/rosidl_typesupport_cpp/perception_interfaces/msg/coordinate__type_support.cpp.i
+.PHONY : rosidl_typesupport_cpp/perception_interfaces/msg/coordinate__type_support.cpp.i
+
+rosidl_typesupport_cpp/perception_interfaces/msg/coordinate__type_support.s: rosidl_typesupport_cpp/perception_interfaces/msg/coordinate__type_support.cpp.s
+.PHONY : rosidl_typesupport_cpp/perception_interfaces/msg/coordinate__type_support.s
+
+# target to generate assembly for a file
+rosidl_typesupport_cpp/perception_interfaces/msg/coordinate__type_support.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/perception_interfaces__rosidl_typesupport_cpp.dir/build.make CMakeFiles/perception_interfaces__rosidl_typesupport_cpp.dir/rosidl_typesupport_cpp/perception_interfaces/msg/coordinate__type_support.cpp.s
+.PHONY : rosidl_typesupport_cpp/perception_interfaces/msg/coordinate__type_support.cpp.s
+
+rosidl_typesupport_cpp/perception_interfaces/msg/coordinates__type_support.o: rosidl_typesupport_cpp/perception_interfaces/msg/coordinates__type_support.cpp.o
+.PHONY : rosidl_typesupport_cpp/perception_interfaces/msg/coordinates__type_support.o
+
+# target to build an object file
+rosidl_typesupport_cpp/perception_interfaces/msg/coordinates__type_support.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/perception_interfaces__rosidl_typesupport_cpp.dir/build.make CMakeFiles/perception_interfaces__rosidl_typesupport_cpp.dir/rosidl_typesupport_cpp/perception_interfaces/msg/coordinates__type_support.cpp.o
+.PHONY : rosidl_typesupport_cpp/perception_interfaces/msg/coordinates__type_support.cpp.o
+
+rosidl_typesupport_cpp/perception_interfaces/msg/coordinates__type_support.i: rosidl_typesupport_cpp/perception_interfaces/msg/coordinates__type_support.cpp.i
+.PHONY : rosidl_typesupport_cpp/perception_interfaces/msg/coordinates__type_support.i
+
+# target to preprocess a source file
+rosidl_typesupport_cpp/perception_interfaces/msg/coordinates__type_support.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/perception_interfaces__rosidl_typesupport_cpp.dir/build.make CMakeFiles/perception_interfaces__rosidl_typesupport_cpp.dir/rosidl_typesupport_cpp/perception_interfaces/msg/coordinates__type_support.cpp.i
+.PHONY : rosidl_typesupport_cpp/perception_interfaces/msg/coordinates__type_support.cpp.i
+
+rosidl_typesupport_cpp/perception_interfaces/msg/coordinates__type_support.s: rosidl_typesupport_cpp/perception_interfaces/msg/coordinates__type_support.cpp.s
+.PHONY : rosidl_typesupport_cpp/perception_interfaces/msg/coordinates__type_support.s
+
+# target to generate assembly for a file
+rosidl_typesupport_cpp/perception_interfaces/msg/coordinates__type_support.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/perception_interfaces__rosidl_typesupport_cpp.dir/build.make CMakeFiles/perception_interfaces__rosidl_typesupport_cpp.dir/rosidl_typesupport_cpp/perception_interfaces/msg/coordinates__type_support.cpp.s
+.PHONY : rosidl_typesupport_cpp/perception_interfaces/msg/coordinates__type_support.cpp.s
+
 rosidl_typesupport_cpp/perception_interfaces/msg/gate__type_support.o: rosidl_typesupport_cpp/perception_interfaces/msg/gate__type_support.cpp.o
 .PHONY : rosidl_typesupport_cpp/perception_interfaces/msg/gate__type_support.o
 
@@ -1100,6 +1292,54 @@ rosidl_typesupport_fastrtps_c/perception_interfaces/msg/detail/bounding_boxes__t
 rosidl_typesupport_fastrtps_c/perception_interfaces/msg/detail/bounding_boxes__type_support_c.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/perception_interfaces__rosidl_typesupport_fastrtps_c.dir/build.make CMakeFiles/perception_interfaces__rosidl_typesupport_fastrtps_c.dir/rosidl_typesupport_fastrtps_c/perception_interfaces/msg/detail/bounding_boxes__type_support_c.cpp.s
 .PHONY : rosidl_typesupport_fastrtps_c/perception_interfaces/msg/detail/bounding_boxes__type_support_c.cpp.s
+
+rosidl_typesupport_fastrtps_c/perception_interfaces/msg/detail/coordinate__type_support_c.o: rosidl_typesupport_fastrtps_c/perception_interfaces/msg/detail/coordinate__type_support_c.cpp.o
+.PHONY : rosidl_typesupport_fastrtps_c/perception_interfaces/msg/detail/coordinate__type_support_c.o
+
+# target to build an object file
+rosidl_typesupport_fastrtps_c/perception_interfaces/msg/detail/coordinate__type_support_c.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/perception_interfaces__rosidl_typesupport_fastrtps_c.dir/build.make CMakeFiles/perception_interfaces__rosidl_typesupport_fastrtps_c.dir/rosidl_typesupport_fastrtps_c/perception_interfaces/msg/detail/coordinate__type_support_c.cpp.o
+.PHONY : rosidl_typesupport_fastrtps_c/perception_interfaces/msg/detail/coordinate__type_support_c.cpp.o
+
+rosidl_typesupport_fastrtps_c/perception_interfaces/msg/detail/coordinate__type_support_c.i: rosidl_typesupport_fastrtps_c/perception_interfaces/msg/detail/coordinate__type_support_c.cpp.i
+.PHONY : rosidl_typesupport_fastrtps_c/perception_interfaces/msg/detail/coordinate__type_support_c.i
+
+# target to preprocess a source file
+rosidl_typesupport_fastrtps_c/perception_interfaces/msg/detail/coordinate__type_support_c.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/perception_interfaces__rosidl_typesupport_fastrtps_c.dir/build.make CMakeFiles/perception_interfaces__rosidl_typesupport_fastrtps_c.dir/rosidl_typesupport_fastrtps_c/perception_interfaces/msg/detail/coordinate__type_support_c.cpp.i
+.PHONY : rosidl_typesupport_fastrtps_c/perception_interfaces/msg/detail/coordinate__type_support_c.cpp.i
+
+rosidl_typesupport_fastrtps_c/perception_interfaces/msg/detail/coordinate__type_support_c.s: rosidl_typesupport_fastrtps_c/perception_interfaces/msg/detail/coordinate__type_support_c.cpp.s
+.PHONY : rosidl_typesupport_fastrtps_c/perception_interfaces/msg/detail/coordinate__type_support_c.s
+
+# target to generate assembly for a file
+rosidl_typesupport_fastrtps_c/perception_interfaces/msg/detail/coordinate__type_support_c.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/perception_interfaces__rosidl_typesupport_fastrtps_c.dir/build.make CMakeFiles/perception_interfaces__rosidl_typesupport_fastrtps_c.dir/rosidl_typesupport_fastrtps_c/perception_interfaces/msg/detail/coordinate__type_support_c.cpp.s
+.PHONY : rosidl_typesupport_fastrtps_c/perception_interfaces/msg/detail/coordinate__type_support_c.cpp.s
+
+rosidl_typesupport_fastrtps_c/perception_interfaces/msg/detail/coordinates__type_support_c.o: rosidl_typesupport_fastrtps_c/perception_interfaces/msg/detail/coordinates__type_support_c.cpp.o
+.PHONY : rosidl_typesupport_fastrtps_c/perception_interfaces/msg/detail/coordinates__type_support_c.o
+
+# target to build an object file
+rosidl_typesupport_fastrtps_c/perception_interfaces/msg/detail/coordinates__type_support_c.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/perception_interfaces__rosidl_typesupport_fastrtps_c.dir/build.make CMakeFiles/perception_interfaces__rosidl_typesupport_fastrtps_c.dir/rosidl_typesupport_fastrtps_c/perception_interfaces/msg/detail/coordinates__type_support_c.cpp.o
+.PHONY : rosidl_typesupport_fastrtps_c/perception_interfaces/msg/detail/coordinates__type_support_c.cpp.o
+
+rosidl_typesupport_fastrtps_c/perception_interfaces/msg/detail/coordinates__type_support_c.i: rosidl_typesupport_fastrtps_c/perception_interfaces/msg/detail/coordinates__type_support_c.cpp.i
+.PHONY : rosidl_typesupport_fastrtps_c/perception_interfaces/msg/detail/coordinates__type_support_c.i
+
+# target to preprocess a source file
+rosidl_typesupport_fastrtps_c/perception_interfaces/msg/detail/coordinates__type_support_c.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/perception_interfaces__rosidl_typesupport_fastrtps_c.dir/build.make CMakeFiles/perception_interfaces__rosidl_typesupport_fastrtps_c.dir/rosidl_typesupport_fastrtps_c/perception_interfaces/msg/detail/coordinates__type_support_c.cpp.i
+.PHONY : rosidl_typesupport_fastrtps_c/perception_interfaces/msg/detail/coordinates__type_support_c.cpp.i
+
+rosidl_typesupport_fastrtps_c/perception_interfaces/msg/detail/coordinates__type_support_c.s: rosidl_typesupport_fastrtps_c/perception_interfaces/msg/detail/coordinates__type_support_c.cpp.s
+.PHONY : rosidl_typesupport_fastrtps_c/perception_interfaces/msg/detail/coordinates__type_support_c.s
+
+# target to generate assembly for a file
+rosidl_typesupport_fastrtps_c/perception_interfaces/msg/detail/coordinates__type_support_c.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/perception_interfaces__rosidl_typesupport_fastrtps_c.dir/build.make CMakeFiles/perception_interfaces__rosidl_typesupport_fastrtps_c.dir/rosidl_typesupport_fastrtps_c/perception_interfaces/msg/detail/coordinates__type_support_c.cpp.s
+.PHONY : rosidl_typesupport_fastrtps_c/perception_interfaces/msg/detail/coordinates__type_support_c.cpp.s
 
 rosidl_typesupport_fastrtps_c/perception_interfaces/msg/detail/gate__type_support_c.o: rosidl_typesupport_fastrtps_c/perception_interfaces/msg/detail/gate__type_support_c.cpp.o
 .PHONY : rosidl_typesupport_fastrtps_c/perception_interfaces/msg/detail/gate__type_support_c.o
@@ -1245,6 +1485,54 @@ rosidl_typesupport_fastrtps_cpp/perception_interfaces/msg/detail/dds_fastrtps/bo
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/perception_interfaces__rosidl_typesupport_fastrtps_cpp.dir/build.make CMakeFiles/perception_interfaces__rosidl_typesupport_fastrtps_cpp.dir/rosidl_typesupport_fastrtps_cpp/perception_interfaces/msg/detail/dds_fastrtps/bounding_boxes__type_support.cpp.s
 .PHONY : rosidl_typesupport_fastrtps_cpp/perception_interfaces/msg/detail/dds_fastrtps/bounding_boxes__type_support.cpp.s
 
+rosidl_typesupport_fastrtps_cpp/perception_interfaces/msg/detail/dds_fastrtps/coordinate__type_support.o: rosidl_typesupport_fastrtps_cpp/perception_interfaces/msg/detail/dds_fastrtps/coordinate__type_support.cpp.o
+.PHONY : rosidl_typesupport_fastrtps_cpp/perception_interfaces/msg/detail/dds_fastrtps/coordinate__type_support.o
+
+# target to build an object file
+rosidl_typesupport_fastrtps_cpp/perception_interfaces/msg/detail/dds_fastrtps/coordinate__type_support.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/perception_interfaces__rosidl_typesupport_fastrtps_cpp.dir/build.make CMakeFiles/perception_interfaces__rosidl_typesupport_fastrtps_cpp.dir/rosidl_typesupport_fastrtps_cpp/perception_interfaces/msg/detail/dds_fastrtps/coordinate__type_support.cpp.o
+.PHONY : rosidl_typesupport_fastrtps_cpp/perception_interfaces/msg/detail/dds_fastrtps/coordinate__type_support.cpp.o
+
+rosidl_typesupport_fastrtps_cpp/perception_interfaces/msg/detail/dds_fastrtps/coordinate__type_support.i: rosidl_typesupport_fastrtps_cpp/perception_interfaces/msg/detail/dds_fastrtps/coordinate__type_support.cpp.i
+.PHONY : rosidl_typesupport_fastrtps_cpp/perception_interfaces/msg/detail/dds_fastrtps/coordinate__type_support.i
+
+# target to preprocess a source file
+rosidl_typesupport_fastrtps_cpp/perception_interfaces/msg/detail/dds_fastrtps/coordinate__type_support.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/perception_interfaces__rosidl_typesupport_fastrtps_cpp.dir/build.make CMakeFiles/perception_interfaces__rosidl_typesupport_fastrtps_cpp.dir/rosidl_typesupport_fastrtps_cpp/perception_interfaces/msg/detail/dds_fastrtps/coordinate__type_support.cpp.i
+.PHONY : rosidl_typesupport_fastrtps_cpp/perception_interfaces/msg/detail/dds_fastrtps/coordinate__type_support.cpp.i
+
+rosidl_typesupport_fastrtps_cpp/perception_interfaces/msg/detail/dds_fastrtps/coordinate__type_support.s: rosidl_typesupport_fastrtps_cpp/perception_interfaces/msg/detail/dds_fastrtps/coordinate__type_support.cpp.s
+.PHONY : rosidl_typesupport_fastrtps_cpp/perception_interfaces/msg/detail/dds_fastrtps/coordinate__type_support.s
+
+# target to generate assembly for a file
+rosidl_typesupport_fastrtps_cpp/perception_interfaces/msg/detail/dds_fastrtps/coordinate__type_support.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/perception_interfaces__rosidl_typesupport_fastrtps_cpp.dir/build.make CMakeFiles/perception_interfaces__rosidl_typesupport_fastrtps_cpp.dir/rosidl_typesupport_fastrtps_cpp/perception_interfaces/msg/detail/dds_fastrtps/coordinate__type_support.cpp.s
+.PHONY : rosidl_typesupport_fastrtps_cpp/perception_interfaces/msg/detail/dds_fastrtps/coordinate__type_support.cpp.s
+
+rosidl_typesupport_fastrtps_cpp/perception_interfaces/msg/detail/dds_fastrtps/coordinates__type_support.o: rosidl_typesupport_fastrtps_cpp/perception_interfaces/msg/detail/dds_fastrtps/coordinates__type_support.cpp.o
+.PHONY : rosidl_typesupport_fastrtps_cpp/perception_interfaces/msg/detail/dds_fastrtps/coordinates__type_support.o
+
+# target to build an object file
+rosidl_typesupport_fastrtps_cpp/perception_interfaces/msg/detail/dds_fastrtps/coordinates__type_support.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/perception_interfaces__rosidl_typesupport_fastrtps_cpp.dir/build.make CMakeFiles/perception_interfaces__rosidl_typesupport_fastrtps_cpp.dir/rosidl_typesupport_fastrtps_cpp/perception_interfaces/msg/detail/dds_fastrtps/coordinates__type_support.cpp.o
+.PHONY : rosidl_typesupport_fastrtps_cpp/perception_interfaces/msg/detail/dds_fastrtps/coordinates__type_support.cpp.o
+
+rosidl_typesupport_fastrtps_cpp/perception_interfaces/msg/detail/dds_fastrtps/coordinates__type_support.i: rosidl_typesupport_fastrtps_cpp/perception_interfaces/msg/detail/dds_fastrtps/coordinates__type_support.cpp.i
+.PHONY : rosidl_typesupport_fastrtps_cpp/perception_interfaces/msg/detail/dds_fastrtps/coordinates__type_support.i
+
+# target to preprocess a source file
+rosidl_typesupport_fastrtps_cpp/perception_interfaces/msg/detail/dds_fastrtps/coordinates__type_support.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/perception_interfaces__rosidl_typesupport_fastrtps_cpp.dir/build.make CMakeFiles/perception_interfaces__rosidl_typesupport_fastrtps_cpp.dir/rosidl_typesupport_fastrtps_cpp/perception_interfaces/msg/detail/dds_fastrtps/coordinates__type_support.cpp.i
+.PHONY : rosidl_typesupport_fastrtps_cpp/perception_interfaces/msg/detail/dds_fastrtps/coordinates__type_support.cpp.i
+
+rosidl_typesupport_fastrtps_cpp/perception_interfaces/msg/detail/dds_fastrtps/coordinates__type_support.s: rosidl_typesupport_fastrtps_cpp/perception_interfaces/msg/detail/dds_fastrtps/coordinates__type_support.cpp.s
+.PHONY : rosidl_typesupport_fastrtps_cpp/perception_interfaces/msg/detail/dds_fastrtps/coordinates__type_support.s
+
+# target to generate assembly for a file
+rosidl_typesupport_fastrtps_cpp/perception_interfaces/msg/detail/dds_fastrtps/coordinates__type_support.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/perception_interfaces__rosidl_typesupport_fastrtps_cpp.dir/build.make CMakeFiles/perception_interfaces__rosidl_typesupport_fastrtps_cpp.dir/rosidl_typesupport_fastrtps_cpp/perception_interfaces/msg/detail/dds_fastrtps/coordinates__type_support.cpp.s
+.PHONY : rosidl_typesupport_fastrtps_cpp/perception_interfaces/msg/detail/dds_fastrtps/coordinates__type_support.cpp.s
+
 rosidl_typesupport_fastrtps_cpp/perception_interfaces/msg/detail/dds_fastrtps/gate__type_support.o: rosidl_typesupport_fastrtps_cpp/perception_interfaces/msg/detail/dds_fastrtps/gate__type_support.cpp.o
 .PHONY : rosidl_typesupport_fastrtps_cpp/perception_interfaces/msg/detail/dds_fastrtps/gate__type_support.o
 
@@ -1388,6 +1676,54 @@ rosidl_typesupport_introspection_c/perception_interfaces/msg/detail/bounding_box
 rosidl_typesupport_introspection_c/perception_interfaces/msg/detail/bounding_boxes__type_support.c.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/perception_interfaces__rosidl_typesupport_introspection_c.dir/build.make CMakeFiles/perception_interfaces__rosidl_typesupport_introspection_c.dir/rosidl_typesupport_introspection_c/perception_interfaces/msg/detail/bounding_boxes__type_support.c.s
 .PHONY : rosidl_typesupport_introspection_c/perception_interfaces/msg/detail/bounding_boxes__type_support.c.s
+
+rosidl_typesupport_introspection_c/perception_interfaces/msg/detail/coordinate__type_support.o: rosidl_typesupport_introspection_c/perception_interfaces/msg/detail/coordinate__type_support.c.o
+.PHONY : rosidl_typesupport_introspection_c/perception_interfaces/msg/detail/coordinate__type_support.o
+
+# target to build an object file
+rosidl_typesupport_introspection_c/perception_interfaces/msg/detail/coordinate__type_support.c.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/perception_interfaces__rosidl_typesupport_introspection_c.dir/build.make CMakeFiles/perception_interfaces__rosidl_typesupport_introspection_c.dir/rosidl_typesupport_introspection_c/perception_interfaces/msg/detail/coordinate__type_support.c.o
+.PHONY : rosidl_typesupport_introspection_c/perception_interfaces/msg/detail/coordinate__type_support.c.o
+
+rosidl_typesupport_introspection_c/perception_interfaces/msg/detail/coordinate__type_support.i: rosidl_typesupport_introspection_c/perception_interfaces/msg/detail/coordinate__type_support.c.i
+.PHONY : rosidl_typesupport_introspection_c/perception_interfaces/msg/detail/coordinate__type_support.i
+
+# target to preprocess a source file
+rosidl_typesupport_introspection_c/perception_interfaces/msg/detail/coordinate__type_support.c.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/perception_interfaces__rosidl_typesupport_introspection_c.dir/build.make CMakeFiles/perception_interfaces__rosidl_typesupport_introspection_c.dir/rosidl_typesupport_introspection_c/perception_interfaces/msg/detail/coordinate__type_support.c.i
+.PHONY : rosidl_typesupport_introspection_c/perception_interfaces/msg/detail/coordinate__type_support.c.i
+
+rosidl_typesupport_introspection_c/perception_interfaces/msg/detail/coordinate__type_support.s: rosidl_typesupport_introspection_c/perception_interfaces/msg/detail/coordinate__type_support.c.s
+.PHONY : rosidl_typesupport_introspection_c/perception_interfaces/msg/detail/coordinate__type_support.s
+
+# target to generate assembly for a file
+rosidl_typesupport_introspection_c/perception_interfaces/msg/detail/coordinate__type_support.c.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/perception_interfaces__rosidl_typesupport_introspection_c.dir/build.make CMakeFiles/perception_interfaces__rosidl_typesupport_introspection_c.dir/rosidl_typesupport_introspection_c/perception_interfaces/msg/detail/coordinate__type_support.c.s
+.PHONY : rosidl_typesupport_introspection_c/perception_interfaces/msg/detail/coordinate__type_support.c.s
+
+rosidl_typesupport_introspection_c/perception_interfaces/msg/detail/coordinates__type_support.o: rosidl_typesupport_introspection_c/perception_interfaces/msg/detail/coordinates__type_support.c.o
+.PHONY : rosidl_typesupport_introspection_c/perception_interfaces/msg/detail/coordinates__type_support.o
+
+# target to build an object file
+rosidl_typesupport_introspection_c/perception_interfaces/msg/detail/coordinates__type_support.c.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/perception_interfaces__rosidl_typesupport_introspection_c.dir/build.make CMakeFiles/perception_interfaces__rosidl_typesupport_introspection_c.dir/rosidl_typesupport_introspection_c/perception_interfaces/msg/detail/coordinates__type_support.c.o
+.PHONY : rosidl_typesupport_introspection_c/perception_interfaces/msg/detail/coordinates__type_support.c.o
+
+rosidl_typesupport_introspection_c/perception_interfaces/msg/detail/coordinates__type_support.i: rosidl_typesupport_introspection_c/perception_interfaces/msg/detail/coordinates__type_support.c.i
+.PHONY : rosidl_typesupport_introspection_c/perception_interfaces/msg/detail/coordinates__type_support.i
+
+# target to preprocess a source file
+rosidl_typesupport_introspection_c/perception_interfaces/msg/detail/coordinates__type_support.c.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/perception_interfaces__rosidl_typesupport_introspection_c.dir/build.make CMakeFiles/perception_interfaces__rosidl_typesupport_introspection_c.dir/rosidl_typesupport_introspection_c/perception_interfaces/msg/detail/coordinates__type_support.c.i
+.PHONY : rosidl_typesupport_introspection_c/perception_interfaces/msg/detail/coordinates__type_support.c.i
+
+rosidl_typesupport_introspection_c/perception_interfaces/msg/detail/coordinates__type_support.s: rosidl_typesupport_introspection_c/perception_interfaces/msg/detail/coordinates__type_support.c.s
+.PHONY : rosidl_typesupport_introspection_c/perception_interfaces/msg/detail/coordinates__type_support.s
+
+# target to generate assembly for a file
+rosidl_typesupport_introspection_c/perception_interfaces/msg/detail/coordinates__type_support.c.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/perception_interfaces__rosidl_typesupport_introspection_c.dir/build.make CMakeFiles/perception_interfaces__rosidl_typesupport_introspection_c.dir/rosidl_typesupport_introspection_c/perception_interfaces/msg/detail/coordinates__type_support.c.s
+.PHONY : rosidl_typesupport_introspection_c/perception_interfaces/msg/detail/coordinates__type_support.c.s
 
 rosidl_typesupport_introspection_c/perception_interfaces/msg/detail/gate__type_support.o: rosidl_typesupport_introspection_c/perception_interfaces/msg/detail/gate__type_support.c.o
 .PHONY : rosidl_typesupport_introspection_c/perception_interfaces/msg/detail/gate__type_support.o
@@ -1533,6 +1869,54 @@ rosidl_typesupport_introspection_cpp/perception_interfaces/msg/detail/bounding_b
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/perception_interfaces__rosidl_typesupport_introspection_cpp.dir/build.make CMakeFiles/perception_interfaces__rosidl_typesupport_introspection_cpp.dir/rosidl_typesupport_introspection_cpp/perception_interfaces/msg/detail/bounding_boxes__type_support.cpp.s
 .PHONY : rosidl_typesupport_introspection_cpp/perception_interfaces/msg/detail/bounding_boxes__type_support.cpp.s
 
+rosidl_typesupport_introspection_cpp/perception_interfaces/msg/detail/coordinate__type_support.o: rosidl_typesupport_introspection_cpp/perception_interfaces/msg/detail/coordinate__type_support.cpp.o
+.PHONY : rosidl_typesupport_introspection_cpp/perception_interfaces/msg/detail/coordinate__type_support.o
+
+# target to build an object file
+rosidl_typesupport_introspection_cpp/perception_interfaces/msg/detail/coordinate__type_support.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/perception_interfaces__rosidl_typesupport_introspection_cpp.dir/build.make CMakeFiles/perception_interfaces__rosidl_typesupport_introspection_cpp.dir/rosidl_typesupport_introspection_cpp/perception_interfaces/msg/detail/coordinate__type_support.cpp.o
+.PHONY : rosidl_typesupport_introspection_cpp/perception_interfaces/msg/detail/coordinate__type_support.cpp.o
+
+rosidl_typesupport_introspection_cpp/perception_interfaces/msg/detail/coordinate__type_support.i: rosidl_typesupport_introspection_cpp/perception_interfaces/msg/detail/coordinate__type_support.cpp.i
+.PHONY : rosidl_typesupport_introspection_cpp/perception_interfaces/msg/detail/coordinate__type_support.i
+
+# target to preprocess a source file
+rosidl_typesupport_introspection_cpp/perception_interfaces/msg/detail/coordinate__type_support.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/perception_interfaces__rosidl_typesupport_introspection_cpp.dir/build.make CMakeFiles/perception_interfaces__rosidl_typesupport_introspection_cpp.dir/rosidl_typesupport_introspection_cpp/perception_interfaces/msg/detail/coordinate__type_support.cpp.i
+.PHONY : rosidl_typesupport_introspection_cpp/perception_interfaces/msg/detail/coordinate__type_support.cpp.i
+
+rosidl_typesupport_introspection_cpp/perception_interfaces/msg/detail/coordinate__type_support.s: rosidl_typesupport_introspection_cpp/perception_interfaces/msg/detail/coordinate__type_support.cpp.s
+.PHONY : rosidl_typesupport_introspection_cpp/perception_interfaces/msg/detail/coordinate__type_support.s
+
+# target to generate assembly for a file
+rosidl_typesupport_introspection_cpp/perception_interfaces/msg/detail/coordinate__type_support.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/perception_interfaces__rosidl_typesupport_introspection_cpp.dir/build.make CMakeFiles/perception_interfaces__rosidl_typesupport_introspection_cpp.dir/rosidl_typesupport_introspection_cpp/perception_interfaces/msg/detail/coordinate__type_support.cpp.s
+.PHONY : rosidl_typesupport_introspection_cpp/perception_interfaces/msg/detail/coordinate__type_support.cpp.s
+
+rosidl_typesupport_introspection_cpp/perception_interfaces/msg/detail/coordinates__type_support.o: rosidl_typesupport_introspection_cpp/perception_interfaces/msg/detail/coordinates__type_support.cpp.o
+.PHONY : rosidl_typesupport_introspection_cpp/perception_interfaces/msg/detail/coordinates__type_support.o
+
+# target to build an object file
+rosidl_typesupport_introspection_cpp/perception_interfaces/msg/detail/coordinates__type_support.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/perception_interfaces__rosidl_typesupport_introspection_cpp.dir/build.make CMakeFiles/perception_interfaces__rosidl_typesupport_introspection_cpp.dir/rosidl_typesupport_introspection_cpp/perception_interfaces/msg/detail/coordinates__type_support.cpp.o
+.PHONY : rosidl_typesupport_introspection_cpp/perception_interfaces/msg/detail/coordinates__type_support.cpp.o
+
+rosidl_typesupport_introspection_cpp/perception_interfaces/msg/detail/coordinates__type_support.i: rosidl_typesupport_introspection_cpp/perception_interfaces/msg/detail/coordinates__type_support.cpp.i
+.PHONY : rosidl_typesupport_introspection_cpp/perception_interfaces/msg/detail/coordinates__type_support.i
+
+# target to preprocess a source file
+rosidl_typesupport_introspection_cpp/perception_interfaces/msg/detail/coordinates__type_support.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/perception_interfaces__rosidl_typesupport_introspection_cpp.dir/build.make CMakeFiles/perception_interfaces__rosidl_typesupport_introspection_cpp.dir/rosidl_typesupport_introspection_cpp/perception_interfaces/msg/detail/coordinates__type_support.cpp.i
+.PHONY : rosidl_typesupport_introspection_cpp/perception_interfaces/msg/detail/coordinates__type_support.cpp.i
+
+rosidl_typesupport_introspection_cpp/perception_interfaces/msg/detail/coordinates__type_support.s: rosidl_typesupport_introspection_cpp/perception_interfaces/msg/detail/coordinates__type_support.cpp.s
+.PHONY : rosidl_typesupport_introspection_cpp/perception_interfaces/msg/detail/coordinates__type_support.s
+
+# target to generate assembly for a file
+rosidl_typesupport_introspection_cpp/perception_interfaces/msg/detail/coordinates__type_support.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/perception_interfaces__rosidl_typesupport_introspection_cpp.dir/build.make CMakeFiles/perception_interfaces__rosidl_typesupport_introspection_cpp.dir/rosidl_typesupport_introspection_cpp/perception_interfaces/msg/detail/coordinates__type_support.cpp.s
+.PHONY : rosidl_typesupport_introspection_cpp/perception_interfaces/msg/detail/coordinates__type_support.cpp.s
+
 rosidl_typesupport_introspection_cpp/perception_interfaces/msg/detail/gate__type_support.o: rosidl_typesupport_introspection_cpp/perception_interfaces/msg/detail/gate__type_support.cpp.o
 .PHONY : rosidl_typesupport_introspection_cpp/perception_interfaces/msg/detail/gate__type_support.o
 
@@ -1666,6 +2050,12 @@ help:
 	@echo "... rosidl_generator_c/perception_interfaces/msg/detail/bounding_boxes__functions.o"
 	@echo "... rosidl_generator_c/perception_interfaces/msg/detail/bounding_boxes__functions.i"
 	@echo "... rosidl_generator_c/perception_interfaces/msg/detail/bounding_boxes__functions.s"
+	@echo "... rosidl_generator_c/perception_interfaces/msg/detail/coordinate__functions.o"
+	@echo "... rosidl_generator_c/perception_interfaces/msg/detail/coordinate__functions.i"
+	@echo "... rosidl_generator_c/perception_interfaces/msg/detail/coordinate__functions.s"
+	@echo "... rosidl_generator_c/perception_interfaces/msg/detail/coordinates__functions.o"
+	@echo "... rosidl_generator_c/perception_interfaces/msg/detail/coordinates__functions.i"
+	@echo "... rosidl_generator_c/perception_interfaces/msg/detail/coordinates__functions.s"
 	@echo "... rosidl_generator_c/perception_interfaces/msg/detail/gate__functions.o"
 	@echo "... rosidl_generator_c/perception_interfaces/msg/detail/gate__functions.i"
 	@echo "... rosidl_generator_c/perception_interfaces/msg/detail/gate__functions.s"
@@ -1693,6 +2083,12 @@ help:
 	@echo "... rosidl_generator_py/perception_interfaces/msg/_bounding_boxes_s.o"
 	@echo "... rosidl_generator_py/perception_interfaces/msg/_bounding_boxes_s.i"
 	@echo "... rosidl_generator_py/perception_interfaces/msg/_bounding_boxes_s.s"
+	@echo "... rosidl_generator_py/perception_interfaces/msg/_coordinate_s.o"
+	@echo "... rosidl_generator_py/perception_interfaces/msg/_coordinate_s.i"
+	@echo "... rosidl_generator_py/perception_interfaces/msg/_coordinate_s.s"
+	@echo "... rosidl_generator_py/perception_interfaces/msg/_coordinates_s.o"
+	@echo "... rosidl_generator_py/perception_interfaces/msg/_coordinates_s.i"
+	@echo "... rosidl_generator_py/perception_interfaces/msg/_coordinates_s.s"
 	@echo "... rosidl_generator_py/perception_interfaces/msg/_gate_array_s.o"
 	@echo "... rosidl_generator_py/perception_interfaces/msg/_gate_array_s.i"
 	@echo "... rosidl_generator_py/perception_interfaces/msg/_gate_array_s.s"
@@ -1711,6 +2107,12 @@ help:
 	@echo "... rosidl_typesupport_c/perception_interfaces/msg/bounding_boxes__type_support.o"
 	@echo "... rosidl_typesupport_c/perception_interfaces/msg/bounding_boxes__type_support.i"
 	@echo "... rosidl_typesupport_c/perception_interfaces/msg/bounding_boxes__type_support.s"
+	@echo "... rosidl_typesupport_c/perception_interfaces/msg/coordinate__type_support.o"
+	@echo "... rosidl_typesupport_c/perception_interfaces/msg/coordinate__type_support.i"
+	@echo "... rosidl_typesupport_c/perception_interfaces/msg/coordinate__type_support.s"
+	@echo "... rosidl_typesupport_c/perception_interfaces/msg/coordinates__type_support.o"
+	@echo "... rosidl_typesupport_c/perception_interfaces/msg/coordinates__type_support.i"
+	@echo "... rosidl_typesupport_c/perception_interfaces/msg/coordinates__type_support.s"
 	@echo "... rosidl_typesupport_c/perception_interfaces/msg/gate__type_support.o"
 	@echo "... rosidl_typesupport_c/perception_interfaces/msg/gate__type_support.i"
 	@echo "... rosidl_typesupport_c/perception_interfaces/msg/gate__type_support.s"
@@ -1729,6 +2131,12 @@ help:
 	@echo "... rosidl_typesupport_cpp/perception_interfaces/msg/bounding_boxes__type_support.o"
 	@echo "... rosidl_typesupport_cpp/perception_interfaces/msg/bounding_boxes__type_support.i"
 	@echo "... rosidl_typesupport_cpp/perception_interfaces/msg/bounding_boxes__type_support.s"
+	@echo "... rosidl_typesupport_cpp/perception_interfaces/msg/coordinate__type_support.o"
+	@echo "... rosidl_typesupport_cpp/perception_interfaces/msg/coordinate__type_support.i"
+	@echo "... rosidl_typesupport_cpp/perception_interfaces/msg/coordinate__type_support.s"
+	@echo "... rosidl_typesupport_cpp/perception_interfaces/msg/coordinates__type_support.o"
+	@echo "... rosidl_typesupport_cpp/perception_interfaces/msg/coordinates__type_support.i"
+	@echo "... rosidl_typesupport_cpp/perception_interfaces/msg/coordinates__type_support.s"
 	@echo "... rosidl_typesupport_cpp/perception_interfaces/msg/gate__type_support.o"
 	@echo "... rosidl_typesupport_cpp/perception_interfaces/msg/gate__type_support.i"
 	@echo "... rosidl_typesupport_cpp/perception_interfaces/msg/gate__type_support.s"
@@ -1747,6 +2155,12 @@ help:
 	@echo "... rosidl_typesupport_fastrtps_c/perception_interfaces/msg/detail/bounding_boxes__type_support_c.o"
 	@echo "... rosidl_typesupport_fastrtps_c/perception_interfaces/msg/detail/bounding_boxes__type_support_c.i"
 	@echo "... rosidl_typesupport_fastrtps_c/perception_interfaces/msg/detail/bounding_boxes__type_support_c.s"
+	@echo "... rosidl_typesupport_fastrtps_c/perception_interfaces/msg/detail/coordinate__type_support_c.o"
+	@echo "... rosidl_typesupport_fastrtps_c/perception_interfaces/msg/detail/coordinate__type_support_c.i"
+	@echo "... rosidl_typesupport_fastrtps_c/perception_interfaces/msg/detail/coordinate__type_support_c.s"
+	@echo "... rosidl_typesupport_fastrtps_c/perception_interfaces/msg/detail/coordinates__type_support_c.o"
+	@echo "... rosidl_typesupport_fastrtps_c/perception_interfaces/msg/detail/coordinates__type_support_c.i"
+	@echo "... rosidl_typesupport_fastrtps_c/perception_interfaces/msg/detail/coordinates__type_support_c.s"
 	@echo "... rosidl_typesupport_fastrtps_c/perception_interfaces/msg/detail/gate__type_support_c.o"
 	@echo "... rosidl_typesupport_fastrtps_c/perception_interfaces/msg/detail/gate__type_support_c.i"
 	@echo "... rosidl_typesupport_fastrtps_c/perception_interfaces/msg/detail/gate__type_support_c.s"
@@ -1765,6 +2179,12 @@ help:
 	@echo "... rosidl_typesupport_fastrtps_cpp/perception_interfaces/msg/detail/dds_fastrtps/bounding_boxes__type_support.o"
 	@echo "... rosidl_typesupport_fastrtps_cpp/perception_interfaces/msg/detail/dds_fastrtps/bounding_boxes__type_support.i"
 	@echo "... rosidl_typesupport_fastrtps_cpp/perception_interfaces/msg/detail/dds_fastrtps/bounding_boxes__type_support.s"
+	@echo "... rosidl_typesupport_fastrtps_cpp/perception_interfaces/msg/detail/dds_fastrtps/coordinate__type_support.o"
+	@echo "... rosidl_typesupport_fastrtps_cpp/perception_interfaces/msg/detail/dds_fastrtps/coordinate__type_support.i"
+	@echo "... rosidl_typesupport_fastrtps_cpp/perception_interfaces/msg/detail/dds_fastrtps/coordinate__type_support.s"
+	@echo "... rosidl_typesupport_fastrtps_cpp/perception_interfaces/msg/detail/dds_fastrtps/coordinates__type_support.o"
+	@echo "... rosidl_typesupport_fastrtps_cpp/perception_interfaces/msg/detail/dds_fastrtps/coordinates__type_support.i"
+	@echo "... rosidl_typesupport_fastrtps_cpp/perception_interfaces/msg/detail/dds_fastrtps/coordinates__type_support.s"
 	@echo "... rosidl_typesupport_fastrtps_cpp/perception_interfaces/msg/detail/dds_fastrtps/gate__type_support.o"
 	@echo "... rosidl_typesupport_fastrtps_cpp/perception_interfaces/msg/detail/dds_fastrtps/gate__type_support.i"
 	@echo "... rosidl_typesupport_fastrtps_cpp/perception_interfaces/msg/detail/dds_fastrtps/gate__type_support.s"
@@ -1783,6 +2203,12 @@ help:
 	@echo "... rosidl_typesupport_introspection_c/perception_interfaces/msg/detail/bounding_boxes__type_support.o"
 	@echo "... rosidl_typesupport_introspection_c/perception_interfaces/msg/detail/bounding_boxes__type_support.i"
 	@echo "... rosidl_typesupport_introspection_c/perception_interfaces/msg/detail/bounding_boxes__type_support.s"
+	@echo "... rosidl_typesupport_introspection_c/perception_interfaces/msg/detail/coordinate__type_support.o"
+	@echo "... rosidl_typesupport_introspection_c/perception_interfaces/msg/detail/coordinate__type_support.i"
+	@echo "... rosidl_typesupport_introspection_c/perception_interfaces/msg/detail/coordinate__type_support.s"
+	@echo "... rosidl_typesupport_introspection_c/perception_interfaces/msg/detail/coordinates__type_support.o"
+	@echo "... rosidl_typesupport_introspection_c/perception_interfaces/msg/detail/coordinates__type_support.i"
+	@echo "... rosidl_typesupport_introspection_c/perception_interfaces/msg/detail/coordinates__type_support.s"
 	@echo "... rosidl_typesupport_introspection_c/perception_interfaces/msg/detail/gate__type_support.o"
 	@echo "... rosidl_typesupport_introspection_c/perception_interfaces/msg/detail/gate__type_support.i"
 	@echo "... rosidl_typesupport_introspection_c/perception_interfaces/msg/detail/gate__type_support.s"
@@ -1801,6 +2227,12 @@ help:
 	@echo "... rosidl_typesupport_introspection_cpp/perception_interfaces/msg/detail/bounding_boxes__type_support.o"
 	@echo "... rosidl_typesupport_introspection_cpp/perception_interfaces/msg/detail/bounding_boxes__type_support.i"
 	@echo "... rosidl_typesupport_introspection_cpp/perception_interfaces/msg/detail/bounding_boxes__type_support.s"
+	@echo "... rosidl_typesupport_introspection_cpp/perception_interfaces/msg/detail/coordinate__type_support.o"
+	@echo "... rosidl_typesupport_introspection_cpp/perception_interfaces/msg/detail/coordinate__type_support.i"
+	@echo "... rosidl_typesupport_introspection_cpp/perception_interfaces/msg/detail/coordinate__type_support.s"
+	@echo "... rosidl_typesupport_introspection_cpp/perception_interfaces/msg/detail/coordinates__type_support.o"
+	@echo "... rosidl_typesupport_introspection_cpp/perception_interfaces/msg/detail/coordinates__type_support.i"
+	@echo "... rosidl_typesupport_introspection_cpp/perception_interfaces/msg/detail/coordinates__type_support.s"
 	@echo "... rosidl_typesupport_introspection_cpp/perception_interfaces/msg/detail/gate__type_support.o"
 	@echo "... rosidl_typesupport_introspection_cpp/perception_interfaces/msg/detail/gate__type_support.i"
 	@echo "... rosidl_typesupport_introspection_cpp/perception_interfaces/msg/detail/gate__type_support.s"

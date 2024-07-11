@@ -1,0 +1,24 @@
+// generated from rosidl_adapter/resource/msg.idl.em
+// with input from perception_interfaces/msg/Coordinate.msg
+// generated code does not contain a copyright notice
+
+
+module perception_interfaces {
+  module msg {
+    struct Coordinate {
+      uint16 xmin;
+
+      uint16 ymin;
+
+      uint16 xmax;
+
+      uint16 ymax;
+
+      uint16 id;
+
+      float probability;
+
+      string class_id;
+    };
+  };
+};

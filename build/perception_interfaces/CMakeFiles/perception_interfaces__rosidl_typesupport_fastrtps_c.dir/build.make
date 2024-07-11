@@ -83,6 +83,8 @@ rosidl_typesupport_fastrtps_c/perception_interfaces/msg/detail/prop__rosidl_type
 rosidl_typesupport_fastrtps_c/perception_interfaces/msg/detail/prop__rosidl_typesupport_fastrtps_c.h: rosidl_adapter/perception_interfaces/msg/BoundingBoxes.idl
 rosidl_typesupport_fastrtps_c/perception_interfaces/msg/detail/prop__rosidl_typesupport_fastrtps_c.h: rosidl_adapter/perception_interfaces/msg/Gate.idl
 rosidl_typesupport_fastrtps_c/perception_interfaces/msg/detail/prop__rosidl_typesupport_fastrtps_c.h: rosidl_adapter/perception_interfaces/msg/GateArray.idl
+rosidl_typesupport_fastrtps_c/perception_interfaces/msg/detail/prop__rosidl_typesupport_fastrtps_c.h: rosidl_adapter/perception_interfaces/msg/Coordinate.idl
+rosidl_typesupport_fastrtps_c/perception_interfaces/msg/detail/prop__rosidl_typesupport_fastrtps_c.h: rosidl_adapter/perception_interfaces/msg/Coordinates.idl
 rosidl_typesupport_fastrtps_c/perception_interfaces/msg/detail/prop__rosidl_typesupport_fastrtps_c.h: /opt/ros/humble/share/std_msgs/msg/Bool.idl
 rosidl_typesupport_fastrtps_c/perception_interfaces/msg/detail/prop__rosidl_typesupport_fastrtps_c.h: /opt/ros/humble/share/std_msgs/msg/Byte.idl
 rosidl_typesupport_fastrtps_c/perception_interfaces/msg/detail/prop__rosidl_typesupport_fastrtps_c.h: /opt/ros/humble/share/std_msgs/msg/ByteMultiArray.idl
@@ -181,6 +183,18 @@ rosidl_typesupport_fastrtps_c/perception_interfaces/msg/detail/gate_array__rosid
 rosidl_typesupport_fastrtps_c/perception_interfaces/msg/detail/gate_array__type_support_c.cpp: rosidl_typesupport_fastrtps_c/perception_interfaces/msg/detail/prop__rosidl_typesupport_fastrtps_c.h
 	@$(CMAKE_COMMAND) -E touch_nocreate rosidl_typesupport_fastrtps_c/perception_interfaces/msg/detail/gate_array__type_support_c.cpp
 
+rosidl_typesupport_fastrtps_c/perception_interfaces/msg/detail/coordinate__rosidl_typesupport_fastrtps_c.h: rosidl_typesupport_fastrtps_c/perception_interfaces/msg/detail/prop__rosidl_typesupport_fastrtps_c.h
+	@$(CMAKE_COMMAND) -E touch_nocreate rosidl_typesupport_fastrtps_c/perception_interfaces/msg/detail/coordinate__rosidl_typesupport_fastrtps_c.h
+
+rosidl_typesupport_fastrtps_c/perception_interfaces/msg/detail/coordinate__type_support_c.cpp: rosidl_typesupport_fastrtps_c/perception_interfaces/msg/detail/prop__rosidl_typesupport_fastrtps_c.h
+	@$(CMAKE_COMMAND) -E touch_nocreate rosidl_typesupport_fastrtps_c/perception_interfaces/msg/detail/coordinate__type_support_c.cpp
+
+rosidl_typesupport_fastrtps_c/perception_interfaces/msg/detail/coordinates__rosidl_typesupport_fastrtps_c.h: rosidl_typesupport_fastrtps_c/perception_interfaces/msg/detail/prop__rosidl_typesupport_fastrtps_c.h
+	@$(CMAKE_COMMAND) -E touch_nocreate rosidl_typesupport_fastrtps_c/perception_interfaces/msg/detail/coordinates__rosidl_typesupport_fastrtps_c.h
+
+rosidl_typesupport_fastrtps_c/perception_interfaces/msg/detail/coordinates__type_support_c.cpp: rosidl_typesupport_fastrtps_c/perception_interfaces/msg/detail/prop__rosidl_typesupport_fastrtps_c.h
+	@$(CMAKE_COMMAND) -E touch_nocreate rosidl_typesupport_fastrtps_c/perception_interfaces/msg/detail/coordinates__type_support_c.cpp
+
 CMakeFiles/perception_interfaces__rosidl_typesupport_fastrtps_c.dir/rosidl_typesupport_fastrtps_c/perception_interfaces/msg/detail/prop__type_support_c.cpp.o: CMakeFiles/perception_interfaces__rosidl_typesupport_fastrtps_c.dir/flags.make
 CMakeFiles/perception_interfaces__rosidl_typesupport_fastrtps_c.dir/rosidl_typesupport_fastrtps_c/perception_interfaces/msg/detail/prop__type_support_c.cpp.o: rosidl_typesupport_fastrtps_c/perception_interfaces/msg/detail/prop__type_support_c.cpp
 CMakeFiles/perception_interfaces__rosidl_typesupport_fastrtps_c.dir/rosidl_typesupport_fastrtps_c/perception_interfaces/msg/detail/prop__type_support_c.cpp.o: CMakeFiles/perception_interfaces__rosidl_typesupport_fastrtps_c.dir/compiler_depend.ts
@@ -265,6 +279,34 @@ CMakeFiles/perception_interfaces__rosidl_typesupport_fastrtps_c.dir/rosidl_types
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/perception_interfaces__rosidl_typesupport_fastrtps_c.dir/rosidl_typesupport_fastrtps_c/perception_interfaces/msg/detail/gate_array__type_support_c.cpp.s"
 	/usr/lib/ccache/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/parallels/ros2_ws/src/general/build/perception_interfaces/rosidl_typesupport_fastrtps_c/perception_interfaces/msg/detail/gate_array__type_support_c.cpp -o CMakeFiles/perception_interfaces__rosidl_typesupport_fastrtps_c.dir/rosidl_typesupport_fastrtps_c/perception_interfaces/msg/detail/gate_array__type_support_c.cpp.s
 
+CMakeFiles/perception_interfaces__rosidl_typesupport_fastrtps_c.dir/rosidl_typesupport_fastrtps_c/perception_interfaces/msg/detail/coordinate__type_support_c.cpp.o: CMakeFiles/perception_interfaces__rosidl_typesupport_fastrtps_c.dir/flags.make
+CMakeFiles/perception_interfaces__rosidl_typesupport_fastrtps_c.dir/rosidl_typesupport_fastrtps_c/perception_interfaces/msg/detail/coordinate__type_support_c.cpp.o: rosidl_typesupport_fastrtps_c/perception_interfaces/msg/detail/coordinate__type_support_c.cpp
+CMakeFiles/perception_interfaces__rosidl_typesupport_fastrtps_c.dir/rosidl_typesupport_fastrtps_c/perception_interfaces/msg/detail/coordinate__type_support_c.cpp.o: CMakeFiles/perception_interfaces__rosidl_typesupport_fastrtps_c.dir/compiler_depend.ts
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/parallels/ros2_ws/src/general/build/perception_interfaces/CMakeFiles --progress-num=$(CMAKE_PROGRESS_8) "Building CXX object CMakeFiles/perception_interfaces__rosidl_typesupport_fastrtps_c.dir/rosidl_typesupport_fastrtps_c/perception_interfaces/msg/detail/coordinate__type_support_c.cpp.o"
+	/usr/lib/ccache/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/perception_interfaces__rosidl_typesupport_fastrtps_c.dir/rosidl_typesupport_fastrtps_c/perception_interfaces/msg/detail/coordinate__type_support_c.cpp.o -MF CMakeFiles/perception_interfaces__rosidl_typesupport_fastrtps_c.dir/rosidl_typesupport_fastrtps_c/perception_interfaces/msg/detail/coordinate__type_support_c.cpp.o.d -o CMakeFiles/perception_interfaces__rosidl_typesupport_fastrtps_c.dir/rosidl_typesupport_fastrtps_c/perception_interfaces/msg/detail/coordinate__type_support_c.cpp.o -c /home/parallels/ros2_ws/src/general/build/perception_interfaces/rosidl_typesupport_fastrtps_c/perception_interfaces/msg/detail/coordinate__type_support_c.cpp
+
+CMakeFiles/perception_interfaces__rosidl_typesupport_fastrtps_c.dir/rosidl_typesupport_fastrtps_c/perception_interfaces/msg/detail/coordinate__type_support_c.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/perception_interfaces__rosidl_typesupport_fastrtps_c.dir/rosidl_typesupport_fastrtps_c/perception_interfaces/msg/detail/coordinate__type_support_c.cpp.i"
+	/usr/lib/ccache/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/parallels/ros2_ws/src/general/build/perception_interfaces/rosidl_typesupport_fastrtps_c/perception_interfaces/msg/detail/coordinate__type_support_c.cpp > CMakeFiles/perception_interfaces__rosidl_typesupport_fastrtps_c.dir/rosidl_typesupport_fastrtps_c/perception_interfaces/msg/detail/coordinate__type_support_c.cpp.i
+
+CMakeFiles/perception_interfaces__rosidl_typesupport_fastrtps_c.dir/rosidl_typesupport_fastrtps_c/perception_interfaces/msg/detail/coordinate__type_support_c.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/perception_interfaces__rosidl_typesupport_fastrtps_c.dir/rosidl_typesupport_fastrtps_c/perception_interfaces/msg/detail/coordinate__type_support_c.cpp.s"
+	/usr/lib/ccache/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/parallels/ros2_ws/src/general/build/perception_interfaces/rosidl_typesupport_fastrtps_c/perception_interfaces/msg/detail/coordinate__type_support_c.cpp -o CMakeFiles/perception_interfaces__rosidl_typesupport_fastrtps_c.dir/rosidl_typesupport_fastrtps_c/perception_interfaces/msg/detail/coordinate__type_support_c.cpp.s
+
+CMakeFiles/perception_interfaces__rosidl_typesupport_fastrtps_c.dir/rosidl_typesupport_fastrtps_c/perception_interfaces/msg/detail/coordinates__type_support_c.cpp.o: CMakeFiles/perception_interfaces__rosidl_typesupport_fastrtps_c.dir/flags.make
+CMakeFiles/perception_interfaces__rosidl_typesupport_fastrtps_c.dir/rosidl_typesupport_fastrtps_c/perception_interfaces/msg/detail/coordinates__type_support_c.cpp.o: rosidl_typesupport_fastrtps_c/perception_interfaces/msg/detail/coordinates__type_support_c.cpp
+CMakeFiles/perception_interfaces__rosidl_typesupport_fastrtps_c.dir/rosidl_typesupport_fastrtps_c/perception_interfaces/msg/detail/coordinates__type_support_c.cpp.o: CMakeFiles/perception_interfaces__rosidl_typesupport_fastrtps_c.dir/compiler_depend.ts
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/parallels/ros2_ws/src/general/build/perception_interfaces/CMakeFiles --progress-num=$(CMAKE_PROGRESS_9) "Building CXX object CMakeFiles/perception_interfaces__rosidl_typesupport_fastrtps_c.dir/rosidl_typesupport_fastrtps_c/perception_interfaces/msg/detail/coordinates__type_support_c.cpp.o"
+	/usr/lib/ccache/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/perception_interfaces__rosidl_typesupport_fastrtps_c.dir/rosidl_typesupport_fastrtps_c/perception_interfaces/msg/detail/coordinates__type_support_c.cpp.o -MF CMakeFiles/perception_interfaces__rosidl_typesupport_fastrtps_c.dir/rosidl_typesupport_fastrtps_c/perception_interfaces/msg/detail/coordinates__type_support_c.cpp.o.d -o CMakeFiles/perception_interfaces__rosidl_typesupport_fastrtps_c.dir/rosidl_typesupport_fastrtps_c/perception_interfaces/msg/detail/coordinates__type_support_c.cpp.o -c /home/parallels/ros2_ws/src/general/build/perception_interfaces/rosidl_typesupport_fastrtps_c/perception_interfaces/msg/detail/coordinates__type_support_c.cpp
+
+CMakeFiles/perception_interfaces__rosidl_typesupport_fastrtps_c.dir/rosidl_typesupport_fastrtps_c/perception_interfaces/msg/detail/coordinates__type_support_c.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/perception_interfaces__rosidl_typesupport_fastrtps_c.dir/rosidl_typesupport_fastrtps_c/perception_interfaces/msg/detail/coordinates__type_support_c.cpp.i"
+	/usr/lib/ccache/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/parallels/ros2_ws/src/general/build/perception_interfaces/rosidl_typesupport_fastrtps_c/perception_interfaces/msg/detail/coordinates__type_support_c.cpp > CMakeFiles/perception_interfaces__rosidl_typesupport_fastrtps_c.dir/rosidl_typesupport_fastrtps_c/perception_interfaces/msg/detail/coordinates__type_support_c.cpp.i
+
+CMakeFiles/perception_interfaces__rosidl_typesupport_fastrtps_c.dir/rosidl_typesupport_fastrtps_c/perception_interfaces/msg/detail/coordinates__type_support_c.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/perception_interfaces__rosidl_typesupport_fastrtps_c.dir/rosidl_typesupport_fastrtps_c/perception_interfaces/msg/detail/coordinates__type_support_c.cpp.s"
+	/usr/lib/ccache/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/parallels/ros2_ws/src/general/build/perception_interfaces/rosidl_typesupport_fastrtps_c/perception_interfaces/msg/detail/coordinates__type_support_c.cpp -o CMakeFiles/perception_interfaces__rosidl_typesupport_fastrtps_c.dir/rosidl_typesupport_fastrtps_c/perception_interfaces/msg/detail/coordinates__type_support_c.cpp.s
+
 # Object files for target perception_interfaces__rosidl_typesupport_fastrtps_c
 perception_interfaces__rosidl_typesupport_fastrtps_c_OBJECTS = \
 "CMakeFiles/perception_interfaces__rosidl_typesupport_fastrtps_c.dir/rosidl_typesupport_fastrtps_c/perception_interfaces/msg/detail/prop__type_support_c.cpp.o" \
@@ -272,7 +314,9 @@ perception_interfaces__rosidl_typesupport_fastrtps_c_OBJECTS = \
 "CMakeFiles/perception_interfaces__rosidl_typesupport_fastrtps_c.dir/rosidl_typesupport_fastrtps_c/perception_interfaces/msg/detail/bounding_box__type_support_c.cpp.o" \
 "CMakeFiles/perception_interfaces__rosidl_typesupport_fastrtps_c.dir/rosidl_typesupport_fastrtps_c/perception_interfaces/msg/detail/bounding_boxes__type_support_c.cpp.o" \
 "CMakeFiles/perception_interfaces__rosidl_typesupport_fastrtps_c.dir/rosidl_typesupport_fastrtps_c/perception_interfaces/msg/detail/gate__type_support_c.cpp.o" \
-"CMakeFiles/perception_interfaces__rosidl_typesupport_fastrtps_c.dir/rosidl_typesupport_fastrtps_c/perception_interfaces/msg/detail/gate_array__type_support_c.cpp.o"
+"CMakeFiles/perception_interfaces__rosidl_typesupport_fastrtps_c.dir/rosidl_typesupport_fastrtps_c/perception_interfaces/msg/detail/gate_array__type_support_c.cpp.o" \
+"CMakeFiles/perception_interfaces__rosidl_typesupport_fastrtps_c.dir/rosidl_typesupport_fastrtps_c/perception_interfaces/msg/detail/coordinate__type_support_c.cpp.o" \
+"CMakeFiles/perception_interfaces__rosidl_typesupport_fastrtps_c.dir/rosidl_typesupport_fastrtps_c/perception_interfaces/msg/detail/coordinates__type_support_c.cpp.o"
 
 # External object files for target perception_interfaces__rosidl_typesupport_fastrtps_c
 perception_interfaces__rosidl_typesupport_fastrtps_c_EXTERNAL_OBJECTS =
@@ -283,6 +327,8 @@ libperception_interfaces__rosidl_typesupport_fastrtps_c.so: CMakeFiles/perceptio
 libperception_interfaces__rosidl_typesupport_fastrtps_c.so: CMakeFiles/perception_interfaces__rosidl_typesupport_fastrtps_c.dir/rosidl_typesupport_fastrtps_c/perception_interfaces/msg/detail/bounding_boxes__type_support_c.cpp.o
 libperception_interfaces__rosidl_typesupport_fastrtps_c.so: CMakeFiles/perception_interfaces__rosidl_typesupport_fastrtps_c.dir/rosidl_typesupport_fastrtps_c/perception_interfaces/msg/detail/gate__type_support_c.cpp.o
 libperception_interfaces__rosidl_typesupport_fastrtps_c.so: CMakeFiles/perception_interfaces__rosidl_typesupport_fastrtps_c.dir/rosidl_typesupport_fastrtps_c/perception_interfaces/msg/detail/gate_array__type_support_c.cpp.o
+libperception_interfaces__rosidl_typesupport_fastrtps_c.so: CMakeFiles/perception_interfaces__rosidl_typesupport_fastrtps_c.dir/rosidl_typesupport_fastrtps_c/perception_interfaces/msg/detail/coordinate__type_support_c.cpp.o
+libperception_interfaces__rosidl_typesupport_fastrtps_c.so: CMakeFiles/perception_interfaces__rosidl_typesupport_fastrtps_c.dir/rosidl_typesupport_fastrtps_c/perception_interfaces/msg/detail/coordinates__type_support_c.cpp.o
 libperception_interfaces__rosidl_typesupport_fastrtps_c.so: CMakeFiles/perception_interfaces__rosidl_typesupport_fastrtps_c.dir/build.make
 libperception_interfaces__rosidl_typesupport_fastrtps_c.so: libperception_interfaces__rosidl_generator_c.so
 libperception_interfaces__rosidl_typesupport_fastrtps_c.so: /opt/ros/humble/lib/libgeometry_msgs__rosidl_typesupport_fastrtps_c.so
@@ -298,7 +344,7 @@ libperception_interfaces__rosidl_typesupport_fastrtps_c.so: /opt/ros/humble/lib/
 libperception_interfaces__rosidl_typesupport_fastrtps_c.so: /opt/ros/humble/lib/librosidl_runtime_c.so
 libperception_interfaces__rosidl_typesupport_fastrtps_c.so: /opt/ros/humble/lib/librcutils.so
 libperception_interfaces__rosidl_typesupport_fastrtps_c.so: CMakeFiles/perception_interfaces__rosidl_typesupport_fastrtps_c.dir/link.txt
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=/home/parallels/ros2_ws/src/general/build/perception_interfaces/CMakeFiles --progress-num=$(CMAKE_PROGRESS_8) "Linking CXX shared library libperception_interfaces__rosidl_typesupport_fastrtps_c.so"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=/home/parallels/ros2_ws/src/general/build/perception_interfaces/CMakeFiles --progress-num=$(CMAKE_PROGRESS_10) "Linking CXX shared library libperception_interfaces__rosidl_typesupport_fastrtps_c.so"
 	$(CMAKE_COMMAND) -E cmake_link_script CMakeFiles/perception_interfaces__rosidl_typesupport_fastrtps_c.dir/link.txt --verbose=$(VERBOSE)
 
 # Rule to build all files generated by this target.
@@ -313,6 +359,10 @@ CMakeFiles/perception_interfaces__rosidl_typesupport_fastrtps_c.dir/depend: rosi
 CMakeFiles/perception_interfaces__rosidl_typesupport_fastrtps_c.dir/depend: rosidl_typesupport_fastrtps_c/perception_interfaces/msg/detail/bounding_box__type_support_c.cpp
 CMakeFiles/perception_interfaces__rosidl_typesupport_fastrtps_c.dir/depend: rosidl_typesupport_fastrtps_c/perception_interfaces/msg/detail/bounding_boxes__rosidl_typesupport_fastrtps_c.h
 CMakeFiles/perception_interfaces__rosidl_typesupport_fastrtps_c.dir/depend: rosidl_typesupport_fastrtps_c/perception_interfaces/msg/detail/bounding_boxes__type_support_c.cpp
+CMakeFiles/perception_interfaces__rosidl_typesupport_fastrtps_c.dir/depend: rosidl_typesupport_fastrtps_c/perception_interfaces/msg/detail/coordinate__rosidl_typesupport_fastrtps_c.h
+CMakeFiles/perception_interfaces__rosidl_typesupport_fastrtps_c.dir/depend: rosidl_typesupport_fastrtps_c/perception_interfaces/msg/detail/coordinate__type_support_c.cpp
+CMakeFiles/perception_interfaces__rosidl_typesupport_fastrtps_c.dir/depend: rosidl_typesupport_fastrtps_c/perception_interfaces/msg/detail/coordinates__rosidl_typesupport_fastrtps_c.h
+CMakeFiles/perception_interfaces__rosidl_typesupport_fastrtps_c.dir/depend: rosidl_typesupport_fastrtps_c/perception_interfaces/msg/detail/coordinates__type_support_c.cpp
 CMakeFiles/perception_interfaces__rosidl_typesupport_fastrtps_c.dir/depend: rosidl_typesupport_fastrtps_c/perception_interfaces/msg/detail/gate__rosidl_typesupport_fastrtps_c.h
 CMakeFiles/perception_interfaces__rosidl_typesupport_fastrtps_c.dir/depend: rosidl_typesupport_fastrtps_c/perception_interfaces/msg/detail/gate__type_support_c.cpp
 CMakeFiles/perception_interfaces__rosidl_typesupport_fastrtps_c.dir/depend: rosidl_typesupport_fastrtps_c/perception_interfaces/msg/detail/gate_array__rosidl_typesupport_fastrtps_c.h

@@ -90,6 +90,14 @@ CMakeFiles/perception_interfaces__cpp: rosidl_generator_cpp/perception_interface
 CMakeFiles/perception_interfaces__cpp: rosidl_generator_cpp/perception_interfaces/msg/detail/gate_array__builder.hpp
 CMakeFiles/perception_interfaces__cpp: rosidl_generator_cpp/perception_interfaces/msg/detail/gate_array__struct.hpp
 CMakeFiles/perception_interfaces__cpp: rosidl_generator_cpp/perception_interfaces/msg/detail/gate_array__traits.hpp
+CMakeFiles/perception_interfaces__cpp: rosidl_generator_cpp/perception_interfaces/msg/coordinate.hpp
+CMakeFiles/perception_interfaces__cpp: rosidl_generator_cpp/perception_interfaces/msg/detail/coordinate__builder.hpp
+CMakeFiles/perception_interfaces__cpp: rosidl_generator_cpp/perception_interfaces/msg/detail/coordinate__struct.hpp
+CMakeFiles/perception_interfaces__cpp: rosidl_generator_cpp/perception_interfaces/msg/detail/coordinate__traits.hpp
+CMakeFiles/perception_interfaces__cpp: rosidl_generator_cpp/perception_interfaces/msg/coordinates.hpp
+CMakeFiles/perception_interfaces__cpp: rosidl_generator_cpp/perception_interfaces/msg/detail/coordinates__builder.hpp
+CMakeFiles/perception_interfaces__cpp: rosidl_generator_cpp/perception_interfaces/msg/detail/coordinates__struct.hpp
+CMakeFiles/perception_interfaces__cpp: rosidl_generator_cpp/perception_interfaces/msg/detail/coordinates__traits.hpp
 
 rosidl_generator_cpp/perception_interfaces/msg/prop.hpp: /opt/ros/humble/lib/rosidl_generator_cpp/rosidl_generator_cpp
 rosidl_generator_cpp/perception_interfaces/msg/prop.hpp: /opt/ros/humble/local/lib/python3.10/dist-packages/rosidl_generator_cpp/__init__.py
@@ -112,6 +120,8 @@ rosidl_generator_cpp/perception_interfaces/msg/prop.hpp: rosidl_adapter/percepti
 rosidl_generator_cpp/perception_interfaces/msg/prop.hpp: rosidl_adapter/perception_interfaces/msg/BoundingBoxes.idl
 rosidl_generator_cpp/perception_interfaces/msg/prop.hpp: rosidl_adapter/perception_interfaces/msg/Gate.idl
 rosidl_generator_cpp/perception_interfaces/msg/prop.hpp: rosidl_adapter/perception_interfaces/msg/GateArray.idl
+rosidl_generator_cpp/perception_interfaces/msg/prop.hpp: rosidl_adapter/perception_interfaces/msg/Coordinate.idl
+rosidl_generator_cpp/perception_interfaces/msg/prop.hpp: rosidl_adapter/perception_interfaces/msg/Coordinates.idl
 rosidl_generator_cpp/perception_interfaces/msg/prop.hpp: /opt/ros/humble/share/std_msgs/msg/Bool.idl
 rosidl_generator_cpp/perception_interfaces/msg/prop.hpp: /opt/ros/humble/share/std_msgs/msg/Byte.idl
 rosidl_generator_cpp/perception_interfaces/msg/prop.hpp: /opt/ros/humble/share/std_msgs/msg/ByteMultiArray.idl
@@ -246,15 +256,47 @@ rosidl_generator_cpp/perception_interfaces/msg/detail/gate_array__struct.hpp: ro
 rosidl_generator_cpp/perception_interfaces/msg/detail/gate_array__traits.hpp: rosidl_generator_cpp/perception_interfaces/msg/prop.hpp
 	@$(CMAKE_COMMAND) -E touch_nocreate rosidl_generator_cpp/perception_interfaces/msg/detail/gate_array__traits.hpp
 
+rosidl_generator_cpp/perception_interfaces/msg/coordinate.hpp: rosidl_generator_cpp/perception_interfaces/msg/prop.hpp
+	@$(CMAKE_COMMAND) -E touch_nocreate rosidl_generator_cpp/perception_interfaces/msg/coordinate.hpp
+
+rosidl_generator_cpp/perception_interfaces/msg/detail/coordinate__builder.hpp: rosidl_generator_cpp/perception_interfaces/msg/prop.hpp
+	@$(CMAKE_COMMAND) -E touch_nocreate rosidl_generator_cpp/perception_interfaces/msg/detail/coordinate__builder.hpp
+
+rosidl_generator_cpp/perception_interfaces/msg/detail/coordinate__struct.hpp: rosidl_generator_cpp/perception_interfaces/msg/prop.hpp
+	@$(CMAKE_COMMAND) -E touch_nocreate rosidl_generator_cpp/perception_interfaces/msg/detail/coordinate__struct.hpp
+
+rosidl_generator_cpp/perception_interfaces/msg/detail/coordinate__traits.hpp: rosidl_generator_cpp/perception_interfaces/msg/prop.hpp
+	@$(CMAKE_COMMAND) -E touch_nocreate rosidl_generator_cpp/perception_interfaces/msg/detail/coordinate__traits.hpp
+
+rosidl_generator_cpp/perception_interfaces/msg/coordinates.hpp: rosidl_generator_cpp/perception_interfaces/msg/prop.hpp
+	@$(CMAKE_COMMAND) -E touch_nocreate rosidl_generator_cpp/perception_interfaces/msg/coordinates.hpp
+
+rosidl_generator_cpp/perception_interfaces/msg/detail/coordinates__builder.hpp: rosidl_generator_cpp/perception_interfaces/msg/prop.hpp
+	@$(CMAKE_COMMAND) -E touch_nocreate rosidl_generator_cpp/perception_interfaces/msg/detail/coordinates__builder.hpp
+
+rosidl_generator_cpp/perception_interfaces/msg/detail/coordinates__struct.hpp: rosidl_generator_cpp/perception_interfaces/msg/prop.hpp
+	@$(CMAKE_COMMAND) -E touch_nocreate rosidl_generator_cpp/perception_interfaces/msg/detail/coordinates__struct.hpp
+
+rosidl_generator_cpp/perception_interfaces/msg/detail/coordinates__traits.hpp: rosidl_generator_cpp/perception_interfaces/msg/prop.hpp
+	@$(CMAKE_COMMAND) -E touch_nocreate rosidl_generator_cpp/perception_interfaces/msg/detail/coordinates__traits.hpp
+
 perception_interfaces__cpp: CMakeFiles/perception_interfaces__cpp
 perception_interfaces__cpp: rosidl_generator_cpp/perception_interfaces/msg/bounding_box.hpp
 perception_interfaces__cpp: rosidl_generator_cpp/perception_interfaces/msg/bounding_boxes.hpp
+perception_interfaces__cpp: rosidl_generator_cpp/perception_interfaces/msg/coordinate.hpp
+perception_interfaces__cpp: rosidl_generator_cpp/perception_interfaces/msg/coordinates.hpp
 perception_interfaces__cpp: rosidl_generator_cpp/perception_interfaces/msg/detail/bounding_box__builder.hpp
 perception_interfaces__cpp: rosidl_generator_cpp/perception_interfaces/msg/detail/bounding_box__struct.hpp
 perception_interfaces__cpp: rosidl_generator_cpp/perception_interfaces/msg/detail/bounding_box__traits.hpp
 perception_interfaces__cpp: rosidl_generator_cpp/perception_interfaces/msg/detail/bounding_boxes__builder.hpp
 perception_interfaces__cpp: rosidl_generator_cpp/perception_interfaces/msg/detail/bounding_boxes__struct.hpp
 perception_interfaces__cpp: rosidl_generator_cpp/perception_interfaces/msg/detail/bounding_boxes__traits.hpp
+perception_interfaces__cpp: rosidl_generator_cpp/perception_interfaces/msg/detail/coordinate__builder.hpp
+perception_interfaces__cpp: rosidl_generator_cpp/perception_interfaces/msg/detail/coordinate__struct.hpp
+perception_interfaces__cpp: rosidl_generator_cpp/perception_interfaces/msg/detail/coordinate__traits.hpp
+perception_interfaces__cpp: rosidl_generator_cpp/perception_interfaces/msg/detail/coordinates__builder.hpp
+perception_interfaces__cpp: rosidl_generator_cpp/perception_interfaces/msg/detail/coordinates__struct.hpp
+perception_interfaces__cpp: rosidl_generator_cpp/perception_interfaces/msg/detail/coordinates__traits.hpp
 perception_interfaces__cpp: rosidl_generator_cpp/perception_interfaces/msg/detail/gate__builder.hpp
 perception_interfaces__cpp: rosidl_generator_cpp/perception_interfaces/msg/detail/gate__struct.hpp
 perception_interfaces__cpp: rosidl_generator_cpp/perception_interfaces/msg/detail/gate__traits.hpp

@@ -163,39 +163,39 @@ _register_msg_type__msg__prop(PyObject * pymodule)
 // #include "rosidl_runtime_c/service_type_support_struct.h"
 // already included above
 // #include "rosidl_runtime_c/action_type_support_struct.h"
-#include "perception_interfaces/msg/detail/lidar_detected_prop__type_support.h"
-#include "perception_interfaces/msg/detail/lidar_detected_prop__struct.h"
-#include "perception_interfaces/msg/detail/lidar_detected_prop__functions.h"
+#include "perception_interfaces/msg/detail/prop_array__type_support.h"
+#include "perception_interfaces/msg/detail/prop_array__struct.h"
+#include "perception_interfaces/msg/detail/prop_array__functions.h"
 
-static void * perception_interfaces__msg__lidar_detected_prop__create_ros_message(void)
+static void * perception_interfaces__msg__prop_array__create_ros_message(void)
 {
-  return perception_interfaces__msg__LidarDetectedProp__create();
+  return perception_interfaces__msg__PropArray__create();
 }
 
-static void perception_interfaces__msg__lidar_detected_prop__destroy_ros_message(void * raw_ros_message)
+static void perception_interfaces__msg__prop_array__destroy_ros_message(void * raw_ros_message)
 {
-  perception_interfaces__msg__LidarDetectedProp * ros_message = (perception_interfaces__msg__LidarDetectedProp *)raw_ros_message;
-  perception_interfaces__msg__LidarDetectedProp__destroy(ros_message);
+  perception_interfaces__msg__PropArray * ros_message = (perception_interfaces__msg__PropArray *)raw_ros_message;
+  perception_interfaces__msg__PropArray__destroy(ros_message);
 }
 
 ROSIDL_GENERATOR_C_IMPORT
-bool perception_interfaces__msg__lidar_detected_prop__convert_from_py(PyObject * _pymsg, void * ros_message);
+bool perception_interfaces__msg__prop_array__convert_from_py(PyObject * _pymsg, void * ros_message);
 ROSIDL_GENERATOR_C_IMPORT
-PyObject * perception_interfaces__msg__lidar_detected_prop__convert_to_py(void * raw_ros_message);
+PyObject * perception_interfaces__msg__prop_array__convert_to_py(void * raw_ros_message);
 
 
 ROSIDL_GENERATOR_C_IMPORT
 const rosidl_message_type_support_t *
-ROSIDL_GET_MSG_TYPE_SUPPORT(perception_interfaces, msg, LidarDetectedProp);
+ROSIDL_GET_MSG_TYPE_SUPPORT(perception_interfaces, msg, PropArray);
 
 int8_t
-_register_msg_type__msg__lidar_detected_prop(PyObject * pymodule)
+_register_msg_type__msg__prop_array(PyObject * pymodule)
 {
   int8_t err;
 
   PyObject * pyobject_create_ros_message = NULL;
   pyobject_create_ros_message = PyCapsule_New(
-    (void *)&perception_interfaces__msg__lidar_detected_prop__create_ros_message,
+    (void *)&perception_interfaces__msg__prop_array__create_ros_message,
     NULL, NULL);
   if (!pyobject_create_ros_message) {
     // previously added objects will be removed when the module is destroyed
@@ -203,7 +203,7 @@ _register_msg_type__msg__lidar_detected_prop(PyObject * pymodule)
   }
   err = PyModule_AddObject(
     pymodule,
-    "create_ros_message_msg__msg__lidar_detected_prop",
+    "create_ros_message_msg__msg__prop_array",
     pyobject_create_ros_message);
   if (err) {
     // the created capsule needs to be decremented
@@ -214,7 +214,7 @@ _register_msg_type__msg__lidar_detected_prop(PyObject * pymodule)
 
   PyObject * pyobject_destroy_ros_message = NULL;
   pyobject_destroy_ros_message = PyCapsule_New(
-    (void *)&perception_interfaces__msg__lidar_detected_prop__destroy_ros_message,
+    (void *)&perception_interfaces__msg__prop_array__destroy_ros_message,
     NULL, NULL);
   if (!pyobject_destroy_ros_message) {
     // previously added objects will be removed when the module is destroyed
@@ -222,7 +222,7 @@ _register_msg_type__msg__lidar_detected_prop(PyObject * pymodule)
   }
   err = PyModule_AddObject(
     pymodule,
-    "destroy_ros_message_msg__msg__lidar_detected_prop",
+    "destroy_ros_message_msg__msg__prop_array",
     pyobject_destroy_ros_message);
   if (err) {
     // the created capsule needs to be decremented
@@ -233,7 +233,7 @@ _register_msg_type__msg__lidar_detected_prop(PyObject * pymodule)
 
   PyObject * pyobject_convert_from_py = NULL;
   pyobject_convert_from_py = PyCapsule_New(
-    (void *)&perception_interfaces__msg__lidar_detected_prop__convert_from_py,
+    (void *)&perception_interfaces__msg__prop_array__convert_from_py,
     NULL, NULL);
   if (!pyobject_convert_from_py) {
     // previously added objects will be removed when the module is destroyed
@@ -241,7 +241,7 @@ _register_msg_type__msg__lidar_detected_prop(PyObject * pymodule)
   }
   err = PyModule_AddObject(
     pymodule,
-    "convert_from_py_msg__msg__lidar_detected_prop",
+    "convert_from_py_msg__msg__prop_array",
     pyobject_convert_from_py);
   if (err) {
     // the created capsule needs to be decremented
@@ -252,7 +252,7 @@ _register_msg_type__msg__lidar_detected_prop(PyObject * pymodule)
 
   PyObject * pyobject_convert_to_py = NULL;
   pyobject_convert_to_py = PyCapsule_New(
-    (void *)&perception_interfaces__msg__lidar_detected_prop__convert_to_py,
+    (void *)&perception_interfaces__msg__prop_array__convert_to_py,
     NULL, NULL);
   if (!pyobject_convert_to_py) {
     // previously added objects will be removed when the module is destroyed
@@ -260,7 +260,7 @@ _register_msg_type__msg__lidar_detected_prop(PyObject * pymodule)
   }
   err = PyModule_AddObject(
     pymodule,
-    "convert_to_py_msg__msg__lidar_detected_prop",
+    "convert_to_py_msg__msg__prop_array",
     pyobject_convert_to_py);
   if (err) {
     // the created capsule needs to be decremented
@@ -271,7 +271,7 @@ _register_msg_type__msg__lidar_detected_prop(PyObject * pymodule)
 
   PyObject * pyobject_type_support = NULL;
   pyobject_type_support = PyCapsule_New(
-    (void *)ROSIDL_GET_MSG_TYPE_SUPPORT(perception_interfaces, msg, LidarDetectedProp),
+    (void *)ROSIDL_GET_MSG_TYPE_SUPPORT(perception_interfaces, msg, PropArray),
     NULL, NULL);
   if (!pyobject_type_support) {
     // previously added objects will be removed when the module is destroyed
@@ -279,7 +279,7 @@ _register_msg_type__msg__lidar_detected_prop(PyObject * pymodule)
   }
   err = PyModule_AddObject(
     pymodule,
-    "type_support_msg__msg__lidar_detected_prop",
+    "type_support_msg__msg__prop_array",
     pyobject_type_support);
   if (err) {
     // the created capsule needs to be decremented
@@ -302,39 +302,39 @@ _register_msg_type__msg__lidar_detected_prop(PyObject * pymodule)
 // #include "rosidl_runtime_c/service_type_support_struct.h"
 // already included above
 // #include "rosidl_runtime_c/action_type_support_struct.h"
-#include "perception_interfaces/msg/detail/lidar_detected_prop_array__type_support.h"
-#include "perception_interfaces/msg/detail/lidar_detected_prop_array__struct.h"
-#include "perception_interfaces/msg/detail/lidar_detected_prop_array__functions.h"
+#include "perception_interfaces/msg/detail/bounding_box__type_support.h"
+#include "perception_interfaces/msg/detail/bounding_box__struct.h"
+#include "perception_interfaces/msg/detail/bounding_box__functions.h"
 
-static void * perception_interfaces__msg__lidar_detected_prop_array__create_ros_message(void)
+static void * perception_interfaces__msg__bounding_box__create_ros_message(void)
 {
-  return perception_interfaces__msg__LidarDetectedPropArray__create();
+  return perception_interfaces__msg__BoundingBox__create();
 }
 
-static void perception_interfaces__msg__lidar_detected_prop_array__destroy_ros_message(void * raw_ros_message)
+static void perception_interfaces__msg__bounding_box__destroy_ros_message(void * raw_ros_message)
 {
-  perception_interfaces__msg__LidarDetectedPropArray * ros_message = (perception_interfaces__msg__LidarDetectedPropArray *)raw_ros_message;
-  perception_interfaces__msg__LidarDetectedPropArray__destroy(ros_message);
+  perception_interfaces__msg__BoundingBox * ros_message = (perception_interfaces__msg__BoundingBox *)raw_ros_message;
+  perception_interfaces__msg__BoundingBox__destroy(ros_message);
 }
 
 ROSIDL_GENERATOR_C_IMPORT
-bool perception_interfaces__msg__lidar_detected_prop_array__convert_from_py(PyObject * _pymsg, void * ros_message);
+bool perception_interfaces__msg__bounding_box__convert_from_py(PyObject * _pymsg, void * ros_message);
 ROSIDL_GENERATOR_C_IMPORT
-PyObject * perception_interfaces__msg__lidar_detected_prop_array__convert_to_py(void * raw_ros_message);
+PyObject * perception_interfaces__msg__bounding_box__convert_to_py(void * raw_ros_message);
 
 
 ROSIDL_GENERATOR_C_IMPORT
 const rosidl_message_type_support_t *
-ROSIDL_GET_MSG_TYPE_SUPPORT(perception_interfaces, msg, LidarDetectedPropArray);
+ROSIDL_GET_MSG_TYPE_SUPPORT(perception_interfaces, msg, BoundingBox);
 
 int8_t
-_register_msg_type__msg__lidar_detected_prop_array(PyObject * pymodule)
+_register_msg_type__msg__bounding_box(PyObject * pymodule)
 {
   int8_t err;
 
   PyObject * pyobject_create_ros_message = NULL;
   pyobject_create_ros_message = PyCapsule_New(
-    (void *)&perception_interfaces__msg__lidar_detected_prop_array__create_ros_message,
+    (void *)&perception_interfaces__msg__bounding_box__create_ros_message,
     NULL, NULL);
   if (!pyobject_create_ros_message) {
     // previously added objects will be removed when the module is destroyed
@@ -342,7 +342,7 @@ _register_msg_type__msg__lidar_detected_prop_array(PyObject * pymodule)
   }
   err = PyModule_AddObject(
     pymodule,
-    "create_ros_message_msg__msg__lidar_detected_prop_array",
+    "create_ros_message_msg__msg__bounding_box",
     pyobject_create_ros_message);
   if (err) {
     // the created capsule needs to be decremented
@@ -353,7 +353,7 @@ _register_msg_type__msg__lidar_detected_prop_array(PyObject * pymodule)
 
   PyObject * pyobject_destroy_ros_message = NULL;
   pyobject_destroy_ros_message = PyCapsule_New(
-    (void *)&perception_interfaces__msg__lidar_detected_prop_array__destroy_ros_message,
+    (void *)&perception_interfaces__msg__bounding_box__destroy_ros_message,
     NULL, NULL);
   if (!pyobject_destroy_ros_message) {
     // previously added objects will be removed when the module is destroyed
@@ -361,7 +361,7 @@ _register_msg_type__msg__lidar_detected_prop_array(PyObject * pymodule)
   }
   err = PyModule_AddObject(
     pymodule,
-    "destroy_ros_message_msg__msg__lidar_detected_prop_array",
+    "destroy_ros_message_msg__msg__bounding_box",
     pyobject_destroy_ros_message);
   if (err) {
     // the created capsule needs to be decremented
@@ -372,7 +372,7 @@ _register_msg_type__msg__lidar_detected_prop_array(PyObject * pymodule)
 
   PyObject * pyobject_convert_from_py = NULL;
   pyobject_convert_from_py = PyCapsule_New(
-    (void *)&perception_interfaces__msg__lidar_detected_prop_array__convert_from_py,
+    (void *)&perception_interfaces__msg__bounding_box__convert_from_py,
     NULL, NULL);
   if (!pyobject_convert_from_py) {
     // previously added objects will be removed when the module is destroyed
@@ -380,7 +380,7 @@ _register_msg_type__msg__lidar_detected_prop_array(PyObject * pymodule)
   }
   err = PyModule_AddObject(
     pymodule,
-    "convert_from_py_msg__msg__lidar_detected_prop_array",
+    "convert_from_py_msg__msg__bounding_box",
     pyobject_convert_from_py);
   if (err) {
     // the created capsule needs to be decremented
@@ -391,7 +391,7 @@ _register_msg_type__msg__lidar_detected_prop_array(PyObject * pymodule)
 
   PyObject * pyobject_convert_to_py = NULL;
   pyobject_convert_to_py = PyCapsule_New(
-    (void *)&perception_interfaces__msg__lidar_detected_prop_array__convert_to_py,
+    (void *)&perception_interfaces__msg__bounding_box__convert_to_py,
     NULL, NULL);
   if (!pyobject_convert_to_py) {
     // previously added objects will be removed when the module is destroyed
@@ -399,7 +399,7 @@ _register_msg_type__msg__lidar_detected_prop_array(PyObject * pymodule)
   }
   err = PyModule_AddObject(
     pymodule,
-    "convert_to_py_msg__msg__lidar_detected_prop_array",
+    "convert_to_py_msg__msg__bounding_box",
     pyobject_convert_to_py);
   if (err) {
     // the created capsule needs to be decremented
@@ -410,7 +410,7 @@ _register_msg_type__msg__lidar_detected_prop_array(PyObject * pymodule)
 
   PyObject * pyobject_type_support = NULL;
   pyobject_type_support = PyCapsule_New(
-    (void *)ROSIDL_GET_MSG_TYPE_SUPPORT(perception_interfaces, msg, LidarDetectedPropArray),
+    (void *)ROSIDL_GET_MSG_TYPE_SUPPORT(perception_interfaces, msg, BoundingBox),
     NULL, NULL);
   if (!pyobject_type_support) {
     // previously added objects will be removed when the module is destroyed
@@ -418,7 +418,424 @@ _register_msg_type__msg__lidar_detected_prop_array(PyObject * pymodule)
   }
   err = PyModule_AddObject(
     pymodule,
-    "type_support_msg__msg__lidar_detected_prop_array",
+    "type_support_msg__msg__bounding_box",
+    pyobject_type_support);
+  if (err) {
+    // the created capsule needs to be decremented
+    Py_XDECREF(pyobject_type_support);
+    // previously added objects will be removed when the module is destroyed
+    return err;
+  }
+  return 0;
+}
+
+// already included above
+// #include <stdbool.h>
+// already included above
+// #include <stdint.h>
+// already included above
+// #include "rosidl_runtime_c/visibility_control.h"
+// already included above
+// #include "rosidl_runtime_c/message_type_support_struct.h"
+// already included above
+// #include "rosidl_runtime_c/service_type_support_struct.h"
+// already included above
+// #include "rosidl_runtime_c/action_type_support_struct.h"
+#include "perception_interfaces/msg/detail/bounding_boxes__type_support.h"
+#include "perception_interfaces/msg/detail/bounding_boxes__struct.h"
+#include "perception_interfaces/msg/detail/bounding_boxes__functions.h"
+
+static void * perception_interfaces__msg__bounding_boxes__create_ros_message(void)
+{
+  return perception_interfaces__msg__BoundingBoxes__create();
+}
+
+static void perception_interfaces__msg__bounding_boxes__destroy_ros_message(void * raw_ros_message)
+{
+  perception_interfaces__msg__BoundingBoxes * ros_message = (perception_interfaces__msg__BoundingBoxes *)raw_ros_message;
+  perception_interfaces__msg__BoundingBoxes__destroy(ros_message);
+}
+
+ROSIDL_GENERATOR_C_IMPORT
+bool perception_interfaces__msg__bounding_boxes__convert_from_py(PyObject * _pymsg, void * ros_message);
+ROSIDL_GENERATOR_C_IMPORT
+PyObject * perception_interfaces__msg__bounding_boxes__convert_to_py(void * raw_ros_message);
+
+
+ROSIDL_GENERATOR_C_IMPORT
+const rosidl_message_type_support_t *
+ROSIDL_GET_MSG_TYPE_SUPPORT(perception_interfaces, msg, BoundingBoxes);
+
+int8_t
+_register_msg_type__msg__bounding_boxes(PyObject * pymodule)
+{
+  int8_t err;
+
+  PyObject * pyobject_create_ros_message = NULL;
+  pyobject_create_ros_message = PyCapsule_New(
+    (void *)&perception_interfaces__msg__bounding_boxes__create_ros_message,
+    NULL, NULL);
+  if (!pyobject_create_ros_message) {
+    // previously added objects will be removed when the module is destroyed
+    return -1;
+  }
+  err = PyModule_AddObject(
+    pymodule,
+    "create_ros_message_msg__msg__bounding_boxes",
+    pyobject_create_ros_message);
+  if (err) {
+    // the created capsule needs to be decremented
+    Py_XDECREF(pyobject_create_ros_message);
+    // previously added objects will be removed when the module is destroyed
+    return err;
+  }
+
+  PyObject * pyobject_destroy_ros_message = NULL;
+  pyobject_destroy_ros_message = PyCapsule_New(
+    (void *)&perception_interfaces__msg__bounding_boxes__destroy_ros_message,
+    NULL, NULL);
+  if (!pyobject_destroy_ros_message) {
+    // previously added objects will be removed when the module is destroyed
+    return -1;
+  }
+  err = PyModule_AddObject(
+    pymodule,
+    "destroy_ros_message_msg__msg__bounding_boxes",
+    pyobject_destroy_ros_message);
+  if (err) {
+    // the created capsule needs to be decremented
+    Py_XDECREF(pyobject_destroy_ros_message);
+    // previously added objects will be removed when the module is destroyed
+    return err;
+  }
+
+  PyObject * pyobject_convert_from_py = NULL;
+  pyobject_convert_from_py = PyCapsule_New(
+    (void *)&perception_interfaces__msg__bounding_boxes__convert_from_py,
+    NULL, NULL);
+  if (!pyobject_convert_from_py) {
+    // previously added objects will be removed when the module is destroyed
+    return -1;
+  }
+  err = PyModule_AddObject(
+    pymodule,
+    "convert_from_py_msg__msg__bounding_boxes",
+    pyobject_convert_from_py);
+  if (err) {
+    // the created capsule needs to be decremented
+    Py_XDECREF(pyobject_convert_from_py);
+    // previously added objects will be removed when the module is destroyed
+    return err;
+  }
+
+  PyObject * pyobject_convert_to_py = NULL;
+  pyobject_convert_to_py = PyCapsule_New(
+    (void *)&perception_interfaces__msg__bounding_boxes__convert_to_py,
+    NULL, NULL);
+  if (!pyobject_convert_to_py) {
+    // previously added objects will be removed when the module is destroyed
+    return -1;
+  }
+  err = PyModule_AddObject(
+    pymodule,
+    "convert_to_py_msg__msg__bounding_boxes",
+    pyobject_convert_to_py);
+  if (err) {
+    // the created capsule needs to be decremented
+    Py_XDECREF(pyobject_convert_to_py);
+    // previously added objects will be removed when the module is destroyed
+    return err;
+  }
+
+  PyObject * pyobject_type_support = NULL;
+  pyobject_type_support = PyCapsule_New(
+    (void *)ROSIDL_GET_MSG_TYPE_SUPPORT(perception_interfaces, msg, BoundingBoxes),
+    NULL, NULL);
+  if (!pyobject_type_support) {
+    // previously added objects will be removed when the module is destroyed
+    return -1;
+  }
+  err = PyModule_AddObject(
+    pymodule,
+    "type_support_msg__msg__bounding_boxes",
+    pyobject_type_support);
+  if (err) {
+    // the created capsule needs to be decremented
+    Py_XDECREF(pyobject_type_support);
+    // previously added objects will be removed when the module is destroyed
+    return err;
+  }
+  return 0;
+}
+
+// already included above
+// #include <stdbool.h>
+// already included above
+// #include <stdint.h>
+// already included above
+// #include "rosidl_runtime_c/visibility_control.h"
+// already included above
+// #include "rosidl_runtime_c/message_type_support_struct.h"
+// already included above
+// #include "rosidl_runtime_c/service_type_support_struct.h"
+// already included above
+// #include "rosidl_runtime_c/action_type_support_struct.h"
+#include "perception_interfaces/msg/detail/gate__type_support.h"
+#include "perception_interfaces/msg/detail/gate__struct.h"
+#include "perception_interfaces/msg/detail/gate__functions.h"
+
+static void * perception_interfaces__msg__gate__create_ros_message(void)
+{
+  return perception_interfaces__msg__Gate__create();
+}
+
+static void perception_interfaces__msg__gate__destroy_ros_message(void * raw_ros_message)
+{
+  perception_interfaces__msg__Gate * ros_message = (perception_interfaces__msg__Gate *)raw_ros_message;
+  perception_interfaces__msg__Gate__destroy(ros_message);
+}
+
+ROSIDL_GENERATOR_C_IMPORT
+bool perception_interfaces__msg__gate__convert_from_py(PyObject * _pymsg, void * ros_message);
+ROSIDL_GENERATOR_C_IMPORT
+PyObject * perception_interfaces__msg__gate__convert_to_py(void * raw_ros_message);
+
+
+ROSIDL_GENERATOR_C_IMPORT
+const rosidl_message_type_support_t *
+ROSIDL_GET_MSG_TYPE_SUPPORT(perception_interfaces, msg, Gate);
+
+int8_t
+_register_msg_type__msg__gate(PyObject * pymodule)
+{
+  int8_t err;
+
+  PyObject * pyobject_create_ros_message = NULL;
+  pyobject_create_ros_message = PyCapsule_New(
+    (void *)&perception_interfaces__msg__gate__create_ros_message,
+    NULL, NULL);
+  if (!pyobject_create_ros_message) {
+    // previously added objects will be removed when the module is destroyed
+    return -1;
+  }
+  err = PyModule_AddObject(
+    pymodule,
+    "create_ros_message_msg__msg__gate",
+    pyobject_create_ros_message);
+  if (err) {
+    // the created capsule needs to be decremented
+    Py_XDECREF(pyobject_create_ros_message);
+    // previously added objects will be removed when the module is destroyed
+    return err;
+  }
+
+  PyObject * pyobject_destroy_ros_message = NULL;
+  pyobject_destroy_ros_message = PyCapsule_New(
+    (void *)&perception_interfaces__msg__gate__destroy_ros_message,
+    NULL, NULL);
+  if (!pyobject_destroy_ros_message) {
+    // previously added objects will be removed when the module is destroyed
+    return -1;
+  }
+  err = PyModule_AddObject(
+    pymodule,
+    "destroy_ros_message_msg__msg__gate",
+    pyobject_destroy_ros_message);
+  if (err) {
+    // the created capsule needs to be decremented
+    Py_XDECREF(pyobject_destroy_ros_message);
+    // previously added objects will be removed when the module is destroyed
+    return err;
+  }
+
+  PyObject * pyobject_convert_from_py = NULL;
+  pyobject_convert_from_py = PyCapsule_New(
+    (void *)&perception_interfaces__msg__gate__convert_from_py,
+    NULL, NULL);
+  if (!pyobject_convert_from_py) {
+    // previously added objects will be removed when the module is destroyed
+    return -1;
+  }
+  err = PyModule_AddObject(
+    pymodule,
+    "convert_from_py_msg__msg__gate",
+    pyobject_convert_from_py);
+  if (err) {
+    // the created capsule needs to be decremented
+    Py_XDECREF(pyobject_convert_from_py);
+    // previously added objects will be removed when the module is destroyed
+    return err;
+  }
+
+  PyObject * pyobject_convert_to_py = NULL;
+  pyobject_convert_to_py = PyCapsule_New(
+    (void *)&perception_interfaces__msg__gate__convert_to_py,
+    NULL, NULL);
+  if (!pyobject_convert_to_py) {
+    // previously added objects will be removed when the module is destroyed
+    return -1;
+  }
+  err = PyModule_AddObject(
+    pymodule,
+    "convert_to_py_msg__msg__gate",
+    pyobject_convert_to_py);
+  if (err) {
+    // the created capsule needs to be decremented
+    Py_XDECREF(pyobject_convert_to_py);
+    // previously added objects will be removed when the module is destroyed
+    return err;
+  }
+
+  PyObject * pyobject_type_support = NULL;
+  pyobject_type_support = PyCapsule_New(
+    (void *)ROSIDL_GET_MSG_TYPE_SUPPORT(perception_interfaces, msg, Gate),
+    NULL, NULL);
+  if (!pyobject_type_support) {
+    // previously added objects will be removed when the module is destroyed
+    return -1;
+  }
+  err = PyModule_AddObject(
+    pymodule,
+    "type_support_msg__msg__gate",
+    pyobject_type_support);
+  if (err) {
+    // the created capsule needs to be decremented
+    Py_XDECREF(pyobject_type_support);
+    // previously added objects will be removed when the module is destroyed
+    return err;
+  }
+  return 0;
+}
+
+// already included above
+// #include <stdbool.h>
+// already included above
+// #include <stdint.h>
+// already included above
+// #include "rosidl_runtime_c/visibility_control.h"
+// already included above
+// #include "rosidl_runtime_c/message_type_support_struct.h"
+// already included above
+// #include "rosidl_runtime_c/service_type_support_struct.h"
+// already included above
+// #include "rosidl_runtime_c/action_type_support_struct.h"
+#include "perception_interfaces/msg/detail/gate_array__type_support.h"
+#include "perception_interfaces/msg/detail/gate_array__struct.h"
+#include "perception_interfaces/msg/detail/gate_array__functions.h"
+
+static void * perception_interfaces__msg__gate_array__create_ros_message(void)
+{
+  return perception_interfaces__msg__GateArray__create();
+}
+
+static void perception_interfaces__msg__gate_array__destroy_ros_message(void * raw_ros_message)
+{
+  perception_interfaces__msg__GateArray * ros_message = (perception_interfaces__msg__GateArray *)raw_ros_message;
+  perception_interfaces__msg__GateArray__destroy(ros_message);
+}
+
+ROSIDL_GENERATOR_C_IMPORT
+bool perception_interfaces__msg__gate_array__convert_from_py(PyObject * _pymsg, void * ros_message);
+ROSIDL_GENERATOR_C_IMPORT
+PyObject * perception_interfaces__msg__gate_array__convert_to_py(void * raw_ros_message);
+
+
+ROSIDL_GENERATOR_C_IMPORT
+const rosidl_message_type_support_t *
+ROSIDL_GET_MSG_TYPE_SUPPORT(perception_interfaces, msg, GateArray);
+
+int8_t
+_register_msg_type__msg__gate_array(PyObject * pymodule)
+{
+  int8_t err;
+
+  PyObject * pyobject_create_ros_message = NULL;
+  pyobject_create_ros_message = PyCapsule_New(
+    (void *)&perception_interfaces__msg__gate_array__create_ros_message,
+    NULL, NULL);
+  if (!pyobject_create_ros_message) {
+    // previously added objects will be removed when the module is destroyed
+    return -1;
+  }
+  err = PyModule_AddObject(
+    pymodule,
+    "create_ros_message_msg__msg__gate_array",
+    pyobject_create_ros_message);
+  if (err) {
+    // the created capsule needs to be decremented
+    Py_XDECREF(pyobject_create_ros_message);
+    // previously added objects will be removed when the module is destroyed
+    return err;
+  }
+
+  PyObject * pyobject_destroy_ros_message = NULL;
+  pyobject_destroy_ros_message = PyCapsule_New(
+    (void *)&perception_interfaces__msg__gate_array__destroy_ros_message,
+    NULL, NULL);
+  if (!pyobject_destroy_ros_message) {
+    // previously added objects will be removed when the module is destroyed
+    return -1;
+  }
+  err = PyModule_AddObject(
+    pymodule,
+    "destroy_ros_message_msg__msg__gate_array",
+    pyobject_destroy_ros_message);
+  if (err) {
+    // the created capsule needs to be decremented
+    Py_XDECREF(pyobject_destroy_ros_message);
+    // previously added objects will be removed when the module is destroyed
+    return err;
+  }
+
+  PyObject * pyobject_convert_from_py = NULL;
+  pyobject_convert_from_py = PyCapsule_New(
+    (void *)&perception_interfaces__msg__gate_array__convert_from_py,
+    NULL, NULL);
+  if (!pyobject_convert_from_py) {
+    // previously added objects will be removed when the module is destroyed
+    return -1;
+  }
+  err = PyModule_AddObject(
+    pymodule,
+    "convert_from_py_msg__msg__gate_array",
+    pyobject_convert_from_py);
+  if (err) {
+    // the created capsule needs to be decremented
+    Py_XDECREF(pyobject_convert_from_py);
+    // previously added objects will be removed when the module is destroyed
+    return err;
+  }
+
+  PyObject * pyobject_convert_to_py = NULL;
+  pyobject_convert_to_py = PyCapsule_New(
+    (void *)&perception_interfaces__msg__gate_array__convert_to_py,
+    NULL, NULL);
+  if (!pyobject_convert_to_py) {
+    // previously added objects will be removed when the module is destroyed
+    return -1;
+  }
+  err = PyModule_AddObject(
+    pymodule,
+    "convert_to_py_msg__msg__gate_array",
+    pyobject_convert_to_py);
+  if (err) {
+    // the created capsule needs to be decremented
+    Py_XDECREF(pyobject_convert_to_py);
+    // previously added objects will be removed when the module is destroyed
+    return err;
+  }
+
+  PyObject * pyobject_type_support = NULL;
+  pyobject_type_support = PyCapsule_New(
+    (void *)ROSIDL_GET_MSG_TYPE_SUPPORT(perception_interfaces, msg, GateArray),
+    NULL, NULL);
+  if (!pyobject_type_support) {
+    // previously added objects will be removed when the module is destroyed
+    return -1;
+  }
+  err = PyModule_AddObject(
+    pymodule,
+    "type_support_msg__msg__gate_array",
     pyobject_type_support);
   if (err) {
     // the created capsule needs to be decremented
@@ -445,13 +862,31 @@ PyInit_perception_interfaces_s__rosidl_typesupport_introspection_c(void)
     return NULL;
   }
 
-  err = _register_msg_type__msg__lidar_detected_prop(pymodule);
+  err = _register_msg_type__msg__prop_array(pymodule);
   if (err) {
     Py_XDECREF(pymodule);
     return NULL;
   }
 
-  err = _register_msg_type__msg__lidar_detected_prop_array(pymodule);
+  err = _register_msg_type__msg__bounding_box(pymodule);
+  if (err) {
+    Py_XDECREF(pymodule);
+    return NULL;
+  }
+
+  err = _register_msg_type__msg__bounding_boxes(pymodule);
+  if (err) {
+    Py_XDECREF(pymodule);
+    return NULL;
+  }
+
+  err = _register_msg_type__msg__gate(pymodule);
+  if (err) {
+    Py_XDECREF(pymodule);
+    return NULL;
+  }
+
+  err = _register_msg_type__msg__gate_array(pymodule);
   if (err) {
     Py_XDECREF(pymodule);
     return NULL;

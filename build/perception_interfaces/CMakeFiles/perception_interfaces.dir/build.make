@@ -72,6 +72,8 @@ CMakeFiles/perception_interfaces: /home/parallels/ros2_ws/src/general/perception
 CMakeFiles/perception_interfaces: /home/parallels/ros2_ws/src/general/perception_interfaces/msg/BoundingBoxes.msg
 CMakeFiles/perception_interfaces: /home/parallels/ros2_ws/src/general/perception_interfaces/msg/Gate.msg
 CMakeFiles/perception_interfaces: /home/parallels/ros2_ws/src/general/perception_interfaces/msg/GateArray.msg
+CMakeFiles/perception_interfaces: /home/parallels/ros2_ws/src/general/perception_interfaces/msg/Coordinate.msg
+CMakeFiles/perception_interfaces: /home/parallels/ros2_ws/src/general/perception_interfaces/msg/Coordinates.msg
 CMakeFiles/perception_interfaces: /opt/ros/humble/share/std_msgs/msg/Bool.idl
 CMakeFiles/perception_interfaces: /opt/ros/humble/share/std_msgs/msg/Byte.idl
 CMakeFiles/perception_interfaces: /opt/ros/humble/share/std_msgs/msg/ByteMultiArray.idl

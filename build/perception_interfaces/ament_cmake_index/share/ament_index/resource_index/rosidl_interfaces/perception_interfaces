@@ -2,6 +2,10 @@ msg/BoundingBox.idl
 msg/BoundingBox.msg
 msg/BoundingBoxes.idl
 msg/BoundingBoxes.msg
+msg/Coordinate.idl
+msg/Coordinate.msg
+msg/Coordinates.idl
+msg/Coordinates.msg
 msg/Gate.idl
 msg/Gate.msg
 msg/GateArray.idl

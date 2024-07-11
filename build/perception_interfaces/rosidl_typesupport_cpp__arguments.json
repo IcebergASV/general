@@ -8,7 +8,9 @@
     "/home/parallels/ros2_ws/src/general/build/perception_interfaces/rosidl_adapter/perception_interfaces:msg/BoundingBox.idl",
     "/home/parallels/ros2_ws/src/general/build/perception_interfaces/rosidl_adapter/perception_interfaces:msg/BoundingBoxes.idl",
     "/home/parallels/ros2_ws/src/general/build/perception_interfaces/rosidl_adapter/perception_interfaces:msg/Gate.idl",
-    "/home/parallels/ros2_ws/src/general/build/perception_interfaces/rosidl_adapter/perception_interfaces:msg/GateArray.idl"
+    "/home/parallels/ros2_ws/src/general/build/perception_interfaces/rosidl_adapter/perception_interfaces:msg/GateArray.idl",
+    "/home/parallels/ros2_ws/src/general/build/perception_interfaces/rosidl_adapter/perception_interfaces:msg/Coordinate.idl",
+    "/home/parallels/ros2_ws/src/general/build/perception_interfaces/rosidl_adapter/perception_interfaces:msg/Coordinates.idl"
   ],
   "ros_interface_dependencies": [
     "std_msgs:/opt/ros/humble/share/std_msgs/msg/Bool.idl",
@@ -87,6 +89,8 @@
     "/home/parallels/ros2_ws/src/general/build/perception_interfaces/rosidl_adapter/perception_interfaces/msg/BoundingBoxes.idl",
     "/home/parallels/ros2_ws/src/general/build/perception_interfaces/rosidl_adapter/perception_interfaces/msg/Gate.idl",
     "/home/parallels/ros2_ws/src/general/build/perception_interfaces/rosidl_adapter/perception_interfaces/msg/GateArray.idl",
+    "/home/parallels/ros2_ws/src/general/build/perception_interfaces/rosidl_adapter/perception_interfaces/msg/Coordinate.idl",
+    "/home/parallels/ros2_ws/src/general/build/perception_interfaces/rosidl_adapter/perception_interfaces/msg/Coordinates.idl",
     "/opt/ros/humble/share/std_msgs/msg/Bool.idl",
     "/opt/ros/humble/share/std_msgs/msg/Byte.idl",
     "/opt/ros/humble/share/std_msgs/msg/ByteMultiArray.idl",
