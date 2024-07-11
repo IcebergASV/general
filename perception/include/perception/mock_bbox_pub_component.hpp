@@ -1,47 +1,40 @@
-#ifndef COMPOSITION__LIDAR_PROP_DETECTOR_COMPONENT_HPP_
-#define COMPOSITION__LIDAR_PROP_DETECTOR_COMPONENT_HPP_
+#ifndef COMPOSITION__MOCK_BBOX_PUB_HPP_
+#define COMPOSITION__MOCK_BBOX_PUB_HPP_
 
 #include <yaml-cpp/yaml.h>
 #include <string>
-#include <eigen3/Eigen/Dense>
+#include <chrono>
 
 #include "rclcpp/rclcpp.hpp"
-#include "slg_msgs/msg/segment_array.hpp"
-#include "slg_msgs/msg/segment.hpp"
-#include "geometry_msgs/msg/point.hpp"
-#include "perception_interfaces/msg/prop.hpp"
-#include "perception_interfaces/msg/prop_array.hpp"
+
+#include "perception_interfaces/msg/bounding_box.hpp"
+#include "perception_interfaces/msg/bounding_boxes.hpp"
 
 using std::placeholders::_1;
+using namespace std::chrono_literals;
 
 namespace perception
 {
 
-class LidarPropDetector : public rclcpp::Node
+class MockBBoxPub : public rclcpp::Node
 {
 public:
-  explicit LidarPropDetector(const rclcpp::NodeOptions & options);
+  explicit MockBBoxPub(const rclcpp::NodeOptions & options);
 
 protected:
-  void laserSegmentCallback(const slg_msgs::msg::SegmentArray::SharedPtr msg);
+  void timer_callback();
 
 private:
-  std::map<std::string, double> p_prop_radii_;
-  double p_max_lidar_dist_;
-  double p_min_lidar_dist_;
-  int p_min_points_in_segment_;
-  double p_max_radius_diff_;
-  double p_lidar_fov_;
-  rclcpp::Subscription<slg_msgs::msg::SegmentArray>::SharedPtr sub_;
-  rclcpp::Publisher<perception_interfaces::msg::PropArray>::SharedPtr pub_;
+
+  int p_xmin_;
+  int p_xmax_;
+  int p_ymin_;
+  int p_ymax_;
+
+  rclcpp::Publisher<perception_interfaces::msg::BoundingBoxes>::SharedPtr pub_;
   rclcpp::node_interfaces::OnSetParametersCallbackHandle::SharedPtr on_set_parameters_callback_handle_;
-  
-  std::vector<double> extractCoordinates(std::vector<geometry_msgs::msg::Point> points, std::string coords_to_extract);
-  void attemptToCreateAndAddLidarDetectedProp(std::vector<geometry_msgs::msg::Point> points, perception_interfaces::msg::PropArray& prop_array);
-  bool isSegmentValid(slg_msgs::msg::Segment segment);
-  perception_interfaces::msg::Prop createLidarDetectedProp(std::vector<geometry_msgs::msg::Point> points);
-  void findClosestMatchAndSetRadiusDiff(perception_interfaces::msg::Prop& circle);
-  bool measuredRadiusIsCloseToExpected(const perception_interfaces::msg::Prop& prop);
+  rclcpp::TimerBase::SharedPtr timer_;
+
   rcl_interfaces::msg::SetParametersResult param_callback(const std::vector<rclcpp::Parameter> &params);
 
   // TODO - figure out how to move this to a library and pass in a reference to the node calling it or make a subclass of rclcpp
@@ -90,4 +83,4 @@ private:
 
 }  // namespace perception
 
-#endif  // COMPOSITION__LIDAR_PROP_DETECTOR_COMPONENT_HPP_
+#endif  // COMPOSITION__MOCK_BBOX_PUB_HPP_
