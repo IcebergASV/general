@@ -80,10 +80,10 @@ namespace perception
     {
       bounding_boxes_ = msg->bounding_boxes;
       haveDetectedGateWithCamera_ = true;
-      RCLCPP_INFO_THROTTLE(this->get_logger(), *this->get_clock(), 1000, "Red and green markers detected");
+      RCLCPP_INFO_THROTTLE(this->get_logger(), *this->get_clock(), 10000, "Red and green markers detected");
     }
     else{
-      RCLCPP_INFO_THROTTLE(this->get_logger(), *this->get_clock(), 1000, "Red AND green markers NOT detected");
+      RCLCPP_INFO_THROTTLE(this->get_logger(), *this->get_clock(), 10000, "Red AND green markers NOT detected");
     }
     return;
   }
@@ -111,7 +111,7 @@ namespace perception
     if (props_in_range.size() > 0)
     {
       closest_prop = getClosestProp(props_in_range);
-      RCLCPP_INFO(this->get_logger(), "Closest prop within BBox Range at (%f, %f)" , closest_prop.point.x, closest_prop.point.y);
+      RCLCPP_DEBUG(this->get_logger(), "Closest prop within BBox Range at (%f, %f)" , closest_prop.point.x, closest_prop.point.y);
       return true;
     }
 
