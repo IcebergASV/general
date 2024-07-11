@@ -1,0 +1,44 @@
+[ 11%] Built target gtest_main
+[ 23%] Built target gtest
+[ 52%] Built target laser_segmentation_component
+[ 64%] Built target test_segmentations
+[ 76%] Built target laser_segmentation
+[ 88%] Built target test_laser_segmentation
+[100%] Built target test_integration
+-- Install configuration: "Release"
+-- Up-to-date: /home/parallels/ros2_ws/src/general/install/laser_segmentation/lib/liblaser_segmentation_component.so
+-- Up-to-date: /home/parallels/ros2_ws/src/general/install/laser_segmentation/lib/laser_segmentation/laser_segmentation
+-- Up-to-date: /home/parallels/ros2_ws/src/general/install/laser_segmentation/include/laser_segmentation
+-- Up-to-date: /home/parallels/ros2_ws/src/general/install/laser_segmentation/include/laser_segmentation/parameter_handler.hpp
+-- Up-to-date: /home/parallels/ros2_ws/src/general/install/laser_segmentation/include/laser_segmentation/parula.hpp
+-- Up-to-date: /home/parallels/ros2_ws/src/general/install/laser_segmentation/include/laser_segmentation/laser_segmentation.hpp
+-- Up-to-date: /home/parallels/ros2_ws/src/general/install/laser_segmentation/include/laser_segmentation/segmentation
+-- Up-to-date: /home/parallels/ros2_ws/src/general/install/laser_segmentation/include/laser_segmentation/segmentation/segmentation.hpp
+-- Up-to-date: /home/parallels/ros2_ws/src/general/install/laser_segmentation/include/laser_segmentation/segmentation/jump_distance.hpp
+-- Up-to-date: /home/parallels/ros2_ws/src/general/install/laser_segmentation/include/laser_segmentation/segmentation/jump_distance_merge.hpp
+-- Up-to-date: /home/parallels/ros2_ws/src/general/install/laser_segmentation/share/laser_segmentation//launch
+-- Up-to-date: /home/parallels/ros2_ws/src/general/install/laser_segmentation/share/laser_segmentation//launch/segmentation.launch.py
+-- Up-to-date: /home/parallels/ros2_ws/src/general/install/laser_segmentation/share/laser_segmentation//params
+-- Up-to-date: /home/parallels/ros2_ws/src/general/install/laser_segmentation/share/laser_segmentation//params/default_params.yml
+-- Up-to-date: /home/parallels/ros2_ws/src/general/install/laser_segmentation/share/laser_segmentation//params/close_steps_detect.yml
+-- Up-to-date: /home/parallels/ros2_ws/src/general/install/laser_segmentation/share/laser_segmentation/environment/library_path.sh
+-- Up-to-date: /home/parallels/ros2_ws/src/general/install/laser_segmentation/share/laser_segmentation/environment/library_path.dsv
+-- Up-to-date: /home/parallels/ros2_ws/src/general/install/laser_segmentation/share/ament_index/resource_index/package_run_dependencies/laser_segmentation
+-- Up-to-date: /home/parallels/ros2_ws/src/general/install/laser_segmentation/share/ament_index/resource_index/parent_prefix_path/laser_segmentation
+-- Up-to-date: /home/parallels/ros2_ws/src/general/install/laser_segmentation/share/laser_segmentation/environment/ament_prefix_path.sh
+-- Up-to-date: /home/parallels/ros2_ws/src/general/install/laser_segmentation/share/laser_segmentation/environment/ament_prefix_path.dsv
+-- Up-to-date: /home/parallels/ros2_ws/src/general/install/laser_segmentation/share/laser_segmentation/environment/path.sh
+-- Up-to-date: /home/parallels/ros2_ws/src/general/install/laser_segmentation/share/laser_segmentation/environment/path.dsv
+-- Up-to-date: /home/parallels/ros2_ws/src/general/install/laser_segmentation/share/laser_segmentation/local_setup.bash
+-- Up-to-date: /home/parallels/ros2_ws/src/general/install/laser_segmentation/share/laser_segmentation/local_setup.sh
+-- Up-to-date: /home/parallels/ros2_ws/src/general/install/laser_segmentation/share/laser_segmentation/local_setup.zsh
+-- Up-to-date: /home/parallels/ros2_ws/src/general/install/laser_segmentation/share/laser_segmentation/local_setup.dsv
+-- Installing: /home/parallels/ros2_ws/src/general/install/laser_segmentation/share/laser_segmentation/package.dsv
+-- Up-to-date: /home/parallels/ros2_ws/src/general/install/laser_segmentation/share/ament_index/resource_index/packages/laser_segmentation
+-- Up-to-date: /home/parallels/ros2_ws/src/general/install/laser_segmentation/share/ament_index/resource_index/rclcpp_components/laser_segmentation
+-- Up-to-date: /home/parallels/ros2_ws/src/general/install/laser_segmentation/share/laser_segmentation/cmake/ament_cmake_export_include_directories-extras.cmake
+-- Up-to-date: /home/parallels/ros2_ws/src/general/install/laser_segmentation/share/laser_segmentation/cmake/ament_cmake_export_libraries-extras.cmake
+-- Up-to-date: /home/parallels/ros2_ws/src/general/install/laser_segmentation/share/laser_segmentation/cmake/ament_cmake_export_dependencies-extras.cmake
+-- Up-to-date: /home/parallels/ros2_ws/src/general/install/laser_segmentation/share/laser_segmentation/cmake/laser_segmentationConfig.cmake
+-- Up-to-date: /home/parallels/ros2_ws/src/general/install/laser_segmentation/share/laser_segmentation/cmake/laser_segmentationConfig-version.cmake
+-- Up-to-date: /home/parallels/ros2_ws/src/general/install/laser_segmentation/share/laser_segmentation/package.xml

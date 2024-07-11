@@ -1,0 +1,28 @@
+[0.010s] Invoking command in '/home/parallels/ros2_ws/src/general/build/slg_msgs': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/opt/ros/humble /usr/bin/cmake --build /home/parallels/ros2_ws/src/general/build/slg_msgs -- -j2 -l2
+[0.066s] [  2%] Built target slg_msgs__cpp
+[0.072s] [ 10%] Built target slg_msgs__rosidl_generator_c
+[0.090s] [ 14%] Built target gtest_main
+[0.092s] [ 14%] Built target ament_cmake_python_copy_slg_msgs
+[0.111s] [ 22%] Built target slg_msgs__rosidl_typesupport_cpp
+[0.119s] [ 26%] Built target gtest
+[0.135s] [ 34%] Built target slg_msgs__rosidl_typesupport_fastrtps_c
+[0.139s] [ 42%] Built target slg_msgs__rosidl_typesupport_introspection_c
+[0.148s] [ 51%] Built target slg_msgs__rosidl_typesupport_c
+[0.160s] [ 59%] Built target slg_msgs__rosidl_typesupport_fastrtps_cpp
+[0.164s] [ 67%] Built target slg_msgs__rosidl_typesupport_introspection_cpp
+[0.177s] [ 71%] Built target test_point2d
+[0.195s] [ 75%] Built target test_polygon
+[0.210s] [ 79%] Built target test_segment2d
+[0.217s] [ 79%] Built target slg_msgs
+[0.224s] [ 81%] Built target slg_msgs__py
+[0.233s] [ 87%] Built target slg_msgs__rosidl_generator_py
+[0.242s] [ 91%] Built target slg_msgs__rosidl_typesupport_fastrtps_c__pyext
+[0.252s] [ 95%] Built target slg_msgs__rosidl_typesupport_introspection_c__pyext
+[0.261s] [100%] Built target slg_msgs__rosidl_typesupport_c__pyext
+[0.278s] running egg_info
+[0.284s] writing slg_msgs.egg-info/PKG-INFO
+[0.284s] writing dependency_links to slg_msgs.egg-info/dependency_links.txt
+[0.284s] writing top-level names to slg_msgs.egg-info/top_level.txt
+[0.303s] reading manifest file 'slg_msgs.egg-info/SOURCES.txt'
+[0.303s] writing manifest file 'slg_msgs.egg-info/SOURCES.txt'
+[0.316s] [100%] Built target ament_cmake_python_build_slg_msgs_egg

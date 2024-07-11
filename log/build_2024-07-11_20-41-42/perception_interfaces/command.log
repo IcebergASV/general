@@ -1,0 +1,2 @@
+Invoking command in '/home/parallels/ros2_ws/src/general/build/perception_interfaces': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/opt/ros/humble /usr/bin/cmake --build /home/parallels/ros2_ws/src/general/build/perception_interfaces -- -j2 -l2
+Invoked command in '/home/parallels/ros2_ws/src/general/build/perception_interfaces' returned '2': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/opt/ros/humble /usr/bin/cmake --build /home/parallels/ros2_ws/src/general/build/perception_interfaces -- -j2 -l2

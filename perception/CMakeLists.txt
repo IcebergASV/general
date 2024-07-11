@@ -71,6 +71,15 @@ ament_target_dependencies(mock_bbox_pub_component
 rclcpp_components_register_nodes(mock_bbox_pub_component "perception::MockBBoxPub")
 set(node_plugins "${node_plugins}perception::MockBBoxPub;$<TARGET_FILE:mock_bbox_pub_component>\n")
 
+add_library(mock_coord_pub_component SHARED src/mock_coord_pub_component.cpp)
+target_compile_definitions(mock_coord_pub_component PRIVATE "COMPOSITION_BUILDING_DLL")
+ament_target_dependencies(mock_coord_pub_component
+  "rclcpp"
+  "rclcpp_components"
+  "perception_interfaces")
+rclcpp_components_register_nodes(mock_coord_pub_component "perception::MockCoordPub")
+set(node_plugins "${node_plugins}perception::MockCoordPub;$<TARGET_FILE:mock_coord_pub_component>\n")
+
 ## Declare a C++ library
 add_library(liblidar_calculations
   lib/lidar_calculations.cpp
@@ -103,6 +112,7 @@ install(TARGETS
   coord_finder_component
   lidar_camera_fuser_component
   mock_bbox_pub_component
+  mock_coord_pub_component
   ARCHIVE DESTINATION lib
   LIBRARY DESTINATION lib
   RUNTIME DESTINATION bin)
@@ -147,6 +157,13 @@ mock_bbox_pub_component)
 ament_target_dependencies(mock_bbox_pub_composition
   rclcpp perception_interfaces)
 
+add_executable(mock_coord_pub_composition
+  src/mock_coord_pub_composition.cpp)
+target_link_libraries(mock_coord_pub_composition
+mock_coord_pub_component)
+ament_target_dependencies(mock_coord_pub_composition
+  rclcpp perception_interfaces)
+
 target_link_libraries(lidar_prop_detector_composition
   ${YAML_CPP_LIBRARIES}
   liblidar_calculations
@@ -166,22 +183,9 @@ install(TARGETS
   coord_finder_composition
   lidar_camera_fuser_composition
   mock_bbox_pub_composition
+  mock_coord_pub_composition
   DESTINATION lib/${PROJECT_NAME})
 
 ament_package()
 
-add_library(mock_coord_pub_component SHARED src/mock_coord_pub_component.cpp)
-target_compile_definitions(mock_coord_pub_component PRIVATE "COMPOSITION_BUILDING_DLL")
-ament_target_dependencies(mock_coord_pub_component
-  "rclcpp"
-  "rclcpp_components"
-  "perception_interfaces")
-rclcpp_components_register_nodes(mock_coord_pub_component "perception::MockCoordPub")
-set(node_plugins "${node_plugins}perception::MockCoordPub;$<TARGET_FILE:mock_coord_pub_component>\n")
 
-add_executable(mock_coord_pub_composition
-  src/mock_coord_pub_composition.cpp)
-target_link_libraries(mock_coord_pub_composition
-mock_coord_pub_component)
-ament_target_dependencies(mock_coord_pub_composition
-  rclcpp perception_interfaces)

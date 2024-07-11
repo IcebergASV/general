@@ -1,0 +1,27 @@
+[  2%] Built target slg_msgs__cpp
+[ 10%] Built target slg_msgs__rosidl_generator_c
+[ 14%] Built target gtest_main
+[ 14%] Built target ament_cmake_python_copy_slg_msgs
+[ 22%] Built target slg_msgs__rosidl_typesupport_cpp
+[ 26%] Built target gtest
+[ 34%] Built target slg_msgs__rosidl_typesupport_fastrtps_c
+[ 42%] Built target slg_msgs__rosidl_typesupport_introspection_c
+[ 51%] Built target slg_msgs__rosidl_typesupport_c
+[ 59%] Built target slg_msgs__rosidl_typesupport_fastrtps_cpp
+[ 67%] Built target slg_msgs__rosidl_typesupport_introspection_cpp
+[ 71%] Built target test_point2d
+[ 75%] Built target test_polygon
+[ 79%] Built target test_segment2d
+[ 79%] Built target slg_msgs
+[ 81%] Built target slg_msgs__py
+[ 87%] Built target slg_msgs__rosidl_generator_py
+[ 91%] Built target slg_msgs__rosidl_typesupport_fastrtps_c__pyext
+[ 95%] Built target slg_msgs__rosidl_typesupport_introspection_c__pyext
+[100%] Built target slg_msgs__rosidl_typesupport_c__pyext
+running egg_info
+writing slg_msgs.egg-info/PKG-INFO
+writing dependency_links to slg_msgs.egg-info/dependency_links.txt
+writing top-level names to slg_msgs.egg-info/top_level.txt
+reading manifest file 'slg_msgs.egg-info/SOURCES.txt'
+writing manifest file 'slg_msgs.egg-info/SOURCES.txt'
+[100%] Built target ament_cmake_python_build_slg_msgs_egg

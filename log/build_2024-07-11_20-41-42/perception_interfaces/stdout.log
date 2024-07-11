@@ -1,0 +1,5 @@
+[35m[1mConsolidate compiler generated dependencies of target perception_interfaces__rosidl_generator_c[0m
+[  1%] Built target perception_interfaces__cpp
+[  2%] [32mBuilding C object CMakeFiles/perception_interfaces__rosidl_generator_c.dir/rosidl_generator_c/perception_interfaces/msg/detail/coordinates__functions.c.o[0m
+[  2%] Built target ament_cmake_python_copy_perception_interfaces
+[ 13%] Built target perception_interfaces__rosidl_typesupport_cpp
