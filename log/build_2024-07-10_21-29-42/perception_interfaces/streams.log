@@ -1,0 +1,180 @@
+[0.013s] Invoking command in '/home/parallels/ros2_ws/src/general/build/perception_interfaces': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/opt/ros/humble /usr/bin/cmake --build /home/parallels/ros2_ws/src/general/build/perception_interfaces -- -j2 -l2
+[0.093s] [  2%] Built target perception_interfaces__cpp
+[0.098s] [ 12%] Built target perception_interfaces__rosidl_generator_c
+[0.125s] [ 23%] Built target perception_interfaces__rosidl_typesupport_cpp
+[0.125s] [ 23%] Built target ament_cmake_python_copy_perception_interfaces
+[0.144s] [ 34%] Built target perception_interfaces__rosidl_typesupport_fastrtps_c
+[0.147s] [ 44%] Built target perception_interfaces__rosidl_typesupport_fastrtps_cpp
+[0.164s] [ 55%] Built target perception_interfaces__rosidl_typesupport_introspection_c
+[0.167s] [ 65%] Built target perception_interfaces__rosidl_typesupport_c
+[0.201s] [ 76%] Built target perception_interfaces__rosidl_typesupport_introspection_cpp
+[0.314s] [ 76%] Built target perception_interfaces
+[0.402s] [ 78%] Built target perception_interfaces__py
+[0.414s] [ 87%] Built target perception_interfaces__rosidl_generator_py
+[0.443s] [ 91%] Built target perception_interfaces__rosidl_typesupport_fastrtps_c__pyext
+[0.452s] [ 95%] Built target perception_interfaces__rosidl_typesupport_introspection_c__pyext
+[0.469s] [100%] Built target perception_interfaces__rosidl_typesupport_c__pyext
+[0.480s] running egg_info
+[0.487s] writing perception_interfaces.egg-info/PKG-INFO
+[0.487s] writing dependency_links to perception_interfaces.egg-info/dependency_links.txt
+[0.487s] writing top-level names to perception_interfaces.egg-info/top_level.txt
+[0.505s] reading manifest file 'perception_interfaces.egg-info/SOURCES.txt'
+[0.505s] writing manifest file 'perception_interfaces.egg-info/SOURCES.txt'
+[0.522s] [100%] Built target ament_cmake_python_build_perception_interfaces_egg
+[0.528s] Invoked command in '/home/parallels/ros2_ws/src/general/build/perception_interfaces' returned '0': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/opt/ros/humble /usr/bin/cmake --build /home/parallels/ros2_ws/src/general/build/perception_interfaces -- -j2 -l2
+[0.572s] Invoking command in '/home/parallels/ros2_ws/src/general/build/perception_interfaces': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/opt/ros/humble /usr/bin/cmake --install /home/parallels/ros2_ws/src/general/build/perception_interfaces
+[0.577s] -- Install configuration: ""
+[0.578s] -- Up-to-date: /home/parallels/ros2_ws/src/general/install/perception_interfaces/share/ament_index/resource_index/rosidl_interfaces/perception_interfaces
+[0.578s] -- Up-to-date: /home/parallels/ros2_ws/src/general/install/perception_interfaces/include/perception_interfaces/perception_interfaces
+[0.578s] -- Up-to-date: /home/parallels/ros2_ws/src/general/install/perception_interfaces/include/perception_interfaces/perception_interfaces/msg
+[0.578s] -- Up-to-date: /home/parallels/ros2_ws/src/general/install/perception_interfaces/include/perception_interfaces/perception_interfaces/msg/rosidl_generator_c__visibility_control.h
+[0.578s] -- Up-to-date: /home/parallels/ros2_ws/src/general/install/perception_interfaces/include/perception_interfaces/perception_interfaces/msg/detail
+[0.579s] -- Up-to-date: /home/parallels/ros2_ws/src/general/install/perception_interfaces/include/perception_interfaces/perception_interfaces/msg/detail/lidar_detected_prop_array__functions.c
+[0.579s] -- Up-to-date: /home/parallels/ros2_ws/src/general/install/perception_interfaces/include/perception_interfaces/perception_interfaces/msg/detail/lidar_detected_prop_array__type_support.h
+[0.579s] -- Up-to-date: /home/parallels/ros2_ws/src/general/install/perception_interfaces/include/perception_interfaces/perception_interfaces/msg/detail/lidar_detected_prop__type_support.h
+[0.579s] -- Up-to-date: /home/parallels/ros2_ws/src/general/install/perception_interfaces/include/perception_interfaces/perception_interfaces/msg/detail/prop__type_support.h
+[0.579s] -- Up-to-date: /home/parallels/ros2_ws/src/general/install/perception_interfaces/include/perception_interfaces/perception_interfaces/msg/detail/prop__struct.h
+[0.579s] -- Up-to-date: /home/parallels/ros2_ws/src/general/install/perception_interfaces/include/perception_interfaces/perception_interfaces/msg/detail/prop__functions.c
+[0.579s] -- Up-to-date: /home/parallels/ros2_ws/src/general/install/perception_interfaces/include/perception_interfaces/perception_interfaces/msg/detail/lidar_detected_prop_array__struct.h
+[0.579s] -- Up-to-date: /home/parallels/ros2_ws/src/general/install/perception_interfaces/include/perception_interfaces/perception_interfaces/msg/detail/lidar_detected_prop__functions.h
+[0.579s] -- Up-to-date: /home/parallels/ros2_ws/src/general/install/perception_interfaces/include/perception_interfaces/perception_interfaces/msg/detail/lidar_detected_prop_array__functions.h
+[0.579s] -- Up-to-date: /home/parallels/ros2_ws/src/general/install/perception_interfaces/include/perception_interfaces/perception_interfaces/msg/detail/lidar_detected_prop__functions.c
+[0.579s] -- Up-to-date: /home/parallels/ros2_ws/src/general/install/perception_interfaces/include/perception_interfaces/perception_interfaces/msg/detail/lidar_detected_prop__struct.h
+[0.579s] -- Up-to-date: /home/parallels/ros2_ws/src/general/install/perception_interfaces/include/perception_interfaces/perception_interfaces/msg/detail/prop__functions.h
+[0.579s] -- Up-to-date: /home/parallels/ros2_ws/src/general/install/perception_interfaces/include/perception_interfaces/perception_interfaces/msg/lidar_detected_prop.h
+[0.579s] -- Up-to-date: /home/parallels/ros2_ws/src/general/install/perception_interfaces/include/perception_interfaces/perception_interfaces/msg/lidar_detected_prop_array.h
+[0.579s] -- Up-to-date: /home/parallels/ros2_ws/src/general/install/perception_interfaces/include/perception_interfaces/perception_interfaces/msg/prop.h
+[0.579s] -- Up-to-date: /home/parallels/ros2_ws/src/general/install/perception_interfaces/share/perception_interfaces/environment/library_path.sh
+[0.579s] -- Up-to-date: /home/parallels/ros2_ws/src/general/install/perception_interfaces/share/perception_interfaces/environment/library_path.dsv
+[0.580s] -- Up-to-date: /home/parallels/ros2_ws/src/general/install/perception_interfaces/lib/libperception_interfaces__rosidl_generator_c.so
+[0.580s] -- Up-to-date: /home/parallels/ros2_ws/src/general/install/perception_interfaces/include/perception_interfaces/perception_interfaces
+[0.580s] -- Up-to-date: /home/parallels/ros2_ws/src/general/install/perception_interfaces/include/perception_interfaces/perception_interfaces/msg
+[0.580s] -- Up-to-date: /home/parallels/ros2_ws/src/general/install/perception_interfaces/include/perception_interfaces/perception_interfaces/msg/detail
+[0.580s] -- Up-to-date: /home/parallels/ros2_ws/src/general/install/perception_interfaces/include/perception_interfaces/perception_interfaces/msg/detail/lidar_detected_prop__rosidl_typesupport_fastrtps_c.h
+[0.580s] -- Up-to-date: /home/parallels/ros2_ws/src/general/install/perception_interfaces/include/perception_interfaces/perception_interfaces/msg/detail/lidar_detected_prop_array__rosidl_typesupport_fastrtps_c.h
+[0.580s] -- Up-to-date: /home/parallels/ros2_ws/src/general/install/perception_interfaces/include/perception_interfaces/perception_interfaces/msg/detail/prop__rosidl_typesupport_fastrtps_c.h
+[0.580s] -- Up-to-date: /home/parallels/ros2_ws/src/general/install/perception_interfaces/include/perception_interfaces/perception_interfaces/msg/rosidl_typesupport_fastrtps_c__visibility_control.h
+[0.580s] -- Up-to-date: /home/parallels/ros2_ws/src/general/install/perception_interfaces/lib/libperception_interfaces__rosidl_typesupport_fastrtps_c.so
+[0.580s] -- Up-to-date: /home/parallels/ros2_ws/src/general/install/perception_interfaces/include/perception_interfaces/perception_interfaces
+[0.580s] -- Up-to-date: /home/parallels/ros2_ws/src/general/install/perception_interfaces/include/perception_interfaces/perception_interfaces/msg
+[0.580s] -- Up-to-date: /home/parallels/ros2_ws/src/general/install/perception_interfaces/include/perception_interfaces/perception_interfaces/msg/detail
+[0.580s] -- Up-to-date: /home/parallels/ros2_ws/src/general/install/perception_interfaces/include/perception_interfaces/perception_interfaces/msg/detail/prop__struct.hpp
+[0.580s] -- Up-to-date: /home/parallels/ros2_ws/src/general/install/perception_interfaces/include/perception_interfaces/perception_interfaces/msg/detail/lidar_detected_prop__traits.hpp
+[0.580s] -- Up-to-date: /home/parallels/ros2_ws/src/general/install/perception_interfaces/include/perception_interfaces/perception_interfaces/msg/detail/lidar_detected_prop_array__builder.hpp
+[0.580s] -- Up-to-date: /home/parallels/ros2_ws/src/general/install/perception_interfaces/include/perception_interfaces/perception_interfaces/msg/detail/prop__builder.hpp
+[0.580s] -- Up-to-date: /home/parallels/ros2_ws/src/general/install/perception_interfaces/include/perception_interfaces/perception_interfaces/msg/detail/lidar_detected_prop__builder.hpp
+[0.580s] -- Up-to-date: /home/parallels/ros2_ws/src/general/install/perception_interfaces/include/perception_interfaces/perception_interfaces/msg/detail/lidar_detected_prop_array__traits.hpp
+[0.580s] -- Up-to-date: /home/parallels/ros2_ws/src/general/install/perception_interfaces/include/perception_interfaces/perception_interfaces/msg/detail/lidar_detected_prop_array__struct.hpp
+[0.580s] -- Up-to-date: /home/parallels/ros2_ws/src/general/install/perception_interfaces/include/perception_interfaces/perception_interfaces/msg/detail/lidar_detected_prop__struct.hpp
+[0.580s] -- Up-to-date: /home/parallels/ros2_ws/src/general/install/perception_interfaces/include/perception_interfaces/perception_interfaces/msg/detail/prop__traits.hpp
+[0.580s] -- Up-to-date: /home/parallels/ros2_ws/src/general/install/perception_interfaces/include/perception_interfaces/perception_interfaces/msg/lidar_detected_prop.hpp
+[0.580s] -- Up-to-date: /home/parallels/ros2_ws/src/general/install/perception_interfaces/include/perception_interfaces/perception_interfaces/msg/lidar_detected_prop_array.hpp
+[0.581s] -- Up-to-date: /home/parallels/ros2_ws/src/general/install/perception_interfaces/include/perception_interfaces/perception_interfaces/msg/prop.hpp
+[0.581s] -- Up-to-date: /home/parallels/ros2_ws/src/general/install/perception_interfaces/include/perception_interfaces/perception_interfaces
+[0.581s] -- Up-to-date: /home/parallels/ros2_ws/src/general/install/perception_interfaces/include/perception_interfaces/perception_interfaces/msg
+[0.581s] -- Up-to-date: /home/parallels/ros2_ws/src/general/install/perception_interfaces/include/perception_interfaces/perception_interfaces/msg/detail
+[0.581s] -- Up-to-date: /home/parallels/ros2_ws/src/general/install/perception_interfaces/include/perception_interfaces/perception_interfaces/msg/detail/lidar_detected_prop_array__rosidl_typesupport_fastrtps_cpp.hpp
+[0.581s] -- Up-to-date: /home/parallels/ros2_ws/src/general/install/perception_interfaces/include/perception_interfaces/perception_interfaces/msg/detail/dds_fastrtps
+[0.581s] -- Up-to-date: /home/parallels/ros2_ws/src/general/install/perception_interfaces/include/perception_interfaces/perception_interfaces/msg/detail/lidar_detected_prop__rosidl_typesupport_fastrtps_cpp.hpp
+[0.581s] -- Up-to-date: /home/parallels/ros2_ws/src/general/install/perception_interfaces/include/perception_interfaces/perception_interfaces/msg/detail/prop__rosidl_typesupport_fastrtps_cpp.hpp
+[0.581s] -- Up-to-date: /home/parallels/ros2_ws/src/general/install/perception_interfaces/include/perception_interfaces/perception_interfaces/msg/rosidl_typesupport_fastrtps_cpp__visibility_control.h
+[0.581s] -- Up-to-date: /home/parallels/ros2_ws/src/general/install/perception_interfaces/lib/libperception_interfaces__rosidl_typesupport_fastrtps_cpp.so
+[0.582s] -- Up-to-date: /home/parallels/ros2_ws/src/general/install/perception_interfaces/include/perception_interfaces/perception_interfaces
+[0.582s] -- Up-to-date: /home/parallels/ros2_ws/src/general/install/perception_interfaces/include/perception_interfaces/perception_interfaces/msg
+[0.582s] -- Up-to-date: /home/parallels/ros2_ws/src/general/install/perception_interfaces/include/perception_interfaces/perception_interfaces/msg/detail
+[0.582s] -- Up-to-date: /home/parallels/ros2_ws/src/general/install/perception_interfaces/include/perception_interfaces/perception_interfaces/msg/detail/lidar_detected_prop_array__type_support.c
+[0.582s] -- Up-to-date: /home/parallels/ros2_ws/src/general/install/perception_interfaces/include/perception_interfaces/perception_interfaces/msg/detail/lidar_detected_prop__type_support.c
+[0.582s] -- Up-to-date: /home/parallels/ros2_ws/src/general/install/perception_interfaces/include/perception_interfaces/perception_interfaces/msg/detail/lidar_detected_prop__rosidl_typesupport_introspection_c.h
+[0.582s] -- Up-to-date: /home/parallels/ros2_ws/src/general/install/perception_interfaces/include/perception_interfaces/perception_interfaces/msg/detail/lidar_detected_prop_array__rosidl_typesupport_introspection_c.h
+[0.582s] -- Up-to-date: /home/parallels/ros2_ws/src/general/install/perception_interfaces/include/perception_interfaces/perception_interfaces/msg/detail/prop__rosidl_typesupport_introspection_c.h
+[0.582s] -- Up-to-date: /home/parallels/ros2_ws/src/general/install/perception_interfaces/include/perception_interfaces/perception_interfaces/msg/detail/prop__type_support.c
+[0.582s] -- Up-to-date: /home/parallels/ros2_ws/src/general/install/perception_interfaces/include/perception_interfaces/perception_interfaces/msg/rosidl_typesupport_introspection_c__visibility_control.h
+[0.582s] -- Up-to-date: /home/parallels/ros2_ws/src/general/install/perception_interfaces/lib/libperception_interfaces__rosidl_typesupport_introspection_c.so
+[0.582s] -- Up-to-date: /home/parallels/ros2_ws/src/general/install/perception_interfaces/lib/libperception_interfaces__rosidl_typesupport_c.so
+[0.582s] -- Up-to-date: /home/parallels/ros2_ws/src/general/install/perception_interfaces/include/perception_interfaces/perception_interfaces
+[0.582s] -- Up-to-date: /home/parallels/ros2_ws/src/general/install/perception_interfaces/include/perception_interfaces/perception_interfaces/msg
+[0.582s] -- Up-to-date: /home/parallels/ros2_ws/src/general/install/perception_interfaces/include/perception_interfaces/perception_interfaces/msg/detail
+[0.582s] -- Up-to-date: /home/parallels/ros2_ws/src/general/install/perception_interfaces/include/perception_interfaces/perception_interfaces/msg/detail/lidar_detected_prop_array__type_support.cpp
+[0.582s] -- Up-to-date: /home/parallels/ros2_ws/src/general/install/perception_interfaces/include/perception_interfaces/perception_interfaces/msg/detail/lidar_detected_prop_array__rosidl_typesupport_introspection_cpp.hpp
+[0.582s] -- Up-to-date: /home/parallels/ros2_ws/src/general/install/perception_interfaces/include/perception_interfaces/perception_interfaces/msg/detail/prop__rosidl_typesupport_introspection_cpp.hpp
+[0.583s] -- Up-to-date: /home/parallels/ros2_ws/src/general/install/perception_interfaces/include/perception_interfaces/perception_interfaces/msg/detail/prop__type_support.cpp
+[0.583s] -- Up-to-date: /home/parallels/ros2_ws/src/general/install/perception_interfaces/include/perception_interfaces/perception_interfaces/msg/detail/lidar_detected_prop__rosidl_typesupport_introspection_cpp.hpp
+[0.583s] -- Up-to-date: /home/parallels/ros2_ws/src/general/install/perception_interfaces/include/perception_interfaces/perception_interfaces/msg/detail/lidar_detected_prop__type_support.cpp
+[0.583s] -- Up-to-date: /home/parallels/ros2_ws/src/general/install/perception_interfaces/lib/libperception_interfaces__rosidl_typesupport_introspection_cpp.so
+[0.583s] -- Up-to-date: /home/parallels/ros2_ws/src/general/install/perception_interfaces/lib/libperception_interfaces__rosidl_typesupport_cpp.so
+[0.583s] -- Up-to-date: /home/parallels/ros2_ws/src/general/install/perception_interfaces/share/perception_interfaces/environment/pythonpath.sh
+[0.583s] -- Up-to-date: /home/parallels/ros2_ws/src/general/install/perception_interfaces/share/perception_interfaces/environment/pythonpath.dsv
+[0.583s] -- Up-to-date: /home/parallels/ros2_ws/src/general/install/perception_interfaces/local/lib/python3.10/dist-packages/perception_interfaces-0.0.0-py3.10.egg-info
+[0.583s] -- Installing: /home/parallels/ros2_ws/src/general/install/perception_interfaces/local/lib/python3.10/dist-packages/perception_interfaces-0.0.0-py3.10.egg-info/dependency_links.txt
+[0.583s] -- Installing: /home/parallels/ros2_ws/src/general/install/perception_interfaces/local/lib/python3.10/dist-packages/perception_interfaces-0.0.0-py3.10.egg-info/top_level.txt
+[0.583s] -- Installing: /home/parallels/ros2_ws/src/general/install/perception_interfaces/local/lib/python3.10/dist-packages/perception_interfaces-0.0.0-py3.10.egg-info/PKG-INFO
+[0.583s] -- Installing: /home/parallels/ros2_ws/src/general/install/perception_interfaces/local/lib/python3.10/dist-packages/perception_interfaces-0.0.0-py3.10.egg-info/SOURCES.txt
+[0.583s] -- Up-to-date: /home/parallels/ros2_ws/src/general/install/perception_interfaces/local/lib/python3.10/dist-packages/perception_interfaces
+[0.583s] -- Up-to-date: /home/parallels/ros2_ws/src/general/install/perception_interfaces/local/lib/python3.10/dist-packages/perception_interfaces/_perception_interfaces_s.ep.rosidl_typesupport_introspection_c.c
+[0.583s] -- Up-to-date: /home/parallels/ros2_ws/src/general/install/perception_interfaces/local/lib/python3.10/dist-packages/perception_interfaces/perception_interfaces_s__rosidl_typesupport_c.cpython-310-aarch64-linux-gnu.so
+[0.583s] -- Up-to-date: /home/parallels/ros2_ws/src/general/install/perception_interfaces/local/lib/python3.10/dist-packages/perception_interfaces/_perception_interfaces_s.ep.rosidl_typesupport_c.c
+[0.584s] -- Up-to-date: /home/parallels/ros2_ws/src/general/install/perception_interfaces/local/lib/python3.10/dist-packages/perception_interfaces/perception_interfaces_s__rosidl_typesupport_fastrtps_c.cpython-310-aarch64-linux-gnu.so
+[0.584s] -- Up-to-date: /home/parallels/ros2_ws/src/general/install/perception_interfaces/local/lib/python3.10/dist-packages/perception_interfaces/msg
+[0.584s] -- Up-to-date: /home/parallels/ros2_ws/src/general/install/perception_interfaces/local/lib/python3.10/dist-packages/perception_interfaces/msg/_lidar_detected_prop_array.py
+[0.584s] -- Up-to-date: /home/parallels/ros2_ws/src/general/install/perception_interfaces/local/lib/python3.10/dist-packages/perception_interfaces/msg/_lidar_detected_prop_array_s.c
+[0.584s] -- Up-to-date: /home/parallels/ros2_ws/src/general/install/perception_interfaces/local/lib/python3.10/dist-packages/perception_interfaces/msg/_prop.py
+[0.584s] -- Up-to-date: /home/parallels/ros2_ws/src/general/install/perception_interfaces/local/lib/python3.10/dist-packages/perception_interfaces/msg/_lidar_detected_prop.py
+[0.584s] -- Up-to-date: /home/parallels/ros2_ws/src/general/install/perception_interfaces/local/lib/python3.10/dist-packages/perception_interfaces/msg/__init__.py
+[0.584s] -- Up-to-date: /home/parallels/ros2_ws/src/general/install/perception_interfaces/local/lib/python3.10/dist-packages/perception_interfaces/msg/_lidar_detected_prop_s.c
+[0.584s] -- Up-to-date: /home/parallels/ros2_ws/src/general/install/perception_interfaces/local/lib/python3.10/dist-packages/perception_interfaces/msg/_prop_s.c
+[0.584s] -- Up-to-date: /home/parallels/ros2_ws/src/general/install/perception_interfaces/local/lib/python3.10/dist-packages/perception_interfaces/libperception_interfaces__rosidl_generator_py.so
+[0.584s] -- Up-to-date: /home/parallels/ros2_ws/src/general/install/perception_interfaces/local/lib/python3.10/dist-packages/perception_interfaces/__init__.py
+[0.584s] -- Up-to-date: /home/parallels/ros2_ws/src/general/install/perception_interfaces/local/lib/python3.10/dist-packages/perception_interfaces/perception_interfaces_s__rosidl_typesupport_introspection_c.cpython-310-aarch64-linux-gnu.so
+[0.584s] -- Up-to-date: /home/parallels/ros2_ws/src/general/install/perception_interfaces/local/lib/python3.10/dist-packages/perception_interfaces/_perception_interfaces_s.ep.rosidl_typesupport_fastrtps_c.c
+[0.602s] Listing '/home/parallels/ros2_ws/src/general/install/perception_interfaces/local/lib/python3.10/dist-packages/perception_interfaces'...
+[0.602s] Listing '/home/parallels/ros2_ws/src/general/install/perception_interfaces/local/lib/python3.10/dist-packages/perception_interfaces/msg'...
+[0.604s] -- Up-to-date: /home/parallels/ros2_ws/src/general/install/perception_interfaces/local/lib/python3.10/dist-packages/perception_interfaces/perception_interfaces_s__rosidl_typesupport_fastrtps_c.cpython-310-aarch64-linux-gnu.so
+[0.605s] -- Up-to-date: /home/parallels/ros2_ws/src/general/install/perception_interfaces/local/lib/python3.10/dist-packages/perception_interfaces/perception_interfaces_s__rosidl_typesupport_introspection_c.cpython-310-aarch64-linux-gnu.so
+[0.605s] -- Up-to-date: /home/parallels/ros2_ws/src/general/install/perception_interfaces/local/lib/python3.10/dist-packages/perception_interfaces/perception_interfaces_s__rosidl_typesupport_c.cpython-310-aarch64-linux-gnu.so
+[0.605s] -- Up-to-date: /home/parallels/ros2_ws/src/general/install/perception_interfaces/lib/libperception_interfaces__rosidl_generator_py.so
+[0.606s] -- Up-to-date: /home/parallels/ros2_ws/src/general/install/perception_interfaces/share/perception_interfaces/msg/Prop.idl
+[0.606s] -- Up-to-date: /home/parallels/ros2_ws/src/general/install/perception_interfaces/share/perception_interfaces/msg/LidarDetectedProp.idl
+[0.606s] -- Up-to-date: /home/parallels/ros2_ws/src/general/install/perception_interfaces/share/perception_interfaces/msg/LidarDetectedPropArray.idl
+[0.606s] -- Up-to-date: /home/parallels/ros2_ws/src/general/install/perception_interfaces/share/perception_interfaces/msg/Prop.msg
+[0.606s] -- Up-to-date: /home/parallels/ros2_ws/src/general/install/perception_interfaces/share/perception_interfaces/msg/LidarDetectedProp.msg
+[0.606s] -- Up-to-date: /home/parallels/ros2_ws/src/general/install/perception_interfaces/share/perception_interfaces/msg/LidarDetectedPropArray.msg
+[0.606s] -- Up-to-date: /home/parallels/ros2_ws/src/general/install/perception_interfaces/share/ament_index/resource_index/package_run_dependencies/perception_interfaces
+[0.606s] -- Up-to-date: /home/parallels/ros2_ws/src/general/install/perception_interfaces/share/ament_index/resource_index/parent_prefix_path/perception_interfaces
+[0.606s] -- Up-to-date: /home/parallels/ros2_ws/src/general/install/perception_interfaces/share/perception_interfaces/environment/ament_prefix_path.sh
+[0.606s] -- Up-to-date: /home/parallels/ros2_ws/src/general/install/perception_interfaces/share/perception_interfaces/environment/ament_prefix_path.dsv
+[0.606s] -- Up-to-date: /home/parallels/ros2_ws/src/general/install/perception_interfaces/share/perception_interfaces/environment/path.sh
+[0.606s] -- Up-to-date: /home/parallels/ros2_ws/src/general/install/perception_interfaces/share/perception_interfaces/environment/path.dsv
+[0.606s] -- Up-to-date: /home/parallels/ros2_ws/src/general/install/perception_interfaces/share/perception_interfaces/local_setup.bash
+[0.606s] -- Up-to-date: /home/parallels/ros2_ws/src/general/install/perception_interfaces/share/perception_interfaces/local_setup.sh
+[0.607s] -- Up-to-date: /home/parallels/ros2_ws/src/general/install/perception_interfaces/share/perception_interfaces/local_setup.zsh
+[0.607s] -- Up-to-date: /home/parallels/ros2_ws/src/general/install/perception_interfaces/share/perception_interfaces/local_setup.dsv
+[0.607s] -- Installing: /home/parallels/ros2_ws/src/general/install/perception_interfaces/share/perception_interfaces/package.dsv
+[0.608s] -- Up-to-date: /home/parallels/ros2_ws/src/general/install/perception_interfaces/share/ament_index/resource_index/packages/perception_interfaces
+[0.608s] -- Up-to-date: /home/parallels/ros2_ws/src/general/install/perception_interfaces/share/perception_interfaces/cmake/export_perception_interfaces__rosidl_generator_cExport.cmake
+[0.608s] -- Up-to-date: /home/parallels/ros2_ws/src/general/install/perception_interfaces/share/perception_interfaces/cmake/export_perception_interfaces__rosidl_generator_cExport-noconfig.cmake
+[0.609s] -- Up-to-date: /home/parallels/ros2_ws/src/general/install/perception_interfaces/share/perception_interfaces/cmake/export_perception_interfaces__rosidl_typesupport_fastrtps_cExport.cmake
+[0.609s] -- Up-to-date: /home/parallels/ros2_ws/src/general/install/perception_interfaces/share/perception_interfaces/cmake/export_perception_interfaces__rosidl_typesupport_fastrtps_cExport-noconfig.cmake
+[0.611s] -- Up-to-date: /home/parallels/ros2_ws/src/general/install/perception_interfaces/share/perception_interfaces/cmake/export_perception_interfaces__rosidl_generator_cppExport.cmake
+[0.611s] -- Up-to-date: /home/parallels/ros2_ws/src/general/install/perception_interfaces/share/perception_interfaces/cmake/export_perception_interfaces__rosidl_typesupport_fastrtps_cppExport.cmake
+[0.611s] -- Up-to-date: /home/parallels/ros2_ws/src/general/install/perception_interfaces/share/perception_interfaces/cmake/export_perception_interfaces__rosidl_typesupport_fastrtps_cppExport-noconfig.cmake
+[0.611s] -- Up-to-date: /home/parallels/ros2_ws/src/general/install/perception_interfaces/share/perception_interfaces/cmake/perception_interfaces__rosidl_typesupport_introspection_cExport.cmake
+[0.611s] -- Up-to-date: /home/parallels/ros2_ws/src/general/install/perception_interfaces/share/perception_interfaces/cmake/perception_interfaces__rosidl_typesupport_introspection_cExport-noconfig.cmake
+[0.612s] -- Up-to-date: /home/parallels/ros2_ws/src/general/install/perception_interfaces/share/perception_interfaces/cmake/perception_interfaces__rosidl_typesupport_cExport.cmake
+[0.612s] -- Up-to-date: /home/parallels/ros2_ws/src/general/install/perception_interfaces/share/perception_interfaces/cmake/perception_interfaces__rosidl_typesupport_cExport-noconfig.cmake
+[0.612s] -- Up-to-date: /home/parallels/ros2_ws/src/general/install/perception_interfaces/share/perception_interfaces/cmake/perception_interfaces__rosidl_typesupport_introspection_cppExport.cmake
+[0.612s] -- Up-to-date: /home/parallels/ros2_ws/src/general/install/perception_interfaces/share/perception_interfaces/cmake/perception_interfaces__rosidl_typesupport_introspection_cppExport-noconfig.cmake
+[0.612s] -- Up-to-date: /home/parallels/ros2_ws/src/general/install/perception_interfaces/share/perception_interfaces/cmake/perception_interfaces__rosidl_typesupport_cppExport.cmake
+[0.613s] -- Up-to-date: /home/parallels/ros2_ws/src/general/install/perception_interfaces/share/perception_interfaces/cmake/perception_interfaces__rosidl_typesupport_cppExport-noconfig.cmake
+[0.613s] -- Up-to-date: /home/parallels/ros2_ws/src/general/install/perception_interfaces/share/perception_interfaces/cmake/export_perception_interfaces__rosidl_generator_pyExport.cmake
+[0.613s] -- Up-to-date: /home/parallels/ros2_ws/src/general/install/perception_interfaces/share/perception_interfaces/cmake/export_perception_interfaces__rosidl_generator_pyExport-noconfig.cmake
+[0.613s] -- Up-to-date: /home/parallels/ros2_ws/src/general/install/perception_interfaces/share/perception_interfaces/cmake/rosidl_cmake-extras.cmake
+[0.613s] -- Up-to-date: /home/parallels/ros2_ws/src/general/install/perception_interfaces/share/perception_interfaces/cmake/ament_cmake_export_dependencies-extras.cmake
+[0.613s] -- Up-to-date: /home/parallels/ros2_ws/src/general/install/perception_interfaces/share/perception_interfaces/cmake/ament_cmake_export_include_directories-extras.cmake
+[0.613s] -- Up-to-date: /home/parallels/ros2_ws/src/general/install/perception_interfaces/share/perception_interfaces/cmake/ament_cmake_export_libraries-extras.cmake
+[0.613s] -- Up-to-date: /home/parallels/ros2_ws/src/general/install/perception_interfaces/share/perception_interfaces/cmake/ament_cmake_export_targets-extras.cmake
+[0.613s] -- Up-to-date: /home/parallels/ros2_ws/src/general/install/perception_interfaces/share/perception_interfaces/cmake/rosidl_cmake_export_typesupport_targets-extras.cmake
+[0.613s] -- Up-to-date: /home/parallels/ros2_ws/src/general/install/perception_interfaces/share/perception_interfaces/cmake/rosidl_cmake_export_typesupport_libraries-extras.cmake
+[0.613s] -- Up-to-date: /home/parallels/ros2_ws/src/general/install/perception_interfaces/share/perception_interfaces/cmake/perception_interfacesConfig.cmake
+[0.613s] -- Up-to-date: /home/parallels/ros2_ws/src/general/install/perception_interfaces/share/perception_interfaces/cmake/perception_interfacesConfig-version.cmake
+[0.614s] -- Up-to-date: /home/parallels/ros2_ws/src/general/install/perception_interfaces/share/perception_interfaces/package.xml
+[0.626s] Invoked command in '/home/parallels/ros2_ws/src/general/build/perception_interfaces' returned '0': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/opt/ros/humble /usr/bin/cmake --install /home/parallels/ros2_ws/src/general/build/perception_interfaces

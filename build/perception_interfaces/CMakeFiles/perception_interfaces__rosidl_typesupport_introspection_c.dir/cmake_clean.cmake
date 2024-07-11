@@ -1,0 +1,33 @@
+file(REMOVE_RECURSE
+  "CMakeFiles/perception_interfaces__rosidl_typesupport_introspection_c.dir/rosidl_typesupport_introspection_c/perception_interfaces/msg/detail/bounding_box__type_support.c.o"
+  "CMakeFiles/perception_interfaces__rosidl_typesupport_introspection_c.dir/rosidl_typesupport_introspection_c/perception_interfaces/msg/detail/bounding_box__type_support.c.o.d"
+  "CMakeFiles/perception_interfaces__rosidl_typesupport_introspection_c.dir/rosidl_typesupport_introspection_c/perception_interfaces/msg/detail/bounding_boxes__type_support.c.o"
+  "CMakeFiles/perception_interfaces__rosidl_typesupport_introspection_c.dir/rosidl_typesupport_introspection_c/perception_interfaces/msg/detail/bounding_boxes__type_support.c.o.d"
+  "CMakeFiles/perception_interfaces__rosidl_typesupport_introspection_c.dir/rosidl_typesupport_introspection_c/perception_interfaces/msg/detail/gate__type_support.c.o"
+  "CMakeFiles/perception_interfaces__rosidl_typesupport_introspection_c.dir/rosidl_typesupport_introspection_c/perception_interfaces/msg/detail/gate__type_support.c.o.d"
+  "CMakeFiles/perception_interfaces__rosidl_typesupport_introspection_c.dir/rosidl_typesupport_introspection_c/perception_interfaces/msg/detail/gate_array__type_support.c.o"
+  "CMakeFiles/perception_interfaces__rosidl_typesupport_introspection_c.dir/rosidl_typesupport_introspection_c/perception_interfaces/msg/detail/gate_array__type_support.c.o.d"
+  "CMakeFiles/perception_interfaces__rosidl_typesupport_introspection_c.dir/rosidl_typesupport_introspection_c/perception_interfaces/msg/detail/prop__type_support.c.o"
+  "CMakeFiles/perception_interfaces__rosidl_typesupport_introspection_c.dir/rosidl_typesupport_introspection_c/perception_interfaces/msg/detail/prop__type_support.c.o.d"
+  "CMakeFiles/perception_interfaces__rosidl_typesupport_introspection_c.dir/rosidl_typesupport_introspection_c/perception_interfaces/msg/detail/prop_array__type_support.c.o"
+  "CMakeFiles/perception_interfaces__rosidl_typesupport_introspection_c.dir/rosidl_typesupport_introspection_c/perception_interfaces/msg/detail/prop_array__type_support.c.o.d"
+  "libperception_interfaces__rosidl_typesupport_introspection_c.pdb"
+  "libperception_interfaces__rosidl_typesupport_introspection_c.so"
+  "rosidl_typesupport_introspection_c/perception_interfaces/msg/detail/bounding_box__rosidl_typesupport_introspection_c.h"
+  "rosidl_typesupport_introspection_c/perception_interfaces/msg/detail/bounding_box__type_support.c"
+  "rosidl_typesupport_introspection_c/perception_interfaces/msg/detail/bounding_boxes__rosidl_typesupport_introspection_c.h"
+  "rosidl_typesupport_introspection_c/perception_interfaces/msg/detail/bounding_boxes__type_support.c"
+  "rosidl_typesupport_introspection_c/perception_interfaces/msg/detail/gate__rosidl_typesupport_introspection_c.h"
+  "rosidl_typesupport_introspection_c/perception_interfaces/msg/detail/gate__type_support.c"
+  "rosidl_typesupport_introspection_c/perception_interfaces/msg/detail/gate_array__rosidl_typesupport_introspection_c.h"
+  "rosidl_typesupport_introspection_c/perception_interfaces/msg/detail/gate_array__type_support.c"
+  "rosidl_typesupport_introspection_c/perception_interfaces/msg/detail/prop__rosidl_typesupport_introspection_c.h"
+  "rosidl_typesupport_introspection_c/perception_interfaces/msg/detail/prop__type_support.c"
+  "rosidl_typesupport_introspection_c/perception_interfaces/msg/detail/prop_array__rosidl_typesupport_introspection_c.h"
+  "rosidl_typesupport_introspection_c/perception_interfaces/msg/detail/prop_array__type_support.c"
+)
+
+# Per-language clean rules from dependency scanning.
+foreach(lang C)
+  include(CMakeFiles/perception_interfaces__rosidl_typesupport_introspection_c.dir/cmake_clean_${lang}.cmake OPTIONAL)
+endforeach()

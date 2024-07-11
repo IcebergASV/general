@@ -1,0 +1,1142 @@
+[0.000000] (-) TimerEvent: {}
+[0.000071] (njord_tasks) JobQueued: {'identifier': 'njord_tasks', 'dependencies': OrderedDict()}
+[0.000313] (perception_interfaces) JobQueued: {'identifier': 'perception_interfaces', 'dependencies': OrderedDict()}
+[0.000325] (slg_msgs) JobQueued: {'identifier': 'slg_msgs', 'dependencies': OrderedDict()}
+[0.000333] (laser_segmentation) JobQueued: {'identifier': 'laser_segmentation', 'dependencies': OrderedDict([('slg_msgs', '/home/parallels/ros2_ws/src/general/install/slg_msgs')])}
+[0.000342] (perception) JobQueued: {'identifier': 'perception', 'dependencies': OrderedDict([('perception_interfaces', '/home/parallels/ros2_ws/src/general/install/perception_interfaces'), ('slg_msgs', '/home/parallels/ros2_ws/src/general/install/slg_msgs')])}
+[0.000352] (slg_msgs) JobStarted: {'identifier': 'slg_msgs'}
+[0.006285] (perception_interfaces) JobStarted: {'identifier': 'perception_interfaces'}
+[0.008503] (slg_msgs) JobProgress: {'identifier': 'slg_msgs', 'progress': 'cmake'}
+[0.009833] (slg_msgs) JobProgress: {'identifier': 'slg_msgs', 'progress': 'build'}
+[0.009852] (slg_msgs) Command: {'cmd': ['/usr/bin/cmake', '--build', '/home/parallels/ros2_ws/src/general/build/slg_msgs', '--', '-j2', '-l2'], 'cwd': '/home/parallels/ros2_ws/src/general/build/slg_msgs', 'env': OrderedDict([('LESSOPEN', '| /usr/bin/lesspipe %s'), ('GZ_SIM_RESOURCE_PATH', '/home/parallels/ros2_ws/src/ardupilot_gazebo/models:/home/parallels/ros2_ws/src/ardupilot_gazebo/worlds:/home/parallels/ros2_ws/src/iceberg_sim/models:'), ('no_proxy', 'localhost,127.0.0.0/8,::1'), ('USER', 'parallels'), ('XDG_SESSION_TYPE', 'wayland'), ('SHLVL', '1'), ('LD_LIBRARY_PATH', '/opt/ros/humble/opt/rviz_ogre_vendor/lib:/opt/ros/humble/lib/aarch64-linux-gnu:/opt/ros/humble/lib'), ('HOME', '/home/parallels'), ('OLDPWD', '/home/parallels'), ('DESKTOP_SESSION', 'ubuntu'), ('NO_PROXY', 'localhost,127.0.0.0/8,::1'), ('ROS_PYTHON_VERSION', '3'), ('GNOME_SHELL_SESSION_MODE', 'ubuntu'), ('GTK_MODULES', 'gail:atk-bridge'), ('SYSTEMD_EXEC_PID', '1815'), ('DBUS_SESSION_BUS_ADDRESS', 'unix:path=/run/user/1000/bus'), ('COLORTERM', 'truecolor'), ('_colcon_cd_root', '/home/parallels/ros2_install'), ('IM_CONFIG_PHASE', '1'), ('WAYLAND_DISPLAY', 'wayland-0'), ('ROS_DISTRO', 'humble'), ('LOGNAME', 'parallels'), ('_', '/usr/bin/colcon'), ('ROS_VERSION', '2'), ('XDG_SESSION_CLASS', 'user'), ('USERNAME', 'parallels'), ('TERM', 'xterm-256color'), ('GNOME_DESKTOP_SESSION_ID', 'this-is-deprecated'), ('ROS_LOCALHOST_ONLY', '0'), ('PATH', '/opt/ros/humble/bin:/usr/lib/ccache:/home/parallels/ros2_ws/src/ardupilot/Tools/autotest:/opt/gcc-arm-none-eabi-10-2020-q4-major/bin:/home/parallels/.local/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/snap/bin:/snap/bin:/home/parallels/Micro-XRCE-DDS-Gen/scripts'), ('SESSION_MANAGER', 'local/ubuntu-linux-22-04-desktop:@/tmp/.ICE-unix/1792,unix/ubuntu-linux-22-04-desktop:/tmp/.ICE-unix/1792'), ('XDG_MENU_PREFIX', 'gnome-'), ('GNOME_TERMINAL_SCREEN', '/org/gnome/Terminal/screen/ae8e7e6f_a0c4_48b7_9b0e_8ed12784624c'), ('GNOME_SETUP_DISPLAY', ':1'), ('XDG_RUNTIME_DIR', '/run/user/1000'), ('DISPLAY', ':0'), ('LANG', 'en_US.UTF-8'), ('XDG_CURRENT_DESKTOP', 'ubuntu:GNOME'), ('XMODIFIERS', '@im=ibus'), ('XDG_SESSION_DESKTOP', 'ubuntu'), ('XAUTHORITY', '/run/user/1000/.mutter-Xwaylandauth.I3J8Q2'), ('LS_COLORS', 'rs=0:di=01;34:ln=01;36:mh=00:pi=40;33:so=01;35:do=01;35:bd=40;33;01:cd=40;33;01:or=40;31;01:mi=00:su=37;41:sg=30;43:ca=30;41:tw=30;42:ow=34;42:st=37;44:ex=01;32:*.tar=01;31:*.tgz=01;31:*.arc=01;31:*.arj=01;31:*.taz=01;31:*.lha=01;31:*.lz4=01;31:*.lzh=01;31:*.lzma=01;31:*.tlz=01;31:*.txz=01;31:*.tzo=01;31:*.t7z=01;31:*.zip=01;31:*.z=01;31:*.dz=01;31:*.gz=01;31:*.lrz=01;31:*.lz=01;31:*.lzo=01;31:*.xz=01;31:*.zst=01;31:*.tzst=01;31:*.bz2=01;31:*.bz=01;31:*.tbz=01;31:*.tbz2=01;31:*.tz=01;31:*.deb=01;31:*.rpm=01;31:*.jar=01;31:*.war=01;31:*.ear=01;31:*.sar=01;31:*.rar=01;31:*.alz=01;31:*.ace=01;31:*.zoo=01;31:*.cpio=01;31:*.7z=01;31:*.rz=01;31:*.cab=01;31:*.wim=01;31:*.swm=01;31:*.dwm=01;31:*.esd=01;31:*.jpg=01;35:*.jpeg=01;35:*.mjpg=01;35:*.mjpeg=01;35:*.gif=01;35:*.bmp=01;35:*.pbm=01;35:*.pgm=01;35:*.ppm=01;35:*.tga=01;35:*.xbm=01;35:*.xpm=01;35:*.tif=01;35:*.tiff=01;35:*.png=01;35:*.svg=01;35:*.svgz=01;35:*.mng=01;35:*.pcx=01;35:*.mov=01;35:*.mpg=01;35:*.mpeg=01;35:*.m2v=01;35:*.mkv=01;35:*.webm=01;35:*.webp=01;35:*.ogm=01;35:*.mp4=01;35:*.m4v=01;35:*.mp4v=01;35:*.vob=01;35:*.qt=01;35:*.nuv=01;35:*.wmv=01;35:*.asf=01;35:*.rm=01;35:*.rmvb=01;35:*.flc=01;35:*.avi=01;35:*.fli=01;35:*.flv=01;35:*.gl=01;35:*.dl=01;35:*.xcf=01;35:*.xwd=01;35:*.yuv=01;35:*.cgm=01;35:*.emf=01;35:*.ogv=01;35:*.ogx=01;35:*.aac=00;36:*.au=00;36:*.flac=00;36:*.m4a=00;36:*.mid=00;36:*.midi=00;36:*.mka=00;36:*.mp3=00;36:*.mpc=00;36:*.ogg=00;36:*.ra=00;36:*.wav=00;36:*.oga=00;36:*.opus=00;36:*.spx=00;36:*.xspf=00;36:'), ('GNOME_TERMINAL_SERVICE', ':1.94'), ('SSH_AGENT_LAUNCHER', 'gnome-keyring'), ('SSH_AUTH_SOCK', '/run/user/1000/keyring/ssh'), ('AMENT_PREFIX_PATH', '/opt/ros/humble'), ('SHELL', '/bin/bash'), ('QT_ACCESSIBILITY', '1'), ('GDMSESSION', 'ubuntu'), ('LESSCLOSE', '/usr/bin/lesspipe %s %s'), ('GZ_VERSION', 'garden'), ('QT_IM_MODULE', 'ibus'), ('PWD', '/home/parallels/ros2_ws/src/general/build/slg_msgs'), ('LC_ALL', 'en_US.UTF-8'), ('XDG_CONFIG_DIRS', '/etc/xdg/xdg-ubuntu:/etc/xdg'), ('XDG_DATA_DIRS', '/usr/share/ubuntu:/usr/local/share/:/usr/share/:/var/lib/snapd/desktop'), ('PYTHONPATH', '/opt/ros/humble/lib/python3.10/site-packages:/opt/ros/humble/local/lib/python3.10/dist-packages'), ('COLCON', '1'), ('VTE_VERSION', '6800'), ('CMAKE_PREFIX_PATH', '/opt/ros/humble')]), 'shell': False}
+[0.020845] (perception_interfaces) JobProgress: {'identifier': 'perception_interfaces', 'progress': 'cmake'}
+[0.021744] (perception_interfaces) JobProgress: {'identifier': 'perception_interfaces', 'progress': 'build'}
+[0.021890] (perception_interfaces) Command: {'cmd': ['/usr/bin/cmake', '--build', '/home/parallels/ros2_ws/src/general/build/perception_interfaces', '--', '-j2', '-l2'], 'cwd': '/home/parallels/ros2_ws/src/general/build/perception_interfaces', 'env': OrderedDict([('LESSOPEN', '| /usr/bin/lesspipe %s'), ('GZ_SIM_RESOURCE_PATH', '/home/parallels/ros2_ws/src/ardupilot_gazebo/models:/home/parallels/ros2_ws/src/ardupilot_gazebo/worlds:/home/parallels/ros2_ws/src/iceberg_sim/models:'), ('no_proxy', 'localhost,127.0.0.0/8,::1'), ('USER', 'parallels'), ('XDG_SESSION_TYPE', 'wayland'), ('SHLVL', '1'), ('LD_LIBRARY_PATH', '/opt/ros/humble/opt/rviz_ogre_vendor/lib:/opt/ros/humble/lib/aarch64-linux-gnu:/opt/ros/humble/lib'), ('HOME', '/home/parallels'), ('OLDPWD', '/home/parallels'), ('DESKTOP_SESSION', 'ubuntu'), ('NO_PROXY', 'localhost,127.0.0.0/8,::1'), ('ROS_PYTHON_VERSION', '3'), ('GNOME_SHELL_SESSION_MODE', 'ubuntu'), ('GTK_MODULES', 'gail:atk-bridge'), ('SYSTEMD_EXEC_PID', '1815'), ('DBUS_SESSION_BUS_ADDRESS', 'unix:path=/run/user/1000/bus'), ('COLORTERM', 'truecolor'), ('_colcon_cd_root', '/home/parallels/ros2_install'), ('IM_CONFIG_PHASE', '1'), ('WAYLAND_DISPLAY', 'wayland-0'), ('ROS_DISTRO', 'humble'), ('LOGNAME', 'parallels'), ('_', '/usr/bin/colcon'), ('ROS_VERSION', '2'), ('XDG_SESSION_CLASS', 'user'), ('USERNAME', 'parallels'), ('TERM', 'xterm-256color'), ('GNOME_DESKTOP_SESSION_ID', 'this-is-deprecated'), ('ROS_LOCALHOST_ONLY', '0'), ('PATH', '/opt/ros/humble/bin:/usr/lib/ccache:/home/parallels/ros2_ws/src/ardupilot/Tools/autotest:/opt/gcc-arm-none-eabi-10-2020-q4-major/bin:/home/parallels/.local/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/snap/bin:/snap/bin:/home/parallels/Micro-XRCE-DDS-Gen/scripts'), ('SESSION_MANAGER', 'local/ubuntu-linux-22-04-desktop:@/tmp/.ICE-unix/1792,unix/ubuntu-linux-22-04-desktop:/tmp/.ICE-unix/1792'), ('XDG_MENU_PREFIX', 'gnome-'), ('GNOME_TERMINAL_SCREEN', '/org/gnome/Terminal/screen/ae8e7e6f_a0c4_48b7_9b0e_8ed12784624c'), ('GNOME_SETUP_DISPLAY', ':1'), ('XDG_RUNTIME_DIR', '/run/user/1000'), ('DISPLAY', ':0'), ('LANG', 'en_US.UTF-8'), ('XDG_CURRENT_DESKTOP', 'ubuntu:GNOME'), ('XMODIFIERS', '@im=ibus'), ('XDG_SESSION_DESKTOP', 'ubuntu'), ('XAUTHORITY', '/run/user/1000/.mutter-Xwaylandauth.I3J8Q2'), ('LS_COLORS', 'rs=0:di=01;34:ln=01;36:mh=00:pi=40;33:so=01;35:do=01;35:bd=40;33;01:cd=40;33;01:or=40;31;01:mi=00:su=37;41:sg=30;43:ca=30;41:tw=30;42:ow=34;42:st=37;44:ex=01;32:*.tar=01;31:*.tgz=01;31:*.arc=01;31:*.arj=01;31:*.taz=01;31:*.lha=01;31:*.lz4=01;31:*.lzh=01;31:*.lzma=01;31:*.tlz=01;31:*.txz=01;31:*.tzo=01;31:*.t7z=01;31:*.zip=01;31:*.z=01;31:*.dz=01;31:*.gz=01;31:*.lrz=01;31:*.lz=01;31:*.lzo=01;31:*.xz=01;31:*.zst=01;31:*.tzst=01;31:*.bz2=01;31:*.bz=01;31:*.tbz=01;31:*.tbz2=01;31:*.tz=01;31:*.deb=01;31:*.rpm=01;31:*.jar=01;31:*.war=01;31:*.ear=01;31:*.sar=01;31:*.rar=01;31:*.alz=01;31:*.ace=01;31:*.zoo=01;31:*.cpio=01;31:*.7z=01;31:*.rz=01;31:*.cab=01;31:*.wim=01;31:*.swm=01;31:*.dwm=01;31:*.esd=01;31:*.jpg=01;35:*.jpeg=01;35:*.mjpg=01;35:*.mjpeg=01;35:*.gif=01;35:*.bmp=01;35:*.pbm=01;35:*.pgm=01;35:*.ppm=01;35:*.tga=01;35:*.xbm=01;35:*.xpm=01;35:*.tif=01;35:*.tiff=01;35:*.png=01;35:*.svg=01;35:*.svgz=01;35:*.mng=01;35:*.pcx=01;35:*.mov=01;35:*.mpg=01;35:*.mpeg=01;35:*.m2v=01;35:*.mkv=01;35:*.webm=01;35:*.webp=01;35:*.ogm=01;35:*.mp4=01;35:*.m4v=01;35:*.mp4v=01;35:*.vob=01;35:*.qt=01;35:*.nuv=01;35:*.wmv=01;35:*.asf=01;35:*.rm=01;35:*.rmvb=01;35:*.flc=01;35:*.avi=01;35:*.fli=01;35:*.flv=01;35:*.gl=01;35:*.dl=01;35:*.xcf=01;35:*.xwd=01;35:*.yuv=01;35:*.cgm=01;35:*.emf=01;35:*.ogv=01;35:*.ogx=01;35:*.aac=00;36:*.au=00;36:*.flac=00;36:*.m4a=00;36:*.mid=00;36:*.midi=00;36:*.mka=00;36:*.mp3=00;36:*.mpc=00;36:*.ogg=00;36:*.ra=00;36:*.wav=00;36:*.oga=00;36:*.opus=00;36:*.spx=00;36:*.xspf=00;36:'), ('GNOME_TERMINAL_SERVICE', ':1.94'), ('SSH_AGENT_LAUNCHER', 'gnome-keyring'), ('SSH_AUTH_SOCK', '/run/user/1000/keyring/ssh'), ('AMENT_PREFIX_PATH', '/opt/ros/humble'), ('SHELL', '/bin/bash'), ('QT_ACCESSIBILITY', '1'), ('GDMSESSION', 'ubuntu'), ('LESSCLOSE', '/usr/bin/lesspipe %s %s'), ('GZ_VERSION', 'garden'), ('QT_IM_MODULE', 'ibus'), ('PWD', '/home/parallels/ros2_ws/src/general/build/perception_interfaces'), ('LC_ALL', 'en_US.UTF-8'), ('XDG_CONFIG_DIRS', '/etc/xdg/xdg-ubuntu:/etc/xdg'), ('XDG_DATA_DIRS', '/usr/share/ubuntu:/usr/local/share/:/usr/share/:/var/lib/snapd/desktop'), ('PYTHONPATH', '/opt/ros/humble/lib/python3.10/site-packages:/opt/ros/humble/local/lib/python3.10/dist-packages'), ('COLCON', '1'), ('VTE_VERSION', '6800'), ('CMAKE_PREFIX_PATH', '/opt/ros/humble')]), 'shell': False}
+[0.055178] (perception_interfaces) StdoutLine: {'line': b'-- Found ament_cmake: 1.3.9 (/opt/ros/humble/share/ament_cmake/cmake)\n'}
+[0.083471] (slg_msgs) StdoutLine: {'line': b'[  2%] Built target slg_msgs__cpp\n'}
+[0.098882] (slg_msgs) StdoutLine: {'line': b'[ 10%] Built target slg_msgs__rosidl_generator_c\n'}
+[0.099626] (-) TimerEvent: {}
+[0.111414] (slg_msgs) StdoutLine: {'line': b'[ 10%] Built target ament_cmake_python_copy_slg_msgs\n'}
+[0.134995] (slg_msgs) StdoutLine: {'line': b'[ 14%] Built target gtest\n'}
+[0.136521] (slg_msgs) StdoutLine: {'line': b'[ 18%] Built target gtest_main\n'}
+[0.152822] (slg_msgs) StdoutLine: {'line': b'[ 26%] Built target slg_msgs__rosidl_typesupport_fastrtps_c\n'}
+[0.156487] (slg_msgs) StdoutLine: {'line': b'[ 34%] Built target slg_msgs__rosidl_typesupport_cpp\n'}
+[0.160636] (perception_interfaces) StdoutLine: {'line': b'-- Found geometry_msgs: 4.2.4 (/opt/ros/humble/share/geometry_msgs/cmake)\n'}
+[0.168104] (slg_msgs) StdoutLine: {'line': b'[ 42%] Built target slg_msgs__rosidl_typesupport_c\n'}
+[0.177163] (slg_msgs) StdoutLine: {'line': b'[ 51%] Built target slg_msgs__rosidl_typesupport_introspection_c\n'}
+[0.177717] (slg_msgs) StdoutLine: {'line': b'[ 59%] Built target slg_msgs__rosidl_typesupport_fastrtps_cpp\n'}
+[0.185737] (perception_interfaces) StdoutLine: {'line': b'-- Found rosidl_generator_c: 3.1.5 (/opt/ros/humble/share/rosidl_generator_c/cmake)\n'}
+[0.187999] (perception_interfaces) StdoutLine: {'line': b'-- Found rosidl_adapter: 3.1.5 (/opt/ros/humble/share/rosidl_adapter/cmake)\n'}
+[0.193188] (perception_interfaces) StdoutLine: {'line': b'-- Found rosidl_generator_cpp: 3.1.5 (/opt/ros/humble/share/rosidl_generator_cpp/cmake)\n'}
+[0.199757] (-) TimerEvent: {}
+[0.201869] (perception_interfaces) StdoutLine: {'line': b'-- Using all available rosidl_typesupport_c: rosidl_typesupport_fastrtps_c;rosidl_typesupport_introspection_c\n'}
+[0.202464] (slg_msgs) StdoutLine: {'line': b'[ 67%] Built target slg_msgs__rosidl_typesupport_introspection_cpp\n'}
+[0.217975] (perception_interfaces) StdoutLine: {'line': b'-- Using all available rosidl_typesupport_cpp: rosidl_typesupport_fastrtps_cpp;rosidl_typesupport_introspection_cpp\n'}
+[0.269644] (slg_msgs) StdoutLine: {'line': b'[ 71%] Built target test_point2d\n'}
+[0.296470] (perception_interfaces) StdoutLine: {'line': b'-- Found rosidl_default_generators: 1.2.0 (/opt/ros/humble/share/rosidl_default_generators/cmake)\n'}
+[0.299827] (-) TimerEvent: {}
+[0.311868] (slg_msgs) StdoutLine: {'line': b'[ 75%] Built target test_polygon\n'}
+[0.314123] (slg_msgs) StdoutLine: {'line': b'running egg_info\n'}
+[0.319805] (slg_msgs) StdoutLine: {'line': b'writing slg_msgs.egg-info/PKG-INFO\n'}
+[0.320131] (slg_msgs) StdoutLine: {'line': b'writing dependency_links to slg_msgs.egg-info/dependency_links.txt\n'}
+[0.320353] (slg_msgs) StdoutLine: {'line': b'writing top-level names to slg_msgs.egg-info/top_level.txt\n'}
+[0.343658] (slg_msgs) StdoutLine: {'line': b"reading manifest file 'slg_msgs.egg-info/SOURCES.txt'\n"}
+[0.344558] (slg_msgs) StdoutLine: {'line': b"writing manifest file 'slg_msgs.egg-info/SOURCES.txt'\n"}
+[0.351692] (slg_msgs) StdoutLine: {'line': b'[ 79%] Built target test_segment2d\n'}
+[0.359854] (slg_msgs) StdoutLine: {'line': b'[ 79%] Built target slg_msgs\n'}
+[0.372860] (slg_msgs) StdoutLine: {'line': b'[ 79%] Built target ament_cmake_python_build_slg_msgs_egg\n'}
+[0.377916] (slg_msgs) StdoutLine: {'line': b'[ 81%] Built target slg_msgs__py\n'}
+[0.395569] (slg_msgs) StdoutLine: {'line': b'[ 87%] Built target slg_msgs__rosidl_generator_py\n'}
+[0.399894] (-) TimerEvent: {}
+[0.404231] (slg_msgs) StdoutLine: {'line': b'[ 91%] Built target slg_msgs__rosidl_typesupport_fastrtps_c__pyext\n'}
+[0.418536] (slg_msgs) StdoutLine: {'line': b'[ 95%] Built target slg_msgs__rosidl_typesupport_c__pyext\n'}
+[0.418914] (slg_msgs) StdoutLine: {'line': b'[100%] Built target slg_msgs__rosidl_typesupport_introspection_c__pyext\n'}
+[0.430009] (slg_msgs) CommandEnded: {'returncode': 0}
+[0.499986] (-) TimerEvent: {}
+[0.511483] (perception_interfaces) StdoutLine: {'line': b'-- Found ament_cmake_ros: 0.10.0 (/opt/ros/humble/share/ament_cmake_ros/cmake)\n'}
+[0.538173] (slg_msgs) JobProgress: {'identifier': 'slg_msgs', 'progress': 'install'}
+[0.541707] (slg_msgs) Command: {'cmd': ['/usr/bin/cmake', '--install', '/home/parallels/ros2_ws/src/general/build/slg_msgs'], 'cwd': '/home/parallels/ros2_ws/src/general/build/slg_msgs', 'env': OrderedDict([('LESSOPEN', '| /usr/bin/lesspipe %s'), ('GZ_SIM_RESOURCE_PATH', '/home/parallels/ros2_ws/src/ardupilot_gazebo/models:/home/parallels/ros2_ws/src/ardupilot_gazebo/worlds:/home/parallels/ros2_ws/src/iceberg_sim/models:'), ('no_proxy', 'localhost,127.0.0.0/8,::1'), ('USER', 'parallels'), ('XDG_SESSION_TYPE', 'wayland'), ('SHLVL', '1'), ('LD_LIBRARY_PATH', '/opt/ros/humble/opt/rviz_ogre_vendor/lib:/opt/ros/humble/lib/aarch64-linux-gnu:/opt/ros/humble/lib'), ('HOME', '/home/parallels'), ('OLDPWD', '/home/parallels'), ('DESKTOP_SESSION', 'ubuntu'), ('NO_PROXY', 'localhost,127.0.0.0/8,::1'), ('ROS_PYTHON_VERSION', '3'), ('GNOME_SHELL_SESSION_MODE', 'ubuntu'), ('GTK_MODULES', 'gail:atk-bridge'), ('SYSTEMD_EXEC_PID', '1815'), ('DBUS_SESSION_BUS_ADDRESS', 'unix:path=/run/user/1000/bus'), ('COLORTERM', 'truecolor'), ('_colcon_cd_root', '/home/parallels/ros2_install'), ('IM_CONFIG_PHASE', '1'), ('WAYLAND_DISPLAY', 'wayland-0'), ('ROS_DISTRO', 'humble'), ('LOGNAME', 'parallels'), ('_', '/usr/bin/colcon'), ('ROS_VERSION', '2'), ('XDG_SESSION_CLASS', 'user'), ('USERNAME', 'parallels'), ('TERM', 'xterm-256color'), ('GNOME_DESKTOP_SESSION_ID', 'this-is-deprecated'), ('ROS_LOCALHOST_ONLY', '0'), ('PATH', '/opt/ros/humble/bin:/usr/lib/ccache:/home/parallels/ros2_ws/src/ardupilot/Tools/autotest:/opt/gcc-arm-none-eabi-10-2020-q4-major/bin:/home/parallels/.local/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/snap/bin:/snap/bin:/home/parallels/Micro-XRCE-DDS-Gen/scripts'), ('SESSION_MANAGER', 'local/ubuntu-linux-22-04-desktop:@/tmp/.ICE-unix/1792,unix/ubuntu-linux-22-04-desktop:/tmp/.ICE-unix/1792'), ('XDG_MENU_PREFIX', 'gnome-'), ('GNOME_TERMINAL_SCREEN', '/org/gnome/Terminal/screen/ae8e7e6f_a0c4_48b7_9b0e_8ed12784624c'), ('GNOME_SETUP_DISPLAY', ':1'), ('XDG_RUNTIME_DIR', '/run/user/1000'), ('DISPLAY', ':0'), ('LANG', 'en_US.UTF-8'), ('XDG_CURRENT_DESKTOP', 'ubuntu:GNOME'), ('XMODIFIERS', '@im=ibus'), ('XDG_SESSION_DESKTOP', 'ubuntu'), ('XAUTHORITY', '/run/user/1000/.mutter-Xwaylandauth.I3J8Q2'), ('LS_COLORS', 'rs=0:di=01;34:ln=01;36:mh=00:pi=40;33:so=01;35:do=01;35:bd=40;33;01:cd=40;33;01:or=40;31;01:mi=00:su=37;41:sg=30;43:ca=30;41:tw=30;42:ow=34;42:st=37;44:ex=01;32:*.tar=01;31:*.tgz=01;31:*.arc=01;31:*.arj=01;31:*.taz=01;31:*.lha=01;31:*.lz4=01;31:*.lzh=01;31:*.lzma=01;31:*.tlz=01;31:*.txz=01;31:*.tzo=01;31:*.t7z=01;31:*.zip=01;31:*.z=01;31:*.dz=01;31:*.gz=01;31:*.lrz=01;31:*.lz=01;31:*.lzo=01;31:*.xz=01;31:*.zst=01;31:*.tzst=01;31:*.bz2=01;31:*.bz=01;31:*.tbz=01;31:*.tbz2=01;31:*.tz=01;31:*.deb=01;31:*.rpm=01;31:*.jar=01;31:*.war=01;31:*.ear=01;31:*.sar=01;31:*.rar=01;31:*.alz=01;31:*.ace=01;31:*.zoo=01;31:*.cpio=01;31:*.7z=01;31:*.rz=01;31:*.cab=01;31:*.wim=01;31:*.swm=01;31:*.dwm=01;31:*.esd=01;31:*.jpg=01;35:*.jpeg=01;35:*.mjpg=01;35:*.mjpeg=01;35:*.gif=01;35:*.bmp=01;35:*.pbm=01;35:*.pgm=01;35:*.ppm=01;35:*.tga=01;35:*.xbm=01;35:*.xpm=01;35:*.tif=01;35:*.tiff=01;35:*.png=01;35:*.svg=01;35:*.svgz=01;35:*.mng=01;35:*.pcx=01;35:*.mov=01;35:*.mpg=01;35:*.mpeg=01;35:*.m2v=01;35:*.mkv=01;35:*.webm=01;35:*.webp=01;35:*.ogm=01;35:*.mp4=01;35:*.m4v=01;35:*.mp4v=01;35:*.vob=01;35:*.qt=01;35:*.nuv=01;35:*.wmv=01;35:*.asf=01;35:*.rm=01;35:*.rmvb=01;35:*.flc=01;35:*.avi=01;35:*.fli=01;35:*.flv=01;35:*.gl=01;35:*.dl=01;35:*.xcf=01;35:*.xwd=01;35:*.yuv=01;35:*.cgm=01;35:*.emf=01;35:*.ogv=01;35:*.ogx=01;35:*.aac=00;36:*.au=00;36:*.flac=00;36:*.m4a=00;36:*.mid=00;36:*.midi=00;36:*.mka=00;36:*.mp3=00;36:*.mpc=00;36:*.ogg=00;36:*.ra=00;36:*.wav=00;36:*.oga=00;36:*.opus=00;36:*.spx=00;36:*.xspf=00;36:'), ('GNOME_TERMINAL_SERVICE', ':1.94'), ('SSH_AGENT_LAUNCHER', 'gnome-keyring'), ('SSH_AUTH_SOCK', '/run/user/1000/keyring/ssh'), ('AMENT_PREFIX_PATH', '/opt/ros/humble'), ('SHELL', '/bin/bash'), ('QT_ACCESSIBILITY', '1'), ('GDMSESSION', 'ubuntu'), ('LESSCLOSE', '/usr/bin/lesspipe %s %s'), ('GZ_VERSION', 'garden'), ('QT_IM_MODULE', 'ibus'), ('PWD', '/home/parallels/ros2_ws/src/general/build/slg_msgs'), ('LC_ALL', 'en_US.UTF-8'), ('XDG_CONFIG_DIRS', '/etc/xdg/xdg-ubuntu:/etc/xdg'), ('XDG_DATA_DIRS', '/usr/share/ubuntu:/usr/local/share/:/usr/share/:/var/lib/snapd/desktop'), ('PYTHONPATH', '/opt/ros/humble/lib/python3.10/site-packages:/opt/ros/humble/local/lib/python3.10/dist-packages'), ('COLCON', '1'), ('VTE_VERSION', '6800'), ('CMAKE_PREFIX_PATH', '/opt/ros/humble')]), 'shell': False}
+[0.551228] (slg_msgs) StdoutLine: {'line': b'-- Install configuration: "Release"\n'}
+[0.560092] (slg_msgs) StdoutLine: {'line': b'-- Up-to-date: /home/parallels/ros2_ws/src/general/install/slg_msgs/share/ament_index/resource_index/rosidl_interfaces/slg_msgs\n'}
+[0.560136] (slg_msgs) StdoutLine: {'line': b'-- Up-to-date: /home/parallels/ros2_ws/src/general/install/slg_msgs/include/slg_msgs/slg_msgs\n'}
+[0.560163] (slg_msgs) StdoutLine: {'line': b'-- Up-to-date: /home/parallels/ros2_ws/src/general/install/slg_msgs/include/slg_msgs/slg_msgs/msg\n'}
+[0.560187] (slg_msgs) StdoutLine: {'line': b'-- Up-to-date: /home/parallels/ros2_ws/src/general/install/slg_msgs/include/slg_msgs/slg_msgs/msg/rosidl_generator_c__visibility_control.h\n'}
+[0.560212] (slg_msgs) StdoutLine: {'line': b'-- Up-to-date: /home/parallels/ros2_ws/src/general/install/slg_msgs/include/slg_msgs/slg_msgs/msg/detail\n'}
+[0.560235] (slg_msgs) StdoutLine: {'line': b'-- Up-to-date: /home/parallels/ros2_ws/src/general/install/slg_msgs/include/slg_msgs/slg_msgs/msg/detail/segment__functions.c\n'}
+[0.560261] (slg_msgs) StdoutLine: {'line': b'-- Up-to-date: /home/parallels/ros2_ws/src/general/install/slg_msgs/include/slg_msgs/slg_msgs/msg/detail/segment__functions.h\n'}
+[0.560284] (slg_msgs) StdoutLine: {'line': b'-- Up-to-date: /home/parallels/ros2_ws/src/general/install/slg_msgs/include/slg_msgs/slg_msgs/msg/detail/segment_array__struct.h\n'}
+[0.560306] (slg_msgs) StdoutLine: {'line': b'-- Up-to-date: /home/parallels/ros2_ws/src/general/install/slg_msgs/include/slg_msgs/slg_msgs/msg/detail/segment__struct.h\n'}
+[0.560329] (slg_msgs) StdoutLine: {'line': b'-- Up-to-date: /home/parallels/ros2_ws/src/general/install/slg_msgs/include/slg_msgs/slg_msgs/msg/detail/segment_array__functions.h\n'}
+[0.560350] (slg_msgs) StdoutLine: {'line': b'-- Up-to-date: /home/parallels/ros2_ws/src/general/install/slg_msgs/include/slg_msgs/slg_msgs/msg/detail/segment_array__type_support.h\n'}
+[0.560373] (slg_msgs) StdoutLine: {'line': b'-- Up-to-date: /home/parallels/ros2_ws/src/general/install/slg_msgs/include/slg_msgs/slg_msgs/msg/detail/segment__type_support.h\n'}
+[0.560395] (slg_msgs) StdoutLine: {'line': b'-- Up-to-date: /home/parallels/ros2_ws/src/general/install/slg_msgs/include/slg_msgs/slg_msgs/msg/detail/segment_array__functions.c\n'}
+[0.560417] (slg_msgs) StdoutLine: {'line': b'-- Up-to-date: /home/parallels/ros2_ws/src/general/install/slg_msgs/include/slg_msgs/slg_msgs/msg/segment_array.h\n'}
+[0.560440] (slg_msgs) StdoutLine: {'line': b'-- Up-to-date: /home/parallels/ros2_ws/src/general/install/slg_msgs/include/slg_msgs/slg_msgs/msg/segment.h\n'}
+[0.560465] (slg_msgs) StdoutLine: {'line': b'-- Up-to-date: /home/parallels/ros2_ws/src/general/install/slg_msgs/share/slg_msgs/environment/library_path.sh\n'}
+[0.560487] (slg_msgs) StdoutLine: {'line': b'-- Up-to-date: /home/parallels/ros2_ws/src/general/install/slg_msgs/share/slg_msgs/environment/library_path.dsv\n'}
+[0.560510] (slg_msgs) StdoutLine: {'line': b'-- Up-to-date: /home/parallels/ros2_ws/src/general/install/slg_msgs/lib/libslg_msgs__rosidl_generator_c.so\n'}
+[0.560532] (slg_msgs) StdoutLine: {'line': b'-- Up-to-date: /home/parallels/ros2_ws/src/general/install/slg_msgs/include/slg_msgs/slg_msgs\n'}
+[0.560554] (slg_msgs) StdoutLine: {'line': b'-- Up-to-date: /home/parallels/ros2_ws/src/general/install/slg_msgs/include/slg_msgs/slg_msgs/msg\n'}
+[0.560576] (slg_msgs) StdoutLine: {'line': b'-- Up-to-date: /home/parallels/ros2_ws/src/general/install/slg_msgs/include/slg_msgs/slg_msgs/msg/detail\n'}
+[0.560598] (slg_msgs) StdoutLine: {'line': b'-- Up-to-date: /home/parallels/ros2_ws/src/general/install/slg_msgs/include/slg_msgs/slg_msgs/msg/detail/segment_array__rosidl_typesupport_fastrtps_c.h\n'}
+[0.560620] (slg_msgs) StdoutLine: {'line': b'-- Up-to-date: /home/parallels/ros2_ws/src/general/install/slg_msgs/include/slg_msgs/slg_msgs/msg/detail/segment__rosidl_typesupport_fastrtps_c.h\n'}
+[0.560643] (slg_msgs) StdoutLine: {'line': b'-- Up-to-date: /home/parallels/ros2_ws/src/general/install/slg_msgs/include/slg_msgs/slg_msgs/msg/rosidl_typesupport_fastrtps_c__visibility_control.h\n'}
+[0.560668] (slg_msgs) StdoutLine: {'line': b'-- Up-to-date: /home/parallels/ros2_ws/src/general/install/slg_msgs/lib/libslg_msgs__rosidl_typesupport_fastrtps_c.so\n'}
+[0.560691] (slg_msgs) StdoutLine: {'line': b'-- Up-to-date: /home/parallels/ros2_ws/src/general/install/slg_msgs/include/slg_msgs/slg_msgs\n'}
+[0.560713] (slg_msgs) StdoutLine: {'line': b'-- Up-to-date: /home/parallels/ros2_ws/src/general/install/slg_msgs/include/slg_msgs/slg_msgs/msg\n'}
+[0.560735] (slg_msgs) StdoutLine: {'line': b'-- Up-to-date: /home/parallels/ros2_ws/src/general/install/slg_msgs/include/slg_msgs/slg_msgs/msg/detail\n'}
+[0.560757] (slg_msgs) StdoutLine: {'line': b'-- Up-to-date: /home/parallels/ros2_ws/src/general/install/slg_msgs/include/slg_msgs/slg_msgs/msg/detail/segment_array__type_support.c\n'}
+[0.560779] (slg_msgs) StdoutLine: {'line': b'-- Up-to-date: /home/parallels/ros2_ws/src/general/install/slg_msgs/include/slg_msgs/slg_msgs/msg/detail/segment__type_support.c\n'}
+[0.560802] (slg_msgs) StdoutLine: {'line': b'-- Up-to-date: /home/parallels/ros2_ws/src/general/install/slg_msgs/include/slg_msgs/slg_msgs/msg/detail/segment__rosidl_typesupport_introspection_c.h\n'}
+[0.560825] (slg_msgs) StdoutLine: {'line': b'-- Up-to-date: /home/parallels/ros2_ws/src/general/install/slg_msgs/include/slg_msgs/slg_msgs/msg/detail/segment_array__rosidl_typesupport_introspection_c.h\n'}
+[0.560848] (slg_msgs) StdoutLine: {'line': b'-- Up-to-date: /home/parallels/ros2_ws/src/general/install/slg_msgs/include/slg_msgs/slg_msgs/msg/rosidl_typesupport_introspection_c__visibility_control.h\n'}
+[0.560870] (slg_msgs) StdoutLine: {'line': b'-- Up-to-date: /home/parallels/ros2_ws/src/general/install/slg_msgs/lib/libslg_msgs__rosidl_typesupport_introspection_c.so\n'}
+[0.560893] (slg_msgs) StdoutLine: {'line': b'-- Up-to-date: /home/parallels/ros2_ws/src/general/install/slg_msgs/lib/libslg_msgs__rosidl_typesupport_c.so\n'}
+[0.560921] (slg_msgs) StdoutLine: {'line': b'-- Up-to-date: /home/parallels/ros2_ws/src/general/install/slg_msgs/include/slg_msgs/slg_msgs\n'}
+[0.560946] (slg_msgs) StdoutLine: {'line': b'-- Up-to-date: /home/parallels/ros2_ws/src/general/install/slg_msgs/include/slg_msgs/slg_msgs/msg\n'}
+[0.560983] (slg_msgs) StdoutLine: {'line': b'-- Up-to-date: /home/parallels/ros2_ws/src/general/install/slg_msgs/include/slg_msgs/slg_msgs/msg/detail\n'}
+[0.561010] (slg_msgs) StdoutLine: {'line': b'-- Up-to-date: /home/parallels/ros2_ws/src/general/install/slg_msgs/include/slg_msgs/slg_msgs/msg/detail/segment_array__builder.hpp\n'}
+[0.561033] (slg_msgs) StdoutLine: {'line': b'-- Up-to-date: /home/parallels/ros2_ws/src/general/install/slg_msgs/include/slg_msgs/slg_msgs/msg/detail/segment_array__traits.hpp\n'}
+[0.561055] (slg_msgs) StdoutLine: {'line': b'-- Up-to-date: /home/parallels/ros2_ws/src/general/install/slg_msgs/include/slg_msgs/slg_msgs/msg/detail/segment__traits.hpp\n'}
+[0.561077] (slg_msgs) StdoutLine: {'line': b'-- Up-to-date: /home/parallels/ros2_ws/src/general/install/slg_msgs/include/slg_msgs/slg_msgs/msg/detail/segment_array__struct.hpp\n'}
+[0.561099] (slg_msgs) StdoutLine: {'line': b'-- Up-to-date: /home/parallels/ros2_ws/src/general/install/slg_msgs/include/slg_msgs/slg_msgs/msg/detail/segment__struct.hpp\n'}
+[0.561121] (slg_msgs) StdoutLine: {'line': b'-- Up-to-date: /home/parallels/ros2_ws/src/general/install/slg_msgs/include/slg_msgs/slg_msgs/msg/detail/segment__builder.hpp\n'}
+[0.561143] (slg_msgs) StdoutLine: {'line': b'-- Up-to-date: /home/parallels/ros2_ws/src/general/install/slg_msgs/include/slg_msgs/slg_msgs/msg/segment_array.hpp\n'}
+[0.561166] (slg_msgs) StdoutLine: {'line': b'-- Up-to-date: /home/parallels/ros2_ws/src/general/install/slg_msgs/include/slg_msgs/slg_msgs/msg/segment.hpp\n'}
+[0.561188] (slg_msgs) StdoutLine: {'line': b'-- Up-to-date: /home/parallels/ros2_ws/src/general/install/slg_msgs/include/slg_msgs/slg_msgs\n'}
+[0.561211] (slg_msgs) StdoutLine: {'line': b'-- Up-to-date: /home/parallels/ros2_ws/src/general/install/slg_msgs/include/slg_msgs/slg_msgs/msg\n'}
+[0.561234] (slg_msgs) StdoutLine: {'line': b'-- Up-to-date: /home/parallels/ros2_ws/src/general/install/slg_msgs/include/slg_msgs/slg_msgs/msg/detail\n'}
+[0.561257] (slg_msgs) StdoutLine: {'line': b'-- Up-to-date: /home/parallels/ros2_ws/src/general/install/slg_msgs/include/slg_msgs/slg_msgs/msg/detail/segment__rosidl_typesupport_fastrtps_cpp.hpp\n'}
+[0.561299] (slg_msgs) StdoutLine: {'line': b'-- Up-to-date: /home/parallels/ros2_ws/src/general/install/slg_msgs/include/slg_msgs/slg_msgs/msg/detail/dds_fastrtps\n'}
+[0.561337] (slg_msgs) StdoutLine: {'line': b'-- Up-to-date: /home/parallels/ros2_ws/src/general/install/slg_msgs/include/slg_msgs/slg_msgs/msg/detail/segment_array__rosidl_typesupport_fastrtps_cpp.hpp\n'}
+[0.561360] (slg_msgs) StdoutLine: {'line': b'-- Up-to-date: /home/parallels/ros2_ws/src/general/install/slg_msgs/include/slg_msgs/slg_msgs/msg/rosidl_typesupport_fastrtps_cpp__visibility_control.h\n'}
+[0.561403] (slg_msgs) StdoutLine: {'line': b'-- Up-to-date: /home/parallels/ros2_ws/src/general/install/slg_msgs/lib/libslg_msgs__rosidl_typesupport_fastrtps_cpp.so\n'}
+[0.561429] (slg_msgs) StdoutLine: {'line': b'-- Up-to-date: /home/parallels/ros2_ws/src/general/install/slg_msgs/include/slg_msgs/slg_msgs\n'}
+[0.561451] (slg_msgs) StdoutLine: {'line': b'-- Up-to-date: /home/parallels/ros2_ws/src/general/install/slg_msgs/include/slg_msgs/slg_msgs/msg\n'}
+[0.561472] (slg_msgs) StdoutLine: {'line': b'-- Up-to-date: /home/parallels/ros2_ws/src/general/install/slg_msgs/include/slg_msgs/slg_msgs/msg/detail\n'}
+[0.561509] (slg_msgs) StdoutLine: {'line': b'-- Up-to-date: /home/parallels/ros2_ws/src/general/install/slg_msgs/include/slg_msgs/slg_msgs/msg/detail/segment_array__type_support.cpp\n'}
+[0.561536] (slg_msgs) StdoutLine: {'line': b'-- Up-to-date: /home/parallels/ros2_ws/src/general/install/slg_msgs/include/slg_msgs/slg_msgs/msg/detail/segment__type_support.cpp\n'}
+[0.561558] (slg_msgs) StdoutLine: {'line': b'-- Up-to-date: /home/parallels/ros2_ws/src/general/install/slg_msgs/include/slg_msgs/slg_msgs/msg/detail/segment_array__rosidl_typesupport_introspection_cpp.hpp\n'}
+[0.561592] (slg_msgs) StdoutLine: {'line': b'-- Up-to-date: /home/parallels/ros2_ws/src/general/install/slg_msgs/include/slg_msgs/slg_msgs/msg/detail/segment__rosidl_typesupport_introspection_cpp.hpp\n'}
+[0.561615] (slg_msgs) StdoutLine: {'line': b'-- Up-to-date: /home/parallels/ros2_ws/src/general/install/slg_msgs/lib/libslg_msgs__rosidl_typesupport_introspection_cpp.so\n'}
+[0.561637] (slg_msgs) StdoutLine: {'line': b'-- Up-to-date: /home/parallels/ros2_ws/src/general/install/slg_msgs/lib/libslg_msgs__rosidl_typesupport_cpp.so\n'}
+[0.561659] (slg_msgs) StdoutLine: {'line': b'-- Up-to-date: /home/parallels/ros2_ws/src/general/install/slg_msgs/share/slg_msgs/environment/pythonpath.sh\n'}
+[0.561680] (slg_msgs) StdoutLine: {'line': b'-- Up-to-date: /home/parallels/ros2_ws/src/general/install/slg_msgs/share/slg_msgs/environment/pythonpath.dsv\n'}
+[0.561703] (slg_msgs) StdoutLine: {'line': b'-- Up-to-date: /home/parallels/ros2_ws/src/general/install/slg_msgs/local/lib/python3.10/dist-packages/slg_msgs-3.8.0-py3.10.egg-info\n'}
+[0.561725] (slg_msgs) StdoutLine: {'line': b'-- Installing: /home/parallels/ros2_ws/src/general/install/slg_msgs/local/lib/python3.10/dist-packages/slg_msgs-3.8.0-py3.10.egg-info/dependency_links.txt\n'}
+[0.561747] (slg_msgs) StdoutLine: {'line': b'-- Installing: /home/parallels/ros2_ws/src/general/install/slg_msgs/local/lib/python3.10/dist-packages/slg_msgs-3.8.0-py3.10.egg-info/top_level.txt\n'}
+[0.561770] (slg_msgs) StdoutLine: {'line': b'-- Installing: /home/parallels/ros2_ws/src/general/install/slg_msgs/local/lib/python3.10/dist-packages/slg_msgs-3.8.0-py3.10.egg-info/PKG-INFO\n'}
+[0.561792] (slg_msgs) StdoutLine: {'line': b'-- Installing: /home/parallels/ros2_ws/src/general/install/slg_msgs/local/lib/python3.10/dist-packages/slg_msgs-3.8.0-py3.10.egg-info/SOURCES.txt\n'}
+[0.561814] (slg_msgs) StdoutLine: {'line': b'-- Up-to-date: /home/parallels/ros2_ws/src/general/install/slg_msgs/local/lib/python3.10/dist-packages/slg_msgs\n'}
+[0.561836] (slg_msgs) StdoutLine: {'line': b'-- Up-to-date: /home/parallels/ros2_ws/src/general/install/slg_msgs/local/lib/python3.10/dist-packages/slg_msgs/slg_msgs_s__rosidl_typesupport_introspection_c.cpython-310-aarch64-linux-gnu.so\n'}
+[0.561860] (slg_msgs) StdoutLine: {'line': b'-- Up-to-date: /home/parallels/ros2_ws/src/general/install/slg_msgs/local/lib/python3.10/dist-packages/slg_msgs/_slg_msgs_s.ep.rosidl_typesupport_c.c\n'}
+[0.561898] (slg_msgs) StdoutLine: {'line': b'-- Up-to-date: /home/parallels/ros2_ws/src/general/install/slg_msgs/local/lib/python3.10/dist-packages/slg_msgs/msg\n'}
+[0.561926] (slg_msgs) StdoutLine: {'line': b'-- Up-to-date: /home/parallels/ros2_ws/src/general/install/slg_msgs/local/lib/python3.10/dist-packages/slg_msgs/msg/_segment.py\n'}
+[0.561955] (slg_msgs) StdoutLine: {'line': b'-- Up-to-date: /home/parallels/ros2_ws/src/general/install/slg_msgs/local/lib/python3.10/dist-packages/slg_msgs/msg/_segment_array_s.c\n'}
+[0.561981] (slg_msgs) StdoutLine: {'line': b'-- Up-to-date: /home/parallels/ros2_ws/src/general/install/slg_msgs/local/lib/python3.10/dist-packages/slg_msgs/msg/__init__.py\n'}
+[0.562004] (slg_msgs) StdoutLine: {'line': b'-- Up-to-date: /home/parallels/ros2_ws/src/general/install/slg_msgs/local/lib/python3.10/dist-packages/slg_msgs/msg/_segment_s.c\n'}
+[0.562026] (slg_msgs) StdoutLine: {'line': b'-- Up-to-date: /home/parallels/ros2_ws/src/general/install/slg_msgs/local/lib/python3.10/dist-packages/slg_msgs/msg/_segment_array.py\n'}
+[0.562048] (slg_msgs) StdoutLine: {'line': b'-- Up-to-date: /home/parallels/ros2_ws/src/general/install/slg_msgs/local/lib/python3.10/dist-packages/slg_msgs/_slg_msgs_s.ep.rosidl_typesupport_introspection_c.c\n'}
+[0.562080] (slg_msgs) StdoutLine: {'line': b'-- Up-to-date: /home/parallels/ros2_ws/src/general/install/slg_msgs/local/lib/python3.10/dist-packages/slg_msgs/slg_msgs_s__rosidl_typesupport_fastrtps_c.cpython-310-aarch64-linux-gnu.so\n'}
+[0.562104] (slg_msgs) StdoutLine: {'line': b'-- Up-to-date: /home/parallels/ros2_ws/src/general/install/slg_msgs/local/lib/python3.10/dist-packages/slg_msgs/slg_msgs_s__rosidl_typesupport_c.cpython-310-aarch64-linux-gnu.so\n'}
+[0.562126] (slg_msgs) StdoutLine: {'line': b'-- Up-to-date: /home/parallels/ros2_ws/src/general/install/slg_msgs/local/lib/python3.10/dist-packages/slg_msgs/_slg_msgs_s.ep.rosidl_typesupport_fastrtps_c.c\n'}
+[0.562148] (slg_msgs) StdoutLine: {'line': b'-- Up-to-date: /home/parallels/ros2_ws/src/general/install/slg_msgs/local/lib/python3.10/dist-packages/slg_msgs/__init__.py\n'}
+[0.562169] (slg_msgs) StdoutLine: {'line': b'-- Up-to-date: /home/parallels/ros2_ws/src/general/install/slg_msgs/local/lib/python3.10/dist-packages/slg_msgs/libslg_msgs__rosidl_generator_py.so\n'}
+[0.573582] (slg_msgs) StdoutLine: {'line': b"Listing '/home/parallels/ros2_ws/src/general/install/slg_msgs/local/lib/python3.10/dist-packages/slg_msgs'...\n"}
+[0.573644] (slg_msgs) StdoutLine: {'line': b"Listing '/home/parallels/ros2_ws/src/general/install/slg_msgs/local/lib/python3.10/dist-packages/slg_msgs/msg'...\n"}
+[0.573677] (slg_msgs) StdoutLine: {'line': b'-- Up-to-date: /home/parallels/ros2_ws/src/general/install/slg_msgs/local/lib/python3.10/dist-packages/slg_msgs/slg_msgs_s__rosidl_typesupport_fastrtps_c.cpython-310-aarch64-linux-gnu.so\n'}
+[0.573723] (slg_msgs) StdoutLine: {'line': b'-- Up-to-date: /home/parallels/ros2_ws/src/general/install/slg_msgs/local/lib/python3.10/dist-packages/slg_msgs/slg_msgs_s__rosidl_typesupport_introspection_c.cpython-310-aarch64-linux-gnu.so\n'}
+[0.573770] (slg_msgs) StdoutLine: {'line': b'-- Up-to-date: /home/parallels/ros2_ws/src/general/install/slg_msgs/local/lib/python3.10/dist-packages/slg_msgs/slg_msgs_s__rosidl_typesupport_c.cpython-310-aarch64-linux-gnu.so\n'}
+[0.573798] (slg_msgs) StdoutLine: {'line': b'-- Up-to-date: /home/parallels/ros2_ws/src/general/install/slg_msgs/lib/libslg_msgs__rosidl_generator_py.so\n'}
+[0.573822] (slg_msgs) StdoutLine: {'line': b'-- Up-to-date: /home/parallels/ros2_ws/src/general/install/slg_msgs/share/slg_msgs/msg/Segment.idl\n'}
+[0.573845] (slg_msgs) StdoutLine: {'line': b'-- Up-to-date: /home/parallels/ros2_ws/src/general/install/slg_msgs/share/slg_msgs/msg/SegmentArray.idl\n'}
+[0.573868] (slg_msgs) StdoutLine: {'line': b'-- Up-to-date: /home/parallels/ros2_ws/src/general/install/slg_msgs/share/slg_msgs/msg/Segment.msg\n'}
+[0.573890] (slg_msgs) StdoutLine: {'line': b'-- Up-to-date: /home/parallels/ros2_ws/src/general/install/slg_msgs/share/slg_msgs/msg/SegmentArray.msg\n'}
+[0.573912] (slg_msgs) StdoutLine: {'line': b'-- Up-to-date: /home/parallels/ros2_ws/src/general/install/slg_msgs/include/slg_msgs\n'}
+[0.573935] (slg_msgs) StdoutLine: {'line': b'-- Up-to-date: /home/parallels/ros2_ws/src/general/install/slg_msgs/include/slg_msgs/segment2D.hpp\n'}
+[0.573978] (slg_msgs) StdoutLine: {'line': b'-- Up-to-date: /home/parallels/ros2_ws/src/general/install/slg_msgs/include/slg_msgs/polygon.hpp\n'}
+[0.574002] (slg_msgs) StdoutLine: {'line': b'-- Up-to-date: /home/parallels/ros2_ws/src/general/install/slg_msgs/include/slg_msgs/point2D.hpp\n'}
+[0.574024] (slg_msgs) StdoutLine: {'line': b'-- Up-to-date: /home/parallels/ros2_ws/src/general/install/slg_msgs/share/ament_index/resource_index/package_run_dependencies/slg_msgs\n'}
+[0.574049] (slg_msgs) StdoutLine: {'line': b'-- Up-to-date: /home/parallels/ros2_ws/src/general/install/slg_msgs/share/ament_index/resource_index/parent_prefix_path/slg_msgs\n'}
+[0.574071] (slg_msgs) StdoutLine: {'line': b'-- Up-to-date: /home/parallels/ros2_ws/src/general/install/slg_msgs/share/slg_msgs/environment/ament_prefix_path.sh\n'}
+[0.574094] (slg_msgs) StdoutLine: {'line': b'-- Up-to-date: /home/parallels/ros2_ws/src/general/install/slg_msgs/share/slg_msgs/environment/ament_prefix_path.dsv\n'}
+[0.574130] (slg_msgs) StdoutLine: {'line': b'-- Up-to-date: /home/parallels/ros2_ws/src/general/install/slg_msgs/share/slg_msgs/environment/path.sh\n'}
+[0.574208] (slg_msgs) StdoutLine: {'line': b'-- Up-to-date: /home/parallels/ros2_ws/src/general/install/slg_msgs/share/slg_msgs/environment/path.dsv\n'}
+[0.574278] (slg_msgs) StdoutLine: {'line': b'-- Up-to-date: /home/parallels/ros2_ws/src/general/install/slg_msgs/share/slg_msgs/local_setup.bash\n'}
+[0.574348] (slg_msgs) StdoutLine: {'line': b'-- Up-to-date: /home/parallels/ros2_ws/src/general/install/slg_msgs/share/slg_msgs/local_setup.sh\n'}
+[0.574408] (slg_msgs) StdoutLine: {'line': b'-- Up-to-date: /home/parallels/ros2_ws/src/general/install/slg_msgs/share/slg_msgs/local_setup.zsh\n'}
+[0.574472] (slg_msgs) StdoutLine: {'line': b'-- Up-to-date: /home/parallels/ros2_ws/src/general/install/slg_msgs/share/slg_msgs/local_setup.dsv\n'}
+[0.574525] (slg_msgs) StdoutLine: {'line': b'-- Installing: /home/parallels/ros2_ws/src/general/install/slg_msgs/share/slg_msgs/package.dsv\n'}
+[0.574867] (slg_msgs) StdoutLine: {'line': b'-- Up-to-date: /home/parallels/ros2_ws/src/general/install/slg_msgs/share/ament_index/resource_index/packages/slg_msgs\n'}
+[0.575022] (slg_msgs) StdoutLine: {'line': b'-- Up-to-date: /home/parallels/ros2_ws/src/general/install/slg_msgs/share/slg_msgs/cmake/export_slg_msgs__rosidl_generator_cExport.cmake\n'}
+[0.575111] (slg_msgs) StdoutLine: {'line': b'-- Up-to-date: /home/parallels/ros2_ws/src/general/install/slg_msgs/share/slg_msgs/cmake/export_slg_msgs__rosidl_generator_cExport-release.cmake\n'}
+[0.575248] (slg_msgs) StdoutLine: {'line': b'-- Up-to-date: /home/parallels/ros2_ws/src/general/install/slg_msgs/share/slg_msgs/cmake/export_slg_msgs__rosidl_typesupport_fastrtps_cExport.cmake\n'}
+[0.575331] (slg_msgs) StdoutLine: {'line': b'-- Up-to-date: /home/parallels/ros2_ws/src/general/install/slg_msgs/share/slg_msgs/cmake/export_slg_msgs__rosidl_typesupport_fastrtps_cExport-release.cmake\n'}
+[0.575465] (slg_msgs) StdoutLine: {'line': b'-- Up-to-date: /home/parallels/ros2_ws/src/general/install/slg_msgs/share/slg_msgs/cmake/slg_msgs__rosidl_typesupport_introspection_cExport.cmake\n'}
+[0.575526] (slg_msgs) StdoutLine: {'line': b'-- Up-to-date: /home/parallels/ros2_ws/src/general/install/slg_msgs/share/slg_msgs/cmake/slg_msgs__rosidl_typesupport_introspection_cExport-release.cmake\n'}
+[0.575679] (slg_msgs) StdoutLine: {'line': b'-- Up-to-date: /home/parallels/ros2_ws/src/general/install/slg_msgs/share/slg_msgs/cmake/slg_msgs__rosidl_typesupport_cExport.cmake\n'}
+[0.575746] (slg_msgs) StdoutLine: {'line': b'-- Up-to-date: /home/parallels/ros2_ws/src/general/install/slg_msgs/share/slg_msgs/cmake/slg_msgs__rosidl_typesupport_cExport-release.cmake\n'}
+[0.575872] (slg_msgs) StdoutLine: {'line': b'-- Up-to-date: /home/parallels/ros2_ws/src/general/install/slg_msgs/share/slg_msgs/cmake/export_slg_msgs__rosidl_generator_cppExport.cmake\n'}
+[0.576005] (slg_msgs) StdoutLine: {'line': b'-- Up-to-date: /home/parallels/ros2_ws/src/general/install/slg_msgs/share/slg_msgs/cmake/export_slg_msgs__rosidl_typesupport_fastrtps_cppExport.cmake\n'}
+[0.576064] (slg_msgs) StdoutLine: {'line': b'-- Up-to-date: /home/parallels/ros2_ws/src/general/install/slg_msgs/share/slg_msgs/cmake/export_slg_msgs__rosidl_typesupport_fastrtps_cppExport-release.cmake\n'}
+[0.576216] (slg_msgs) StdoutLine: {'line': b'-- Up-to-date: /home/parallels/ros2_ws/src/general/install/slg_msgs/share/slg_msgs/cmake/slg_msgs__rosidl_typesupport_introspection_cppExport.cmake\n'}
+[0.576301] (slg_msgs) StdoutLine: {'line': b'-- Up-to-date: /home/parallels/ros2_ws/src/general/install/slg_msgs/share/slg_msgs/cmake/slg_msgs__rosidl_typesupport_introspection_cppExport-release.cmake\n'}
+[0.576426] (slg_msgs) StdoutLine: {'line': b'-- Up-to-date: /home/parallels/ros2_ws/src/general/install/slg_msgs/share/slg_msgs/cmake/slg_msgs__rosidl_typesupport_cppExport.cmake\n'}
+[0.576485] (slg_msgs) StdoutLine: {'line': b'-- Up-to-date: /home/parallels/ros2_ws/src/general/install/slg_msgs/share/slg_msgs/cmake/slg_msgs__rosidl_typesupport_cppExport-release.cmake\n'}
+[0.576610] (slg_msgs) StdoutLine: {'line': b'-- Up-to-date: /home/parallels/ros2_ws/src/general/install/slg_msgs/share/slg_msgs/cmake/export_slg_msgs__rosidl_generator_pyExport.cmake\n'}
+[0.576685] (slg_msgs) StdoutLine: {'line': b'-- Up-to-date: /home/parallels/ros2_ws/src/general/install/slg_msgs/share/slg_msgs/cmake/export_slg_msgs__rosidl_generator_pyExport-release.cmake\n'}
+[0.576813] (slg_msgs) StdoutLine: {'line': b'-- Up-to-date: /home/parallels/ros2_ws/src/general/install/slg_msgs/share/slg_msgs/cmake/export_slg_msgsExport.cmake\n'}
+[0.576872] (slg_msgs) StdoutLine: {'line': b'-- Up-to-date: /home/parallels/ros2_ws/src/general/install/slg_msgs/share/slg_msgs/cmake/rosidl_cmake-extras.cmake\n'}
+[0.576929] (slg_msgs) StdoutLine: {'line': b'-- Up-to-date: /home/parallels/ros2_ws/src/general/install/slg_msgs/share/slg_msgs/cmake/ament_cmake_export_dependencies-extras.cmake\n'}
+[0.576994] (slg_msgs) StdoutLine: {'line': b'-- Up-to-date: /home/parallels/ros2_ws/src/general/install/slg_msgs/share/slg_msgs/cmake/ament_cmake_export_include_directories-extras.cmake\n'}
+[0.577051] (slg_msgs) StdoutLine: {'line': b'-- Up-to-date: /home/parallels/ros2_ws/src/general/install/slg_msgs/share/slg_msgs/cmake/ament_cmake_export_libraries-extras.cmake\n'}
+[0.577108] (slg_msgs) StdoutLine: {'line': b'-- Up-to-date: /home/parallels/ros2_ws/src/general/install/slg_msgs/share/slg_msgs/cmake/ament_cmake_export_targets-extras.cmake\n'}
+[0.577165] (slg_msgs) StdoutLine: {'line': b'-- Up-to-date: /home/parallels/ros2_ws/src/general/install/slg_msgs/share/slg_msgs/cmake/rosidl_cmake_export_typesupport_targets-extras.cmake\n'}
+[0.577224] (slg_msgs) StdoutLine: {'line': b'-- Up-to-date: /home/parallels/ros2_ws/src/general/install/slg_msgs/share/slg_msgs/cmake/rosidl_cmake_export_typesupport_libraries-extras.cmake\n'}
+[0.577279] (slg_msgs) StdoutLine: {'line': b'-- Up-to-date: /home/parallels/ros2_ws/src/general/install/slg_msgs/share/slg_msgs/cmake/slg_msgsConfig.cmake\n'}
+[0.577341] (slg_msgs) StdoutLine: {'line': b'-- Up-to-date: /home/parallels/ros2_ws/src/general/install/slg_msgs/share/slg_msgs/cmake/slg_msgsConfig-version.cmake\n'}
+[0.577401] (slg_msgs) StdoutLine: {'line': b'-- Up-to-date: /home/parallels/ros2_ws/src/general/install/slg_msgs/share/slg_msgs/package.xml\n'}
+[0.587033] (slg_msgs) CommandEnded: {'returncode': 0}
+[0.600969] (-) TimerEvent: {}
+[0.676121] (slg_msgs) JobEnded: {'identifier': 'slg_msgs', 'rc': 0}
+[0.676427] (njord_tasks) JobStarted: {'identifier': 'njord_tasks'}
+[0.682648] (njord_tasks) JobProgress: {'identifier': 'njord_tasks', 'progress': 'cmake'}
+[0.683496] (njord_tasks) JobProgress: {'identifier': 'njord_tasks', 'progress': 'build'}
+[0.683513] (njord_tasks) Command: {'cmd': ['/usr/bin/cmake', '--build', '/home/parallels/ros2_ws/src/general/build/njord_tasks', '--', '-j2', '-l2'], 'cwd': '/home/parallels/ros2_ws/src/general/build/njord_tasks', 'env': OrderedDict([('LESSOPEN', '| /usr/bin/lesspipe %s'), ('GZ_SIM_RESOURCE_PATH', '/home/parallels/ros2_ws/src/ardupilot_gazebo/models:/home/parallels/ros2_ws/src/ardupilot_gazebo/worlds:/home/parallels/ros2_ws/src/iceberg_sim/models:'), ('no_proxy', 'localhost,127.0.0.0/8,::1'), ('USER', 'parallels'), ('XDG_SESSION_TYPE', 'wayland'), ('SHLVL', '1'), ('LD_LIBRARY_PATH', '/opt/ros/humble/opt/rviz_ogre_vendor/lib:/opt/ros/humble/lib/aarch64-linux-gnu:/opt/ros/humble/lib'), ('HOME', '/home/parallels'), ('OLDPWD', '/home/parallels'), ('DESKTOP_SESSION', 'ubuntu'), ('NO_PROXY', 'localhost,127.0.0.0/8,::1'), ('ROS_PYTHON_VERSION', '3'), ('GNOME_SHELL_SESSION_MODE', 'ubuntu'), ('GTK_MODULES', 'gail:atk-bridge'), ('SYSTEMD_EXEC_PID', '1815'), ('DBUS_SESSION_BUS_ADDRESS', 'unix:path=/run/user/1000/bus'), ('COLORTERM', 'truecolor'), ('_colcon_cd_root', '/home/parallels/ros2_install'), ('IM_CONFIG_PHASE', '1'), ('WAYLAND_DISPLAY', 'wayland-0'), ('ROS_DISTRO', 'humble'), ('LOGNAME', 'parallels'), ('_', '/usr/bin/colcon'), ('ROS_VERSION', '2'), ('XDG_SESSION_CLASS', 'user'), ('USERNAME', 'parallels'), ('TERM', 'xterm-256color'), ('GNOME_DESKTOP_SESSION_ID', 'this-is-deprecated'), ('ROS_LOCALHOST_ONLY', '0'), ('PATH', '/opt/ros/humble/bin:/usr/lib/ccache:/home/parallels/ros2_ws/src/ardupilot/Tools/autotest:/opt/gcc-arm-none-eabi-10-2020-q4-major/bin:/home/parallels/.local/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/snap/bin:/snap/bin:/home/parallels/Micro-XRCE-DDS-Gen/scripts'), ('SESSION_MANAGER', 'local/ubuntu-linux-22-04-desktop:@/tmp/.ICE-unix/1792,unix/ubuntu-linux-22-04-desktop:/tmp/.ICE-unix/1792'), ('XDG_MENU_PREFIX', 'gnome-'), ('GNOME_TERMINAL_SCREEN', '/org/gnome/Terminal/screen/ae8e7e6f_a0c4_48b7_9b0e_8ed12784624c'), ('GNOME_SETUP_DISPLAY', ':1'), ('XDG_RUNTIME_DIR', '/run/user/1000'), ('DISPLAY', ':0'), ('LANG', 'en_US.UTF-8'), ('XDG_CURRENT_DESKTOP', 'ubuntu:GNOME'), ('XMODIFIERS', '@im=ibus'), ('XDG_SESSION_DESKTOP', 'ubuntu'), ('XAUTHORITY', '/run/user/1000/.mutter-Xwaylandauth.I3J8Q2'), ('LS_COLORS', 'rs=0:di=01;34:ln=01;36:mh=00:pi=40;33:so=01;35:do=01;35:bd=40;33;01:cd=40;33;01:or=40;31;01:mi=00:su=37;41:sg=30;43:ca=30;41:tw=30;42:ow=34;42:st=37;44:ex=01;32:*.tar=01;31:*.tgz=01;31:*.arc=01;31:*.arj=01;31:*.taz=01;31:*.lha=01;31:*.lz4=01;31:*.lzh=01;31:*.lzma=01;31:*.tlz=01;31:*.txz=01;31:*.tzo=01;31:*.t7z=01;31:*.zip=01;31:*.z=01;31:*.dz=01;31:*.gz=01;31:*.lrz=01;31:*.lz=01;31:*.lzo=01;31:*.xz=01;31:*.zst=01;31:*.tzst=01;31:*.bz2=01;31:*.bz=01;31:*.tbz=01;31:*.tbz2=01;31:*.tz=01;31:*.deb=01;31:*.rpm=01;31:*.jar=01;31:*.war=01;31:*.ear=01;31:*.sar=01;31:*.rar=01;31:*.alz=01;31:*.ace=01;31:*.zoo=01;31:*.cpio=01;31:*.7z=01;31:*.rz=01;31:*.cab=01;31:*.wim=01;31:*.swm=01;31:*.dwm=01;31:*.esd=01;31:*.jpg=01;35:*.jpeg=01;35:*.mjpg=01;35:*.mjpeg=01;35:*.gif=01;35:*.bmp=01;35:*.pbm=01;35:*.pgm=01;35:*.ppm=01;35:*.tga=01;35:*.xbm=01;35:*.xpm=01;35:*.tif=01;35:*.tiff=01;35:*.png=01;35:*.svg=01;35:*.svgz=01;35:*.mng=01;35:*.pcx=01;35:*.mov=01;35:*.mpg=01;35:*.mpeg=01;35:*.m2v=01;35:*.mkv=01;35:*.webm=01;35:*.webp=01;35:*.ogm=01;35:*.mp4=01;35:*.m4v=01;35:*.mp4v=01;35:*.vob=01;35:*.qt=01;35:*.nuv=01;35:*.wmv=01;35:*.asf=01;35:*.rm=01;35:*.rmvb=01;35:*.flc=01;35:*.avi=01;35:*.fli=01;35:*.flv=01;35:*.gl=01;35:*.dl=01;35:*.xcf=01;35:*.xwd=01;35:*.yuv=01;35:*.cgm=01;35:*.emf=01;35:*.ogv=01;35:*.ogx=01;35:*.aac=00;36:*.au=00;36:*.flac=00;36:*.m4a=00;36:*.mid=00;36:*.midi=00;36:*.mka=00;36:*.mp3=00;36:*.mpc=00;36:*.ogg=00;36:*.ra=00;36:*.wav=00;36:*.oga=00;36:*.opus=00;36:*.spx=00;36:*.xspf=00;36:'), ('GNOME_TERMINAL_SERVICE', ':1.94'), ('SSH_AGENT_LAUNCHER', 'gnome-keyring'), ('SSH_AUTH_SOCK', '/run/user/1000/keyring/ssh'), ('AMENT_PREFIX_PATH', '/opt/ros/humble'), ('SHELL', '/bin/bash'), ('QT_ACCESSIBILITY', '1'), ('GDMSESSION', 'ubuntu'), ('LESSCLOSE', '/usr/bin/lesspipe %s %s'), ('GZ_VERSION', 'garden'), ('QT_IM_MODULE', 'ibus'), ('PWD', '/home/parallels/ros2_ws/src/general/build/njord_tasks'), ('LC_ALL', 'en_US.UTF-8'), ('XDG_CONFIG_DIRS', '/etc/xdg/xdg-ubuntu:/etc/xdg'), ('XDG_DATA_DIRS', '/usr/share/ubuntu:/usr/local/share/:/usr/share/:/var/lib/snapd/desktop'), ('PYTHONPATH', '/opt/ros/humble/lib/python3.10/site-packages:/opt/ros/humble/local/lib/python3.10/dist-packages'), ('COLCON', '1'), ('VTE_VERSION', '6800'), ('CMAKE_PREFIX_PATH', '/opt/ros/humble')]), 'shell': False}
+[0.701048] (-) TimerEvent: {}
+[0.708723] (njord_tasks) CommandEnded: {'returncode': 0}
+[0.732616] (njord_tasks) JobProgress: {'identifier': 'njord_tasks', 'progress': 'install'}
+[0.732698] (njord_tasks) Command: {'cmd': ['/usr/bin/cmake', '--install', '/home/parallels/ros2_ws/src/general/build/njord_tasks'], 'cwd': '/home/parallels/ros2_ws/src/general/build/njord_tasks', 'env': OrderedDict([('LESSOPEN', '| /usr/bin/lesspipe %s'), ('GZ_SIM_RESOURCE_PATH', '/home/parallels/ros2_ws/src/ardupilot_gazebo/models:/home/parallels/ros2_ws/src/ardupilot_gazebo/worlds:/home/parallels/ros2_ws/src/iceberg_sim/models:'), ('no_proxy', 'localhost,127.0.0.0/8,::1'), ('USER', 'parallels'), ('XDG_SESSION_TYPE', 'wayland'), ('SHLVL', '1'), ('LD_LIBRARY_PATH', '/opt/ros/humble/opt/rviz_ogre_vendor/lib:/opt/ros/humble/lib/aarch64-linux-gnu:/opt/ros/humble/lib'), ('HOME', '/home/parallels'), ('OLDPWD', '/home/parallels'), ('DESKTOP_SESSION', 'ubuntu'), ('NO_PROXY', 'localhost,127.0.0.0/8,::1'), ('ROS_PYTHON_VERSION', '3'), ('GNOME_SHELL_SESSION_MODE', 'ubuntu'), ('GTK_MODULES', 'gail:atk-bridge'), ('SYSTEMD_EXEC_PID', '1815'), ('DBUS_SESSION_BUS_ADDRESS', 'unix:path=/run/user/1000/bus'), ('COLORTERM', 'truecolor'), ('_colcon_cd_root', '/home/parallels/ros2_install'), ('IM_CONFIG_PHASE', '1'), ('WAYLAND_DISPLAY', 'wayland-0'), ('ROS_DISTRO', 'humble'), ('LOGNAME', 'parallels'), ('_', '/usr/bin/colcon'), ('ROS_VERSION', '2'), ('XDG_SESSION_CLASS', 'user'), ('USERNAME', 'parallels'), ('TERM', 'xterm-256color'), ('GNOME_DESKTOP_SESSION_ID', 'this-is-deprecated'), ('ROS_LOCALHOST_ONLY', '0'), ('PATH', '/opt/ros/humble/bin:/usr/lib/ccache:/home/parallels/ros2_ws/src/ardupilot/Tools/autotest:/opt/gcc-arm-none-eabi-10-2020-q4-major/bin:/home/parallels/.local/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/snap/bin:/snap/bin:/home/parallels/Micro-XRCE-DDS-Gen/scripts'), ('SESSION_MANAGER', 'local/ubuntu-linux-22-04-desktop:@/tmp/.ICE-unix/1792,unix/ubuntu-linux-22-04-desktop:/tmp/.ICE-unix/1792'), ('XDG_MENU_PREFIX', 'gnome-'), ('GNOME_TERMINAL_SCREEN', '/org/gnome/Terminal/screen/ae8e7e6f_a0c4_48b7_9b0e_8ed12784624c'), ('GNOME_SETUP_DISPLAY', ':1'), ('XDG_RUNTIME_DIR', '/run/user/1000'), ('DISPLAY', ':0'), ('LANG', 'en_US.UTF-8'), ('XDG_CURRENT_DESKTOP', 'ubuntu:GNOME'), ('XMODIFIERS', '@im=ibus'), ('XDG_SESSION_DESKTOP', 'ubuntu'), ('XAUTHORITY', '/run/user/1000/.mutter-Xwaylandauth.I3J8Q2'), ('LS_COLORS', 'rs=0:di=01;34:ln=01;36:mh=00:pi=40;33:so=01;35:do=01;35:bd=40;33;01:cd=40;33;01:or=40;31;01:mi=00:su=37;41:sg=30;43:ca=30;41:tw=30;42:ow=34;42:st=37;44:ex=01;32:*.tar=01;31:*.tgz=01;31:*.arc=01;31:*.arj=01;31:*.taz=01;31:*.lha=01;31:*.lz4=01;31:*.lzh=01;31:*.lzma=01;31:*.tlz=01;31:*.txz=01;31:*.tzo=01;31:*.t7z=01;31:*.zip=01;31:*.z=01;31:*.dz=01;31:*.gz=01;31:*.lrz=01;31:*.lz=01;31:*.lzo=01;31:*.xz=01;31:*.zst=01;31:*.tzst=01;31:*.bz2=01;31:*.bz=01;31:*.tbz=01;31:*.tbz2=01;31:*.tz=01;31:*.deb=01;31:*.rpm=01;31:*.jar=01;31:*.war=01;31:*.ear=01;31:*.sar=01;31:*.rar=01;31:*.alz=01;31:*.ace=01;31:*.zoo=01;31:*.cpio=01;31:*.7z=01;31:*.rz=01;31:*.cab=01;31:*.wim=01;31:*.swm=01;31:*.dwm=01;31:*.esd=01;31:*.jpg=01;35:*.jpeg=01;35:*.mjpg=01;35:*.mjpeg=01;35:*.gif=01;35:*.bmp=01;35:*.pbm=01;35:*.pgm=01;35:*.ppm=01;35:*.tga=01;35:*.xbm=01;35:*.xpm=01;35:*.tif=01;35:*.tiff=01;35:*.png=01;35:*.svg=01;35:*.svgz=01;35:*.mng=01;35:*.pcx=01;35:*.mov=01;35:*.mpg=01;35:*.mpeg=01;35:*.m2v=01;35:*.mkv=01;35:*.webm=01;35:*.webp=01;35:*.ogm=01;35:*.mp4=01;35:*.m4v=01;35:*.mp4v=01;35:*.vob=01;35:*.qt=01;35:*.nuv=01;35:*.wmv=01;35:*.asf=01;35:*.rm=01;35:*.rmvb=01;35:*.flc=01;35:*.avi=01;35:*.fli=01;35:*.flv=01;35:*.gl=01;35:*.dl=01;35:*.xcf=01;35:*.xwd=01;35:*.yuv=01;35:*.cgm=01;35:*.emf=01;35:*.ogv=01;35:*.ogx=01;35:*.aac=00;36:*.au=00;36:*.flac=00;36:*.m4a=00;36:*.mid=00;36:*.midi=00;36:*.mka=00;36:*.mp3=00;36:*.mpc=00;36:*.ogg=00;36:*.ra=00;36:*.wav=00;36:*.oga=00;36:*.opus=00;36:*.spx=00;36:*.xspf=00;36:'), ('GNOME_TERMINAL_SERVICE', ':1.94'), ('SSH_AGENT_LAUNCHER', 'gnome-keyring'), ('SSH_AUTH_SOCK', '/run/user/1000/keyring/ssh'), ('AMENT_PREFIX_PATH', '/opt/ros/humble'), ('SHELL', '/bin/bash'), ('QT_ACCESSIBILITY', '1'), ('GDMSESSION', 'ubuntu'), ('LESSCLOSE', '/usr/bin/lesspipe %s %s'), ('GZ_VERSION', 'garden'), ('QT_IM_MODULE', 'ibus'), ('PWD', '/home/parallels/ros2_ws/src/general/build/njord_tasks'), ('LC_ALL', 'en_US.UTF-8'), ('XDG_CONFIG_DIRS', '/etc/xdg/xdg-ubuntu:/etc/xdg'), ('XDG_DATA_DIRS', '/usr/share/ubuntu:/usr/local/share/:/usr/share/:/var/lib/snapd/desktop'), ('PYTHONPATH', '/opt/ros/humble/lib/python3.10/site-packages:/opt/ros/humble/local/lib/python3.10/dist-packages'), ('COLCON', '1'), ('VTE_VERSION', '6800'), ('CMAKE_PREFIX_PATH', '/opt/ros/humble')]), 'shell': False}
+[0.737372] (njord_tasks) StdoutLine: {'line': b'-- Install configuration: ""\n'}
+[0.737449] (njord_tasks) StdoutLine: {'line': b'-- Up-to-date: /home/parallels/ros2_ws/src/general/install/njord_tasks/share/njord_tasks/launch\n'}
+[0.737478] (njord_tasks) StdoutLine: {'line': b'-- Up-to-date: /home/parallels/ros2_ws/src/general/install/njord_tasks/share/njord_tasks/launch/master.launch.py\n'}
+[0.737503] (njord_tasks) StdoutLine: {'line': b'-- Up-to-date: /home/parallels/ros2_ws/src/general/install/njord_tasks/share/ament_index/resource_index/package_run_dependencies/njord_tasks\n'}
+[0.737526] (njord_tasks) StdoutLine: {'line': b'-- Up-to-date: /home/parallels/ros2_ws/src/general/install/njord_tasks/share/ament_index/resource_index/parent_prefix_path/njord_tasks\n'}
+[0.737551] (njord_tasks) StdoutLine: {'line': b'-- Up-to-date: /home/parallels/ros2_ws/src/general/install/njord_tasks/share/njord_tasks/environment/ament_prefix_path.sh\n'}
+[0.739961] (njord_tasks) StdoutLine: {'line': b'-- Up-to-date: /home/parallels/ros2_ws/src/general/install/njord_tasks/share/njord_tasks/environment/ament_prefix_path.dsv\n'}
+[0.739996] (njord_tasks) StdoutLine: {'line': b'-- Up-to-date: /home/parallels/ros2_ws/src/general/install/njord_tasks/share/njord_tasks/environment/path.sh\n'}
+[0.740022] (njord_tasks) StdoutLine: {'line': b'-- Up-to-date: /home/parallels/ros2_ws/src/general/install/njord_tasks/share/njord_tasks/environment/path.dsv\n'}
+[0.740046] (njord_tasks) StdoutLine: {'line': b'-- Up-to-date: /home/parallels/ros2_ws/src/general/install/njord_tasks/share/njord_tasks/local_setup.bash\n'}
+[0.740070] (njord_tasks) StdoutLine: {'line': b'-- Up-to-date: /home/parallels/ros2_ws/src/general/install/njord_tasks/share/njord_tasks/local_setup.sh\n'}
+[0.740094] (njord_tasks) StdoutLine: {'line': b'-- Up-to-date: /home/parallels/ros2_ws/src/general/install/njord_tasks/share/njord_tasks/local_setup.zsh\n'}
+[0.740118] (njord_tasks) StdoutLine: {'line': b'-- Up-to-date: /home/parallels/ros2_ws/src/general/install/njord_tasks/share/njord_tasks/local_setup.dsv\n'}
+[0.740140] (njord_tasks) StdoutLine: {'line': b'-- Installing: /home/parallels/ros2_ws/src/general/install/njord_tasks/share/njord_tasks/package.dsv\n'}
+[0.740163] (njord_tasks) StdoutLine: {'line': b'-- Up-to-date: /home/parallels/ros2_ws/src/general/install/njord_tasks/share/ament_index/resource_index/packages/njord_tasks\n'}
+[0.740186] (njord_tasks) StdoutLine: {'line': b'-- Up-to-date: /home/parallels/ros2_ws/src/general/install/njord_tasks/share/njord_tasks/cmake/njord_tasksConfig.cmake\n'}
+[0.740208] (njord_tasks) StdoutLine: {'line': b'-- Up-to-date: /home/parallels/ros2_ws/src/general/install/njord_tasks/share/njord_tasks/cmake/njord_tasksConfig-version.cmake\n'}
+[0.740231] (njord_tasks) StdoutLine: {'line': b'-- Up-to-date: /home/parallels/ros2_ws/src/general/install/njord_tasks/share/njord_tasks/package.xml\n'}
+[0.740254] (njord_tasks) CommandEnded: {'returncode': 0}
+[0.759672] (njord_tasks) JobEnded: {'identifier': 'njord_tasks', 'rc': 0}
+[0.759955] (laser_segmentation) JobStarted: {'identifier': 'laser_segmentation'}
+[0.764184] (laser_segmentation) JobProgress: {'identifier': 'laser_segmentation', 'progress': 'cmake'}
+[0.765230] (laser_segmentation) JobProgress: {'identifier': 'laser_segmentation', 'progress': 'build'}
+[0.765292] (laser_segmentation) Command: {'cmd': ['/usr/bin/cmake', '--build', '/home/parallels/ros2_ws/src/general/build/laser_segmentation', '--', '-j2', '-l2'], 'cwd': '/home/parallels/ros2_ws/src/general/build/laser_segmentation', 'env': OrderedDict([('LESSOPEN', '| /usr/bin/lesspipe %s'), ('GZ_SIM_RESOURCE_PATH', '/home/parallels/ros2_ws/src/ardupilot_gazebo/models:/home/parallels/ros2_ws/src/ardupilot_gazebo/worlds:/home/parallels/ros2_ws/src/iceberg_sim/models:'), ('no_proxy', 'localhost,127.0.0.0/8,::1'), ('USER', 'parallels'), ('XDG_SESSION_TYPE', 'wayland'), ('SHLVL', '1'), ('LD_LIBRARY_PATH', '/home/parallels/ros2_ws/src/general/install/slg_msgs/lib:/opt/ros/humble/opt/rviz_ogre_vendor/lib:/opt/ros/humble/lib/aarch64-linux-gnu:/opt/ros/humble/lib'), ('HOME', '/home/parallels'), ('OLDPWD', '/home/parallels'), ('DESKTOP_SESSION', 'ubuntu'), ('NO_PROXY', 'localhost,127.0.0.0/8,::1'), ('ROS_PYTHON_VERSION', '3'), ('GNOME_SHELL_SESSION_MODE', 'ubuntu'), ('GTK_MODULES', 'gail:atk-bridge'), ('SYSTEMD_EXEC_PID', '1815'), ('DBUS_SESSION_BUS_ADDRESS', 'unix:path=/run/user/1000/bus'), ('COLORTERM', 'truecolor'), ('_colcon_cd_root', '/home/parallels/ros2_install'), ('IM_CONFIG_PHASE', '1'), ('WAYLAND_DISPLAY', 'wayland-0'), ('ROS_DISTRO', 'humble'), ('LOGNAME', 'parallels'), ('_', '/usr/bin/colcon'), ('ROS_VERSION', '2'), ('XDG_SESSION_CLASS', 'user'), ('USERNAME', 'parallels'), ('TERM', 'xterm-256color'), ('GNOME_DESKTOP_SESSION_ID', 'this-is-deprecated'), ('ROS_LOCALHOST_ONLY', '0'), ('PATH', '/opt/ros/humble/bin:/usr/lib/ccache:/home/parallels/ros2_ws/src/ardupilot/Tools/autotest:/opt/gcc-arm-none-eabi-10-2020-q4-major/bin:/home/parallels/.local/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/snap/bin:/snap/bin:/home/parallels/Micro-XRCE-DDS-Gen/scripts'), ('SESSION_MANAGER', 'local/ubuntu-linux-22-04-desktop:@/tmp/.ICE-unix/1792,unix/ubuntu-linux-22-04-desktop:/tmp/.ICE-unix/1792'), ('XDG_MENU_PREFIX', 'gnome-'), ('GNOME_TERMINAL_SCREEN', '/org/gnome/Terminal/screen/ae8e7e6f_a0c4_48b7_9b0e_8ed12784624c'), ('GNOME_SETUP_DISPLAY', ':1'), ('XDG_RUNTIME_DIR', '/run/user/1000'), ('DISPLAY', ':0'), ('LANG', 'en_US.UTF-8'), ('XDG_CURRENT_DESKTOP', 'ubuntu:GNOME'), ('XMODIFIERS', '@im=ibus'), ('XDG_SESSION_DESKTOP', 'ubuntu'), ('XAUTHORITY', '/run/user/1000/.mutter-Xwaylandauth.I3J8Q2'), ('LS_COLORS', 'rs=0:di=01;34:ln=01;36:mh=00:pi=40;33:so=01;35:do=01;35:bd=40;33;01:cd=40;33;01:or=40;31;01:mi=00:su=37;41:sg=30;43:ca=30;41:tw=30;42:ow=34;42:st=37;44:ex=01;32:*.tar=01;31:*.tgz=01;31:*.arc=01;31:*.arj=01;31:*.taz=01;31:*.lha=01;31:*.lz4=01;31:*.lzh=01;31:*.lzma=01;31:*.tlz=01;31:*.txz=01;31:*.tzo=01;31:*.t7z=01;31:*.zip=01;31:*.z=01;31:*.dz=01;31:*.gz=01;31:*.lrz=01;31:*.lz=01;31:*.lzo=01;31:*.xz=01;31:*.zst=01;31:*.tzst=01;31:*.bz2=01;31:*.bz=01;31:*.tbz=01;31:*.tbz2=01;31:*.tz=01;31:*.deb=01;31:*.rpm=01;31:*.jar=01;31:*.war=01;31:*.ear=01;31:*.sar=01;31:*.rar=01;31:*.alz=01;31:*.ace=01;31:*.zoo=01;31:*.cpio=01;31:*.7z=01;31:*.rz=01;31:*.cab=01;31:*.wim=01;31:*.swm=01;31:*.dwm=01;31:*.esd=01;31:*.jpg=01;35:*.jpeg=01;35:*.mjpg=01;35:*.mjpeg=01;35:*.gif=01;35:*.bmp=01;35:*.pbm=01;35:*.pgm=01;35:*.ppm=01;35:*.tga=01;35:*.xbm=01;35:*.xpm=01;35:*.tif=01;35:*.tiff=01;35:*.png=01;35:*.svg=01;35:*.svgz=01;35:*.mng=01;35:*.pcx=01;35:*.mov=01;35:*.mpg=01;35:*.mpeg=01;35:*.m2v=01;35:*.mkv=01;35:*.webm=01;35:*.webp=01;35:*.ogm=01;35:*.mp4=01;35:*.m4v=01;35:*.mp4v=01;35:*.vob=01;35:*.qt=01;35:*.nuv=01;35:*.wmv=01;35:*.asf=01;35:*.rm=01;35:*.rmvb=01;35:*.flc=01;35:*.avi=01;35:*.fli=01;35:*.flv=01;35:*.gl=01;35:*.dl=01;35:*.xcf=01;35:*.xwd=01;35:*.yuv=01;35:*.cgm=01;35:*.emf=01;35:*.ogv=01;35:*.ogx=01;35:*.aac=00;36:*.au=00;36:*.flac=00;36:*.m4a=00;36:*.mid=00;36:*.midi=00;36:*.mka=00;36:*.mp3=00;36:*.mpc=00;36:*.ogg=00;36:*.ra=00;36:*.wav=00;36:*.oga=00;36:*.opus=00;36:*.spx=00;36:*.xspf=00;36:'), ('GNOME_TERMINAL_SERVICE', ':1.94'), ('SSH_AGENT_LAUNCHER', 'gnome-keyring'), ('SSH_AUTH_SOCK', '/run/user/1000/keyring/ssh'), ('AMENT_PREFIX_PATH', '/home/parallels/ros2_ws/src/general/install/slg_msgs:/opt/ros/humble'), ('SHELL', '/bin/bash'), ('QT_ACCESSIBILITY', '1'), ('GDMSESSION', 'ubuntu'), ('LESSCLOSE', '/usr/bin/lesspipe %s %s'), ('GZ_VERSION', 'garden'), ('QT_IM_MODULE', 'ibus'), ('PWD', '/home/parallels/ros2_ws/src/general/build/laser_segmentation'), ('LC_ALL', 'en_US.UTF-8'), ('XDG_CONFIG_DIRS', '/etc/xdg/xdg-ubuntu:/etc/xdg'), ('XDG_DATA_DIRS', '/usr/share/ubuntu:/usr/local/share/:/usr/share/:/var/lib/snapd/desktop'), ('PYTHONPATH', '/home/parallels/ros2_ws/src/general/install/slg_msgs/local/lib/python3.10/dist-packages:/opt/ros/humble/lib/python3.10/site-packages:/opt/ros/humble/local/lib/python3.10/dist-packages'), ('COLCON', '1'), ('VTE_VERSION', '6800'), ('CMAKE_PREFIX_PATH', '/home/parallels/ros2_ws/src/general/install/slg_msgs:/opt/ros/humble')]), 'shell': False}
+[0.774241] (perception_interfaces) StdoutLine: {'line': b'-- Using all available rosidl_typesupport_c: rosidl_typesupport_fastrtps_c;rosidl_typesupport_introspection_c\n'}
+[0.801135] (-) TimerEvent: {}
+[0.807850] (laser_segmentation) StdoutLine: {'line': b'[ 11%] Built target gtest_main\n'}
+[0.845243] (laser_segmentation) StdoutLine: {'line': b'[ 23%] Built target gtest\n'}
+[0.848622] (laser_segmentation) StdoutLine: {'line': b'[ 52%] Built target laser_segmentation_component\n'}
+[0.868997] (laser_segmentation) StdoutLine: {'line': b'[ 64%] Built target laser_segmentation\n'}
+[0.874655] (laser_segmentation) StdoutLine: {'line': b'[ 76%] Built target test_segmentations\n'}
+[0.882036] (perception_interfaces) StdoutLine: {'line': b'-- Using all available rosidl_typesupport_cpp: rosidl_typesupport_fastrtps_cpp;rosidl_typesupport_introspection_cpp\n'}
+[0.891516] (laser_segmentation) StdoutLine: {'line': b'[ 88%] Built target test_laser_segmentation\n'}
+[0.896632] (perception_interfaces) StdoutLine: {'line': b'-- Found python_cmake_module: 0.10.0 (/opt/ros/humble/share/python_cmake_module/cmake)\n'}
+[0.897020] (laser_segmentation) StdoutLine: {'line': b'[100%] Built target test_integration\n'}
+[0.901268] (-) TimerEvent: {}
+[0.902834] (laser_segmentation) CommandEnded: {'returncode': 0}
+[0.908915] (perception_interfaces) StdoutLine: {'line': b'-- Using PYTHON_EXECUTABLE: /usr/bin/python3\n'}
+[0.909732] (perception_interfaces) StdoutLine: {'line': b'-- Using PYTHON_INCLUDE_DIRS: /usr/include/python3.10\n'}
+[0.910109] (perception_interfaces) StdoutLine: {'line': b'-- Using PYTHON_LIBRARIES: /usr/lib/aarch64-linux-gnu/libpython3.10.so\n'}
+[0.931399] (perception_interfaces) StdoutLine: {'line': b'-- Found ament_lint_auto: 0.12.11 (/opt/ros/humble/share/ament_lint_auto/cmake)\n'}
+[0.946656] (perception_interfaces) StdoutLine: {'line': b"-- Added test 'lint_cmake' to check CMake code style\n"}
+[0.947195] (perception_interfaces) StdoutLine: {'line': b"-- Added test 'xmllint' to check XML markup files\n"}
+[0.949542] (perception_interfaces) StdoutLine: {'line': b'-- Configuring done\n'}
+[0.962770] (laser_segmentation) JobProgress: {'identifier': 'laser_segmentation', 'progress': 'install'}
+[0.962790] (laser_segmentation) Command: {'cmd': ['/usr/bin/cmake', '--install', '/home/parallels/ros2_ws/src/general/build/laser_segmentation'], 'cwd': '/home/parallels/ros2_ws/src/general/build/laser_segmentation', 'env': OrderedDict([('LESSOPEN', '| /usr/bin/lesspipe %s'), ('GZ_SIM_RESOURCE_PATH', '/home/parallels/ros2_ws/src/ardupilot_gazebo/models:/home/parallels/ros2_ws/src/ardupilot_gazebo/worlds:/home/parallels/ros2_ws/src/iceberg_sim/models:'), ('no_proxy', 'localhost,127.0.0.0/8,::1'), ('USER', 'parallels'), ('XDG_SESSION_TYPE', 'wayland'), ('SHLVL', '1'), ('LD_LIBRARY_PATH', '/home/parallels/ros2_ws/src/general/install/slg_msgs/lib:/opt/ros/humble/opt/rviz_ogre_vendor/lib:/opt/ros/humble/lib/aarch64-linux-gnu:/opt/ros/humble/lib'), ('HOME', '/home/parallels'), ('OLDPWD', '/home/parallels'), ('DESKTOP_SESSION', 'ubuntu'), ('NO_PROXY', 'localhost,127.0.0.0/8,::1'), ('ROS_PYTHON_VERSION', '3'), ('GNOME_SHELL_SESSION_MODE', 'ubuntu'), ('GTK_MODULES', 'gail:atk-bridge'), ('SYSTEMD_EXEC_PID', '1815'), ('DBUS_SESSION_BUS_ADDRESS', 'unix:path=/run/user/1000/bus'), ('COLORTERM', 'truecolor'), ('_colcon_cd_root', '/home/parallels/ros2_install'), ('IM_CONFIG_PHASE', '1'), ('WAYLAND_DISPLAY', 'wayland-0'), ('ROS_DISTRO', 'humble'), ('LOGNAME', 'parallels'), ('_', '/usr/bin/colcon'), ('ROS_VERSION', '2'), ('XDG_SESSION_CLASS', 'user'), ('USERNAME', 'parallels'), ('TERM', 'xterm-256color'), ('GNOME_DESKTOP_SESSION_ID', 'this-is-deprecated'), ('ROS_LOCALHOST_ONLY', '0'), ('PATH', '/opt/ros/humble/bin:/usr/lib/ccache:/home/parallels/ros2_ws/src/ardupilot/Tools/autotest:/opt/gcc-arm-none-eabi-10-2020-q4-major/bin:/home/parallels/.local/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/snap/bin:/snap/bin:/home/parallels/Micro-XRCE-DDS-Gen/scripts'), ('SESSION_MANAGER', 'local/ubuntu-linux-22-04-desktop:@/tmp/.ICE-unix/1792,unix/ubuntu-linux-22-04-desktop:/tmp/.ICE-unix/1792'), ('XDG_MENU_PREFIX', 'gnome-'), ('GNOME_TERMINAL_SCREEN', '/org/gnome/Terminal/screen/ae8e7e6f_a0c4_48b7_9b0e_8ed12784624c'), ('GNOME_SETUP_DISPLAY', ':1'), ('XDG_RUNTIME_DIR', '/run/user/1000'), ('DISPLAY', ':0'), ('LANG', 'en_US.UTF-8'), ('XDG_CURRENT_DESKTOP', 'ubuntu:GNOME'), ('XMODIFIERS', '@im=ibus'), ('XDG_SESSION_DESKTOP', 'ubuntu'), ('XAUTHORITY', '/run/user/1000/.mutter-Xwaylandauth.I3J8Q2'), ('LS_COLORS', 'rs=0:di=01;34:ln=01;36:mh=00:pi=40;33:so=01;35:do=01;35:bd=40;33;01:cd=40;33;01:or=40;31;01:mi=00:su=37;41:sg=30;43:ca=30;41:tw=30;42:ow=34;42:st=37;44:ex=01;32:*.tar=01;31:*.tgz=01;31:*.arc=01;31:*.arj=01;31:*.taz=01;31:*.lha=01;31:*.lz4=01;31:*.lzh=01;31:*.lzma=01;31:*.tlz=01;31:*.txz=01;31:*.tzo=01;31:*.t7z=01;31:*.zip=01;31:*.z=01;31:*.dz=01;31:*.gz=01;31:*.lrz=01;31:*.lz=01;31:*.lzo=01;31:*.xz=01;31:*.zst=01;31:*.tzst=01;31:*.bz2=01;31:*.bz=01;31:*.tbz=01;31:*.tbz2=01;31:*.tz=01;31:*.deb=01;31:*.rpm=01;31:*.jar=01;31:*.war=01;31:*.ear=01;31:*.sar=01;31:*.rar=01;31:*.alz=01;31:*.ace=01;31:*.zoo=01;31:*.cpio=01;31:*.7z=01;31:*.rz=01;31:*.cab=01;31:*.wim=01;31:*.swm=01;31:*.dwm=01;31:*.esd=01;31:*.jpg=01;35:*.jpeg=01;35:*.mjpg=01;35:*.mjpeg=01;35:*.gif=01;35:*.bmp=01;35:*.pbm=01;35:*.pgm=01;35:*.ppm=01;35:*.tga=01;35:*.xbm=01;35:*.xpm=01;35:*.tif=01;35:*.tiff=01;35:*.png=01;35:*.svg=01;35:*.svgz=01;35:*.mng=01;35:*.pcx=01;35:*.mov=01;35:*.mpg=01;35:*.mpeg=01;35:*.m2v=01;35:*.mkv=01;35:*.webm=01;35:*.webp=01;35:*.ogm=01;35:*.mp4=01;35:*.m4v=01;35:*.mp4v=01;35:*.vob=01;35:*.qt=01;35:*.nuv=01;35:*.wmv=01;35:*.asf=01;35:*.rm=01;35:*.rmvb=01;35:*.flc=01;35:*.avi=01;35:*.fli=01;35:*.flv=01;35:*.gl=01;35:*.dl=01;35:*.xcf=01;35:*.xwd=01;35:*.yuv=01;35:*.cgm=01;35:*.emf=01;35:*.ogv=01;35:*.ogx=01;35:*.aac=00;36:*.au=00;36:*.flac=00;36:*.m4a=00;36:*.mid=00;36:*.midi=00;36:*.mka=00;36:*.mp3=00;36:*.mpc=00;36:*.ogg=00;36:*.ra=00;36:*.wav=00;36:*.oga=00;36:*.opus=00;36:*.spx=00;36:*.xspf=00;36:'), ('GNOME_TERMINAL_SERVICE', ':1.94'), ('SSH_AGENT_LAUNCHER', 'gnome-keyring'), ('SSH_AUTH_SOCK', '/run/user/1000/keyring/ssh'), ('AMENT_PREFIX_PATH', '/home/parallels/ros2_ws/src/general/install/slg_msgs:/opt/ros/humble'), ('SHELL', '/bin/bash'), ('QT_ACCESSIBILITY', '1'), ('GDMSESSION', 'ubuntu'), ('LESSCLOSE', '/usr/bin/lesspipe %s %s'), ('GZ_VERSION', 'garden'), ('QT_IM_MODULE', 'ibus'), ('PWD', '/home/parallels/ros2_ws/src/general/build/laser_segmentation'), ('LC_ALL', 'en_US.UTF-8'), ('XDG_CONFIG_DIRS', '/etc/xdg/xdg-ubuntu:/etc/xdg'), ('XDG_DATA_DIRS', '/usr/share/ubuntu:/usr/local/share/:/usr/share/:/var/lib/snapd/desktop'), ('PYTHONPATH', '/home/parallels/ros2_ws/src/general/install/slg_msgs/local/lib/python3.10/dist-packages:/opt/ros/humble/lib/python3.10/site-packages:/opt/ros/humble/local/lib/python3.10/dist-packages'), ('COLCON', '1'), ('VTE_VERSION', '6800'), ('CMAKE_PREFIX_PATH', '/home/parallels/ros2_ws/src/general/install/slg_msgs:/opt/ros/humble')]), 'shell': False}
+[0.969707] (laser_segmentation) StdoutLine: {'line': b'-- Install configuration: "Release"\n'}
+[0.980828] (laser_segmentation) StdoutLine: {'line': b'-- Up-to-date: /home/parallels/ros2_ws/src/general/install/laser_segmentation/lib/liblaser_segmentation_component.so\n'}
+[0.980884] (laser_segmentation) StdoutLine: {'line': b'-- Up-to-date: /home/parallels/ros2_ws/src/general/install/laser_segmentation/lib/laser_segmentation/laser_segmentation\n'}
+[0.980912] (laser_segmentation) StdoutLine: {'line': b'-- Up-to-date: /home/parallels/ros2_ws/src/general/install/laser_segmentation/include/laser_segmentation\n'}
+[0.980940] (laser_segmentation) StdoutLine: {'line': b'-- Up-to-date: /home/parallels/ros2_ws/src/general/install/laser_segmentation/include/laser_segmentation/parameter_handler.hpp\n'}
+[0.980964] (laser_segmentation) StdoutLine: {'line': b'-- Up-to-date: /home/parallels/ros2_ws/src/general/install/laser_segmentation/include/laser_segmentation/parula.hpp\n'}
+[0.980987] (laser_segmentation) StdoutLine: {'line': b'-- Up-to-date: /home/parallels/ros2_ws/src/general/install/laser_segmentation/include/laser_segmentation/laser_segmentation.hpp\n'}
+[0.981009] (laser_segmentation) StdoutLine: {'line': b'-- Up-to-date: /home/parallels/ros2_ws/src/general/install/laser_segmentation/include/laser_segmentation/segmentation\n'}
+[0.981032] (laser_segmentation) StdoutLine: {'line': b'-- Up-to-date: /home/parallels/ros2_ws/src/general/install/laser_segmentation/include/laser_segmentation/segmentation/segmentation.hpp\n'}
+[0.981055] (laser_segmentation) StdoutLine: {'line': b'-- Up-to-date: /home/parallels/ros2_ws/src/general/install/laser_segmentation/include/laser_segmentation/segmentation/jump_distance.hpp\n'}
+[0.981078] (laser_segmentation) StdoutLine: {'line': b'-- Up-to-date: /home/parallels/ros2_ws/src/general/install/laser_segmentation/include/laser_segmentation/segmentation/jump_distance_merge.hpp\n'}
+[0.981101] (laser_segmentation) StdoutLine: {'line': b'-- Up-to-date: /home/parallels/ros2_ws/src/general/install/laser_segmentation/share/laser_segmentation//launch\n'}
+[0.981123] (laser_segmentation) StdoutLine: {'line': b'-- Up-to-date: /home/parallels/ros2_ws/src/general/install/laser_segmentation/share/laser_segmentation//launch/segmentation.launch.py\n'}
+[0.981145] (laser_segmentation) StdoutLine: {'line': b'-- Up-to-date: /home/parallels/ros2_ws/src/general/install/laser_segmentation/share/laser_segmentation//params\n'}
+[0.981167] (laser_segmentation) StdoutLine: {'line': b'-- Up-to-date: /home/parallels/ros2_ws/src/general/install/laser_segmentation/share/laser_segmentation//params/default_params.yml\n'}
+[0.981190] (laser_segmentation) StdoutLine: {'line': b'-- Up-to-date: /home/parallels/ros2_ws/src/general/install/laser_segmentation/share/laser_segmentation//params/close_steps_detect.yml\n'}
+[0.981213] (laser_segmentation) StdoutLine: {'line': b'-- Up-to-date: /home/parallels/ros2_ws/src/general/install/laser_segmentation/share/laser_segmentation/environment/library_path.sh\n'}
+[0.981238] (laser_segmentation) StdoutLine: {'line': b'-- Up-to-date: /home/parallels/ros2_ws/src/general/install/laser_segmentation/share/laser_segmentation/environment/library_path.dsv\n'}
+[0.981261] (laser_segmentation) StdoutLine: {'line': b'-- Up-to-date: /home/parallels/ros2_ws/src/general/install/laser_segmentation/share/ament_index/resource_index/package_run_dependencies/laser_segmentation\n'}
+[0.981284] (laser_segmentation) StdoutLine: {'line': b'-- Up-to-date: /home/parallels/ros2_ws/src/general/install/laser_segmentation/share/ament_index/resource_index/parent_prefix_path/laser_segmentation\n'}
+[0.981314] (laser_segmentation) StdoutLine: {'line': b'-- Up-to-date: /home/parallels/ros2_ws/src/general/install/laser_segmentation/share/laser_segmentation/environment/ament_prefix_path.sh\n'}
+[0.981338] (laser_segmentation) StdoutLine: {'line': b'-- Up-to-date: /home/parallels/ros2_ws/src/general/install/laser_segmentation/share/laser_segmentation/environment/ament_prefix_path.dsv\n'}
+[0.981361] (laser_segmentation) StdoutLine: {'line': b'-- Up-to-date: /home/parallels/ros2_ws/src/general/install/laser_segmentation/share/laser_segmentation/environment/path.sh\n'}
+[0.981384] (laser_segmentation) StdoutLine: {'line': b'-- Up-to-date: /home/parallels/ros2_ws/src/general/install/laser_segmentation/share/laser_segmentation/environment/path.dsv\n'}
+[0.981407] (laser_segmentation) StdoutLine: {'line': b'-- Up-to-date: /home/parallels/ros2_ws/src/general/install/laser_segmentation/share/laser_segmentation/local_setup.bash\n'}
+[0.981431] (laser_segmentation) StdoutLine: {'line': b'-- Up-to-date: /home/parallels/ros2_ws/src/general/install/laser_segmentation/share/laser_segmentation/local_setup.sh\n'}
+[0.981455] (laser_segmentation) StdoutLine: {'line': b'-- Up-to-date: /home/parallels/ros2_ws/src/general/install/laser_segmentation/share/laser_segmentation/local_setup.zsh\n'}
+[0.981478] (laser_segmentation) StdoutLine: {'line': b'-- Up-to-date: /home/parallels/ros2_ws/src/general/install/laser_segmentation/share/laser_segmentation/local_setup.dsv\n'}
+[0.981502] (laser_segmentation) StdoutLine: {'line': b'-- Installing: /home/parallels/ros2_ws/src/general/install/laser_segmentation/share/laser_segmentation/package.dsv\n'}
+[0.981550] (laser_segmentation) StdoutLine: {'line': b'-- Up-to-date: /home/parallels/ros2_ws/src/general/install/laser_segmentation/share/ament_index/resource_index/packages/laser_segmentation\n'}
+[0.981589] (laser_segmentation) StdoutLine: {'line': b'-- Up-to-date: /home/parallels/ros2_ws/src/general/install/laser_segmentation/share/ament_index/resource_index/rclcpp_components/laser_segmentation\n'}
+[0.981616] (laser_segmentation) StdoutLine: {'line': b'-- Up-to-date: /home/parallels/ros2_ws/src/general/install/laser_segmentation/share/laser_segmentation/cmake/ament_cmake_export_include_directories-extras.cmake\n'}
+[0.981640] (laser_segmentation) StdoutLine: {'line': b'-- Up-to-date: /home/parallels/ros2_ws/src/general/install/laser_segmentation/share/laser_segmentation/cmake/ament_cmake_export_libraries-extras.cmake\n'}
+[0.981663] (laser_segmentation) StdoutLine: {'line': b'-- Up-to-date: /home/parallels/ros2_ws/src/general/install/laser_segmentation/share/laser_segmentation/cmake/ament_cmake_export_dependencies-extras.cmake\n'}
+[0.981687] (laser_segmentation) StdoutLine: {'line': b'-- Up-to-date: /home/parallels/ros2_ws/src/general/install/laser_segmentation/share/laser_segmentation/cmake/laser_segmentationConfig.cmake\n'}
+[0.981709] (laser_segmentation) StdoutLine: {'line': b'-- Up-to-date: /home/parallels/ros2_ws/src/general/install/laser_segmentation/share/laser_segmentation/cmake/laser_segmentationConfig-version.cmake\n'}
+[0.981733] (laser_segmentation) StdoutLine: {'line': b'-- Up-to-date: /home/parallels/ros2_ws/src/general/install/laser_segmentation/share/laser_segmentation/package.xml\n'}
+[0.983083] (laser_segmentation) CommandEnded: {'returncode': 0}
+[0.997861] (perception_interfaces) StdoutLine: {'line': b'-- Generating done\n'}
+[1.001337] (-) TimerEvent: {}
+[1.004889] (laser_segmentation) JobEnded: {'identifier': 'laser_segmentation', 'rc': 0}
+[1.009691] (perception_interfaces) StdoutLine: {'line': b'-- Build files have been written to: /home/parallels/ros2_ws/src/general/build/perception_interfaces\n'}
+[1.021297] (perception_interfaces) StdoutLine: {'line': b'[  1%] \x1b[34m\x1b[1mGenerating C code for ROS interfaces\x1b[0m\n'}
+[1.037263] (perception_interfaces) StdoutLine: {'line': b'[  2%] \x1b[34m\x1b[1mGenerating C++ code for ROS interfaces\x1b[0m\n'}
+[1.102485] (-) TimerEvent: {}
+[1.202863] (-) TimerEvent: {}
+[1.303044] (-) TimerEvent: {}
+[1.332189] (perception_interfaces) StdoutLine: {'line': b'[  2%] Built target perception_interfaces__cpp\n'}
+[1.354007] (perception_interfaces) StdoutLine: {'line': b'[  2%] Built target ament_cmake_python_copy_perception_interfaces\n'}
+[1.363148] (perception_interfaces) StdoutLine: {'line': b'[  4%] \x1b[34m\x1b[1mGenerating C++ type support dispatch for ROS interfaces\x1b[0m\n'}
+[1.366214] (perception_interfaces) StdoutLine: {'line': b'\x1b[35m\x1b[1mConsolidate compiler generated dependencies of target perception_interfaces__rosidl_generator_c\x1b[0m\n'}
+[1.371398] (perception_interfaces) StdoutLine: {'line': b'[  5%] \x1b[32mBuilding C object CMakeFiles/perception_interfaces__rosidl_generator_c.dir/rosidl_generator_c/perception_interfaces/msg/detail/prop__functions.c.o\x1b[0m\n'}
+[1.403157] (-) TimerEvent: {}
+[1.462432] (perception_interfaces) StdoutLine: {'line': b'[  7%] \x1b[32mBuilding C object CMakeFiles/perception_interfaces__rosidl_generator_c.dir/rosidl_generator_c/perception_interfaces/msg/detail/prop_array__functions.c.o\x1b[0m\n'}
+[1.503252] (-) TimerEvent: {}
+[1.508830] (perception_interfaces) StdoutLine: {'line': b'[  8%] \x1b[32mBuilding C object CMakeFiles/perception_interfaces__rosidl_generator_c.dir/rosidl_generator_c/perception_interfaces/msg/detail/bounding_box__functions.c.o\x1b[0m\n'}
+[1.548338] (perception_interfaces) StdoutLine: {'line': b'\x1b[35m\x1b[1mConsolidate compiler generated dependencies of target perception_interfaces__rosidl_typesupport_cpp\x1b[0m\n'}
+[1.553930] (perception_interfaces) StdoutLine: {'line': b'[  9%] \x1b[32mBuilding CXX object CMakeFiles/perception_interfaces__rosidl_typesupport_cpp.dir/rosidl_typesupport_cpp/perception_interfaces/msg/prop__type_support.cpp.o\x1b[0m\n'}
+[1.556702] (perception_interfaces) StdoutLine: {'line': b'[ 11%] \x1b[32mBuilding C object CMakeFiles/perception_interfaces__rosidl_generator_c.dir/rosidl_generator_c/perception_interfaces/msg/detail/bounding_boxes__functions.c.o\x1b[0m\n'}
+[1.593182] (perception_interfaces) StdoutLine: {'line': b'[ 12%] \x1b[32mBuilding C object CMakeFiles/perception_interfaces__rosidl_generator_c.dir/rosidl_generator_c/perception_interfaces/msg/detail/gate__functions.c.o\x1b[0m\n'}
+[1.603327] (-) TimerEvent: {}
+[1.638099] (perception_interfaces) StdoutLine: {'line': b'[ 14%] \x1b[32mBuilding C object CMakeFiles/perception_interfaces__rosidl_generator_c.dir/rosidl_generator_c/perception_interfaces/msg/detail/gate_array__functions.c.o\x1b[0m\n'}
+[1.689418] (perception_interfaces) StdoutLine: {'line': b'[ 15%] \x1b[32m\x1b[1mLinking C shared library libperception_interfaces__rosidl_generator_c.so\x1b[0m\n'}
+[1.703417] (-) TimerEvent: {}
+[1.724770] (perception_interfaces) StdoutLine: {'line': b'[ 15%] Built target perception_interfaces__rosidl_generator_c\n'}
+[1.737997] (perception_interfaces) StdoutLine: {'line': b'[ 16%] \x1b[34m\x1b[1mGenerating C++ type support for eProsima Fast-RTPS\x1b[0m\n'}
+[1.797245] (perception_interfaces) StdoutLine: {'line': b'[ 18%] \x1b[32mBuilding CXX object CMakeFiles/perception_interfaces__rosidl_typesupport_cpp.dir/rosidl_typesupport_cpp/perception_interfaces/msg/prop_array__type_support.cpp.o\x1b[0m\n'}
+[1.803487] (-) TimerEvent: {}
+[1.903707] (-) TimerEvent: {}
+[1.946041] (perception_interfaces) StdoutLine: {'line': b'[ 19%] \x1b[32mBuilding CXX object CMakeFiles/perception_interfaces__rosidl_typesupport_cpp.dir/rosidl_typesupport_cpp/perception_interfaces/msg/bounding_box__type_support.cpp.o\x1b[0m\n'}
+[1.971119] (perception_interfaces) StdoutLine: {'line': b'\x1b[35m\x1b[1mConsolidate compiler generated dependencies of target perception_interfaces__rosidl_typesupport_fastrtps_cpp\x1b[0m\n'}
+[1.981748] (perception_interfaces) StdoutLine: {'line': b'[ 21%] \x1b[32mBuilding CXX object CMakeFiles/perception_interfaces__rosidl_typesupport_fastrtps_cpp.dir/rosidl_typesupport_fastrtps_cpp/perception_interfaces/msg/detail/dds_fastrtps/prop__type_support.cpp.o\x1b[0m\n'}
+[2.003785] (-) TimerEvent: {}
+[2.104018] (-) TimerEvent: {}
+[2.108233] (perception_interfaces) StdoutLine: {'line': b'[ 22%] \x1b[32mBuilding CXX object CMakeFiles/perception_interfaces__rosidl_typesupport_cpp.dir/rosidl_typesupport_cpp/perception_interfaces/msg/bounding_boxes__type_support.cpp.o\x1b[0m\n'}
+[2.204107] (-) TimerEvent: {}
+[2.219229] (perception_interfaces) StdoutLine: {'line': b'[ 23%] \x1b[32mBuilding CXX object CMakeFiles/perception_interfaces__rosidl_typesupport_fastrtps_cpp.dir/rosidl_typesupport_fastrtps_cpp/perception_interfaces/msg/detail/dds_fastrtps/prop_array__type_support.cpp.o\x1b[0m\n'}
+[2.288564] (perception_interfaces) StdoutLine: {'line': b'[ 25%] \x1b[32mBuilding CXX object CMakeFiles/perception_interfaces__rosidl_typesupport_cpp.dir/rosidl_typesupport_cpp/perception_interfaces/msg/gate__type_support.cpp.o\x1b[0m\n'}
+[2.304179] (-) TimerEvent: {}
+[2.404468] (-) TimerEvent: {}
+[2.453430] (perception_interfaces) StdoutLine: {'line': b'[ 26%] \x1b[32mBuilding CXX object CMakeFiles/perception_interfaces__rosidl_typesupport_cpp.dir/rosidl_typesupport_cpp/perception_interfaces/msg/gate_array__type_support.cpp.o\x1b[0m\n'}
+[2.478900] (perception_interfaces) StdoutLine: {'line': b'[ 28%] \x1b[32mBuilding CXX object CMakeFiles/perception_interfaces__rosidl_typesupport_fastrtps_cpp.dir/rosidl_typesupport_fastrtps_cpp/perception_interfaces/msg/detail/dds_fastrtps/bounding_box__type_support.cpp.o\x1b[0m\n'}
+[2.504558] (-) TimerEvent: {}
+[2.604887] (-) TimerEvent: {}
+[2.616972] (perception_interfaces) StdoutLine: {'line': b'[ 29%] \x1b[32m\x1b[1mLinking CXX shared library libperception_interfaces__rosidl_typesupport_cpp.so\x1b[0m\n'}
+[2.649372] (perception_interfaces) StdoutLine: {'line': b'[ 29%] Built target perception_interfaces__rosidl_typesupport_cpp\n'}
+[2.653074] (perception_interfaces) StdoutLine: {'line': b'[ 30%] \x1b[34m\x1b[1mGenerating C introspection for ROS interfaces\x1b[0m\n'}
+[2.704962] (-) TimerEvent: {}
+[2.712214] (perception_interfaces) StdoutLine: {'line': b'[ 32%] \x1b[32mBuilding CXX object CMakeFiles/perception_interfaces__rosidl_typesupport_fastrtps_cpp.dir/rosidl_typesupport_fastrtps_cpp/perception_interfaces/msg/detail/dds_fastrtps/bounding_boxes__type_support.cpp.o\x1b[0m\n'}
+[2.805045] (-) TimerEvent: {}
+[2.861551] (perception_interfaces) StdoutLine: {'line': b'\x1b[35m\x1b[1mConsolidate compiler generated dependencies of target perception_interfaces__rosidl_typesupport_introspection_c\x1b[0m\n'}
+[2.864858] (perception_interfaces) StdoutLine: {'line': b'[ 33%] \x1b[32mBuilding C object CMakeFiles/perception_interfaces__rosidl_typesupport_introspection_c.dir/rosidl_typesupport_introspection_c/perception_interfaces/msg/detail/prop__type_support.c.o\x1b[0m\n'}
+[2.895620] (perception_interfaces) StdoutLine: {'line': b'[ 35%] \x1b[32mBuilding C object CMakeFiles/perception_interfaces__rosidl_typesupport_introspection_c.dir/rosidl_typesupport_introspection_c/perception_interfaces/msg/detail/prop_array__type_support.c.o\x1b[0m\n'}
+[2.905122] (-) TimerEvent: {}
+[2.920743] (perception_interfaces) StdoutLine: {'line': b'[ 36%] \x1b[32mBuilding C object CMakeFiles/perception_interfaces__rosidl_typesupport_introspection_c.dir/rosidl_typesupport_introspection_c/perception_interfaces/msg/detail/bounding_box__type_support.c.o\x1b[0m\n'}
+[2.946399] (perception_interfaces) StdoutLine: {'line': b'[ 38%] \x1b[32mBuilding C object CMakeFiles/perception_interfaces__rosidl_typesupport_introspection_c.dir/rosidl_typesupport_introspection_c/perception_interfaces/msg/detail/bounding_boxes__type_support.c.o\x1b[0m\n'}
+[2.965975] (perception_interfaces) StdoutLine: {'line': b'[ 39%] \x1b[32mBuilding CXX object CMakeFiles/perception_interfaces__rosidl_typesupport_fastrtps_cpp.dir/rosidl_typesupport_fastrtps_cpp/perception_interfaces/msg/detail/dds_fastrtps/gate__type_support.cpp.o\x1b[0m\n'}
+[2.973552] (perception_interfaces) StdoutLine: {'line': b'[ 40%] \x1b[32mBuilding C object CMakeFiles/perception_interfaces__rosidl_typesupport_introspection_c.dir/rosidl_typesupport_introspection_c/perception_interfaces/msg/detail/gate__type_support.c.o\x1b[0m\n'}
+[2.998429] (perception_interfaces) StdoutLine: {'line': b'[ 42%] \x1b[32mBuilding C object CMakeFiles/perception_interfaces__rosidl_typesupport_introspection_c.dir/rosidl_typesupport_introspection_c/perception_interfaces/msg/detail/gate_array__type_support.c.o\x1b[0m\n'}
+[3.005190] (-) TimerEvent: {}
+[3.028146] (perception_interfaces) StdoutLine: {'line': b'[ 43%] \x1b[32m\x1b[1mLinking C shared library libperception_interfaces__rosidl_typesupport_introspection_c.so\x1b[0m\n'}
+[3.058921] (perception_interfaces) StdoutLine: {'line': b'[ 43%] Built target perception_interfaces__rosidl_typesupport_introspection_c\n'}
+[3.072234] (perception_interfaces) StdoutLine: {'line': b'[ 45%] \x1b[34m\x1b[1mGenerating C type support dispatch for ROS interfaces\x1b[0m\n'}
+[3.105273] (-) TimerEvent: {}
+[3.197041] (perception_interfaces) StdoutLine: {'line': b'[ 46%] \x1b[32mBuilding CXX object CMakeFiles/perception_interfaces__rosidl_typesupport_fastrtps_cpp.dir/rosidl_typesupport_fastrtps_cpp/perception_interfaces/msg/detail/dds_fastrtps/gate_array__type_support.cpp.o\x1b[0m\n'}
+[3.205346] (-) TimerEvent: {}
+[3.229045] (perception_interfaces) StdoutLine: {'line': b'\x1b[35m\x1b[1mConsolidate compiler generated dependencies of target perception_interfaces__rosidl_typesupport_c\x1b[0m\n'}
+[3.241122] (perception_interfaces) StdoutLine: {'line': b'[ 47%] \x1b[32mBuilding CXX object CMakeFiles/perception_interfaces__rosidl_typesupport_c.dir/rosidl_typesupport_c/perception_interfaces/msg/prop__type_support.cpp.o\x1b[0m\n'}
+[3.289522] (perception_interfaces) StdoutLine: {'line': b'[ 49%] \x1b[32mBuilding CXX object CMakeFiles/perception_interfaces__rosidl_typesupport_c.dir/rosidl_typesupport_c/perception_interfaces/msg/prop_array__type_support.cpp.o\x1b[0m\n'}
+[3.305427] (-) TimerEvent: {}
+[3.318698] (perception_interfaces) StdoutLine: {'line': b'[ 50%] \x1b[32mBuilding CXX object CMakeFiles/perception_interfaces__rosidl_typesupport_c.dir/rosidl_typesupport_c/perception_interfaces/msg/bounding_box__type_support.cpp.o\x1b[0m\n'}
+[3.351052] (perception_interfaces) StdoutLine: {'line': b'[ 52%] \x1b[32mBuilding CXX object CMakeFiles/perception_interfaces__rosidl_typesupport_c.dir/rosidl_typesupport_c/perception_interfaces/msg/bounding_boxes__type_support.cpp.o\x1b[0m\n'}
+[3.372659] (perception_interfaces) StdoutLine: {'line': b'[ 53%] \x1b[32mBuilding CXX object CMakeFiles/perception_interfaces__rosidl_typesupport_c.dir/rosidl_typesupport_c/perception_interfaces/msg/gate__type_support.cpp.o\x1b[0m\n'}
+[3.393486] (perception_interfaces) StdoutLine: {'line': b'[ 54%] \x1b[32mBuilding CXX object CMakeFiles/perception_interfaces__rosidl_typesupport_c.dir/rosidl_typesupport_c/perception_interfaces/msg/gate_array__type_support.cpp.o\x1b[0m\n'}
+[3.405507] (-) TimerEvent: {}
+[3.415428] (perception_interfaces) StdoutLine: {'line': b'[ 56%] \x1b[32m\x1b[1mLinking CXX shared library libperception_interfaces__rosidl_typesupport_c.so\x1b[0m\n'}
+[3.437297] (perception_interfaces) StdoutLine: {'line': b'[ 56%] Built target perception_interfaces__rosidl_typesupport_c\n'}
+[3.442382] (perception_interfaces) StdoutLine: {'line': b'[ 57%] \x1b[34m\x1b[1mGenerating C++ introspection for ROS interfaces\x1b[0m\n'}
+[3.454008] (perception_interfaces) StdoutLine: {'line': b'[ 59%] \x1b[32m\x1b[1mLinking CXX shared library libperception_interfaces__rosidl_typesupport_fastrtps_cpp.so\x1b[0m\n'}
+[3.496719] (perception_interfaces) StdoutLine: {'line': b'[ 59%] Built target perception_interfaces__rosidl_typesupport_fastrtps_cpp\n'}
+[3.505702] (-) TimerEvent: {}
+[3.591929] (perception_interfaces) StdoutLine: {'line': b'running egg_info\n'}
+[3.597875] (perception_interfaces) StdoutLine: {'line': b'writing perception_interfaces.egg-info/PKG-INFO\n'}
+[3.598230] (perception_interfaces) StdoutLine: {'line': b'writing dependency_links to perception_interfaces.egg-info/dependency_links.txt\n'}
+[3.598434] (perception_interfaces) StdoutLine: {'line': b'writing top-level names to perception_interfaces.egg-info/top_level.txt\n'}
+[3.605762] (-) TimerEvent: {}
+[3.615282] (perception_interfaces) StdoutLine: {'line': b"reading manifest file 'perception_interfaces.egg-info/SOURCES.txt'\n"}
+[3.615760] (perception_interfaces) StdoutLine: {'line': b"writing manifest file 'perception_interfaces.egg-info/SOURCES.txt'\n"}
+[3.629472] (perception_interfaces) StdoutLine: {'line': b'[ 59%] Built target ament_cmake_python_build_perception_interfaces_egg\n'}
+[3.637010] (perception_interfaces) StdoutLine: {'line': b'[ 60%] \x1b[34m\x1b[1mGenerating C type support for eProsima Fast-RTPS\x1b[0m\n'}
+[3.664760] (perception_interfaces) StdoutLine: {'line': b'\x1b[35m\x1b[1mConsolidate compiler generated dependencies of target perception_interfaces__rosidl_typesupport_introspection_cpp\x1b[0m\n'}
+[3.670214] (perception_interfaces) StdoutLine: {'line': b'[ 61%] \x1b[32mBuilding CXX object CMakeFiles/perception_interfaces__rosidl_typesupport_introspection_cpp.dir/rosidl_typesupport_introspection_cpp/perception_interfaces/msg/detail/prop__type_support.cpp.o\x1b[0m\n'}
+[3.706125] (-) TimerEvent: {}
+[3.806365] (-) TimerEvent: {}
+[3.872300] (perception_interfaces) StdoutLine: {'line': b'\x1b[35m\x1b[1mConsolidate compiler generated dependencies of target perception_interfaces__rosidl_typesupport_fastrtps_c\x1b[0m\n'}
+[3.892340] (perception_interfaces) StdoutLine: {'line': b'[ 63%] \x1b[32mBuilding CXX object CMakeFiles/perception_interfaces__rosidl_typesupport_fastrtps_c.dir/rosidl_typesupport_fastrtps_c/perception_interfaces/msg/detail/prop__type_support_c.cpp.o\x1b[0m\n'}
+[3.906044] (perception_interfaces) StdoutLine: {'line': b'[ 64%] \x1b[32mBuilding CXX object CMakeFiles/perception_interfaces__rosidl_typesupport_introspection_cpp.dir/rosidl_typesupport_introspection_cpp/perception_interfaces/msg/detail/prop_array__type_support.cpp.o\x1b[0m\n'}
+[3.906424] (-) TimerEvent: {}
+[4.006662] (-) TimerEvent: {}
+[4.106944] (-) TimerEvent: {}
+[4.107150] (perception_interfaces) StdoutLine: {'line': b'[ 66%] \x1b[32mBuilding CXX object CMakeFiles/perception_interfaces__rosidl_typesupport_fastrtps_c.dir/rosidl_typesupport_fastrtps_c/perception_interfaces/msg/detail/prop_array__type_support_c.cpp.o\x1b[0m\n'}
+[4.150797] (perception_interfaces) StdoutLine: {'line': b'[ 67%] \x1b[32mBuilding CXX object CMakeFiles/perception_interfaces__rosidl_typesupport_introspection_cpp.dir/rosidl_typesupport_introspection_cpp/perception_interfaces/msg/detail/bounding_box__type_support.cpp.o\x1b[0m\n'}
+[4.207034] (-) TimerEvent: {}
+[4.307324] (-) TimerEvent: {}
+[4.309377] (perception_interfaces) StdoutLine: {'line': b'[ 69%] \x1b[32mBuilding CXX object CMakeFiles/perception_interfaces__rosidl_typesupport_fastrtps_c.dir/rosidl_typesupport_fastrtps_c/perception_interfaces/msg/detail/bounding_box__type_support_c.cpp.o\x1b[0m\n'}
+[4.358691] (perception_interfaces) StdoutLine: {'line': b'[ 70%] \x1b[32mBuilding CXX object CMakeFiles/perception_interfaces__rosidl_typesupport_introspection_cpp.dir/rosidl_typesupport_introspection_cpp/perception_interfaces/msg/detail/bounding_boxes__type_support.cpp.o\x1b[0m\n'}
+[4.407409] (-) TimerEvent: {}
+[4.504178] (perception_interfaces) StdoutLine: {'line': b'[ 71%] \x1b[32mBuilding CXX object CMakeFiles/perception_interfaces__rosidl_typesupport_fastrtps_c.dir/rosidl_typesupport_fastrtps_c/perception_interfaces/msg/detail/bounding_boxes__type_support_c.cpp.o\x1b[0m\n'}
+[4.507483] (-) TimerEvent: {}
+[4.600602] (perception_interfaces) StdoutLine: {'line': b'[ 73%] \x1b[32mBuilding CXX object CMakeFiles/perception_interfaces__rosidl_typesupport_introspection_cpp.dir/rosidl_typesupport_introspection_cpp/perception_interfaces/msg/detail/gate__type_support.cpp.o\x1b[0m\n'}
+[4.607576] (-) TimerEvent: {}
+[4.692388] (perception_interfaces) StdoutLine: {'line': b'[ 74%] \x1b[32mBuilding CXX object CMakeFiles/perception_interfaces__rosidl_typesupport_fastrtps_c.dir/rosidl_typesupport_fastrtps_c/perception_interfaces/msg/detail/gate__type_support_c.cpp.o\x1b[0m\n'}
+[4.707658] (-) TimerEvent: {}
+[4.807933] (-) TimerEvent: {}
+[4.830364] (perception_interfaces) StdoutLine: {'line': b'[ 76%] \x1b[32mBuilding CXX object CMakeFiles/perception_interfaces__rosidl_typesupport_introspection_cpp.dir/rosidl_typesupport_introspection_cpp/perception_interfaces/msg/detail/gate_array__type_support.cpp.o\x1b[0m\n'}
+[4.883741] (perception_interfaces) StdoutLine: {'line': b'[ 77%] \x1b[32mBuilding CXX object CMakeFiles/perception_interfaces__rosidl_typesupport_fastrtps_c.dir/rosidl_typesupport_fastrtps_c/perception_interfaces/msg/detail/gate_array__type_support_c.cpp.o\x1b[0m\n'}
+[4.908014] (-) TimerEvent: {}
+[5.008254] (-) TimerEvent: {}
+[5.078678] (perception_interfaces) StdoutLine: {'line': b'[ 78%] \x1b[32m\x1b[1mLinking CXX shared library libperception_interfaces__rosidl_typesupport_fastrtps_c.so\x1b[0m\n'}
+[5.088298] (perception_interfaces) StdoutLine: {'line': b'[ 80%] \x1b[32m\x1b[1mLinking CXX shared library libperception_interfaces__rosidl_typesupport_introspection_cpp.so\x1b[0m\n'}
+[5.108345] (-) TimerEvent: {}
+[5.122812] (perception_interfaces) StdoutLine: {'line': b'[ 80%] Built target perception_interfaces__rosidl_typesupport_fastrtps_c\n'}
+[5.123526] (perception_interfaces) StdoutLine: {'line': b'[ 80%] Built target perception_interfaces__rosidl_typesupport_introspection_cpp\n'}
+[5.130524] (perception_interfaces) StdoutLine: {'line': b'[ 80%] Built target perception_interfaces\n'}
+[5.141353] (perception_interfaces) StdoutLine: {'line': b'[ 81%] \x1b[34m\x1b[1mGenerating Python code for ROS interfaces\x1b[0m\n'}
+[5.208443] (-) TimerEvent: {}
+[5.310486] (-) TimerEvent: {}
+[5.411975] (-) TimerEvent: {}
+[5.483615] (perception_interfaces) StdoutLine: {'line': b'[ 81%] Built target perception_interfaces__py\n'}
+[5.487607] (perception_interfaces) StdoutLine: {'line': b'\x1b[35m\x1b[1mConsolidate compiler generated dependencies of target perception_interfaces__rosidl_generator_py\x1b[0m\n'}
+[5.493741] (perception_interfaces) StdoutLine: {'line': b'[ 84%] \x1b[32mBuilding C object CMakeFiles/perception_interfaces__rosidl_generator_py.dir/rosidl_generator_py/perception_interfaces/msg/_prop_array_s.c.o\x1b[0m\n'}
+[5.494047] (perception_interfaces) StdoutLine: {'line': b'[ 84%] \x1b[32mBuilding C object CMakeFiles/perception_interfaces__rosidl_generator_py.dir/rosidl_generator_py/perception_interfaces/msg/_prop_s.c.o\x1b[0m\n'}
+[5.512062] (-) TimerEvent: {}
+[5.612347] (-) TimerEvent: {}
+[5.616258] (perception_interfaces) StdoutLine: {'line': b'[ 85%] \x1b[32mBuilding C object CMakeFiles/perception_interfaces__rosidl_generator_py.dir/rosidl_generator_py/perception_interfaces/msg/_bounding_box_s.c.o\x1b[0m\n'}
+[5.620003] (perception_interfaces) StdoutLine: {'line': b'[ 87%] \x1b[32mBuilding C object CMakeFiles/perception_interfaces__rosidl_generator_py.dir/rosidl_generator_py/perception_interfaces/msg/_bounding_boxes_s.c.o\x1b[0m\n'}
+[5.706612] (perception_interfaces) StdoutLine: {'line': b'[ 88%] \x1b[32mBuilding C object CMakeFiles/perception_interfaces__rosidl_generator_py.dir/rosidl_generator_py/perception_interfaces/msg/_gate_s.c.o\x1b[0m\n'}
+[5.709473] (perception_interfaces) StdoutLine: {'line': b'[ 90%] \x1b[32mBuilding C object CMakeFiles/perception_interfaces__rosidl_generator_py.dir/rosidl_generator_py/perception_interfaces/msg/_gate_array_s.c.o\x1b[0m\n'}
+[5.712400] (-) TimerEvent: {}
+[5.798647] (perception_interfaces) StdoutLine: {'line': b'[ 91%] \x1b[32m\x1b[1mLinking C shared library rosidl_generator_py/perception_interfaces/libperception_interfaces__rosidl_generator_py.so\x1b[0m\n'}
+[5.812480] (-) TimerEvent: {}
+[5.818858] (perception_interfaces) StdoutLine: {'line': b'[ 91%] Built target perception_interfaces__rosidl_generator_py\n'}
+[5.823057] (perception_interfaces) StdoutLine: {'line': b'\x1b[35m\x1b[1mConsolidate compiler generated dependencies of target perception_interfaces__rosidl_typesupport_introspection_c__pyext\x1b[0m\n'}
+[5.823503] (perception_interfaces) StdoutLine: {'line': b'\x1b[35m\x1b[1mConsolidate compiler generated dependencies of target perception_interfaces__rosidl_typesupport_fastrtps_c__pyext\x1b[0m\n'}
+[5.829961] (perception_interfaces) StdoutLine: {'line': b'[ 92%] \x1b[32mBuilding C object CMakeFiles/perception_interfaces__rosidl_typesupport_introspection_c__pyext.dir/rosidl_generator_py/perception_interfaces/_perception_interfaces_s.ep.rosidl_typesupport_introspection_c.c.o\x1b[0m\n'}
+[5.830439] (perception_interfaces) StdoutLine: {'line': b'[ 94%] \x1b[32mBuilding C object CMakeFiles/perception_interfaces__rosidl_typesupport_fastrtps_c__pyext.dir/rosidl_generator_py/perception_interfaces/_perception_interfaces_s.ep.rosidl_typesupport_fastrtps_c.c.o\x1b[0m\n'}
+[5.912594] (-) TimerEvent: {}
+[5.933458] (perception_interfaces) StdoutLine: {'line': b'[ 95%] \x1b[32m\x1b[1mLinking C shared library rosidl_generator_py/perception_interfaces/perception_interfaces_s__rosidl_typesupport_fastrtps_c.cpython-310-aarch64-linux-gnu.so\x1b[0m\n'}
+[5.935569] (perception_interfaces) StdoutLine: {'line': b'[ 97%] \x1b[32m\x1b[1mLinking C shared library rosidl_generator_py/perception_interfaces/perception_interfaces_s__rosidl_typesupport_introspection_c.cpython-310-aarch64-linux-gnu.so\x1b[0m\n'}
+[5.957757] (perception_interfaces) StdoutLine: {'line': b'[ 97%] Built target perception_interfaces__rosidl_typesupport_fastrtps_c__pyext\n'}
+[5.965700] (perception_interfaces) StdoutLine: {'line': b'\x1b[35m\x1b[1mConsolidate compiler generated dependencies of target perception_interfaces__rosidl_typesupport_c__pyext\x1b[0m\n'}
+[5.967465] (perception_interfaces) StdoutLine: {'line': b'[ 97%] Built target perception_interfaces__rosidl_typesupport_introspection_c__pyext\n'}
+[5.975582] (perception_interfaces) StdoutLine: {'line': b'[ 98%] \x1b[32mBuilding C object CMakeFiles/perception_interfaces__rosidl_typesupport_c__pyext.dir/rosidl_generator_py/perception_interfaces/_perception_interfaces_s.ep.rosidl_typesupport_c.c.o\x1b[0m\n'}
+[6.012989] (-) TimerEvent: {}
+[6.074281] (perception_interfaces) StdoutLine: {'line': b'[100%] \x1b[32m\x1b[1mLinking C shared library rosidl_generator_py/perception_interfaces/perception_interfaces_s__rosidl_typesupport_c.cpython-310-aarch64-linux-gnu.so\x1b[0m\n'}
+[6.092282] (perception_interfaces) StdoutLine: {'line': b'[100%] Built target perception_interfaces__rosidl_typesupport_c__pyext\n'}
+[6.106821] (perception_interfaces) CommandEnded: {'returncode': 0}
+[6.113061] (-) TimerEvent: {}
+[6.160818] (perception_interfaces) JobProgress: {'identifier': 'perception_interfaces', 'progress': 'install'}
+[6.161345] (perception_interfaces) Command: {'cmd': ['/usr/bin/cmake', '--install', '/home/parallels/ros2_ws/src/general/build/perception_interfaces'], 'cwd': '/home/parallels/ros2_ws/src/general/build/perception_interfaces', 'env': OrderedDict([('LESSOPEN', '| /usr/bin/lesspipe %s'), ('GZ_SIM_RESOURCE_PATH', '/home/parallels/ros2_ws/src/ardupilot_gazebo/models:/home/parallels/ros2_ws/src/ardupilot_gazebo/worlds:/home/parallels/ros2_ws/src/iceberg_sim/models:'), ('no_proxy', 'localhost,127.0.0.0/8,::1'), ('USER', 'parallels'), ('XDG_SESSION_TYPE', 'wayland'), ('SHLVL', '1'), ('LD_LIBRARY_PATH', '/opt/ros/humble/opt/rviz_ogre_vendor/lib:/opt/ros/humble/lib/aarch64-linux-gnu:/opt/ros/humble/lib'), ('HOME', '/home/parallels'), ('OLDPWD', '/home/parallels'), ('DESKTOP_SESSION', 'ubuntu'), ('NO_PROXY', 'localhost,127.0.0.0/8,::1'), ('ROS_PYTHON_VERSION', '3'), ('GNOME_SHELL_SESSION_MODE', 'ubuntu'), ('GTK_MODULES', 'gail:atk-bridge'), ('SYSTEMD_EXEC_PID', '1815'), ('DBUS_SESSION_BUS_ADDRESS', 'unix:path=/run/user/1000/bus'), ('COLORTERM', 'truecolor'), ('_colcon_cd_root', '/home/parallels/ros2_install'), ('IM_CONFIG_PHASE', '1'), ('WAYLAND_DISPLAY', 'wayland-0'), ('ROS_DISTRO', 'humble'), ('LOGNAME', 'parallels'), ('_', '/usr/bin/colcon'), ('ROS_VERSION', '2'), ('XDG_SESSION_CLASS', 'user'), ('USERNAME', 'parallels'), ('TERM', 'xterm-256color'), ('GNOME_DESKTOP_SESSION_ID', 'this-is-deprecated'), ('ROS_LOCALHOST_ONLY', '0'), ('PATH', '/opt/ros/humble/bin:/usr/lib/ccache:/home/parallels/ros2_ws/src/ardupilot/Tools/autotest:/opt/gcc-arm-none-eabi-10-2020-q4-major/bin:/home/parallels/.local/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/snap/bin:/snap/bin:/home/parallels/Micro-XRCE-DDS-Gen/scripts'), ('SESSION_MANAGER', 'local/ubuntu-linux-22-04-desktop:@/tmp/.ICE-unix/1792,unix/ubuntu-linux-22-04-desktop:/tmp/.ICE-unix/1792'), ('XDG_MENU_PREFIX', 'gnome-'), ('GNOME_TERMINAL_SCREEN', '/org/gnome/Terminal/screen/ae8e7e6f_a0c4_48b7_9b0e_8ed12784624c'), ('GNOME_SETUP_DISPLAY', ':1'), ('XDG_RUNTIME_DIR', '/run/user/1000'), ('DISPLAY', ':0'), ('LANG', 'en_US.UTF-8'), ('XDG_CURRENT_DESKTOP', 'ubuntu:GNOME'), ('XMODIFIERS', '@im=ibus'), ('XDG_SESSION_DESKTOP', 'ubuntu'), ('XAUTHORITY', '/run/user/1000/.mutter-Xwaylandauth.I3J8Q2'), ('LS_COLORS', 'rs=0:di=01;34:ln=01;36:mh=00:pi=40;33:so=01;35:do=01;35:bd=40;33;01:cd=40;33;01:or=40;31;01:mi=00:su=37;41:sg=30;43:ca=30;41:tw=30;42:ow=34;42:st=37;44:ex=01;32:*.tar=01;31:*.tgz=01;31:*.arc=01;31:*.arj=01;31:*.taz=01;31:*.lha=01;31:*.lz4=01;31:*.lzh=01;31:*.lzma=01;31:*.tlz=01;31:*.txz=01;31:*.tzo=01;31:*.t7z=01;31:*.zip=01;31:*.z=01;31:*.dz=01;31:*.gz=01;31:*.lrz=01;31:*.lz=01;31:*.lzo=01;31:*.xz=01;31:*.zst=01;31:*.tzst=01;31:*.bz2=01;31:*.bz=01;31:*.tbz=01;31:*.tbz2=01;31:*.tz=01;31:*.deb=01;31:*.rpm=01;31:*.jar=01;31:*.war=01;31:*.ear=01;31:*.sar=01;31:*.rar=01;31:*.alz=01;31:*.ace=01;31:*.zoo=01;31:*.cpio=01;31:*.7z=01;31:*.rz=01;31:*.cab=01;31:*.wim=01;31:*.swm=01;31:*.dwm=01;31:*.esd=01;31:*.jpg=01;35:*.jpeg=01;35:*.mjpg=01;35:*.mjpeg=01;35:*.gif=01;35:*.bmp=01;35:*.pbm=01;35:*.pgm=01;35:*.ppm=01;35:*.tga=01;35:*.xbm=01;35:*.xpm=01;35:*.tif=01;35:*.tiff=01;35:*.png=01;35:*.svg=01;35:*.svgz=01;35:*.mng=01;35:*.pcx=01;35:*.mov=01;35:*.mpg=01;35:*.mpeg=01;35:*.m2v=01;35:*.mkv=01;35:*.webm=01;35:*.webp=01;35:*.ogm=01;35:*.mp4=01;35:*.m4v=01;35:*.mp4v=01;35:*.vob=01;35:*.qt=01;35:*.nuv=01;35:*.wmv=01;35:*.asf=01;35:*.rm=01;35:*.rmvb=01;35:*.flc=01;35:*.avi=01;35:*.fli=01;35:*.flv=01;35:*.gl=01;35:*.dl=01;35:*.xcf=01;35:*.xwd=01;35:*.yuv=01;35:*.cgm=01;35:*.emf=01;35:*.ogv=01;35:*.ogx=01;35:*.aac=00;36:*.au=00;36:*.flac=00;36:*.m4a=00;36:*.mid=00;36:*.midi=00;36:*.mka=00;36:*.mp3=00;36:*.mpc=00;36:*.ogg=00;36:*.ra=00;36:*.wav=00;36:*.oga=00;36:*.opus=00;36:*.spx=00;36:*.xspf=00;36:'), ('GNOME_TERMINAL_SERVICE', ':1.94'), ('SSH_AGENT_LAUNCHER', 'gnome-keyring'), ('SSH_AUTH_SOCK', '/run/user/1000/keyring/ssh'), ('AMENT_PREFIX_PATH', '/opt/ros/humble'), ('SHELL', '/bin/bash'), ('QT_ACCESSIBILITY', '1'), ('GDMSESSION', 'ubuntu'), ('LESSCLOSE', '/usr/bin/lesspipe %s %s'), ('GZ_VERSION', 'garden'), ('QT_IM_MODULE', 'ibus'), ('PWD', '/home/parallels/ros2_ws/src/general/build/perception_interfaces'), ('LC_ALL', 'en_US.UTF-8'), ('XDG_CONFIG_DIRS', '/etc/xdg/xdg-ubuntu:/etc/xdg'), ('XDG_DATA_DIRS', '/usr/share/ubuntu:/usr/local/share/:/usr/share/:/var/lib/snapd/desktop'), ('PYTHONPATH', '/opt/ros/humble/lib/python3.10/site-packages:/opt/ros/humble/local/lib/python3.10/dist-packages'), ('COLCON', '1'), ('VTE_VERSION', '6800'), ('CMAKE_PREFIX_PATH', '/opt/ros/humble')]), 'shell': False}
+[6.164587] (perception_interfaces) StdoutLine: {'line': b'-- Install configuration: ""\n'}
+[6.173720] (perception_interfaces) StdoutLine: {'line': b'-- Installing: /home/parallels/ros2_ws/src/general/install/perception_interfaces/share/ament_index/resource_index/rosidl_interfaces/perception_interfaces\n'}
+[6.173772] (perception_interfaces) StdoutLine: {'line': b'-- Up-to-date: /home/parallels/ros2_ws/src/general/install/perception_interfaces/include/perception_interfaces/perception_interfaces\n'}
+[6.173801] (perception_interfaces) StdoutLine: {'line': b'-- Up-to-date: /home/parallels/ros2_ws/src/general/install/perception_interfaces/include/perception_interfaces/perception_interfaces/msg\n'}
+[6.173829] (perception_interfaces) StdoutLine: {'line': b'-- Up-to-date: /home/parallels/ros2_ws/src/general/install/perception_interfaces/include/perception_interfaces/perception_interfaces/msg/rosidl_generator_c__visibility_control.h\n'}
+[6.173852] (perception_interfaces) StdoutLine: {'line': b'-- Installing: /home/parallels/ros2_ws/src/general/install/perception_interfaces/include/perception_interfaces/perception_interfaces/msg/prop_array.h\n'}
+[6.173875] (perception_interfaces) StdoutLine: {'line': b'-- Up-to-date: /home/parallels/ros2_ws/src/general/install/perception_interfaces/include/perception_interfaces/perception_interfaces/msg/detail\n'}
+[6.173898] (perception_interfaces) StdoutLine: {'line': b'-- Installing: /home/parallels/ros2_ws/src/general/install/perception_interfaces/include/perception_interfaces/perception_interfaces/msg/detail/gate_array__functions.h\n'}
+[6.173921] (perception_interfaces) StdoutLine: {'line': b'-- Installing: /home/parallels/ros2_ws/src/general/install/perception_interfaces/include/perception_interfaces/perception_interfaces/msg/detail/bounding_boxes__functions.c\n'}
+[6.173944] (perception_interfaces) StdoutLine: {'line': b'-- Installing: /home/parallels/ros2_ws/src/general/install/perception_interfaces/include/perception_interfaces/perception_interfaces/msg/detail/gate_array__functions.c\n'}
+[6.173985] (perception_interfaces) StdoutLine: {'line': b'-- Installing: /home/parallels/ros2_ws/src/general/install/perception_interfaces/include/perception_interfaces/perception_interfaces/msg/detail/gate_array__struct.h\n'}
+[6.174010] (perception_interfaces) StdoutLine: {'line': b'-- Installing: /home/parallels/ros2_ws/src/general/install/perception_interfaces/include/perception_interfaces/perception_interfaces/msg/detail/bounding_box__struct.h\n'}
+[6.174033] (perception_interfaces) StdoutLine: {'line': b'-- Up-to-date: /home/parallels/ros2_ws/src/general/install/perception_interfaces/include/perception_interfaces/perception_interfaces/msg/detail/lidar_detected_prop_array__functions.c\n'}
+[6.174056] (perception_interfaces) StdoutLine: {'line': b'-- Up-to-date: /home/parallels/ros2_ws/src/general/install/perception_interfaces/include/perception_interfaces/perception_interfaces/msg/detail/lidar_detected_prop_array__type_support.h\n'}
+[6.174079] (perception_interfaces) StdoutLine: {'line': b'-- Installing: /home/parallels/ros2_ws/src/general/install/perception_interfaces/include/perception_interfaces/perception_interfaces/msg/detail/gate__struct.h\n'}
+[6.174101] (perception_interfaces) StdoutLine: {'line': b'-- Installing: /home/parallels/ros2_ws/src/general/install/perception_interfaces/include/perception_interfaces/perception_interfaces/msg/detail/bounding_box__functions.c\n'}
+[6.174123] (perception_interfaces) StdoutLine: {'line': b'-- Installing: /home/parallels/ros2_ws/src/general/install/perception_interfaces/include/perception_interfaces/perception_interfaces/msg/detail/bounding_box__functions.h\n'}
+[6.174148] (perception_interfaces) StdoutLine: {'line': b'-- Up-to-date: /home/parallels/ros2_ws/src/general/install/perception_interfaces/include/perception_interfaces/perception_interfaces/msg/detail/lidar_detected_prop__type_support.h\n'}
+[6.174171] (perception_interfaces) StdoutLine: {'line': b'-- Installing: /home/parallels/ros2_ws/src/general/install/perception_interfaces/include/perception_interfaces/perception_interfaces/msg/detail/prop_array__functions.c\n'}
+[6.174193] (perception_interfaces) StdoutLine: {'line': b'-- Installing: /home/parallels/ros2_ws/src/general/install/perception_interfaces/include/perception_interfaces/perception_interfaces/msg/detail/prop_array__functions.h\n'}
+[6.174215] (perception_interfaces) StdoutLine: {'line': b'-- Installing: /home/parallels/ros2_ws/src/general/install/perception_interfaces/include/perception_interfaces/perception_interfaces/msg/detail/prop__type_support.h\n'}
+[6.174238] (perception_interfaces) StdoutLine: {'line': b'-- Installing: /home/parallels/ros2_ws/src/general/install/perception_interfaces/include/perception_interfaces/perception_interfaces/msg/detail/prop__struct.h\n'}
+[6.174261] (perception_interfaces) StdoutLine: {'line': b'-- Installing: /home/parallels/ros2_ws/src/general/install/perception_interfaces/include/perception_interfaces/perception_interfaces/msg/detail/prop_array__type_support.h\n'}
+[6.174283] (perception_interfaces) StdoutLine: {'line': b'-- Installing: /home/parallels/ros2_ws/src/general/install/perception_interfaces/include/perception_interfaces/perception_interfaces/msg/detail/prop__functions.c\n'}
+[6.174305] (perception_interfaces) StdoutLine: {'line': b'-- Up-to-date: /home/parallels/ros2_ws/src/general/install/perception_interfaces/include/perception_interfaces/perception_interfaces/msg/detail/lidar_detected_prop_array__struct.h\n'}
+[6.174327] (perception_interfaces) StdoutLine: {'line': b'-- Installing: /home/parallels/ros2_ws/src/general/install/perception_interfaces/include/perception_interfaces/perception_interfaces/msg/detail/bounding_boxes__functions.h\n'}
+[6.174349] (perception_interfaces) StdoutLine: {'line': b'-- Up-to-date: /home/parallels/ros2_ws/src/general/install/perception_interfaces/include/perception_interfaces/perception_interfaces/msg/detail/lidar_detected_prop__functions.h\n'}
+[6.174372] (perception_interfaces) StdoutLine: {'line': b'-- Up-to-date: /home/parallels/ros2_ws/src/general/install/perception_interfaces/include/perception_interfaces/perception_interfaces/msg/detail/lidar_detected_prop_array__functions.h\n'}
+[6.174394] (perception_interfaces) StdoutLine: {'line': b'-- Installing: /home/parallels/ros2_ws/src/general/install/perception_interfaces/include/perception_interfaces/perception_interfaces/msg/detail/gate_array__type_support.h\n'}
+[6.174419] (perception_interfaces) StdoutLine: {'line': b'-- Installing: /home/parallels/ros2_ws/src/general/install/perception_interfaces/include/perception_interfaces/perception_interfaces/msg/detail/bounding_box__type_support.h\n'}
+[6.174443] (perception_interfaces) StdoutLine: {'line': b'-- Up-to-date: /home/parallels/ros2_ws/src/general/install/perception_interfaces/include/perception_interfaces/perception_interfaces/msg/detail/lidar_detected_prop__functions.c\n'}
+[6.174465] (perception_interfaces) StdoutLine: {'line': b'-- Installing: /home/parallels/ros2_ws/src/general/install/perception_interfaces/include/perception_interfaces/perception_interfaces/msg/detail/gate__type_support.h\n'}
+[6.174488] (perception_interfaces) StdoutLine: {'line': b'-- Installing: /home/parallels/ros2_ws/src/general/install/perception_interfaces/include/perception_interfaces/perception_interfaces/msg/detail/gate__functions.c\n'}
+[6.174516] (perception_interfaces) StdoutLine: {'line': b'-- Installing: /home/parallels/ros2_ws/src/general/install/perception_interfaces/include/perception_interfaces/perception_interfaces/msg/detail/bounding_boxes__struct.h\n'}
+[6.174539] (perception_interfaces) StdoutLine: {'line': b'-- Installing: /home/parallels/ros2_ws/src/general/install/perception_interfaces/include/perception_interfaces/perception_interfaces/msg/detail/bounding_boxes__type_support.h\n'}
+[6.174562] (perception_interfaces) StdoutLine: {'line': b'-- Installing: /home/parallels/ros2_ws/src/general/install/perception_interfaces/include/perception_interfaces/perception_interfaces/msg/detail/gate__functions.h\n'}
+[6.174585] (perception_interfaces) StdoutLine: {'line': b'-- Up-to-date: /home/parallels/ros2_ws/src/general/install/perception_interfaces/include/perception_interfaces/perception_interfaces/msg/detail/lidar_detected_prop__struct.h\n'}
+[6.174608] (perception_interfaces) StdoutLine: {'line': b'-- Installing: /home/parallels/ros2_ws/src/general/install/perception_interfaces/include/perception_interfaces/perception_interfaces/msg/detail/prop_array__struct.h\n'}
+[6.174631] (perception_interfaces) StdoutLine: {'line': b'-- Installing: /home/parallels/ros2_ws/src/general/install/perception_interfaces/include/perception_interfaces/perception_interfaces/msg/detail/prop__functions.h\n'}
+[6.174654] (perception_interfaces) StdoutLine: {'line': b'-- Installing: /home/parallels/ros2_ws/src/general/install/perception_interfaces/include/perception_interfaces/perception_interfaces/msg/bounding_boxes.h\n'}
+[6.174678] (perception_interfaces) StdoutLine: {'line': b'-- Installing: /home/parallels/ros2_ws/src/general/install/perception_interfaces/include/perception_interfaces/perception_interfaces/msg/gate_array.h\n'}
+[6.174702] (perception_interfaces) StdoutLine: {'line': b'-- Up-to-date: /home/parallels/ros2_ws/src/general/install/perception_interfaces/include/perception_interfaces/perception_interfaces/msg/lidar_detected_prop.h\n'}
+[6.174725] (perception_interfaces) StdoutLine: {'line': b'-- Up-to-date: /home/parallels/ros2_ws/src/general/install/perception_interfaces/include/perception_interfaces/perception_interfaces/msg/lidar_detected_prop_array.h\n'}
+[6.174747] (perception_interfaces) StdoutLine: {'line': b'-- Installing: /home/parallels/ros2_ws/src/general/install/perception_interfaces/include/perception_interfaces/perception_interfaces/msg/prop.h\n'}
+[6.174770] (perception_interfaces) StdoutLine: {'line': b'-- Installing: /home/parallels/ros2_ws/src/general/install/perception_interfaces/include/perception_interfaces/perception_interfaces/msg/bounding_box.h\n'}
+[6.174793] (perception_interfaces) StdoutLine: {'line': b'-- Installing: /home/parallels/ros2_ws/src/general/install/perception_interfaces/include/perception_interfaces/perception_interfaces/msg/gate.h\n'}
+[6.174815] (perception_interfaces) StdoutLine: {'line': b'-- Up-to-date: /home/parallels/ros2_ws/src/general/install/perception_interfaces/share/perception_interfaces/environment/library_path.sh\n'}
+[6.174837] (perception_interfaces) StdoutLine: {'line': b'-- Installing: /home/parallels/ros2_ws/src/general/install/perception_interfaces/share/perception_interfaces/environment/library_path.dsv\n'}
+[6.174860] (perception_interfaces) StdoutLine: {'line': b'-- Installing: /home/parallels/ros2_ws/src/general/install/perception_interfaces/lib/libperception_interfaces__rosidl_generator_c.so\n'}
+[6.174882] (perception_interfaces) StdoutLine: {'line': b'-- Set runtime path of "/home/parallels/ros2_ws/src/general/install/perception_interfaces/lib/libperception_interfaces__rosidl_generator_c.so" to ""\n'}
+[6.174904] (perception_interfaces) StdoutLine: {'line': b'-- Up-to-date: /home/parallels/ros2_ws/src/general/install/perception_interfaces/include/perception_interfaces/perception_interfaces\n'}
+[6.174926] (perception_interfaces) StdoutLine: {'line': b'-- Up-to-date: /home/parallels/ros2_ws/src/general/install/perception_interfaces/include/perception_interfaces/perception_interfaces/msg\n'}
+[6.174948] (perception_interfaces) StdoutLine: {'line': b'-- Up-to-date: /home/parallels/ros2_ws/src/general/install/perception_interfaces/include/perception_interfaces/perception_interfaces/msg/detail\n'}
+[6.174970] (perception_interfaces) StdoutLine: {'line': b'-- Up-to-date: /home/parallels/ros2_ws/src/general/install/perception_interfaces/include/perception_interfaces/perception_interfaces/msg/detail/lidar_detected_prop__rosidl_typesupport_fastrtps_c.h\n'}
+[6.174993] (perception_interfaces) StdoutLine: {'line': b'-- Installing: /home/parallels/ros2_ws/src/general/install/perception_interfaces/include/perception_interfaces/perception_interfaces/msg/detail/prop_array__rosidl_typesupport_fastrtps_c.h\n'}
+[6.175017] (perception_interfaces) StdoutLine: {'line': b'-- Installing: /home/parallels/ros2_ws/src/general/install/perception_interfaces/include/perception_interfaces/perception_interfaces/msg/detail/gate_array__rosidl_typesupport_fastrtps_c.h\n'}
+[6.175040] (perception_interfaces) StdoutLine: {'line': b'-- Up-to-date: /home/parallels/ros2_ws/src/general/install/perception_interfaces/include/perception_interfaces/perception_interfaces/msg/detail/lidar_detected_prop_array__rosidl_typesupport_fastrtps_c.h\n'}
+[6.175062] (perception_interfaces) StdoutLine: {'line': b'-- Installing: /home/parallels/ros2_ws/src/general/install/perception_interfaces/include/perception_interfaces/perception_interfaces/msg/detail/bounding_box__rosidl_typesupport_fastrtps_c.h\n'}
+[6.175084] (perception_interfaces) StdoutLine: {'line': b'-- Installing: /home/parallels/ros2_ws/src/general/install/perception_interfaces/include/perception_interfaces/perception_interfaces/msg/detail/bounding_boxes__rosidl_typesupport_fastrtps_c.h\n'}
+[6.175106] (perception_interfaces) StdoutLine: {'line': b'-- Installing: /home/parallels/ros2_ws/src/general/install/perception_interfaces/include/perception_interfaces/perception_interfaces/msg/detail/gate__rosidl_typesupport_fastrtps_c.h\n'}
+[6.175128] (perception_interfaces) StdoutLine: {'line': b'-- Installing: /home/parallels/ros2_ws/src/general/install/perception_interfaces/include/perception_interfaces/perception_interfaces/msg/detail/prop__rosidl_typesupport_fastrtps_c.h\n'}
+[6.175150] (perception_interfaces) StdoutLine: {'line': b'-- Up-to-date: /home/parallels/ros2_ws/src/general/install/perception_interfaces/include/perception_interfaces/perception_interfaces/msg/rosidl_typesupport_fastrtps_c__visibility_control.h\n'}
+[6.175173] (perception_interfaces) StdoutLine: {'line': b'-- Installing: /home/parallels/ros2_ws/src/general/install/perception_interfaces/lib/libperception_interfaces__rosidl_typesupport_fastrtps_c.so\n'}
+[6.175195] (perception_interfaces) StdoutLine: {'line': b'-- Set runtime path of "/home/parallels/ros2_ws/src/general/install/perception_interfaces/lib/libperception_interfaces__rosidl_typesupport_fastrtps_c.so" to ""\n'}
+[6.175218] (perception_interfaces) StdoutLine: {'line': b'-- Up-to-date: /home/parallels/ros2_ws/src/general/install/perception_interfaces/include/perception_interfaces/perception_interfaces\n'}
+[6.175241] (perception_interfaces) StdoutLine: {'line': b'-- Up-to-date: /home/parallels/ros2_ws/src/general/install/perception_interfaces/include/perception_interfaces/perception_interfaces/msg\n'}
+[6.175264] (perception_interfaces) StdoutLine: {'line': b'-- Up-to-date: /home/parallels/ros2_ws/src/general/install/perception_interfaces/include/perception_interfaces/perception_interfaces/msg/detail\n'}
+[6.175286] (perception_interfaces) StdoutLine: {'line': b'-- Installing: /home/parallels/ros2_ws/src/general/install/perception_interfaces/include/perception_interfaces/perception_interfaces/msg/detail/prop_array__traits.hpp\n'}
+[6.175308] (perception_interfaces) StdoutLine: {'line': b'-- Installing: /home/parallels/ros2_ws/src/general/install/perception_interfaces/include/perception_interfaces/perception_interfaces/msg/detail/prop__struct.hpp\n'}
+[6.175330] (perception_interfaces) StdoutLine: {'line': b'-- Installing: /home/parallels/ros2_ws/src/general/install/perception_interfaces/include/perception_interfaces/perception_interfaces/msg/detail/prop_array__builder.hpp\n'}
+[6.175352] (perception_interfaces) StdoutLine: {'line': b'-- Installing: /home/parallels/ros2_ws/src/general/install/perception_interfaces/include/perception_interfaces/perception_interfaces/msg/detail/bounding_box__struct.hpp\n'}
+[6.175374] (perception_interfaces) StdoutLine: {'line': b'-- Up-to-date: /home/parallels/ros2_ws/src/general/install/perception_interfaces/include/perception_interfaces/perception_interfaces/msg/detail/lidar_detected_prop__traits.hpp\n'}
+[6.175396] (perception_interfaces) StdoutLine: {'line': b'-- Installing: /home/parallels/ros2_ws/src/general/install/perception_interfaces/include/perception_interfaces/perception_interfaces/msg/detail/gate__traits.hpp\n'}
+[6.175418] (perception_interfaces) StdoutLine: {'line': b'-- Installing: /home/parallels/ros2_ws/src/general/install/perception_interfaces/include/perception_interfaces/perception_interfaces/msg/detail/gate__builder.hpp\n'}
+[6.175440] (perception_interfaces) StdoutLine: {'line': b'-- Up-to-date: /home/parallels/ros2_ws/src/general/install/perception_interfaces/include/perception_interfaces/perception_interfaces/msg/detail/lidar_detected_prop_array__builder.hpp\n'}
+[6.175462] (perception_interfaces) StdoutLine: {'line': b'-- Installing: /home/parallels/ros2_ws/src/general/install/perception_interfaces/include/perception_interfaces/perception_interfaces/msg/detail/prop_array__struct.hpp\n'}
+[6.175484] (perception_interfaces) StdoutLine: {'line': b'-- Installing: /home/parallels/ros2_ws/src/general/install/perception_interfaces/include/perception_interfaces/perception_interfaces/msg/detail/gate_array__struct.hpp\n'}
+[6.175506] (perception_interfaces) StdoutLine: {'line': b'-- Installing: /home/parallels/ros2_ws/src/general/install/perception_interfaces/include/perception_interfaces/perception_interfaces/msg/detail/prop__builder.hpp\n'}
+[6.175527] (perception_interfaces) StdoutLine: {'line': b'-- Installing: /home/parallels/ros2_ws/src/general/install/perception_interfaces/include/perception_interfaces/perception_interfaces/msg/detail/bounding_box__traits.hpp\n'}
+[6.175557] (perception_interfaces) StdoutLine: {'line': b'-- Up-to-date: /home/parallels/ros2_ws/src/general/install/perception_interfaces/include/perception_interfaces/perception_interfaces/msg/detail/lidar_detected_prop__builder.hpp\n'}
+[6.175579] (perception_interfaces) StdoutLine: {'line': b'-- Installing: /home/parallels/ros2_ws/src/general/install/perception_interfaces/include/perception_interfaces/perception_interfaces/msg/detail/gate__struct.hpp\n'}
+[6.175601] (perception_interfaces) StdoutLine: {'line': b'-- Installing: /home/parallels/ros2_ws/src/general/install/perception_interfaces/include/perception_interfaces/perception_interfaces/msg/detail/gate_array__traits.hpp\n'}
+[6.175623] (perception_interfaces) StdoutLine: {'line': b'-- Up-to-date: /home/parallels/ros2_ws/src/general/install/perception_interfaces/include/perception_interfaces/perception_interfaces/msg/detail/lidar_detected_prop_array__traits.hpp\n'}
+[6.175645] (perception_interfaces) StdoutLine: {'line': b'-- Up-to-date: /home/parallels/ros2_ws/src/general/install/perception_interfaces/include/perception_interfaces/perception_interfaces/msg/detail/lidar_detected_prop_array__struct.hpp\n'}
+[6.175705] (perception_interfaces) StdoutLine: {'line': b'-- Installing: /home/parallels/ros2_ws/src/general/install/perception_interfaces/include/perception_interfaces/perception_interfaces/msg/detail/gate_array__builder.hpp\n'}
+[6.175783] (perception_interfaces) StdoutLine: {'line': b'-- Installing: /home/parallels/ros2_ws/src/general/install/perception_interfaces/include/perception_interfaces/perception_interfaces/msg/detail/bounding_boxes__struct.hpp\n'}
+[6.175863] (perception_interfaces) StdoutLine: {'line': b'-- Installing: /home/parallels/ros2_ws/src/general/install/perception_interfaces/include/perception_interfaces/perception_interfaces/msg/detail/bounding_boxes__builder.hpp\n'}
+[6.175942] (perception_interfaces) StdoutLine: {'line': b'-- Installing: /home/parallels/ros2_ws/src/general/install/perception_interfaces/include/perception_interfaces/perception_interfaces/msg/detail/bounding_box__builder.hpp\n'}
+[6.176020] (perception_interfaces) StdoutLine: {'line': b'-- Up-to-date: /home/parallels/ros2_ws/src/general/install/perception_interfaces/include/perception_interfaces/perception_interfaces/msg/detail/lidar_detected_prop__struct.hpp\n'}
+[6.176064] (perception_interfaces) StdoutLine: {'line': b'-- Installing: /home/parallels/ros2_ws/src/general/install/perception_interfaces/include/perception_interfaces/perception_interfaces/msg/detail/prop__traits.hpp\n'}
+[6.176147] (perception_interfaces) StdoutLine: {'line': b'-- Installing: /home/parallels/ros2_ws/src/general/install/perception_interfaces/include/perception_interfaces/perception_interfaces/msg/detail/bounding_boxes__traits.hpp\n'}
+[6.176226] (perception_interfaces) StdoutLine: {'line': b'-- Installing: /home/parallels/ros2_ws/src/general/install/perception_interfaces/include/perception_interfaces/perception_interfaces/msg/prop_array.hpp\n'}
+[6.176302] (perception_interfaces) StdoutLine: {'line': b'-- Up-to-date: /home/parallels/ros2_ws/src/general/install/perception_interfaces/include/perception_interfaces/perception_interfaces/msg/lidar_detected_prop.hpp\n'}
+[6.176345] (perception_interfaces) StdoutLine: {'line': b'-- Installing: /home/parallels/ros2_ws/src/general/install/perception_interfaces/include/perception_interfaces/perception_interfaces/msg/gate.hpp\n'}
+[6.176419] (perception_interfaces) StdoutLine: {'line': b'-- Up-to-date: /home/parallels/ros2_ws/src/general/install/perception_interfaces/include/perception_interfaces/perception_interfaces/msg/lidar_detected_prop_array.hpp\n'}
+[6.176463] (perception_interfaces) StdoutLine: {'line': b'-- Installing: /home/parallels/ros2_ws/src/general/install/perception_interfaces/include/perception_interfaces/perception_interfaces/msg/gate_array.hpp\n'}
+[6.176547] (perception_interfaces) StdoutLine: {'line': b'-- Installing: /home/parallels/ros2_ws/src/general/install/perception_interfaces/include/perception_interfaces/perception_interfaces/msg/bounding_box.hpp\n'}
+[6.176620] (perception_interfaces) StdoutLine: {'line': b'-- Installing: /home/parallels/ros2_ws/src/general/install/perception_interfaces/include/perception_interfaces/perception_interfaces/msg/prop.hpp\n'}
+[6.176704] (perception_interfaces) StdoutLine: {'line': b'-- Installing: /home/parallels/ros2_ws/src/general/install/perception_interfaces/include/perception_interfaces/perception_interfaces/msg/bounding_boxes.hpp\n'}
+[6.176793] (perception_interfaces) StdoutLine: {'line': b'-- Up-to-date: /home/parallels/ros2_ws/src/general/install/perception_interfaces/include/perception_interfaces/perception_interfaces\n'}
+[6.176844] (perception_interfaces) StdoutLine: {'line': b'-- Up-to-date: /home/parallels/ros2_ws/src/general/install/perception_interfaces/include/perception_interfaces/perception_interfaces/msg\n'}
+[6.176892] (perception_interfaces) StdoutLine: {'line': b'-- Up-to-date: /home/parallels/ros2_ws/src/general/install/perception_interfaces/include/perception_interfaces/perception_interfaces/msg/detail\n'}
+[6.176947] (perception_interfaces) StdoutLine: {'line': b'-- Up-to-date: /home/parallels/ros2_ws/src/general/install/perception_interfaces/include/perception_interfaces/perception_interfaces/msg/detail/lidar_detected_prop_array__rosidl_typesupport_fastrtps_cpp.hpp\n'}
+[6.176995] (perception_interfaces) StdoutLine: {'line': b'-- Installing: /home/parallels/ros2_ws/src/general/install/perception_interfaces/include/perception_interfaces/perception_interfaces/msg/detail/gate__rosidl_typesupport_fastrtps_cpp.hpp\n'}
+[6.177076] (perception_interfaces) StdoutLine: {'line': b'-- Installing: /home/parallels/ros2_ws/src/general/install/perception_interfaces/include/perception_interfaces/perception_interfaces/msg/detail/prop_array__rosidl_typesupport_fastrtps_cpp.hpp\n'}
+[6.177154] (perception_interfaces) StdoutLine: {'line': b'-- Up-to-date: /home/parallels/ros2_ws/src/general/install/perception_interfaces/include/perception_interfaces/perception_interfaces/msg/detail/dds_fastrtps\n'}
+[6.177219] (perception_interfaces) StdoutLine: {'line': b'-- Installing: /home/parallels/ros2_ws/src/general/install/perception_interfaces/include/perception_interfaces/perception_interfaces/msg/detail/gate_array__rosidl_typesupport_fastrtps_cpp.hpp\n'}
+[6.177297] (perception_interfaces) StdoutLine: {'line': b'-- Installing: /home/parallels/ros2_ws/src/general/install/perception_interfaces/include/perception_interfaces/perception_interfaces/msg/detail/bounding_box__rosidl_typesupport_fastrtps_cpp.hpp\n'}
+[6.177374] (perception_interfaces) StdoutLine: {'line': b'-- Up-to-date: /home/parallels/ros2_ws/src/general/install/perception_interfaces/include/perception_interfaces/perception_interfaces/msg/detail/lidar_detected_prop__rosidl_typesupport_fastrtps_cpp.hpp\n'}
+[6.177421] (perception_interfaces) StdoutLine: {'line': b'-- Installing: /home/parallels/ros2_ws/src/general/install/perception_interfaces/include/perception_interfaces/perception_interfaces/msg/detail/bounding_boxes__rosidl_typesupport_fastrtps_cpp.hpp\n'}
+[6.177497] (perception_interfaces) StdoutLine: {'line': b'-- Installing: /home/parallels/ros2_ws/src/general/install/perception_interfaces/include/perception_interfaces/perception_interfaces/msg/detail/prop__rosidl_typesupport_fastrtps_cpp.hpp\n'}
+[6.177606] (perception_interfaces) StdoutLine: {'line': b'-- Up-to-date: /home/parallels/ros2_ws/src/general/install/perception_interfaces/include/perception_interfaces/perception_interfaces/msg/rosidl_typesupport_fastrtps_cpp__visibility_control.h\n'}
+[6.178631] (perception_interfaces) StdoutLine: {'line': b'-- Installing: /home/parallels/ros2_ws/src/general/install/perception_interfaces/lib/libperception_interfaces__rosidl_typesupport_fastrtps_cpp.so\n'}
+[6.178892] (perception_interfaces) StdoutLine: {'line': b'-- Set runtime path of "/home/parallels/ros2_ws/src/general/install/perception_interfaces/lib/libperception_interfaces__rosidl_typesupport_fastrtps_cpp.so" to ""\n'}
+[6.178955] (perception_interfaces) StdoutLine: {'line': b'-- Up-to-date: /home/parallels/ros2_ws/src/general/install/perception_interfaces/include/perception_interfaces/perception_interfaces\n'}
+[6.179005] (perception_interfaces) StdoutLine: {'line': b'-- Up-to-date: /home/parallels/ros2_ws/src/general/install/perception_interfaces/include/perception_interfaces/perception_interfaces/msg\n'}
+[6.179053] (perception_interfaces) StdoutLine: {'line': b'-- Up-to-date: /home/parallels/ros2_ws/src/general/install/perception_interfaces/include/perception_interfaces/perception_interfaces/msg/detail\n'}
+[6.179110] (perception_interfaces) StdoutLine: {'line': b'-- Up-to-date: /home/parallels/ros2_ws/src/general/install/perception_interfaces/include/perception_interfaces/perception_interfaces/msg/detail/lidar_detected_prop_array__type_support.c\n'}
+[6.179157] (perception_interfaces) StdoutLine: {'line': b'-- Up-to-date: /home/parallels/ros2_ws/src/general/install/perception_interfaces/include/perception_interfaces/perception_interfaces/msg/detail/lidar_detected_prop__type_support.c\n'}
+[6.179202] (perception_interfaces) StdoutLine: {'line': b'-- Installing: /home/parallels/ros2_ws/src/general/install/perception_interfaces/include/perception_interfaces/perception_interfaces/msg/detail/gate__rosidl_typesupport_introspection_c.h\n'}
+[6.179282] (perception_interfaces) StdoutLine: {'line': b'-- Installing: /home/parallels/ros2_ws/src/general/install/perception_interfaces/include/perception_interfaces/perception_interfaces/msg/detail/prop_array__rosidl_typesupport_introspection_c.h\n'}
+[6.179362] (perception_interfaces) StdoutLine: {'line': b'-- Installing: /home/parallels/ros2_ws/src/general/install/perception_interfaces/include/perception_interfaces/perception_interfaces/msg/detail/gate_array__rosidl_typesupport_introspection_c.h\n'}
+[6.179462] (perception_interfaces) StdoutLine: {'line': b'-- Installing: /home/parallels/ros2_ws/src/general/install/perception_interfaces/include/perception_interfaces/perception_interfaces/msg/detail/bounding_boxes__type_support.c\n'}
+[6.179554] (perception_interfaces) StdoutLine: {'line': b'-- Up-to-date: /home/parallels/ros2_ws/src/general/install/perception_interfaces/include/perception_interfaces/perception_interfaces/msg/detail/lidar_detected_prop__rosidl_typesupport_introspection_c.h\n'}
+[6.179599] (perception_interfaces) StdoutLine: {'line': b'-- Installing: /home/parallels/ros2_ws/src/general/install/perception_interfaces/include/perception_interfaces/perception_interfaces/msg/detail/gate__type_support.c\n'}
+[6.179694] (perception_interfaces) StdoutLine: {'line': b'-- Up-to-date: /home/parallels/ros2_ws/src/general/install/perception_interfaces/include/perception_interfaces/perception_interfaces/msg/detail/lidar_detected_prop_array__rosidl_typesupport_introspection_c.h\n'}
+[6.179750] (perception_interfaces) StdoutLine: {'line': b'-- Installing: /home/parallels/ros2_ws/src/general/install/perception_interfaces/include/perception_interfaces/perception_interfaces/msg/detail/gate_array__type_support.c\n'}
+[6.179839] (perception_interfaces) StdoutLine: {'line': b'-- Installing: /home/parallels/ros2_ws/src/general/install/perception_interfaces/include/perception_interfaces/perception_interfaces/msg/detail/bounding_boxes__rosidl_typesupport_introspection_c.h\n'}
+[6.179921] (perception_interfaces) StdoutLine: {'line': b'-- Installing: /home/parallels/ros2_ws/src/general/install/perception_interfaces/include/perception_interfaces/perception_interfaces/msg/detail/prop__rosidl_typesupport_introspection_c.h\n'}
+[6.180042] (perception_interfaces) StdoutLine: {'line': b'-- Installing: /home/parallels/ros2_ws/src/general/install/perception_interfaces/include/perception_interfaces/perception_interfaces/msg/detail/prop__type_support.c\n'}
+[6.180134] (perception_interfaces) StdoutLine: {'line': b'-- Installing: /home/parallels/ros2_ws/src/general/install/perception_interfaces/include/perception_interfaces/perception_interfaces/msg/detail/bounding_box__type_support.c\n'}
+[6.180221] (perception_interfaces) StdoutLine: {'line': b'-- Installing: /home/parallels/ros2_ws/src/general/install/perception_interfaces/include/perception_interfaces/perception_interfaces/msg/detail/prop_array__type_support.c\n'}
+[6.180304] (perception_interfaces) StdoutLine: {'line': b'-- Installing: /home/parallels/ros2_ws/src/general/install/perception_interfaces/include/perception_interfaces/perception_interfaces/msg/detail/bounding_box__rosidl_typesupport_introspection_c.h\n'}
+[6.180388] (perception_interfaces) StdoutLine: {'line': b'-- Up-to-date: /home/parallels/ros2_ws/src/general/install/perception_interfaces/include/perception_interfaces/perception_interfaces/msg/rosidl_typesupport_introspection_c__visibility_control.h\n'}
+[6.180834] (perception_interfaces) StdoutLine: {'line': b'-- Installing: /home/parallels/ros2_ws/src/general/install/perception_interfaces/lib/libperception_interfaces__rosidl_typesupport_introspection_c.so\n'}
+[6.181044] (perception_interfaces) StdoutLine: {'line': b'-- Set runtime path of "/home/parallels/ros2_ws/src/general/install/perception_interfaces/lib/libperception_interfaces__rosidl_typesupport_introspection_c.so" to ""\n'}
+[6.181189] (perception_interfaces) StdoutLine: {'line': b'-- Installing: /home/parallels/ros2_ws/src/general/install/perception_interfaces/lib/libperception_interfaces__rosidl_typesupport_c.so\n'}
+[6.181381] (perception_interfaces) StdoutLine: {'line': b'-- Set runtime path of "/home/parallels/ros2_ws/src/general/install/perception_interfaces/lib/libperception_interfaces__rosidl_typesupport_c.so" to ""\n'}
+[6.181444] (perception_interfaces) StdoutLine: {'line': b'-- Up-to-date: /home/parallels/ros2_ws/src/general/install/perception_interfaces/include/perception_interfaces/perception_interfaces\n'}
+[6.181503] (perception_interfaces) StdoutLine: {'line': b'-- Up-to-date: /home/parallels/ros2_ws/src/general/install/perception_interfaces/include/perception_interfaces/perception_interfaces/msg\n'}
+[6.181560] (perception_interfaces) StdoutLine: {'line': b'-- Up-to-date: /home/parallels/ros2_ws/src/general/install/perception_interfaces/include/perception_interfaces/perception_interfaces/msg/detail\n'}
+[6.181663] (perception_interfaces) StdoutLine: {'line': b'-- Installing: /home/parallels/ros2_ws/src/general/install/perception_interfaces/include/perception_interfaces/perception_interfaces/msg/detail/gate_array__rosidl_typesupport_introspection_cpp.hpp\n'}
+[6.182027] (perception_interfaces) StdoutLine: {'line': b'-- Up-to-date: /home/parallels/ros2_ws/src/general/install/perception_interfaces/include/perception_interfaces/perception_interfaces/msg/detail/lidar_detected_prop_array__type_support.cpp\n'}
+[6.182099] (perception_interfaces) StdoutLine: {'line': b'-- Installing: /home/parallels/ros2_ws/src/general/install/perception_interfaces/include/perception_interfaces/perception_interfaces/msg/detail/bounding_boxes__type_support.cpp\n'}
+[6.182225] (perception_interfaces) StdoutLine: {'line': b'-- Installing: /home/parallels/ros2_ws/src/general/install/perception_interfaces/include/perception_interfaces/perception_interfaces/msg/detail/bounding_boxes__rosidl_typesupport_introspection_cpp.hpp\n'}
+[6.182314] (perception_interfaces) StdoutLine: {'line': b'-- Up-to-date: /home/parallels/ros2_ws/src/general/install/perception_interfaces/include/perception_interfaces/perception_interfaces/msg/detail/lidar_detected_prop_array__rosidl_typesupport_introspection_cpp.hpp\n'}
+[6.182365] (perception_interfaces) StdoutLine: {'line': b'-- Installing: /home/parallels/ros2_ws/src/general/install/perception_interfaces/include/perception_interfaces/perception_interfaces/msg/detail/prop_array__type_support.cpp\n'}
+[6.182451] (perception_interfaces) StdoutLine: {'line': b'-- Installing: /home/parallels/ros2_ws/src/general/install/perception_interfaces/include/perception_interfaces/perception_interfaces/msg/detail/prop_array__rosidl_typesupport_introspection_cpp.hpp\n'}
+[6.182549] (perception_interfaces) StdoutLine: {'line': b'-- Installing: /home/parallels/ros2_ws/src/general/install/perception_interfaces/include/perception_interfaces/perception_interfaces/msg/detail/bounding_box__rosidl_typesupport_introspection_cpp.hpp\n'}
+[6.182636] (perception_interfaces) StdoutLine: {'line': b'-- Installing: /home/parallels/ros2_ws/src/general/install/perception_interfaces/include/perception_interfaces/perception_interfaces/msg/detail/prop__rosidl_typesupport_introspection_cpp.hpp\n'}
+[6.182726] (perception_interfaces) StdoutLine: {'line': b'-- Installing: /home/parallels/ros2_ws/src/general/install/perception_interfaces/include/perception_interfaces/perception_interfaces/msg/detail/gate__type_support.cpp\n'}
+[6.182811] (perception_interfaces) StdoutLine: {'line': b'-- Installing: /home/parallels/ros2_ws/src/general/install/perception_interfaces/include/perception_interfaces/perception_interfaces/msg/detail/bounding_box__type_support.cpp\n'}
+[6.182894] (perception_interfaces) StdoutLine: {'line': b'-- Installing: /home/parallels/ros2_ws/src/general/install/perception_interfaces/include/perception_interfaces/perception_interfaces/msg/detail/gate_array__type_support.cpp\n'}
+[6.182979] (perception_interfaces) StdoutLine: {'line': b'-- Installing: /home/parallels/ros2_ws/src/general/install/perception_interfaces/include/perception_interfaces/perception_interfaces/msg/detail/gate__rosidl_typesupport_introspection_cpp.hpp\n'}
+[6.183071] (perception_interfaces) StdoutLine: {'line': b'-- Installing: /home/parallels/ros2_ws/src/general/install/perception_interfaces/include/perception_interfaces/perception_interfaces/msg/detail/prop__type_support.cpp\n'}
+[6.183173] (perception_interfaces) StdoutLine: {'line': b'-- Up-to-date: /home/parallels/ros2_ws/src/general/install/perception_interfaces/include/perception_interfaces/perception_interfaces/msg/detail/lidar_detected_prop__rosidl_typesupport_introspection_cpp.hpp\n'}
+[6.183227] (perception_interfaces) StdoutLine: {'line': b'-- Up-to-date: /home/parallels/ros2_ws/src/general/install/perception_interfaces/include/perception_interfaces/perception_interfaces/msg/detail/lidar_detected_prop__type_support.cpp\n'}
+[6.183450] (perception_interfaces) StdoutLine: {'line': b'-- Installing: /home/parallels/ros2_ws/src/general/install/perception_interfaces/lib/libperception_interfaces__rosidl_typesupport_introspection_cpp.so\n'}
+[6.183701] (perception_interfaces) StdoutLine: {'line': b'-- Set runtime path of "/home/parallels/ros2_ws/src/general/install/perception_interfaces/lib/libperception_interfaces__rosidl_typesupport_introspection_cpp.so" to ""\n'}
+[6.183858] (perception_interfaces) StdoutLine: {'line': b'-- Installing: /home/parallels/ros2_ws/src/general/install/perception_interfaces/lib/libperception_interfaces__rosidl_typesupport_cpp.so\n'}
+[6.184066] (perception_interfaces) StdoutLine: {'line': b'-- Set runtime path of "/home/parallels/ros2_ws/src/general/install/perception_interfaces/lib/libperception_interfaces__rosidl_typesupport_cpp.so" to ""\n'}
+[6.184148] (perception_interfaces) StdoutLine: {'line': b'-- Up-to-date: /home/parallels/ros2_ws/src/general/install/perception_interfaces/share/perception_interfaces/environment/pythonpath.sh\n'}
+[6.184217] (perception_interfaces) StdoutLine: {'line': b'-- Installing: /home/parallels/ros2_ws/src/general/install/perception_interfaces/share/perception_interfaces/environment/pythonpath.dsv\n'}
+[6.184327] (perception_interfaces) StdoutLine: {'line': b'-- Up-to-date: /home/parallels/ros2_ws/src/general/install/perception_interfaces/local/lib/python3.10/dist-packages/perception_interfaces-0.0.0-py3.10.egg-info\n'}
+[6.184389] (perception_interfaces) StdoutLine: {'line': b'-- Installing: /home/parallels/ros2_ws/src/general/install/perception_interfaces/local/lib/python3.10/dist-packages/perception_interfaces-0.0.0-py3.10.egg-info/dependency_links.txt\n'}
+[6.184476] (perception_interfaces) StdoutLine: {'line': b'-- Installing: /home/parallels/ros2_ws/src/general/install/perception_interfaces/local/lib/python3.10/dist-packages/perception_interfaces-0.0.0-py3.10.egg-info/top_level.txt\n'}
+[6.184558] (perception_interfaces) StdoutLine: {'line': b'-- Installing: /home/parallels/ros2_ws/src/general/install/perception_interfaces/local/lib/python3.10/dist-packages/perception_interfaces-0.0.0-py3.10.egg-info/PKG-INFO\n'}
+[6.184641] (perception_interfaces) StdoutLine: {'line': b'-- Installing: /home/parallels/ros2_ws/src/general/install/perception_interfaces/local/lib/python3.10/dist-packages/perception_interfaces-0.0.0-py3.10.egg-info/SOURCES.txt\n'}
+[6.184739] (perception_interfaces) StdoutLine: {'line': b'-- Up-to-date: /home/parallels/ros2_ws/src/general/install/perception_interfaces/local/lib/python3.10/dist-packages/perception_interfaces\n'}
+[6.184798] (perception_interfaces) StdoutLine: {'line': b'-- Installing: /home/parallels/ros2_ws/src/general/install/perception_interfaces/local/lib/python3.10/dist-packages/perception_interfaces/_perception_interfaces_s.ep.rosidl_typesupport_introspection_c.c\n'}
+[6.184903] (perception_interfaces) StdoutLine: {'line': b'-- Installing: /home/parallels/ros2_ws/src/general/install/perception_interfaces/local/lib/python3.10/dist-packages/perception_interfaces/perception_interfaces_s__rosidl_typesupport_c.cpython-310-aarch64-linux-gnu.so\n'}
+[6.185001] (perception_interfaces) StdoutLine: {'line': b'-- Installing: /home/parallels/ros2_ws/src/general/install/perception_interfaces/local/lib/python3.10/dist-packages/perception_interfaces/_perception_interfaces_s.ep.rosidl_typesupport_c.c\n'}
+[6.185102] (perception_interfaces) StdoutLine: {'line': b'-- Installing: /home/parallels/ros2_ws/src/general/install/perception_interfaces/local/lib/python3.10/dist-packages/perception_interfaces/perception_interfaces_s__rosidl_typesupport_fastrtps_c.cpython-310-aarch64-linux-gnu.so\n'}
+[6.185212] (perception_interfaces) StdoutLine: {'line': b'-- Up-to-date: /home/parallels/ros2_ws/src/general/install/perception_interfaces/local/lib/python3.10/dist-packages/perception_interfaces/msg\n'}
+[6.185278] (perception_interfaces) StdoutLine: {'line': b'-- Up-to-date: /home/parallels/ros2_ws/src/general/install/perception_interfaces/local/lib/python3.10/dist-packages/perception_interfaces/msg/_lidar_detected_prop_array.py\n'}
+[6.185328] (perception_interfaces) StdoutLine: {'line': b'-- Installing: /home/parallels/ros2_ws/src/general/install/perception_interfaces/local/lib/python3.10/dist-packages/perception_interfaces/msg/_prop_array.py\n'}
+[6.185434] (perception_interfaces) StdoutLine: {'line': b'-- Installing: /home/parallels/ros2_ws/src/general/install/perception_interfaces/local/lib/python3.10/dist-packages/perception_interfaces/msg/_bounding_boxes_s.c\n'}
+[6.185519] (perception_interfaces) StdoutLine: {'line': b'-- Installing: /home/parallels/ros2_ws/src/general/install/perception_interfaces/local/lib/python3.10/dist-packages/perception_interfaces/msg/_gate_s.c\n'}
+[6.185616] (perception_interfaces) StdoutLine: {'line': b'-- Installing: /home/parallels/ros2_ws/src/general/install/perception_interfaces/local/lib/python3.10/dist-packages/perception_interfaces/msg/_prop_array_s.c\n'}
+[6.185694] (perception_interfaces) StdoutLine: {'line': b'-- Installing: /home/parallels/ros2_ws/src/general/install/perception_interfaces/local/lib/python3.10/dist-packages/perception_interfaces/msg/_bounding_box.py\n'}
+[6.185772] (perception_interfaces) StdoutLine: {'line': b'-- Installing: /home/parallels/ros2_ws/src/general/install/perception_interfaces/local/lib/python3.10/dist-packages/perception_interfaces/msg/_gate_array_s.c\n'}
+[6.185849] (perception_interfaces) StdoutLine: {'line': b'-- Up-to-date: /home/parallels/ros2_ws/src/general/install/perception_interfaces/local/lib/python3.10/dist-packages/perception_interfaces/msg/_lidar_detected_prop_array_s.c\n'}
+[6.185894] (perception_interfaces) StdoutLine: {'line': b'-- Installing: /home/parallels/ros2_ws/src/general/install/perception_interfaces/local/lib/python3.10/dist-packages/perception_interfaces/msg/_bounding_box_s.c\n'}
+[6.185988] (perception_interfaces) StdoutLine: {'line': b'-- Installing: /home/parallels/ros2_ws/src/general/install/perception_interfaces/local/lib/python3.10/dist-packages/perception_interfaces/msg/_gate_array.py\n'}
+[6.186074] (perception_interfaces) StdoutLine: {'line': b'-- Installing: /home/parallels/ros2_ws/src/general/install/perception_interfaces/local/lib/python3.10/dist-packages/perception_interfaces/msg/_gate.py\n'}
+[6.186155] (perception_interfaces) StdoutLine: {'line': b'-- Installing: /home/parallels/ros2_ws/src/general/install/perception_interfaces/local/lib/python3.10/dist-packages/perception_interfaces/msg/_prop.py\n'}
+[6.186257] (perception_interfaces) StdoutLine: {'line': b'-- Up-to-date: /home/parallels/ros2_ws/src/general/install/perception_interfaces/local/lib/python3.10/dist-packages/perception_interfaces/msg/_lidar_detected_prop.py\n'}
+[6.186287] (perception_interfaces) StdoutLine: {'line': b'-- Installing: /home/parallels/ros2_ws/src/general/install/perception_interfaces/local/lib/python3.10/dist-packages/perception_interfaces/msg/__init__.py\n'}
+[6.186371] (perception_interfaces) StdoutLine: {'line': b'-- Up-to-date: /home/parallels/ros2_ws/src/general/install/perception_interfaces/local/lib/python3.10/dist-packages/perception_interfaces/msg/_lidar_detected_prop_s.c\n'}
+[6.186416] (perception_interfaces) StdoutLine: {'line': b'-- Installing: /home/parallels/ros2_ws/src/general/install/perception_interfaces/local/lib/python3.10/dist-packages/perception_interfaces/msg/_bounding_boxes.py\n'}
+[6.186495] (perception_interfaces) StdoutLine: {'line': b'-- Installing: /home/parallels/ros2_ws/src/general/install/perception_interfaces/local/lib/python3.10/dist-packages/perception_interfaces/msg/_prop_s.c\n'}
+[6.186575] (perception_interfaces) StdoutLine: {'line': b'-- Installing: /home/parallels/ros2_ws/src/general/install/perception_interfaces/local/lib/python3.10/dist-packages/perception_interfaces/libperception_interfaces__rosidl_generator_py.so\n'}
+[6.186678] (perception_interfaces) StdoutLine: {'line': b'-- Installing: /home/parallels/ros2_ws/src/general/install/perception_interfaces/local/lib/python3.10/dist-packages/perception_interfaces/__init__.py\n'}
+[6.186754] (perception_interfaces) StdoutLine: {'line': b'-- Installing: /home/parallels/ros2_ws/src/general/install/perception_interfaces/local/lib/python3.10/dist-packages/perception_interfaces/perception_interfaces_s__rosidl_typesupport_introspection_c.cpython-310-aarch64-linux-gnu.so\n'}
+[6.186848] (perception_interfaces) StdoutLine: {'line': b'-- Installing: /home/parallels/ros2_ws/src/general/install/perception_interfaces/local/lib/python3.10/dist-packages/perception_interfaces/_perception_interfaces_s.ep.rosidl_typesupport_fastrtps_c.c\n'}
+[6.207157] (perception_interfaces) StdoutLine: {'line': b"Listing '/home/parallels/ros2_ws/src/general/install/perception_interfaces/local/lib/python3.10/dist-packages/perception_interfaces'...\n"}
+[6.207230] (perception_interfaces) StdoutLine: {'line': b"Compiling '/home/parallels/ros2_ws/src/general/install/perception_interfaces/local/lib/python3.10/dist-packages/perception_interfaces/__init__.py'...\n"}
+[6.207259] (perception_interfaces) StdoutLine: {'line': b"Listing '/home/parallels/ros2_ws/src/general/install/perception_interfaces/local/lib/python3.10/dist-packages/perception_interfaces/msg'...\n"}
+[6.207283] (perception_interfaces) StdoutLine: {'line': b"Compiling '/home/parallels/ros2_ws/src/general/install/perception_interfaces/local/lib/python3.10/dist-packages/perception_interfaces/msg/__init__.py'...\n"}
+[6.207310] (perception_interfaces) StdoutLine: {'line': b"Compiling '/home/parallels/ros2_ws/src/general/install/perception_interfaces/local/lib/python3.10/dist-packages/perception_interfaces/msg/_bounding_box.py'...\n"}
+[6.207333] (perception_interfaces) StdoutLine: {'line': b"Compiling '/home/parallels/ros2_ws/src/general/install/perception_interfaces/local/lib/python3.10/dist-packages/perception_interfaces/msg/_bounding_boxes.py'...\n"}
+[6.207372] (perception_interfaces) StdoutLine: {'line': b"Compiling '/home/parallels/ros2_ws/src/general/install/perception_interfaces/local/lib/python3.10/dist-packages/perception_interfaces/msg/_gate.py'...\n"}
+[6.207398] (perception_interfaces) StdoutLine: {'line': b"Compiling '/home/parallels/ros2_ws/src/general/install/perception_interfaces/local/lib/python3.10/dist-packages/perception_interfaces/msg/_gate_array.py'...\n"}
+[6.207421] (perception_interfaces) StdoutLine: {'line': b"Compiling '/home/parallels/ros2_ws/src/general/install/perception_interfaces/local/lib/python3.10/dist-packages/perception_interfaces/msg/_prop.py'...\n"}
+[6.207443] (perception_interfaces) StdoutLine: {'line': b"Compiling '/home/parallels/ros2_ws/src/general/install/perception_interfaces/local/lib/python3.10/dist-packages/perception_interfaces/msg/_prop_array.py'...\n"}
+[6.209940] (perception_interfaces) StdoutLine: {'line': b'-- Installing: /home/parallels/ros2_ws/src/general/install/perception_interfaces/local/lib/python3.10/dist-packages/perception_interfaces/perception_interfaces_s__rosidl_typesupport_fastrtps_c.cpython-310-aarch64-linux-gnu.so\n'}
+[6.210103] (perception_interfaces) StdoutLine: {'line': b'-- Set runtime path of "/home/parallels/ros2_ws/src/general/install/perception_interfaces/local/lib/python3.10/dist-packages/perception_interfaces/perception_interfaces_s__rosidl_typesupport_fastrtps_c.cpython-310-aarch64-linux-gnu.so" to ""\n'}
+[6.210199] (perception_interfaces) StdoutLine: {'line': b'-- Installing: /home/parallels/ros2_ws/src/general/install/perception_interfaces/local/lib/python3.10/dist-packages/perception_interfaces/perception_interfaces_s__rosidl_typesupport_introspection_c.cpython-310-aarch64-linux-gnu.so\n'}
+[6.210354] (perception_interfaces) StdoutLine: {'line': b'-- Set runtime path of "/home/parallels/ros2_ws/src/general/install/perception_interfaces/local/lib/python3.10/dist-packages/perception_interfaces/perception_interfaces_s__rosidl_typesupport_introspection_c.cpython-310-aarch64-linux-gnu.so" to ""\n'}
+[6.210446] (perception_interfaces) StdoutLine: {'line': b'-- Installing: /home/parallels/ros2_ws/src/general/install/perception_interfaces/local/lib/python3.10/dist-packages/perception_interfaces/perception_interfaces_s__rosidl_typesupport_c.cpython-310-aarch64-linux-gnu.so\n'}
+[6.210596] (perception_interfaces) StdoutLine: {'line': b'-- Set runtime path of "/home/parallels/ros2_ws/src/general/install/perception_interfaces/local/lib/python3.10/dist-packages/perception_interfaces/perception_interfaces_s__rosidl_typesupport_c.cpython-310-aarch64-linux-gnu.so" to ""\n'}
+[6.210777] (perception_interfaces) StdoutLine: {'line': b'-- Installing: /home/parallels/ros2_ws/src/general/install/perception_interfaces/lib/libperception_interfaces__rosidl_generator_py.so\n'}
+[6.210952] (perception_interfaces) StdoutLine: {'line': b'-- Set runtime path of "/home/parallels/ros2_ws/src/general/install/perception_interfaces/lib/libperception_interfaces__rosidl_generator_py.so" to ""\n'}
+[6.210984] (perception_interfaces) StdoutLine: {'line': b'-- Installing: /home/parallels/ros2_ws/src/general/install/perception_interfaces/share/perception_interfaces/msg/Prop.idl\n'}
+[6.211039] (perception_interfaces) StdoutLine: {'line': b'-- Installing: /home/parallels/ros2_ws/src/general/install/perception_interfaces/share/perception_interfaces/msg/PropArray.idl\n'}
+[6.211105] (perception_interfaces) StdoutLine: {'line': b'-- Installing: /home/parallels/ros2_ws/src/general/install/perception_interfaces/share/perception_interfaces/msg/BoundingBox.idl\n'}
+[6.211172] (perception_interfaces) StdoutLine: {'line': b'-- Installing: /home/parallels/ros2_ws/src/general/install/perception_interfaces/share/perception_interfaces/msg/BoundingBoxes.idl\n'}
+[6.211227] (perception_interfaces) StdoutLine: {'line': b'-- Installing: /home/parallels/ros2_ws/src/general/install/perception_interfaces/share/perception_interfaces/msg/Gate.idl\n'}
+[6.211278] (perception_interfaces) StdoutLine: {'line': b'-- Installing: /home/parallels/ros2_ws/src/general/install/perception_interfaces/share/perception_interfaces/msg/GateArray.idl\n'}
+[6.211330] (perception_interfaces) StdoutLine: {'line': b'-- Installing: /home/parallels/ros2_ws/src/general/install/perception_interfaces/share/perception_interfaces/msg/Prop.msg\n'}
+[6.211398] (perception_interfaces) StdoutLine: {'line': b'-- Installing: /home/parallels/ros2_ws/src/general/install/perception_interfaces/share/perception_interfaces/msg/PropArray.msg\n'}
+[6.211464] (perception_interfaces) StdoutLine: {'line': b'-- Installing: /home/parallels/ros2_ws/src/general/install/perception_interfaces/share/perception_interfaces/msg/BoundingBox.msg\n'}
+[6.211513] (perception_interfaces) StdoutLine: {'line': b'-- Installing: /home/parallels/ros2_ws/src/general/install/perception_interfaces/share/perception_interfaces/msg/BoundingBoxes.msg\n'}
+[6.211570] (perception_interfaces) StdoutLine: {'line': b'-- Installing: /home/parallels/ros2_ws/src/general/install/perception_interfaces/share/perception_interfaces/msg/Gate.msg\n'}
+[6.211618] (perception_interfaces) StdoutLine: {'line': b'-- Installing: /home/parallels/ros2_ws/src/general/install/perception_interfaces/share/perception_interfaces/msg/GateArray.msg\n'}
+[6.211673] (perception_interfaces) StdoutLine: {'line': b'-- Up-to-date: /home/parallels/ros2_ws/src/general/install/perception_interfaces/share/ament_index/resource_index/package_run_dependencies/perception_interfaces\n'}
+[6.211706] (perception_interfaces) StdoutLine: {'line': b'-- Up-to-date: /home/parallels/ros2_ws/src/general/install/perception_interfaces/share/ament_index/resource_index/parent_prefix_path/perception_interfaces\n'}
+[6.211750] (perception_interfaces) StdoutLine: {'line': b'-- Up-to-date: /home/parallels/ros2_ws/src/general/install/perception_interfaces/share/perception_interfaces/environment/ament_prefix_path.sh\n'}
+[6.211773] (perception_interfaces) StdoutLine: {'line': b'-- Installing: /home/parallels/ros2_ws/src/general/install/perception_interfaces/share/perception_interfaces/environment/ament_prefix_path.dsv\n'}
+[6.211809] (perception_interfaces) StdoutLine: {'line': b'-- Up-to-date: /home/parallels/ros2_ws/src/general/install/perception_interfaces/share/perception_interfaces/environment/path.sh\n'}
+[6.211846] (perception_interfaces) StdoutLine: {'line': b'-- Installing: /home/parallels/ros2_ws/src/general/install/perception_interfaces/share/perception_interfaces/environment/path.dsv\n'}
+[6.211892] (perception_interfaces) StdoutLine: {'line': b'-- Up-to-date: /home/parallels/ros2_ws/src/general/install/perception_interfaces/share/perception_interfaces/local_setup.bash\n'}
+[6.211923] (perception_interfaces) StdoutLine: {'line': b'-- Up-to-date: /home/parallels/ros2_ws/src/general/install/perception_interfaces/share/perception_interfaces/local_setup.sh\n'}
+[6.211961] (perception_interfaces) StdoutLine: {'line': b'-- Up-to-date: /home/parallels/ros2_ws/src/general/install/perception_interfaces/share/perception_interfaces/local_setup.zsh\n'}
+[6.211989] (perception_interfaces) StdoutLine: {'line': b'-- Installing: /home/parallels/ros2_ws/src/general/install/perception_interfaces/share/perception_interfaces/local_setup.dsv\n'}
+[6.212021] (perception_interfaces) StdoutLine: {'line': b'-- Installing: /home/parallels/ros2_ws/src/general/install/perception_interfaces/share/perception_interfaces/package.dsv\n'}
+[6.212077] (perception_interfaces) StdoutLine: {'line': b'-- Up-to-date: /home/parallels/ros2_ws/src/general/install/perception_interfaces/share/ament_index/resource_index/packages/perception_interfaces\n'}
+[6.212455] (perception_interfaces) StdoutLine: {'line': b'-- Up-to-date: /home/parallels/ros2_ws/src/general/install/perception_interfaces/share/perception_interfaces/cmake/export_perception_interfaces__rosidl_generator_cExport.cmake\n'}
+[6.212488] (perception_interfaces) StdoutLine: {'line': b'-- Up-to-date: /home/parallels/ros2_ws/src/general/install/perception_interfaces/share/perception_interfaces/cmake/export_perception_interfaces__rosidl_generator_cExport-noconfig.cmake\n'}
+[6.212566] (perception_interfaces) StdoutLine: {'line': b'-- Up-to-date: /home/parallels/ros2_ws/src/general/install/perception_interfaces/share/perception_interfaces/cmake/export_perception_interfaces__rosidl_typesupport_fastrtps_cExport.cmake\n'}
+[6.212598] (perception_interfaces) StdoutLine: {'line': b'-- Up-to-date: /home/parallels/ros2_ws/src/general/install/perception_interfaces/share/perception_interfaces/cmake/export_perception_interfaces__rosidl_typesupport_fastrtps_cExport-noconfig.cmake\n'}
+[6.212884] (perception_interfaces) StdoutLine: {'line': b'-- Up-to-date: /home/parallels/ros2_ws/src/general/install/perception_interfaces/share/perception_interfaces/cmake/export_perception_interfaces__rosidl_generator_cppExport.cmake\n'}
+[6.212952] (perception_interfaces) StdoutLine: {'line': b'-- Up-to-date: /home/parallels/ros2_ws/src/general/install/perception_interfaces/share/perception_interfaces/cmake/export_perception_interfaces__rosidl_typesupport_fastrtps_cppExport.cmake\n'}
+[6.212984] (perception_interfaces) StdoutLine: {'line': b'-- Up-to-date: /home/parallels/ros2_ws/src/general/install/perception_interfaces/share/perception_interfaces/cmake/export_perception_interfaces__rosidl_typesupport_fastrtps_cppExport-noconfig.cmake\n'}
+[6.213117] (-) TimerEvent: {}
+[6.213234] (perception_interfaces) StdoutLine: {'line': b'-- Up-to-date: /home/parallels/ros2_ws/src/general/install/perception_interfaces/share/perception_interfaces/cmake/perception_interfaces__rosidl_typesupport_introspection_cExport.cmake\n'}
+[6.213272] (perception_interfaces) StdoutLine: {'line': b'-- Up-to-date: /home/parallels/ros2_ws/src/general/install/perception_interfaces/share/perception_interfaces/cmake/perception_interfaces__rosidl_typesupport_introspection_cExport-noconfig.cmake\n'}
+[6.213334] (perception_interfaces) StdoutLine: {'line': b'-- Up-to-date: /home/parallels/ros2_ws/src/general/install/perception_interfaces/share/perception_interfaces/cmake/perception_interfaces__rosidl_typesupport_cExport.cmake\n'}
+[6.213365] (perception_interfaces) StdoutLine: {'line': b'-- Up-to-date: /home/parallels/ros2_ws/src/general/install/perception_interfaces/share/perception_interfaces/cmake/perception_interfaces__rosidl_typesupport_cExport-noconfig.cmake\n'}
+[6.213429] (perception_interfaces) StdoutLine: {'line': b'-- Up-to-date: /home/parallels/ros2_ws/src/general/install/perception_interfaces/share/perception_interfaces/cmake/perception_interfaces__rosidl_typesupport_introspection_cppExport.cmake\n'}
+[6.213461] (perception_interfaces) StdoutLine: {'line': b'-- Up-to-date: /home/parallels/ros2_ws/src/general/install/perception_interfaces/share/perception_interfaces/cmake/perception_interfaces__rosidl_typesupport_introspection_cppExport-noconfig.cmake\n'}
+[6.213521] (perception_interfaces) StdoutLine: {'line': b'-- Up-to-date: /home/parallels/ros2_ws/src/general/install/perception_interfaces/share/perception_interfaces/cmake/perception_interfaces__rosidl_typesupport_cppExport.cmake\n'}
+[6.213554] (perception_interfaces) StdoutLine: {'line': b'-- Up-to-date: /home/parallels/ros2_ws/src/general/install/perception_interfaces/share/perception_interfaces/cmake/perception_interfaces__rosidl_typesupport_cppExport-noconfig.cmake\n'}
+[6.213624] (perception_interfaces) StdoutLine: {'line': b'-- Up-to-date: /home/parallels/ros2_ws/src/general/install/perception_interfaces/share/perception_interfaces/cmake/export_perception_interfaces__rosidl_generator_pyExport.cmake\n'}
+[6.213655] (perception_interfaces) StdoutLine: {'line': b'-- Up-to-date: /home/parallels/ros2_ws/src/general/install/perception_interfaces/share/perception_interfaces/cmake/export_perception_interfaces__rosidl_generator_pyExport-noconfig.cmake\n'}
+[6.213693] (perception_interfaces) StdoutLine: {'line': b'-- Installing: /home/parallels/ros2_ws/src/general/install/perception_interfaces/share/perception_interfaces/cmake/rosidl_cmake-extras.cmake\n'}
+[6.213768] (perception_interfaces) StdoutLine: {'line': b'-- Up-to-date: /home/parallels/ros2_ws/src/general/install/perception_interfaces/share/perception_interfaces/cmake/ament_cmake_export_dependencies-extras.cmake\n'}
+[6.213800] (perception_interfaces) StdoutLine: {'line': b'-- Up-to-date: /home/parallels/ros2_ws/src/general/install/perception_interfaces/share/perception_interfaces/cmake/ament_cmake_export_include_directories-extras.cmake\n'}
+[6.213833] (perception_interfaces) StdoutLine: {'line': b'-- Up-to-date: /home/parallels/ros2_ws/src/general/install/perception_interfaces/share/perception_interfaces/cmake/ament_cmake_export_libraries-extras.cmake\n'}
+[6.213857] (perception_interfaces) StdoutLine: {'line': b'-- Up-to-date: /home/parallels/ros2_ws/src/general/install/perception_interfaces/share/perception_interfaces/cmake/ament_cmake_export_targets-extras.cmake\n'}
+[6.213889] (perception_interfaces) StdoutLine: {'line': b'-- Up-to-date: /home/parallels/ros2_ws/src/general/install/perception_interfaces/share/perception_interfaces/cmake/rosidl_cmake_export_typesupport_targets-extras.cmake\n'}
+[6.213914] (perception_interfaces) StdoutLine: {'line': b'-- Up-to-date: /home/parallels/ros2_ws/src/general/install/perception_interfaces/share/perception_interfaces/cmake/rosidl_cmake_export_typesupport_libraries-extras.cmake\n'}
+[6.213948] (perception_interfaces) StdoutLine: {'line': b'-- Up-to-date: /home/parallels/ros2_ws/src/general/install/perception_interfaces/share/perception_interfaces/cmake/perception_interfacesConfig.cmake\n'}
+[6.213971] (perception_interfaces) StdoutLine: {'line': b'-- Up-to-date: /home/parallels/ros2_ws/src/general/install/perception_interfaces/share/perception_interfaces/cmake/perception_interfacesConfig-version.cmake\n'}
+[6.213996] (perception_interfaces) StdoutLine: {'line': b'-- Up-to-date: /home/parallels/ros2_ws/src/general/install/perception_interfaces/share/perception_interfaces/package.xml\n'}
+[6.218004] (perception_interfaces) CommandEnded: {'returncode': 0}
+[6.301013] (perception_interfaces) JobEnded: {'identifier': 'perception_interfaces', 'rc': 0}
+[6.301311] (perception) JobStarted: {'identifier': 'perception'}
+[6.313738] (-) TimerEvent: {}
+[6.314491] (perception) JobProgress: {'identifier': 'perception', 'progress': 'cmake'}
+[6.316192] (perception) JobProgress: {'identifier': 'perception', 'progress': 'build'}
+[6.316209] (perception) Command: {'cmd': ['/usr/bin/cmake', '--build', '/home/parallels/ros2_ws/src/general/build/perception', '--', '-j2', '-l2'], 'cwd': '/home/parallels/ros2_ws/src/general/build/perception', 'env': OrderedDict([('LESSOPEN', '| /usr/bin/lesspipe %s'), ('GZ_SIM_RESOURCE_PATH', '/home/parallels/ros2_ws/src/ardupilot_gazebo/models:/home/parallels/ros2_ws/src/ardupilot_gazebo/worlds:/home/parallels/ros2_ws/src/iceberg_sim/models:'), ('no_proxy', 'localhost,127.0.0.0/8,::1'), ('USER', 'parallels'), ('XDG_SESSION_TYPE', 'wayland'), ('SHLVL', '1'), ('LD_LIBRARY_PATH', '/home/parallels/ros2_ws/src/general/install/slg_msgs/lib:/home/parallels/ros2_ws/src/general/install/perception_interfaces/lib:/opt/ros/humble/opt/rviz_ogre_vendor/lib:/opt/ros/humble/lib/aarch64-linux-gnu:/opt/ros/humble/lib'), ('HOME', '/home/parallels'), ('OLDPWD', '/home/parallels'), ('DESKTOP_SESSION', 'ubuntu'), ('NO_PROXY', 'localhost,127.0.0.0/8,::1'), ('ROS_PYTHON_VERSION', '3'), ('GNOME_SHELL_SESSION_MODE', 'ubuntu'), ('GTK_MODULES', 'gail:atk-bridge'), ('SYSTEMD_EXEC_PID', '1815'), ('DBUS_SESSION_BUS_ADDRESS', 'unix:path=/run/user/1000/bus'), ('COLORTERM', 'truecolor'), ('_colcon_cd_root', '/home/parallels/ros2_install'), ('IM_CONFIG_PHASE', '1'), ('WAYLAND_DISPLAY', 'wayland-0'), ('ROS_DISTRO', 'humble'), ('LOGNAME', 'parallels'), ('_', '/usr/bin/colcon'), ('ROS_VERSION', '2'), ('XDG_SESSION_CLASS', 'user'), ('USERNAME', 'parallels'), ('TERM', 'xterm-256color'), ('GNOME_DESKTOP_SESSION_ID', 'this-is-deprecated'), ('ROS_LOCALHOST_ONLY', '0'), ('PATH', '/opt/ros/humble/bin:/usr/lib/ccache:/home/parallels/ros2_ws/src/ardupilot/Tools/autotest:/opt/gcc-arm-none-eabi-10-2020-q4-major/bin:/home/parallels/.local/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/snap/bin:/snap/bin:/home/parallels/Micro-XRCE-DDS-Gen/scripts'), ('SESSION_MANAGER', 'local/ubuntu-linux-22-04-desktop:@/tmp/.ICE-unix/1792,unix/ubuntu-linux-22-04-desktop:/tmp/.ICE-unix/1792'), ('XDG_MENU_PREFIX', 'gnome-'), ('GNOME_TERMINAL_SCREEN', '/org/gnome/Terminal/screen/ae8e7e6f_a0c4_48b7_9b0e_8ed12784624c'), ('GNOME_SETUP_DISPLAY', ':1'), ('XDG_RUNTIME_DIR', '/run/user/1000'), ('DISPLAY', ':0'), ('LANG', 'en_US.UTF-8'), ('XDG_CURRENT_DESKTOP', 'ubuntu:GNOME'), ('XMODIFIERS', '@im=ibus'), ('XDG_SESSION_DESKTOP', 'ubuntu'), ('XAUTHORITY', '/run/user/1000/.mutter-Xwaylandauth.I3J8Q2'), ('LS_COLORS', 'rs=0:di=01;34:ln=01;36:mh=00:pi=40;33:so=01;35:do=01;35:bd=40;33;01:cd=40;33;01:or=40;31;01:mi=00:su=37;41:sg=30;43:ca=30;41:tw=30;42:ow=34;42:st=37;44:ex=01;32:*.tar=01;31:*.tgz=01;31:*.arc=01;31:*.arj=01;31:*.taz=01;31:*.lha=01;31:*.lz4=01;31:*.lzh=01;31:*.lzma=01;31:*.tlz=01;31:*.txz=01;31:*.tzo=01;31:*.t7z=01;31:*.zip=01;31:*.z=01;31:*.dz=01;31:*.gz=01;31:*.lrz=01;31:*.lz=01;31:*.lzo=01;31:*.xz=01;31:*.zst=01;31:*.tzst=01;31:*.bz2=01;31:*.bz=01;31:*.tbz=01;31:*.tbz2=01;31:*.tz=01;31:*.deb=01;31:*.rpm=01;31:*.jar=01;31:*.war=01;31:*.ear=01;31:*.sar=01;31:*.rar=01;31:*.alz=01;31:*.ace=01;31:*.zoo=01;31:*.cpio=01;31:*.7z=01;31:*.rz=01;31:*.cab=01;31:*.wim=01;31:*.swm=01;31:*.dwm=01;31:*.esd=01;31:*.jpg=01;35:*.jpeg=01;35:*.mjpg=01;35:*.mjpeg=01;35:*.gif=01;35:*.bmp=01;35:*.pbm=01;35:*.pgm=01;35:*.ppm=01;35:*.tga=01;35:*.xbm=01;35:*.xpm=01;35:*.tif=01;35:*.tiff=01;35:*.png=01;35:*.svg=01;35:*.svgz=01;35:*.mng=01;35:*.pcx=01;35:*.mov=01;35:*.mpg=01;35:*.mpeg=01;35:*.m2v=01;35:*.mkv=01;35:*.webm=01;35:*.webp=01;35:*.ogm=01;35:*.mp4=01;35:*.m4v=01;35:*.mp4v=01;35:*.vob=01;35:*.qt=01;35:*.nuv=01;35:*.wmv=01;35:*.asf=01;35:*.rm=01;35:*.rmvb=01;35:*.flc=01;35:*.avi=01;35:*.fli=01;35:*.flv=01;35:*.gl=01;35:*.dl=01;35:*.xcf=01;35:*.xwd=01;35:*.yuv=01;35:*.cgm=01;35:*.emf=01;35:*.ogv=01;35:*.ogx=01;35:*.aac=00;36:*.au=00;36:*.flac=00;36:*.m4a=00;36:*.mid=00;36:*.midi=00;36:*.mka=00;36:*.mp3=00;36:*.mpc=00;36:*.ogg=00;36:*.ra=00;36:*.wav=00;36:*.oga=00;36:*.opus=00;36:*.spx=00;36:*.xspf=00;36:'), ('GNOME_TERMINAL_SERVICE', ':1.94'), ('SSH_AGENT_LAUNCHER', 'gnome-keyring'), ('SSH_AUTH_SOCK', '/run/user/1000/keyring/ssh'), ('AMENT_PREFIX_PATH', '/home/parallels/ros2_ws/src/general/install/slg_msgs:/home/parallels/ros2_ws/src/general/install/perception_interfaces:/opt/ros/humble'), ('SHELL', '/bin/bash'), ('QT_ACCESSIBILITY', '1'), ('GDMSESSION', 'ubuntu'), ('LESSCLOSE', '/usr/bin/lesspipe %s %s'), ('GZ_VERSION', 'garden'), ('QT_IM_MODULE', 'ibus'), ('PWD', '/home/parallels/ros2_ws/src/general/build/perception'), ('LC_ALL', 'en_US.UTF-8'), ('XDG_CONFIG_DIRS', '/etc/xdg/xdg-ubuntu:/etc/xdg'), ('XDG_DATA_DIRS', '/usr/share/ubuntu:/usr/local/share/:/usr/share/:/var/lib/snapd/desktop'), ('PYTHONPATH', '/home/parallels/ros2_ws/src/general/install/slg_msgs/local/lib/python3.10/dist-packages:/home/parallels/ros2_ws/src/general/install/perception_interfaces/local/lib/python3.10/dist-packages:/opt/ros/humble/lib/python3.10/site-packages:/opt/ros/humble/local/lib/python3.10/dist-packages'), ('COLCON', '1'), ('VTE_VERSION', '6800'), ('CMAKE_PREFIX_PATH', '/home/parallels/ros2_ws/src/general/install/slg_msgs:/home/parallels/ros2_ws/src/general/install/perception_interfaces:/opt/ros/humble')]), 'shell': False}
+[6.339563] (perception) StdoutLine: {'line': b'-- Found ament_cmake: 1.3.9 (/opt/ros/humble/share/ament_cmake/cmake)\n'}
+[6.401797] (perception) StdoutLine: {'line': b'-- Found rclcpp: 16.0.9 (/opt/ros/humble/share/rclcpp/cmake)\n'}
+[6.413837] (-) TimerEvent: {}
+[6.419439] (perception) StdoutLine: {'line': b'-- Found rosidl_generator_c: 3.1.5 (/opt/ros/humble/share/rosidl_generator_c/cmake)\n'}
+[6.420616] (perception) StdoutLine: {'line': b'-- Found rosidl_adapter: 3.1.5 (/opt/ros/humble/share/rosidl_adapter/cmake)\n'}
+[6.423359] (perception) StdoutLine: {'line': b'-- Found rosidl_generator_cpp: 3.1.5 (/opt/ros/humble/share/rosidl_generator_cpp/cmake)\n'}
+[6.428560] (perception) StdoutLine: {'line': b'-- Using all available rosidl_typesupport_c: rosidl_typesupport_fastrtps_c;rosidl_typesupport_introspection_c\n'}
+[6.435789] (perception) StdoutLine: {'line': b'-- Using all available rosidl_typesupport_cpp: rosidl_typesupport_fastrtps_cpp;rosidl_typesupport_introspection_cpp\n'}
+[6.470968] (perception) StdoutLine: {'line': b'-- Found rmw_implementation_cmake: 6.1.2 (/opt/ros/humble/share/rmw_implementation_cmake/cmake)\n'}
+[6.472430] (perception) StdoutLine: {'line': b'-- Found rmw_fastrtps_cpp: 6.2.6 (/opt/ros/humble/share/rmw_fastrtps_cpp/cmake)\n'}
+[6.513974] (-) TimerEvent: {}
+[6.552139] (perception) StdoutLine: {'line': b"-- Using RMW implementation 'rmw_fastrtps_cpp' as default\n"}
+[6.614072] (-) TimerEvent: {}
+[6.645063] (perception) StdoutLine: {'line': b'-- Found rclcpp_components: 16.0.9 (/opt/ros/humble/share/rclcpp_components/cmake)\n'}
+[6.691696] (perception) StdoutLine: {'line': b'-- Found composition: 0.20.4 (/opt/ros/humble/share/composition/cmake)\n'}
+[6.692065] (perception) StdoutLine: {'line': b'-- Found sensor_msgs: 4.2.4 (/opt/ros/humble/share/sensor_msgs/cmake)\n'}
+[6.714167] (-) TimerEvent: {}
+[6.765021] (perception) StdoutLine: {'line': b'-- Found slg_msgs: 3.8.0 (/home/parallels/ros2_ws/src/general/install/slg_msgs/share/slg_msgs/cmake)\n'}
+[6.805802] (perception) StdoutLine: {'line': b'-- Found perception_interfaces: 0.0.0 (/home/parallels/ros2_ws/src/general/install/perception_interfaces/share/perception_interfaces/cmake)\n'}
+[6.814324] (-) TimerEvent: {}
+[6.845630] (perception) StdoutLine: {'line': b'-- Found ament_lint_auto: 0.12.11 (/opt/ros/humble/share/ament_lint_auto/cmake)\n'}
+[6.887104] (perception) StdoutLine: {'line': b"-- Added test 'cppcheck' to perform static code analysis on C / C++ code\n"}
+[6.887454] (perception) StdoutLine: {'line': b'-- Configured cppcheck include dirs: /home/parallels/ros2_ws/src/general/perception/include\n'}
+[6.887705] (perception) StdoutLine: {'line': b'-- Configured cppcheck exclude dirs and/or files: \n'}
+[6.887944] (perception) StdoutLine: {'line': b"-- Added test 'flake8' to check Python code syntax and style conventions\n"}
+[6.888188] (perception) StdoutLine: {'line': b"-- Added test 'lint_cmake' to check CMake code style\n"}
+[6.888415] (perception) StdoutLine: {'line': b"-- Added test 'pep257' to check Python code against some of the docstring style conventions in PEP 257\n"}
+[6.888935] (perception) StdoutLine: {'line': b"-- Added test 'uncrustify' to check C / C++ code style\n"}
+[6.889186] (perception) StdoutLine: {'line': b'-- Configured uncrustify additional arguments: \n'}
+[6.890073] (perception) StdoutLine: {'line': b"-- Added test 'xmllint' to check XML markup files\n"}
+[6.890637] (perception) StdoutLine: {'line': b'-- Configuring done\n'}
+[6.914391] (-) TimerEvent: {}
+[6.919190] (perception) StdoutLine: {'line': b'-- Generating done\n'}
+[6.920621] (perception) StdoutLine: {'line': b'-- Build files have been written to: /home/parallels/ros2_ws/src/general/build/perception\n'}
+[6.933118] (perception) StdoutLine: {'line': b'\x1b[35m\x1b[1mConsolidate compiler generated dependencies of target lidar_prop_detector_component\x1b[0m\n'}
+[6.936192] (perception) StdoutLine: {'line': b'[  3%] \x1b[32mBuilding CXX object CMakeFiles/lidar_camera_fuser_component.dir/src/lidar_camera_fuser_component.cpp.o\x1b[0m\n'}
+[6.968752] (perception) StdoutLine: {'line': b'[  7%] \x1b[32mBuilding CXX object CMakeFiles/lidar_prop_detector_component.dir/src/lidar_prop_detector_component.cpp.o\x1b[0m\n'}
+[7.014472] (-) TimerEvent: {}
+[7.114750] (-) TimerEvent: {}
+[7.215056] (-) TimerEvent: {}
+[7.315377] (-) TimerEvent: {}
+[7.415711] (-) TimerEvent: {}
+[7.516080] (-) TimerEvent: {}
+[7.616488] (-) TimerEvent: {}
+[7.716941] (-) TimerEvent: {}
+[7.817384] (-) TimerEvent: {}
+[7.917821] (-) TimerEvent: {}
+[8.018541] (-) TimerEvent: {}
+[8.119016] (-) TimerEvent: {}
+[8.219447] (-) TimerEvent: {}
+[8.319972] (-) TimerEvent: {}
+[8.420520] (-) TimerEvent: {}
+[8.520892] (-) TimerEvent: {}
+[8.621347] (-) TimerEvent: {}
+[8.722298] (-) TimerEvent: {}
+[8.822900] (-) TimerEvent: {}
+[8.929780] (-) TimerEvent: {}
+[9.033819] (-) TimerEvent: {}
+[9.134407] (-) TimerEvent: {}
+[9.235768] (-) TimerEvent: {}
+[9.336374] (-) TimerEvent: {}
+[9.437036] (-) TimerEvent: {}
+[9.537692] (-) TimerEvent: {}
+[9.638153] (-) TimerEvent: {}
+[9.738734] (-) TimerEvent: {}
+[9.843723] (-) TimerEvent: {}
+[9.944858] (-) TimerEvent: {}
+[10.048791] (-) TimerEvent: {}
+[10.149715] (-) TimerEvent: {}
+[10.250197] (-) TimerEvent: {}
+[10.350800] (-) TimerEvent: {}
+[10.453334] (-) TimerEvent: {}
+[10.554170] (-) TimerEvent: {}
+[10.655217] (-) TimerEvent: {}
+[10.756441] (-) TimerEvent: {}
+[10.857347] (-) TimerEvent: {}
+[10.957864] (-) TimerEvent: {}
+[11.058534] (-) TimerEvent: {}
+[11.159382] (-) TimerEvent: {}
+[11.260505] (-) TimerEvent: {}
+[11.361464] (-) TimerEvent: {}
+[11.462375] (-) TimerEvent: {}
+[11.562797] (-) TimerEvent: {}
+[11.663189] (-) TimerEvent: {}
+[11.763808] (-) TimerEvent: {}
+[11.864688] (-) TimerEvent: {}
+[11.965574] (-) TimerEvent: {}
+[12.068879] (-) TimerEvent: {}
+[12.173638] (-) TimerEvent: {}
+[12.274149] (-) TimerEvent: {}
+[12.374561] (-) TimerEvent: {}
+[12.477633] (-) TimerEvent: {}
+[12.578315] (-) TimerEvent: {}
+[12.679240] (-) TimerEvent: {}
+[12.779722] (-) TimerEvent: {}
+[12.881179] (-) TimerEvent: {}
+[12.981663] (-) TimerEvent: {}
+[13.082149] (-) TimerEvent: {}
+[13.182566] (-) TimerEvent: {}
+[13.283017] (-) TimerEvent: {}
+[13.383828] (-) TimerEvent: {}
+[13.484621] (-) TimerEvent: {}
+[13.585202] (-) TimerEvent: {}
+[13.685896] (-) TimerEvent: {}
+[13.786728] (-) TimerEvent: {}
+[13.887412] (-) TimerEvent: {}
+[13.988306] (-) TimerEvent: {}
+[14.089662] (-) TimerEvent: {}
+[14.194125] (-) TimerEvent: {}
+[14.294701] (-) TimerEvent: {}
+[14.395948] (-) TimerEvent: {}
+[14.497689] (-) TimerEvent: {}
+[14.605815] (-) TimerEvent: {}
+[14.719442] (-) TimerEvent: {}
+[14.819957] (-) TimerEvent: {}
+[14.920799] (-) TimerEvent: {}
+[15.021789] (-) TimerEvent: {}
+[15.122370] (-) TimerEvent: {}
+[15.223199] (-) TimerEvent: {}
+[15.325126] (-) TimerEvent: {}
+[15.426459] (-) TimerEvent: {}
+[15.527152] (-) TimerEvent: {}
+[15.627974] (-) TimerEvent: {}
+[15.728842] (-) TimerEvent: {}
+[15.829428] (-) TimerEvent: {}
+[15.930252] (-) TimerEvent: {}
+[16.030688] (-) TimerEvent: {}
+[16.131308] (-) TimerEvent: {}
+[16.231905] (-) TimerEvent: {}
+[16.332425] (-) TimerEvent: {}
+[16.432920] (-) TimerEvent: {}
+[16.533534] (-) TimerEvent: {}
+[16.634264] (-) TimerEvent: {}
+[16.735249] (-) TimerEvent: {}
+[16.835773] (-) TimerEvent: {}
+[16.936110] (-) TimerEvent: {}
+[17.036532] (-) TimerEvent: {}
+[17.137105] (-) TimerEvent: {}
+[17.237625] (-) TimerEvent: {}
+[17.338113] (-) TimerEvent: {}
+[17.438531] (-) TimerEvent: {}
+[17.538892] (-) TimerEvent: {}
+[17.639502] (-) TimerEvent: {}
+[17.740298] (-) TimerEvent: {}
+[17.840847] (-) TimerEvent: {}
+[17.941305] (-) TimerEvent: {}
+[18.041967] (-) TimerEvent: {}
+[18.142389] (-) TimerEvent: {}
+[18.242841] (-) TimerEvent: {}
+[18.343260] (-) TimerEvent: {}
+[18.443502] (-) TimerEvent: {}
+[18.543820] (-) TimerEvent: {}
+[18.649699] (-) TimerEvent: {}
+[18.754063] (-) TimerEvent: {}
+[18.854912] (-) TimerEvent: {}
+[18.955442] (-) TimerEvent: {}
+[19.063118] (-) TimerEvent: {}
+[19.163483] (-) TimerEvent: {}
+[19.245207] (perception) StdoutLine: {'line': b'[ 11%] \x1b[32m\x1b[1mLinking CXX shared library liblidar_prop_detector_component.so\x1b[0m\n'}
+[19.263575] (-) TimerEvent: {}
+[19.363877] (-) TimerEvent: {}
+[19.464282] (-) TimerEvent: {}
+[19.564686] (-) TimerEvent: {}
+[19.665059] (-) TimerEvent: {}
+[19.755235] (perception) StdoutLine: {'line': b'[ 11%] Built target lidar_prop_detector_component\n'}
+[19.766114] (-) TimerEvent: {}
+[19.774607] (perception) StdoutLine: {'line': b'\x1b[35m\x1b[1mConsolidate compiler generated dependencies of target coord_finder_component\x1b[0m\n'}
+[19.802280] (perception) StdoutLine: {'line': b'[ 15%] \x1b[32mBuilding CXX object CMakeFiles/coord_finder_component.dir/src/coord_finder_component.cpp.o\x1b[0m\n'}
+[19.866351] (-) TimerEvent: {}
+[19.966896] (-) TimerEvent: {}
+[20.067302] (-) TimerEvent: {}
+[20.167993] (-) TimerEvent: {}
+[20.268752] (-) TimerEvent: {}
+[20.369369] (-) TimerEvent: {}
+[20.469729] (-) TimerEvent: {}
+[20.570190] (-) TimerEvent: {}
+[20.670735] (-) TimerEvent: {}
+[20.771134] (-) TimerEvent: {}
+[20.871506] (-) TimerEvent: {}
+[20.971873] (-) TimerEvent: {}
+[21.072419] (-) TimerEvent: {}
+[21.172960] (-) TimerEvent: {}
+[21.233035] (perception) StdoutLine: {'line': b'[ 19%] \x1b[32m\x1b[1mLinking CXX shared library liblidar_camera_fuser_component.so\x1b[0m\n'}
+[21.273166] (-) TimerEvent: {}
+[21.373725] (-) TimerEvent: {}
+[21.474175] (-) TimerEvent: {}
+[21.574545] (-) TimerEvent: {}
+[21.675074] (-) TimerEvent: {}
+[21.688684] (perception) StdoutLine: {'line': b'[ 19%] Built target lidar_camera_fuser_component\n'}
+[21.707110] (perception) StdoutLine: {'line': b'[ 23%] \x1b[32mBuilding CXX object CMakeFiles/mock_bbox_pub_component.dir/src/mock_bbox_pub_component.cpp.o\x1b[0m\n'}
+[21.775158] (-) TimerEvent: {}
+[21.875478] (-) TimerEvent: {}
+[21.975831] (-) TimerEvent: {}
+[22.076157] (-) TimerEvent: {}
+[22.176608] (-) TimerEvent: {}
+[22.277082] (-) TimerEvent: {}
+[22.377500] (-) TimerEvent: {}
+[22.478035] (-) TimerEvent: {}
+[22.578483] (-) TimerEvent: {}
+[22.679020] (-) TimerEvent: {}
+[22.779457] (-) TimerEvent: {}
+[22.879923] (-) TimerEvent: {}
+[22.980383] (-) TimerEvent: {}
+[23.080765] (-) TimerEvent: {}
+[23.181112] (-) TimerEvent: {}
+[23.281663] (-) TimerEvent: {}
+[23.382380] (-) TimerEvent: {}
+[23.483017] (-) TimerEvent: {}
+[23.583513] (-) TimerEvent: {}
+[23.684131] (-) TimerEvent: {}
+[23.784555] (-) TimerEvent: {}
+[23.885429] (-) TimerEvent: {}
+[23.986032] (-) TimerEvent: {}
+[24.086619] (-) TimerEvent: {}
+[24.187062] (-) TimerEvent: {}
+[24.287702] (-) TimerEvent: {}
+[24.388828] (-) TimerEvent: {}
+[24.489303] (-) TimerEvent: {}
+[24.590002] (-) TimerEvent: {}
+[24.690463] (-) TimerEvent: {}
+[24.790846] (-) TimerEvent: {}
+[24.891179] (-) TimerEvent: {}
+[24.991482] (-) TimerEvent: {}
+[25.100557] (-) TimerEvent: {}
+[25.201073] (-) TimerEvent: {}
+[25.285754] (perception) StdoutLine: {'line': b'[ 26%] \x1b[32m\x1b[1mLinking CXX shared library libmock_bbox_pub_component.so\x1b[0m\n'}
+[25.301627] (-) TimerEvent: {}
+[25.401939] (-) TimerEvent: {}
+[25.446876] (perception) StdoutLine: {'line': b'[ 26%] Built target mock_bbox_pub_component\n'}
+[25.462833] (perception) StdoutLine: {'line': b'\x1b[35m\x1b[1mConsolidate compiler generated dependencies of target liblidar_calculations\x1b[0m\n'}
+[25.481764] (perception) StdoutLine: {'line': b'[ 30%] \x1b[32mBuilding CXX object CMakeFiles/liblidar_calculations.dir/lib/lidar_calculations.cpp.o\x1b[0m\n'}
+[25.502014] (-) TimerEvent: {}
+[25.602273] (-) TimerEvent: {}
+[25.702580] (-) TimerEvent: {}
+[25.802956] (-) TimerEvent: {}
+[25.903306] (-) TimerEvent: {}
+[26.003839] (-) TimerEvent: {}
+[26.104804] (-) TimerEvent: {}
+[26.205518] (-) TimerEvent: {}
+[26.306018] (-) TimerEvent: {}
+[26.406662] (-) TimerEvent: {}
+[26.507515] (-) TimerEvent: {}
+[26.607973] (-) TimerEvent: {}
+[26.708403] (-) TimerEvent: {}
+[26.808806] (-) TimerEvent: {}
+[26.909196] (-) TimerEvent: {}
+[27.009787] (-) TimerEvent: {}
+[27.110665] (-) TimerEvent: {}
+[27.211100] (-) TimerEvent: {}
+[27.311605] (-) TimerEvent: {}
+[27.412325] (-) TimerEvent: {}
+[27.512759] (-) TimerEvent: {}
+[27.613337] (-) TimerEvent: {}
+[27.714646] (-) TimerEvent: {}
+[27.816375] (-) TimerEvent: {}
+[27.916941] (-) TimerEvent: {}
+[28.017370] (-) TimerEvent: {}
+[28.117788] (-) TimerEvent: {}
+[28.219573] (-) TimerEvent: {}
+[28.246097] (perception) StdoutLine: {'line': b'[ 34%] \x1b[32m\x1b[1mLinking CXX shared library libcoord_finder_component.so\x1b[0m\n'}
+[28.319668] (-) TimerEvent: {}
+[28.420108] (-) TimerEvent: {}
+[28.520692] (-) TimerEvent: {}
+[28.621097] (-) TimerEvent: {}
+[28.721615] (-) TimerEvent: {}
+[28.744146] (perception) StdoutLine: {'line': b'[ 34%] Built target coord_finder_component\n'}
+[28.758691] (perception) StdoutLine: {'line': b'\x1b[35m\x1b[1mConsolidate compiler generated dependencies of target libhelpers\x1b[0m\n'}
+[28.773425] (perception) StdoutLine: {'line': b'[ 38%] \x1b[32mBuilding CXX object CMakeFiles/libhelpers.dir/lib/helpers.cpp.o\x1b[0m\n'}
+[28.821703] (-) TimerEvent: {}
+[28.921973] (-) TimerEvent: {}
+[29.022255] (-) TimerEvent: {}
+[29.122645] (-) TimerEvent: {}
+[29.223073] (-) TimerEvent: {}
+[29.323427] (-) TimerEvent: {}
+[29.425662] (-) TimerEvent: {}
+[29.526001] (-) TimerEvent: {}
+[29.626379] (-) TimerEvent: {}
+[29.726915] (-) TimerEvent: {}
+[29.827319] (-) TimerEvent: {}
+[29.927654] (-) TimerEvent: {}
+[30.027991] (-) TimerEvent: {}
+[30.125926] (perception) StdoutLine: {'line': b'[ 42%] \x1b[32m\x1b[1mLinking CXX static library liblibhelpers.a\x1b[0m\n'}
+[30.128053] (-) TimerEvent: {}
+[30.147828] (perception) StdoutLine: {'line': b'[ 42%] Built target libhelpers\n'}
+[30.170772] (perception) StdoutLine: {'line': b'[ 46%] \x1b[32mBuilding CXX object CMakeFiles/libbbox_calculations.dir/lib/bbox_calculations.cpp.o\x1b[0m\n'}
+[30.228309] (-) TimerEvent: {}
+[30.328740] (-) TimerEvent: {}
+[30.403991] (perception) StdoutLine: {'line': b'[ 50%] \x1b[32m\x1b[1mLinking CXX static library libliblidar_calculations.a\x1b[0m\n'}
+[30.428863] (-) TimerEvent: {}
+[30.468625] (perception) StdoutLine: {'line': b'[ 50%] Built target liblidar_calculations\n'}
+[30.478111] (perception) StdoutLine: {'line': b'\x1b[35m\x1b[1mConsolidate compiler generated dependencies of target coord_finder_composition\x1b[0m\n'}
+[30.497516] (perception) StdoutLine: {'line': b'[ 53%] \x1b[32mBuilding CXX object CMakeFiles/coord_finder_composition.dir/src/coord_finder_composition.cpp.o\x1b[0m\n'}
+[30.528950] (-) TimerEvent: {}
+[30.629248] (-) TimerEvent: {}
+[30.729581] (-) TimerEvent: {}
+[30.781879] (perception) StdoutLine: {'line': b'[ 57%] \x1b[32m\x1b[1mLinking CXX static library liblibbbox_calculations.a\x1b[0m\n'}
+[30.797985] (perception) StdoutLine: {'line': b'[ 57%] Built target libbbox_calculations\n'}
+[30.807674] (perception) StdoutLine: {'line': b'[ 61%] \x1b[32mBuilding CXX object CMakeFiles/mock_bbox_pub_composition.dir/src/mock_bbox_pub_composition.cpp.o\x1b[0m\n'}
+[30.829653] (-) TimerEvent: {}
+[30.929922] (-) TimerEvent: {}
+[31.030203] (-) TimerEvent: {}
+[31.130486] (-) TimerEvent: {}
+[31.230809] (-) TimerEvent: {}
+[31.331141] (-) TimerEvent: {}
+[31.431462] (-) TimerEvent: {}
+[31.531926] (-) TimerEvent: {}
+[31.632244] (-) TimerEvent: {}
+[31.732578] (-) TimerEvent: {}
+[31.832967] (-) TimerEvent: {}
+[31.933406] (-) TimerEvent: {}
+[32.033880] (-) TimerEvent: {}
+[32.134262] (-) TimerEvent: {}
+[32.234804] (-) TimerEvent: {}
+[32.335170] (-) TimerEvent: {}
+[32.375862] (perception) StdoutLine: {'line': b'[ 65%] \x1b[32m\x1b[1mLinking CXX executable coord_finder_composition\x1b[0m\n'}
+[32.435257] (-) TimerEvent: {}
+[32.530538] (perception) StdoutLine: {'line': b'[ 65%] Built target coord_finder_composition\n'}
+[32.535332] (-) TimerEvent: {}
+[32.540013] (perception) StdoutLine: {'line': b'[ 69%] \x1b[32mBuilding CXX object CMakeFiles/mock_coord_pub_component.dir/src/mock_coord_pub_component.cpp.o\x1b[0m\n'}
+[32.603335] (perception) StdoutLine: {'line': b'[ 73%] \x1b[32m\x1b[1mLinking CXX executable mock_bbox_pub_composition\x1b[0m\n'}
+[32.635572] (-) TimerEvent: {}
+[32.696926] (perception) StdoutLine: {'line': b'[ 73%] Built target mock_bbox_pub_composition\n'}
+[32.706012] (perception) StdoutLine: {'line': b'\x1b[35m\x1b[1mConsolidate compiler generated dependencies of target lidar_prop_detector_composition\x1b[0m\n'}
+[32.724995] (perception) StdoutLine: {'line': b'[ 76%] \x1b[32mBuilding CXX object CMakeFiles/lidar_prop_detector_composition.dir/src/lidar_prop_detector_composition.cpp.o\x1b[0m\n'}
+[32.736021] (-) TimerEvent: {}
+[32.836237] (-) TimerEvent: {}
+[32.936510] (-) TimerEvent: {}
+[33.036793] (-) TimerEvent: {}
+[33.137064] (-) TimerEvent: {}
+[33.237438] (-) TimerEvent: {}
+[33.338011] (-) TimerEvent: {}
+[33.438312] (-) TimerEvent: {}
+[33.538614] (-) TimerEvent: {}
+[33.638928] (-) TimerEvent: {}
+[33.739246] (-) TimerEvent: {}
+[33.839595] (-) TimerEvent: {}
+[33.939962] (-) TimerEvent: {}
+[34.040362] (-) TimerEvent: {}
+[34.140766] (-) TimerEvent: {}
+[34.241073] (-) TimerEvent: {}
+[34.341378] (-) TimerEvent: {}
+[34.441815] (-) TimerEvent: {}
+[34.542313] (-) TimerEvent: {}
+[34.599603] (perception) StderrLine: {'line': b'In file included from \x1b[01m\x1b[K/home/parallels/ros2_ws/src/general/perception/src/mock_coord_pub_component.cpp:1\x1b[m\x1b[K:\n'}
+[34.600684] (perception) StderrLine: {'line': b'\x1b[01m\x1b[K/home/parallels/ros2_ws/src/general/perception/include/perception/mock_coord_pub_component.hpp:34:49:\x1b[m\x1b[K \x1b[01;31m\x1b[Kerror: \x1b[m\x1b[K\xe2\x80\x98\x1b[01m\x1b[KCoordinates\x1b[m\x1b[K\xe2\x80\x99 is not a member of \xe2\x80\x98\x1b[01m\x1b[Kperception_interfaces::msg\x1b[m\x1b[K\xe2\x80\x99\n'}
+[34.600749] (perception) StderrLine: {'line': b'   34 |   rclcpp::Publisher<perception_interfaces::msg::\x1b[01;31m\x1b[KCoordinates\x1b[m\x1b[K>::SharedPtr pub_;\n'}
+[34.600792] (perception) StderrLine: {'line': b'      |                                                 \x1b[01;31m\x1b[K^~~~~~~~~~~\x1b[m\x1b[K\n'}
+[34.600839] (perception) StderrLine: {'line': b'\x1b[01m\x1b[K/home/parallels/ros2_ws/src/general/perception/include/perception/mock_coord_pub_component.hpp:34:60:\x1b[m\x1b[K \x1b[01;31m\x1b[Kerror: \x1b[m\x1b[Ktemplate argument 1 is invalid\n'}
+[34.600933] (perception) StderrLine: {'line': b'   34 |   rclcpp::Publisher<perception_interfaces::msg::Coordinates\x1b[01;31m\x1b[K>\x1b[m\x1b[K::SharedPtr pub_;\n'}
+[34.600997] (perception) StderrLine: {'line': b'      |                                                            \x1b[01;31m\x1b[K^\x1b[m\x1b[K\n'}
+[34.601039] (perception) StderrLine: {'line': b'\x1b[01m\x1b[K/home/parallels/ros2_ws/src/general/perception/include/perception/mock_coord_pub_component.hpp:34:63:\x1b[m\x1b[K \x1b[01;31m\x1b[Kerror: \x1b[m\x1b[Kexpected \xe2\x80\x98\x1b[01m\x1b[K;\x1b[m\x1b[K\xe2\x80\x99 at end of member declaration\n'}
+[34.601094] (perception) StderrLine: {'line': b'   34 |   rclcpp::Publisher<perception_interfaces::msg::Coordinates>::\x1b[01;31m\x1b[KSharedPtr\x1b[m\x1b[K pub_;\n'}
+[34.601144] (perception) StderrLine: {'line': b'      |                                                               \x1b[01;31m\x1b[K^~~~~~~~~\x1b[m\x1b[K\n'}
+[34.601189] (perception) StderrLine: {'line': b'      |                                                                        \x1b[32m\x1b[K;\x1b[m\x1b[K\n'}
+[34.601229] (perception) StderrLine: {'line': b'\x1b[01m\x1b[K/home/parallels/ros2_ws/src/general/perception/include/perception/mock_coord_pub_component.hpp:34:73:\x1b[m\x1b[K \x1b[01;31m\x1b[Kerror: \x1b[m\x1b[K\xe2\x80\x98\x1b[01m\x1b[Kpub_\x1b[m\x1b[K\xe2\x80\x99 does not name a type\n'}
+[34.601275] (perception) StderrLine: {'line': b'   34 |   rclcpp::Publisher<perception_interfaces::msg::Coordinates>::SharedPtr \x1b[01;31m\x1b[Kpub_\x1b[m\x1b[K;\n'}
+[34.601540] (perception) StderrLine: {'line': b'      |                                                                         \x1b[01;31m\x1b[K^~~~\x1b[m\x1b[K\n'}
+[34.601595] (perception) StderrLine: {'line': b'\x1b[01m\x1b[K/home/parallels/ros2_ws/src/general/perception/src/mock_coord_pub_component.cpp:\x1b[m\x1b[K In constructor \xe2\x80\x98\x1b[01m\x1b[Kperception::MockCoordPub::MockCoordPub(const rclcpp::NodeOptions&)\x1b[m\x1b[K\xe2\x80\x99:\n'}
+[34.601633] (perception) StderrLine: {'line': b'\x1b[01m\x1b[K/home/parallels/ros2_ws/src/general/perception/src/mock_coord_pub_component.cpp:10:7:\x1b[m\x1b[K \x1b[01;31m\x1b[Kerror: \x1b[m\x1b[K\xe2\x80\x98\x1b[01m\x1b[Kpub_\x1b[m\x1b[K\xe2\x80\x99 was not declared in this scope\n'}
+[34.601671] (perception) StderrLine: {'line': b'   10 |       \x1b[01;31m\x1b[Kpub_\x1b[m\x1b[K = this->create_publisher<perception_interfaces::msg::Coordinates>("perception/mock_coord", 10);\n'}
+[34.601718] (perception) StderrLine: {'line': b'      |       \x1b[01;31m\x1b[K^~~~\x1b[m\x1b[K\n'}
+[34.601740] (perception) StderrLine: {'line': b'\x1b[01m\x1b[K/home/parallels/ros2_ws/src/general/perception/src/mock_coord_pub_component.cpp:10:65:\x1b[m\x1b[K \x1b[01;31m\x1b[Kerror: \x1b[m\x1b[K\xe2\x80\x98\x1b[01m\x1b[KCoordinates\x1b[m\x1b[K\xe2\x80\x99 is not a member of \xe2\x80\x98\x1b[01m\x1b[Kperception_interfaces::msg\x1b[m\x1b[K\xe2\x80\x99\n'}
+[34.601789] (perception) StderrLine: {'line': b'   10 |       pub_ = this->create_publisher<perception_interfaces::msg::\x1b[01;31m\x1b[KCoordinates\x1b[m\x1b[K>("perception/mock_coord", 10);\n'}
+[34.601811] (perception) StderrLine: {'line': b'      |                                                                 \x1b[01;31m\x1b[K^~~~~~~~~~~\x1b[m\x1b[K\n'}
+[34.601832] (perception) StderrLine: {'line': b'\x1b[01m\x1b[K/home/parallels/ros2_ws/src/general/perception/src/mock_coord_pub_component.cpp:10:77:\x1b[m\x1b[K \x1b[01;31m\x1b[Kerror: \x1b[m\x1b[Kno matching function for call to \xe2\x80\x98\x1b[01m\x1b[Kperception::MockCoordPub::create_publisher<<expression error> >(const char [22], int)\x1b[m\x1b[K\xe2\x80\x99\n'}
+[34.601854] (perception) StderrLine: {'line': b'   10 |       pub_ = \x1b[01;31m\x1b[Kthis->create_publisher<perception_interfaces::msg::Coordinates>("perception/mock_coord", 10)\x1b[m\x1b[K;\n'}
+[34.601889] (perception) StderrLine: {'line': b'      |              \x1b[01;31m\x1b[K~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^~~~~~~~~~~~~~~~~~~~~~~~~~~~~\x1b[m\x1b[K\n'}
+[34.601913] (perception) StderrLine: {'line': b'In file included from \x1b[01m\x1b[K/opt/ros/humble/include/rclcpp/rclcpp/executors/single_threaded_executor.hpp:28\x1b[m\x1b[K,\n'}
+[34.601935] (perception) StderrLine: {'line': b'                 from \x1b[01m\x1b[K/opt/ros/humble/include/rclcpp/rclcpp/executors.hpp:22\x1b[m\x1b[K,\n'}
+[34.601956] (perception) StderrLine: {'line': b'                 from \x1b[01m\x1b[K/opt/ros/humble/include/rclcpp/rclcpp/rclcpp.hpp:155\x1b[m\x1b[K,\n'}
+[34.601976] (perception) StderrLine: {'line': b'                 from \x1b[01m\x1b[K/home/parallels/ros2_ws/src/general/perception/include/perception/mock_coord_pub_component.hpp:8\x1b[m\x1b[K,\n'}
+[34.602005] (perception) StderrLine: {'line': b'                 from \x1b[01m\x1b[K/home/parallels/ros2_ws/src/general/perception/src/mock_coord_pub_component.cpp:1\x1b[m\x1b[K:\n'}
+[34.602026] (perception) StderrLine: {'line': b'\x1b[01m\x1b[K/opt/ros/humble/include/rclcpp/rclcpp/node.hpp:195:3:\x1b[m\x1b[K \x1b[01;36m\x1b[Knote: \x1b[m\x1b[Kcandidate: \xe2\x80\x98\x1b[01m\x1b[Ktemplate<class MessageT, class AllocatorT, class PublisherT> std::shared_ptr<PublisherT> rclcpp::Node::create_publisher(const string&, const rclcpp::QoS&, const rclcpp::PublisherOptionsWithAllocator<AllocatorT>&)\x1b[m\x1b[K\xe2\x80\x99\n'}
+[34.602098] (perception) StderrLine: {'line': b'  195 |   \x1b[01;36m\x1b[Kcreate_publisher\x1b[m\x1b[K(\n'}
+[34.602121] (perception) StderrLine: {'line': b'      |   \x1b[01;36m\x1b[K^~~~~~~~~~~~~~~~\x1b[m\x1b[K\n'}
+[34.602176] (perception) StderrLine: {'line': b'\x1b[01m\x1b[K/opt/ros/humble/include/rclcpp/rclcpp/node.hpp:195:3:\x1b[m\x1b[K \x1b[01;36m\x1b[Knote: \x1b[m\x1b[K  template argument deduction/substitution failed:\n'}
+[34.602199] (perception) StderrLine: {'line': b'\x1b[01m\x1b[K/home/parallels/ros2_ws/src/general/perception/src/mock_coord_pub_component.cpp:10:77:\x1b[m\x1b[K \x1b[01;31m\x1b[Kerror: \x1b[m\x1b[Ktemplate argument 1 is invalid\n'}
+[34.602219] (perception) StderrLine: {'line': b'   10 |       pub_ = \x1b[01;31m\x1b[Kthis->create_publisher<perception_interfaces::msg::Coordinates>("perception/mock_coord", 10)\x1b[m\x1b[K;\n'}
+[34.602255] (perception) StderrLine: {'line': b'      |              \x1b[01;31m\x1b[K~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^~~~~~~~~~~~~~~~~~~~~~~~~~~~~\x1b[m\x1b[K\n'}
+[34.602275] (perception) StderrLine: {'line': b'\x1b[01m\x1b[K/home/parallels/ros2_ws/src/general/perception/src/mock_coord_pub_component.cpp:13:72:\x1b[m\x1b[K \x1b[01;31m\x1b[Kerror: \x1b[m\x1b[Kqualified-id in declaration before \xe2\x80\x98\x1b[01m\x1b[K(\x1b[m\x1b[K\xe2\x80\x99 token\n'}
+[34.602297] (perception) StderrLine: {'line': b'   13 |   rcl_interfaces::msg::SetParametersResult MockCoordPub::param_callback\x1b[01;31m\x1b[K(\x1b[m\x1b[Kconst std::vector<rclcpp::Parameter> &params)\n'}
+[34.602340] (perception) StderrLine: {'line': b'      |                                                                        \x1b[01;31m\x1b[K^\x1b[m\x1b[K\n'}
+[34.602363] (perception) StderrLine: {'line': b'\x1b[01m\x1b[K/home/parallels/ros2_ws/src/general/perception/src/mock_coord_pub_component.cpp:31:36:\x1b[m\x1b[K \x1b[01;31m\x1b[Kerror: \x1b[m\x1b[Kqualified-id in declaration before \xe2\x80\x98\x1b[01m\x1b[K(\x1b[m\x1b[K\xe2\x80\x99 token\n'}
+[34.602384] (perception) StderrLine: {'line': b'   31 |   void MockCoordPub::timer_callback\x1b[01;31m\x1b[K(\x1b[m\x1b[K)\n'}
+[34.602407] (perception) StderrLine: {'line': b'      |                                    \x1b[01;31m\x1b[K^\x1b[m\x1b[K\n'}
+[34.602428] (perception) StderrLine: {'line': b'In file included from \x1b[01m\x1b[K/opt/ros/humble/include/class_loader/class_loader/class_loader.hpp:56\x1b[m\x1b[K,\n'}
+[34.602449] (perception) StderrLine: {'line': b'                 from \x1b[01m\x1b[K/opt/ros/humble/include/rclcpp_components/rclcpp_components/register_node_macro.hpp:18\x1b[m\x1b[K,\n'}
+[34.602492] (perception) StderrLine: {'line': b'                 from \x1b[01m\x1b[K/home/parallels/ros2_ws/src/general/perception/src/mock_coord_pub_component.cpp:42\x1b[m\x1b[K:\n'}
+[34.602535] (perception) StderrLine: {'line': b'\x1b[01m\x1b[K/home/parallels/ros2_ws/src/general/perception/src/mock_coord_pub_component.cpp:\x1b[m\x1b[K At global scope:\n'}
+[34.602557] (perception) StderrLine: {'line': b'\x1b[01m\x1b[K/home/parallels/ros2_ws/src/general/perception/src/mock_coord_pub_component.cpp:44:1:\x1b[m\x1b[K \x1b[01;31m\x1b[Kerror: \x1b[m\x1b[Kexpected \xe2\x80\x98\x1b[01m\x1b[K}\x1b[m\x1b[K\xe2\x80\x99 at end of input\n'}
+[34.602578] (perception) StderrLine: {'line': b'   44 | \x1b[01;31m\x1b[KRCLCPP_COMPONENTS_REGISTER_NODE\x1b[m\x1b[K(perception::MockCoordPub)\n'}
+[34.602600] (perception) StderrLine: {'line': b'      | \x1b[01;31m\x1b[K^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\x1b[m\x1b[K\n'}
+[34.602643] (perception) StderrLine: {'line': b'\x1b[01m\x1b[K/home/parallels/ros2_ws/src/general/perception/src/mock_coord_pub_component.cpp:4:1:\x1b[m\x1b[K \x1b[01;36m\x1b[Knote: \x1b[m\x1b[Kto match this \xe2\x80\x98\x1b[01m\x1b[K{\x1b[m\x1b[K\xe2\x80\x99\n'}
+[34.602684] (perception) StderrLine: {'line': b'    4 | \x1b[01;36m\x1b[K{\x1b[m\x1b[K\n'}
+[34.602707] (perception) StderrLine: {'line': b'      | \x1b[01;36m\x1b[K^\x1b[m\x1b[K\n'}
+[34.602727] (perception) StderrLine: {'line': b'gmake[2]: *** [CMakeFiles/mock_coord_pub_component.dir/build.make:76: CMakeFiles/mock_coord_pub_component.dir/src/mock_coord_pub_component.cpp.o] Error 1\n'}
+[34.602756] (perception) StderrLine: {'line': b'gmake[1]: *** [CMakeFiles/Makefile2:453: CMakeFiles/mock_coord_pub_component.dir/all] Error 2\n'}
+[34.602777] (perception) StderrLine: {'line': b'gmake[1]: *** Waiting for unfinished jobs....\n'}
+[34.642394] (-) TimerEvent: {}
+[34.742656] (-) TimerEvent: {}
+[34.845846] (-) TimerEvent: {}
+[34.946871] (-) TimerEvent: {}
+[35.049637] (-) TimerEvent: {}
+[35.150719] (-) TimerEvent: {}
+[35.253382] (-) TimerEvent: {}
+[35.354999] (-) TimerEvent: {}
+[35.405327] (perception) StdoutLine: {'line': b'[ 80%] \x1b[32m\x1b[1mLinking CXX executable lidar_prop_detector_composition\x1b[0m\n'}
+[35.455347] (-) TimerEvent: {}
+[35.555738] (-) TimerEvent: {}
+[35.626940] (perception) StdoutLine: {'line': b'[ 80%] Built target lidar_prop_detector_composition\n'}
+[35.627868] (perception) StderrLine: {'line': b'gmake: *** [Makefile:146: all] Error 2\n'}
+[35.642178] (perception) CommandEnded: {'returncode': 2}
+[35.655821] (-) TimerEvent: {}
+[35.680948] (perception) JobEnded: {'identifier': 'perception', 'rc': 2}
+[35.682106] (-) EventReactorShutdown: {}

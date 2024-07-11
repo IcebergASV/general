@@ -1,0 +1,13 @@
+[35m[1mConsolidate compiler generated dependencies of target lidar_prop_detector_component[0m
+[35m[1mConsolidate compiler generated dependencies of target coord_finder_component[0m
+[ 12%] Built target lidar_prop_detector_component
+[ 25%] Built target coord_finder_component
+[35m[1mConsolidate compiler generated dependencies of target liblidar_calculations[0m
+[35m[1mConsolidate compiler generated dependencies of target libhelpers[0m
+[ 37%] Built target libhelpers
+[ 50%] Built target liblidar_calculations
+[35m[1mConsolidate compiler generated dependencies of target coord_finder_composition[0m
+[ 56%] [32mBuilding CXX object CMakeFiles/mock_coord_pub_component.dir/src/mock_coord_pub_component.cpp.o[0m
+[ 68%] Built target coord_finder_composition
+[35m[1mConsolidate compiler generated dependencies of target lidar_prop_detector_composition[0m
+[ 81%] Built target lidar_prop_detector_composition

@@ -1,0 +1,9 @@
+setup.py
+slg_msgs/__init__.py
+slg_msgs.egg-info/PKG-INFO
+slg_msgs.egg-info/SOURCES.txt
+slg_msgs.egg-info/dependency_links.txt
+slg_msgs.egg-info/top_level.txt
+slg_msgs/msg/__init__.py
+slg_msgs/msg/_segment.py
+slg_msgs/msg/_segment_array.py

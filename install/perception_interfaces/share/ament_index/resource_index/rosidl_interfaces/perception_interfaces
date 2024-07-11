@@ -1,0 +1,12 @@
+msg/BoundingBox.idl
+msg/BoundingBox.msg
+msg/BoundingBoxes.idl
+msg/BoundingBoxes.msg
+msg/Gate.idl
+msg/Gate.msg
+msg/GateArray.idl
+msg/GateArray.msg
+msg/Prop.idl
+msg/Prop.msg
+msg/PropArray.idl
+msg/PropArray.msg

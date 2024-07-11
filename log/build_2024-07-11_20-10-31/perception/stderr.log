@@ -1,0 +1,56 @@
+In file included from [01m[K/home/parallels/ros2_ws/src/general/perception/src/mock_coord_pub_component.cpp:1[m[K:
+[01m[K/home/parallels/ros2_ws/src/general/perception/include/perception/mock_coord_pub_component.hpp:34:49:[m[K [01;31m[Kerror: [m[K‘[01m[KCoordinates[m[K’ is not a member of ‘[01m[Kperception_interfaces::msg[m[K’
+   34 |   rclcpp::Publisher<perception_interfaces::msg::[01;31m[KCoordinates[m[K>::SharedPtr pub_;
+      |                                                 [01;31m[K^~~~~~~~~~~[m[K
+[01m[K/home/parallels/ros2_ws/src/general/perception/include/perception/mock_coord_pub_component.hpp:34:60:[m[K [01;31m[Kerror: [m[Ktemplate argument 1 is invalid
+   34 |   rclcpp::Publisher<perception_interfaces::msg::Coordinates[01;31m[K>[m[K::SharedPtr pub_;
+      |                                                            [01;31m[K^[m[K
+[01m[K/home/parallels/ros2_ws/src/general/perception/include/perception/mock_coord_pub_component.hpp:34:63:[m[K [01;31m[Kerror: [m[Kexpected ‘[01m[K;[m[K’ at end of member declaration
+   34 |   rclcpp::Publisher<perception_interfaces::msg::Coordinates>::[01;31m[KSharedPtr[m[K pub_;
+      |                                                               [01;31m[K^~~~~~~~~[m[K
+      |                                                                        [32m[K;[m[K
+[01m[K/home/parallels/ros2_ws/src/general/perception/include/perception/mock_coord_pub_component.hpp:34:73:[m[K [01;31m[Kerror: [m[K‘[01m[Kpub_[m[K’ does not name a type
+   34 |   rclcpp::Publisher<perception_interfaces::msg::Coordinates>::SharedPtr [01;31m[Kpub_[m[K;
+      |                                                                         [01;31m[K^~~~[m[K
+[01m[K/home/parallels/ros2_ws/src/general/perception/src/mock_coord_pub_component.cpp:[m[K In constructor ‘[01m[Kperception::MockCoordPub::MockCoordPub(const rclcpp::NodeOptions&)[m[K’:
+[01m[K/home/parallels/ros2_ws/src/general/perception/src/mock_coord_pub_component.cpp:10:7:[m[K [01;31m[Kerror: [m[K‘[01m[Kpub_[m[K’ was not declared in this scope
+   10 |       [01;31m[Kpub_[m[K = this->create_publisher<perception_interfaces::msg::Coordinates>("perception/mock_coord", 10);
+      |       [01;31m[K^~~~[m[K
+[01m[K/home/parallels/ros2_ws/src/general/perception/src/mock_coord_pub_component.cpp:10:65:[m[K [01;31m[Kerror: [m[K‘[01m[KCoordinates[m[K’ is not a member of ‘[01m[Kperception_interfaces::msg[m[K’
+   10 |       pub_ = this->create_publisher<perception_interfaces::msg::[01;31m[KCoordinates[m[K>("perception/mock_coord", 10);
+      |                                                                 [01;31m[K^~~~~~~~~~~[m[K
+[01m[K/home/parallels/ros2_ws/src/general/perception/src/mock_coord_pub_component.cpp:10:77:[m[K [01;31m[Kerror: [m[Kno matching function for call to ‘[01m[Kperception::MockCoordPub::create_publisher<<expression error> >(const char [22], int)[m[K’
+   10 |       pub_ = [01;31m[Kthis->create_publisher<perception_interfaces::msg::Coordinates>("perception/mock_coord", 10)[m[K;
+      |              [01;31m[K~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^~~~~~~~~~~~~~~~~~~~~~~~~~~~~[m[K
+In file included from [01m[K/opt/ros/humble/include/rclcpp/rclcpp/executors/single_threaded_executor.hpp:28[m[K,
+                 from [01m[K/opt/ros/humble/include/rclcpp/rclcpp/executors.hpp:22[m[K,
+                 from [01m[K/opt/ros/humble/include/rclcpp/rclcpp/rclcpp.hpp:155[m[K,
+                 from [01m[K/home/parallels/ros2_ws/src/general/perception/include/perception/mock_coord_pub_component.hpp:8[m[K,
+                 from [01m[K/home/parallels/ros2_ws/src/general/perception/src/mock_coord_pub_component.cpp:1[m[K:
+[01m[K/opt/ros/humble/include/rclcpp/rclcpp/node.hpp:195:3:[m[K [01;36m[Knote: [m[Kcandidate: ‘[01m[Ktemplate<class MessageT, class AllocatorT, class PublisherT> std::shared_ptr<PublisherT> rclcpp::Node::create_publisher(const string&, const rclcpp::QoS&, const rclcpp::PublisherOptionsWithAllocator<AllocatorT>&)[m[K’
+  195 |   [01;36m[Kcreate_publisher[m[K(
+      |   [01;36m[K^~~~~~~~~~~~~~~~[m[K
+[01m[K/opt/ros/humble/include/rclcpp/rclcpp/node.hpp:195:3:[m[K [01;36m[Knote: [m[K  template argument deduction/substitution failed:
+[01m[K/home/parallels/ros2_ws/src/general/perception/src/mock_coord_pub_component.cpp:10:77:[m[K [01;31m[Kerror: [m[Ktemplate argument 1 is invalid
+   10 |       pub_ = [01;31m[Kthis->create_publisher<perception_interfaces::msg::Coordinates>("perception/mock_coord", 10)[m[K;
+      |              [01;31m[K~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^~~~~~~~~~~~~~~~~~~~~~~~~~~~~[m[K
+[01m[K/home/parallels/ros2_ws/src/general/perception/src/mock_coord_pub_component.cpp:13:72:[m[K [01;31m[Kerror: [m[Kqualified-id in declaration before ‘[01m[K([m[K’ token
+   13 |   rcl_interfaces::msg::SetParametersResult MockCoordPub::param_callback[01;31m[K([m[Kconst std::vector<rclcpp::Parameter> &params)
+      |                                                                        [01;31m[K^[m[K
+[01m[K/home/parallels/ros2_ws/src/general/perception/src/mock_coord_pub_component.cpp:31:36:[m[K [01;31m[Kerror: [m[Kqualified-id in declaration before ‘[01m[K([m[K’ token
+   31 |   void MockCoordPub::timer_callback[01;31m[K([m[K)
+      |                                    [01;31m[K^[m[K
+In file included from [01m[K/opt/ros/humble/include/class_loader/class_loader/class_loader.hpp:56[m[K,
+                 from [01m[K/opt/ros/humble/include/rclcpp_components/rclcpp_components/register_node_macro.hpp:18[m[K,
+                 from [01m[K/home/parallels/ros2_ws/src/general/perception/src/mock_coord_pub_component.cpp:42[m[K:
+[01m[K/home/parallels/ros2_ws/src/general/perception/src/mock_coord_pub_component.cpp:[m[K At global scope:
+[01m[K/home/parallels/ros2_ws/src/general/perception/src/mock_coord_pub_component.cpp:44:1:[m[K [01;31m[Kerror: [m[Kexpected ‘[01m[K}[m[K’ at end of input
+   44 | [01;31m[KRCLCPP_COMPONENTS_REGISTER_NODE[m[K(perception::MockCoordPub)
+      | [01;31m[K^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~[m[K
+[01m[K/home/parallels/ros2_ws/src/general/perception/src/mock_coord_pub_component.cpp:4:1:[m[K [01;36m[Knote: [m[Kto match this ‘[01m[K{[m[K’
+    4 | [01;36m[K{[m[K
+      | [01;36m[K^[m[K
+gmake[2]: *** [CMakeFiles/mock_coord_pub_component.dir/build.make:76: CMakeFiles/mock_coord_pub_component.dir/src/mock_coord_pub_component.cpp.o] Error 1
+gmake[1]: *** [CMakeFiles/Makefile2:453: CMakeFiles/mock_coord_pub_component.dir/all] Error 2
+gmake[1]: *** Waiting for unfinished jobs....
+gmake: *** [Makefile:146: all] Error 2

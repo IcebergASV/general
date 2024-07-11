@@ -1,0 +1,17 @@
+[0.008s] Invoking command in '/home/parallels/ros2_ws/src/general/build/perception': CMAKE_PREFIX_PATH=/home/parallels/ros2_ws/src/general/install/slg_msgs:/home/parallels/ros2_ws/src/general/install/perception_interfaces:/home/parallels/ros2_ws/src/general/install/laser_segmentation:/home/parallels/ros2_ws/src/general/install/njord_tasks:/opt/ros/humble LD_LIBRARY_PATH=/home/parallels/ros2_ws/src/general/install/slg_msgs/lib:/home/parallels/ros2_ws/src/general/install/perception_interfaces/lib:/home/parallels/ros2_ws/src/general/install/laser_segmentation/lib:/opt/ros/humble/opt/rviz_ogre_vendor/lib:/opt/ros/humble/lib/aarch64-linux-gnu:/opt/ros/humble/lib /usr/bin/cmake --build /home/parallels/ros2_ws/src/general/build/perception -- -j2 -l2
+[0.055s] [ 12%] Built target lidar_prop_detector_component
+[0.058s] [ 25%] Built target coord_finder_component
+[0.069s] [ 37%] Built target liblidar_calculations
+[0.072s] [ 50%] Built target libhelpers
+[0.095s] [ 62%] Built target coord_finder_composition
+[0.096s] [ 68%] [32mBuilding CXX object CMakeFiles/mock_coord_pub_component.dir/src/mock_coord_pub_component.cpp.o[0m
+[0.109s] [ 81%] Built target lidar_prop_detector_composition
+[0.534s] In file included from [01m[K/home/parallels/ros2_ws/src/general/perception/src/mock_coord_pub_component.cpp:1[m[K:
+[0.535s] [01m[K/home/parallels/ros2_ws/src/general/perception/include/perception/mock_coord_pub_component.hpp:10:10:[m[K [01;31m[Kfatal error: [m[Kperception_interfaces/msg/bounding_box.hpp: No such file or directory
+[0.535s]    10 | #include [01;31m[K"perception_interfaces/msg/bounding_box.hpp"[m[K
+[0.535s]       |          [01;31m[K^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~[m[K
+[0.535s] compilation terminated.
+[0.536s] gmake[2]: *** [CMakeFiles/mock_coord_pub_component.dir/build.make:76: CMakeFiles/mock_coord_pub_component.dir/src/mock_coord_pub_component.cpp.o] Error 1
+[0.536s] gmake[1]: *** [CMakeFiles/Makefile2:309: CMakeFiles/mock_coord_pub_component.dir/all] Error 2
+[0.536s] gmake: *** [Makefile:146: all] Error 2
+[0.538s] Invoked command in '/home/parallels/ros2_ws/src/general/build/perception' returned '2': CMAKE_PREFIX_PATH=/home/parallels/ros2_ws/src/general/install/slg_msgs:/home/parallels/ros2_ws/src/general/install/perception_interfaces:/home/parallels/ros2_ws/src/general/install/laser_segmentation:/home/parallels/ros2_ws/src/general/install/njord_tasks:/opt/ros/humble LD_LIBRARY_PATH=/home/parallels/ros2_ws/src/general/install/slg_msgs/lib:/home/parallels/ros2_ws/src/general/install/perception_interfaces/lib:/home/parallels/ros2_ws/src/general/install/laser_segmentation/lib:/opt/ros/humble/opt/rviz_ogre_vendor/lib:/opt/ros/humble/lib/aarch64-linux-gnu:/opt/ros/humble/lib /usr/bin/cmake --build /home/parallels/ros2_ws/src/general/build/perception -- -j2 -l2

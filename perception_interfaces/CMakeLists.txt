@@ -17,6 +17,8 @@ set(msg_files
   "msg/BoundingBoxes.msg"
   "msg/Gate.msg"
   "msg/GateArray.msg"
+  "msg/Coordinate.msg"
+  "msg/Coordinates.msg"
 )
 
 rosidl_generate_interfaces(${PROJECT_NAME}

@@ -1,0 +1,2 @@
+/usr/bin/ar qc liblibbbox_calculations.a CMakeFiles/libbbox_calculations.dir/lib/bbox_calculations.cpp.o
+/usr/bin/ranlib liblibbbox_calculations.a

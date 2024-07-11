@@ -1,0 +1,4 @@
+source;share/njord_tasks/local_setup.bash
+source;share/njord_tasks/local_setup.dsv
+source;share/njord_tasks/local_setup.sh
+source;share/njord_tasks/local_setup.zsh

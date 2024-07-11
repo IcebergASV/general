@@ -1,0 +1,22 @@
+// generated from rosidl_adapter/resource/msg.idl.em
+// with input from slg_msgs/msg/SegmentArray.msg
+// generated code does not contain a copyright notice
+
+#include "slg_msgs/msg/Segment.idl"
+#include "std_msgs/msg/Header.idl"
+
+module slg_msgs {
+  module msg {
+    @verbatim (language="comment", text=
+      "Message for array of Segment")
+    struct SegmentArray {
+      @verbatim (language="comment", text=
+        "Standard message header.")
+      std_msgs::msg::Header header;
+
+      @verbatim (language="comment", text=
+        "List of sorted segments.")
+      sequence<slg_msgs::msg::Segment> segments;
+    };
+  };
+};

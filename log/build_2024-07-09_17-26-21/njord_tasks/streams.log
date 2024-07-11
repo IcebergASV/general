@@ -1,0 +1,46 @@
+[0.034s] Invoking command in '/home/parallels/ros2_ws/src/general/build/njord_tasks': CMAKE_PREFIX_PATH=/opt/ros/humble /usr/bin/cmake /home/parallels/ros2_ws/src/general/njord_tasks -DCMAKE_INSTALL_PREFIX=/home/parallels/ros2_ws/src/general/install/njord_tasks
+[0.135s] -- The C compiler identification is GNU 11.4.0
+[0.229s] -- The CXX compiler identification is GNU 11.4.0
+[0.242s] -- Detecting C compiler ABI info
+[0.332s] -- Detecting C compiler ABI info - done
+[0.336s] -- Check for working C compiler: /usr/lib/ccache/cc - skipped
+[0.336s] -- Detecting C compile features
+[0.336s] -- Detecting C compile features - done
+[0.338s] -- Detecting CXX compiler ABI info
+[0.406s] -- Detecting CXX compiler ABI info - done
+[0.410s] -- Check for working CXX compiler: /usr/lib/ccache/c++ - skipped
+[0.410s] -- Detecting CXX compile features
+[0.410s] -- Detecting CXX compile features - done
+[0.411s] -- Found ament_cmake: 1.3.9 (/opt/ros/humble/share/ament_cmake/cmake)
+[0.766s] -- Found Python3: /usr/bin/python3 (found version "3.10.12") found components: Interpreter 
+[0.828s] -- Found ament_lint_auto: 0.12.11 (/opt/ros/humble/share/ament_lint_auto/cmake)
+[0.884s] -- Added test 'flake8' to check Python code syntax and style conventions
+[0.884s] -- Added test 'lint_cmake' to check CMake code style
+[0.884s] -- Added test 'pep257' to check Python code against some of the docstring style conventions in PEP 257
+[0.884s] -- Added test 'xmllint' to check XML markup files
+[0.885s] -- Configuring done
+[0.886s] -- Generating done
+[0.887s] -- Build files have been written to: /home/parallels/ros2_ws/src/general/build/njord_tasks
+[0.889s] Invoked command in '/home/parallels/ros2_ws/src/general/build/njord_tasks' returned '0': CMAKE_PREFIX_PATH=/opt/ros/humble /usr/bin/cmake /home/parallels/ros2_ws/src/general/njord_tasks -DCMAKE_INSTALL_PREFIX=/home/parallels/ros2_ws/src/general/install/njord_tasks
+[0.890s] Invoking command in '/home/parallels/ros2_ws/src/general/build/njord_tasks': CMAKE_PREFIX_PATH=/opt/ros/humble /usr/bin/cmake --build /home/parallels/ros2_ws/src/general/build/njord_tasks -- -j2 -l2
+[0.943s] Invoked command in '/home/parallels/ros2_ws/src/general/build/njord_tasks' returned '0': CMAKE_PREFIX_PATH=/opt/ros/humble /usr/bin/cmake --build /home/parallels/ros2_ws/src/general/build/njord_tasks -- -j2 -l2
+[1.064s] Invoking command in '/home/parallels/ros2_ws/src/general/build/njord_tasks': CMAKE_PREFIX_PATH=/opt/ros/humble /usr/bin/cmake --install /home/parallels/ros2_ws/src/general/build/njord_tasks
+[1.077s] -- Install configuration: ""
+[1.077s] -- Installing: /home/parallels/ros2_ws/src/general/install/njord_tasks/share/njord_tasks/launch
+[1.077s] -- Installing: /home/parallels/ros2_ws/src/general/install/njord_tasks/share/njord_tasks/launch/master.launch.py
+[1.078s] -- Installing: /home/parallels/ros2_ws/src/general/install/njord_tasks/share/ament_index/resource_index/package_run_dependencies/njord_tasks
+[1.078s] -- Installing: /home/parallels/ros2_ws/src/general/install/njord_tasks/share/ament_index/resource_index/parent_prefix_path/njord_tasks
+[1.078s] -- Installing: /home/parallels/ros2_ws/src/general/install/njord_tasks/share/njord_tasks/environment/ament_prefix_path.sh
+[1.078s] -- Installing: /home/parallels/ros2_ws/src/general/install/njord_tasks/share/njord_tasks/environment/ament_prefix_path.dsv
+[1.078s] -- Installing: /home/parallels/ros2_ws/src/general/install/njord_tasks/share/njord_tasks/environment/path.sh
+[1.078s] -- Installing: /home/parallels/ros2_ws/src/general/install/njord_tasks/share/njord_tasks/environment/path.dsv
+[1.079s] -- Installing: /home/parallels/ros2_ws/src/general/install/njord_tasks/share/njord_tasks/local_setup.bash
+[1.079s] -- Installing: /home/parallels/ros2_ws/src/general/install/njord_tasks/share/njord_tasks/local_setup.sh
+[1.079s] -- Installing: /home/parallels/ros2_ws/src/general/install/njord_tasks/share/njord_tasks/local_setup.zsh
+[1.079s] -- Installing: /home/parallels/ros2_ws/src/general/install/njord_tasks/share/njord_tasks/local_setup.dsv
+[1.079s] -- Installing: /home/parallels/ros2_ws/src/general/install/njord_tasks/share/njord_tasks/package.dsv
+[1.079s] -- Installing: /home/parallels/ros2_ws/src/general/install/njord_tasks/share/ament_index/resource_index/packages/njord_tasks
+[1.079s] -- Installing: /home/parallels/ros2_ws/src/general/install/njord_tasks/share/njord_tasks/cmake/njord_tasksConfig.cmake
+[1.079s] -- Installing: /home/parallels/ros2_ws/src/general/install/njord_tasks/share/njord_tasks/cmake/njord_tasksConfig-version.cmake
+[1.079s] -- Installing: /home/parallels/ros2_ws/src/general/install/njord_tasks/share/njord_tasks/package.xml
+[1.082s] Invoked command in '/home/parallels/ros2_ws/src/general/build/njord_tasks' returned '0': CMAKE_PREFIX_PATH=/opt/ros/humble /usr/bin/cmake --install /home/parallels/ros2_ws/src/general/build/njord_tasks

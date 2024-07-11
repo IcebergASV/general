@@ -1,0 +1,16 @@
+/home/parallels/ros2_ws/src/general/install/njord_tasks/share/njord_tasks/launch/master.launch.py
+/home/parallels/ros2_ws/src/general/install/njord_tasks/share/ament_index/resource_index/package_run_dependencies/njord_tasks
+/home/parallels/ros2_ws/src/general/install/njord_tasks/share/ament_index/resource_index/parent_prefix_path/njord_tasks
+/home/parallels/ros2_ws/src/general/install/njord_tasks/share/njord_tasks/environment/ament_prefix_path.sh
+/home/parallels/ros2_ws/src/general/install/njord_tasks/share/njord_tasks/environment/ament_prefix_path.dsv
+/home/parallels/ros2_ws/src/general/install/njord_tasks/share/njord_tasks/environment/path.sh
+/home/parallels/ros2_ws/src/general/install/njord_tasks/share/njord_tasks/environment/path.dsv
+/home/parallels/ros2_ws/src/general/install/njord_tasks/share/njord_tasks/local_setup.bash
+/home/parallels/ros2_ws/src/general/install/njord_tasks/share/njord_tasks/local_setup.sh
+/home/parallels/ros2_ws/src/general/install/njord_tasks/share/njord_tasks/local_setup.zsh
+/home/parallels/ros2_ws/src/general/install/njord_tasks/share/njord_tasks/local_setup.dsv
+/home/parallels/ros2_ws/src/general/install/njord_tasks/share/njord_tasks/package.dsv
+/home/parallels/ros2_ws/src/general/install/njord_tasks/share/ament_index/resource_index/packages/njord_tasks
+/home/parallels/ros2_ws/src/general/install/njord_tasks/share/njord_tasks/cmake/njord_tasksConfig.cmake
+/home/parallels/ros2_ws/src/general/install/njord_tasks/share/njord_tasks/cmake/njord_tasksConfig-version.cmake
+/home/parallels/ros2_ws/src/general/install/njord_tasks/share/njord_tasks/package.xml

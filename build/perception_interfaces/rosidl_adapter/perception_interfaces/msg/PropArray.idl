@@ -1,0 +1,13 @@
+// generated from rosidl_adapter/resource/msg.idl.em
+// with input from perception_interfaces/msg/PropArray.msg
+// generated code does not contain a copyright notice
+
+#include "perception_interfaces/msg/Prop.idl"
+
+module perception_interfaces {
+  module msg {
+    struct PropArray {
+      sequence<perception_interfaces::msg::Prop> props;
+    };
+  };
+};

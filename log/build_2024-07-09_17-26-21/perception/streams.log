@@ -1,0 +1,80 @@
+[0.005s] Invoking command in '/home/parallels/ros2_ws/src/general/build/perception': AMENT_PREFIX_PATH=/home/parallels/ros2_ws/src/general/install/slg_msgs:/home/parallels/ros2_ws/src/general/install/perception_interfaces:${AMENT_PREFIX_PATH} CMAKE_PREFIX_PATH=/home/parallels/ros2_ws/src/general/install/slg_msgs:/home/parallels/ros2_ws/src/general/install/perception_interfaces:/opt/ros/humble LD_LIBRARY_PATH=/home/parallels/ros2_ws/src/general/install/slg_msgs/lib:/home/parallels/ros2_ws/src/general/install/perception_interfaces/lib:${LD_LIBRARY_PATH} PYTHONPATH=/home/parallels/ros2_ws/src/general/install/slg_msgs/local/lib/python3.10/dist-packages:/home/parallels/ros2_ws/src/general/install/perception_interfaces/local/lib/python3.10/dist-packages:${PYTHONPATH} /usr/bin/cmake /home/parallels/ros2_ws/src/general/perception -DCMAKE_INSTALL_PREFIX=/home/parallels/ros2_ws/src/general/install/perception
+[0.041s] -- The C compiler identification is GNU 11.4.0
+[0.077s] -- The CXX compiler identification is GNU 11.4.0
+[0.082s] -- Detecting C compiler ABI info
+[0.109s] -- Detecting C compiler ABI info - done
+[0.113s] -- Check for working C compiler: /usr/lib/ccache/cc - skipped
+[0.113s] -- Detecting C compile features
+[0.113s] -- Detecting C compile features - done
+[0.115s] -- Detecting CXX compiler ABI info
+[0.146s] -- Detecting CXX compiler ABI info - done
+[0.148s] -- Check for working CXX compiler: /usr/lib/ccache/c++ - skipped
+[0.148s] -- Detecting CXX compile features
+[0.148s] -- Detecting CXX compile features - done
+[0.149s] -- Found ament_cmake: 1.3.9 (/opt/ros/humble/share/ament_cmake/cmake)
+[0.329s] -- Found Python3: /usr/bin/python3 (found version "3.10.12") found components: Interpreter 
+[0.373s] -- Found rclcpp: 16.0.9 (/opt/ros/humble/share/rclcpp/cmake)
+[0.399s] -- Found rosidl_generator_c: 3.1.5 (/opt/ros/humble/share/rosidl_generator_c/cmake)
+[0.402s] -- Found rosidl_adapter: 3.1.5 (/opt/ros/humble/share/rosidl_adapter/cmake)
+[0.407s] -- Found rosidl_generator_cpp: 3.1.5 (/opt/ros/humble/share/rosidl_generator_cpp/cmake)
+[0.413s] -- Using all available rosidl_typesupport_c: rosidl_typesupport_fastrtps_c;rosidl_typesupport_introspection_c
+[0.423s] -- Using all available rosidl_typesupport_cpp: rosidl_typesupport_fastrtps_cpp;rosidl_typesupport_introspection_cpp
+[0.464s] -- Found rmw_implementation_cmake: 6.1.2 (/opt/ros/humble/share/rmw_implementation_cmake/cmake)
+[0.467s] -- Found rmw_fastrtps_cpp: 6.2.6 (/opt/ros/humble/share/rmw_fastrtps_cpp/cmake)
+[0.527s] -- Found OpenSSL: /usr/lib/aarch64-linux-gnu/libcrypto.so (found version "3.0.2")  
+[0.545s] -- Found FastRTPS: /opt/ros/humble/include  
+[0.575s] -- Using RMW implementation 'rmw_fastrtps_cpp' as default
+[0.583s] -- Looking for pthread.h
+[0.624s] -- Looking for pthread.h - found
+[0.624s] -- Performing Test CMAKE_HAVE_LIBC_PTHREAD
+[0.661s] -- Performing Test CMAKE_HAVE_LIBC_PTHREAD - Success
+[0.662s] -- Found Threads: TRUE  
+[0.762s] -- Found rclcpp_components: 16.0.9 (/opt/ros/humble/share/rclcpp_components/cmake)
+[0.813s] -- Found composition: 0.20.4 (/opt/ros/humble/share/composition/cmake)
+[0.813s] -- Found sensor_msgs: 4.2.4 (/opt/ros/humble/share/sensor_msgs/cmake)
+[0.890s] -- Found slg_msgs: 3.8.0 (/home/parallels/ros2_ws/src/general/install/slg_msgs/share/slg_msgs/cmake)
+[0.931s] -- Found perception_interfaces: 0.0.0 (/home/parallels/ros2_ws/src/general/install/perception_interfaces/share/perception_interfaces/cmake)
+[0.974s] -- Found ament_lint_auto: 0.12.11 (/opt/ros/humble/share/ament_lint_auto/cmake)
+[1.021s] -- Added test 'cppcheck' to perform static code analysis on C / C++ code
+[1.021s] -- Configured cppcheck include dirs: /home/parallels/ros2_ws/src/general/perception/include
+[1.021s] -- Configured cppcheck exclude dirs and/or files: 
+[1.021s] -- Added test 'flake8' to check Python code syntax and style conventions
+[1.022s] -- Added test 'lint_cmake' to check CMake code style
+[1.022s] -- Added test 'pep257' to check Python code against some of the docstring style conventions in PEP 257
+[1.023s] -- Added test 'uncrustify' to check C / C++ code style
+[1.023s] -- Configured uncrustify additional arguments: 
+[1.023s] -- Added test 'xmllint' to check XML markup files
+[1.024s] -- Configuring done
+[1.042s] -- Generating done
+[1.043s] -- Build files have been written to: /home/parallels/ros2_ws/src/general/build/perception
+[1.048s] Invoked command in '/home/parallels/ros2_ws/src/general/build/perception' returned '0': AMENT_PREFIX_PATH=/home/parallels/ros2_ws/src/general/install/slg_msgs:/home/parallels/ros2_ws/src/general/install/perception_interfaces:${AMENT_PREFIX_PATH} CMAKE_PREFIX_PATH=/home/parallels/ros2_ws/src/general/install/slg_msgs:/home/parallels/ros2_ws/src/general/install/perception_interfaces:/opt/ros/humble LD_LIBRARY_PATH=/home/parallels/ros2_ws/src/general/install/slg_msgs/lib:/home/parallels/ros2_ws/src/general/install/perception_interfaces/lib:${LD_LIBRARY_PATH} PYTHONPATH=/home/parallels/ros2_ws/src/general/install/slg_msgs/local/lib/python3.10/dist-packages:/home/parallels/ros2_ws/src/general/install/perception_interfaces/local/lib/python3.10/dist-packages:${PYTHONPATH} /usr/bin/cmake /home/parallels/ros2_ws/src/general/perception -DCMAKE_INSTALL_PREFIX=/home/parallels/ros2_ws/src/general/install/perception
+[1.049s] Invoking command in '/home/parallels/ros2_ws/src/general/build/perception': AMENT_PREFIX_PATH=/home/parallels/ros2_ws/src/general/install/slg_msgs:/home/parallels/ros2_ws/src/general/install/perception_interfaces:${AMENT_PREFIX_PATH} CMAKE_PREFIX_PATH=/home/parallels/ros2_ws/src/general/install/slg_msgs:/home/parallels/ros2_ws/src/general/install/perception_interfaces:/opt/ros/humble LD_LIBRARY_PATH=/home/parallels/ros2_ws/src/general/install/slg_msgs/lib:/home/parallels/ros2_ws/src/general/install/perception_interfaces/lib:${LD_LIBRARY_PATH} PYTHONPATH=/home/parallels/ros2_ws/src/general/install/slg_msgs/local/lib/python3.10/dist-packages:/home/parallels/ros2_ws/src/general/install/perception_interfaces/local/lib/python3.10/dist-packages:${PYTHONPATH} /usr/bin/cmake --build /home/parallels/ros2_ws/src/general/build/perception -- -j2 -l2
+[1.073s] [  6%] [32mBuilding CXX object CMakeFiles/lidar_prop_detector_component.dir/src/lidar_prop_detector_component.cpp.o[0m
+[1.088s] [ 12%] [32mBuilding CXX object CMakeFiles/coord_finder_component.dir/src/coord_finder_component.cpp.o[0m
+[19.646s] [ 18%] [32m[1mLinking CXX shared library liblidar_prop_detector_component.so[0m
+[20.342s] [ 18%] Built target lidar_prop_detector_component
+[20.430s] [ 25%] [32mBuilding CXX object CMakeFiles/liblidar_calculations.dir/lib/lidar_calculations.cpp.o[0m
+[21.546s] [ 31%] [32m[1mLinking CXX shared library libcoord_finder_component.so[0m
+[22.404s] [ 31%] Built target coord_finder_component
+[22.466s] [ 37%] [32mBuilding CXX object CMakeFiles/libhelpers.dir/lib/helpers.cpp.o[0m
+[24.533s] [ 43%] [32m[1mLinking CXX static library liblibhelpers.a[0m
+[24.629s] [ 43%] Built target libhelpers
+[24.731s] [ 50%] [32mBuilding CXX object CMakeFiles/coord_finder_composition.dir/src/coord_finder_composition.cpp.o[0m
+[28.168s] [ 56%] [32m[1mLinking CXX executable coord_finder_composition[0m
+[28.561s] [ 62%] [32m[1mLinking CXX static library libliblidar_calculations.a[0m
+[28.564s] [ 62%] Built target coord_finder_composition
+[28.613s] [ 68%] [32mBuilding CXX object CMakeFiles/mock_coord_pub_component.dir/src/mock_coord_pub_component.cpp.o[0m
+[28.694s] [ 68%] Built target liblidar_calculations
+[28.790s] [ 75%] [32mBuilding CXX object CMakeFiles/lidar_prop_detector_composition.dir/src/lidar_prop_detector_composition.cpp.o[0m
+[29.230s] In file included from [01m[K/home/parallels/ros2_ws/src/general/perception/src/mock_coord_pub_component.cpp:1[m[K:
+[29.233s] [01m[K/home/parallels/ros2_ws/src/general/perception/include/perception/mock_coord_pub_component.hpp:10:10:[m[K [01;31m[Kfatal error: [m[Kperception_interfaces/msg/bounding_box.hpp: No such file or directory
+[29.233s]    10 | #include [01;31m[K"perception_interfaces/msg/bounding_box.hpp"[m[K
+[29.233s]       |          [01;31m[K^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~[m[K
+[29.233s] compilation terminated.
+[29.233s] gmake[2]: *** [CMakeFiles/mock_coord_pub_component.dir/build.make:76: CMakeFiles/mock_coord_pub_component.dir/src/mock_coord_pub_component.cpp.o] Error 1
+[29.234s] gmake[1]: *** [CMakeFiles/Makefile2:309: CMakeFiles/mock_coord_pub_component.dir/all] Error 2
+[29.234s] gmake[1]: *** Waiting for unfinished jobs....
+[33.071s] [ 81%] [32m[1mLinking CXX executable lidar_prop_detector_composition[0m
+[33.302s] [ 81%] Built target lidar_prop_detector_composition
+[33.307s] gmake: *** [Makefile:146: all] Error 2
+[33.353s] Invoked command in '/home/parallels/ros2_ws/src/general/build/perception' returned '2': AMENT_PREFIX_PATH=/home/parallels/ros2_ws/src/general/install/slg_msgs:/home/parallels/ros2_ws/src/general/install/perception_interfaces:${AMENT_PREFIX_PATH} CMAKE_PREFIX_PATH=/home/parallels/ros2_ws/src/general/install/slg_msgs:/home/parallels/ros2_ws/src/general/install/perception_interfaces:/opt/ros/humble LD_LIBRARY_PATH=/home/parallels/ros2_ws/src/general/install/slg_msgs/lib:/home/parallels/ros2_ws/src/general/install/perception_interfaces/lib:${LD_LIBRARY_PATH} PYTHONPATH=/home/parallels/ros2_ws/src/general/install/slg_msgs/local/lib/python3.10/dist-packages:/home/parallels/ros2_ws/src/general/install/perception_interfaces/local/lib/python3.10/dist-packages:${PYTHONPATH} /usr/bin/cmake --build /home/parallels/ros2_ws/src/general/build/perception -- -j2 -l2

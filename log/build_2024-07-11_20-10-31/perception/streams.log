@@ -1,0 +1,123 @@
+[0.015s] Invoking command in '/home/parallels/ros2_ws/src/general/build/perception': AMENT_PREFIX_PATH=/home/parallels/ros2_ws/src/general/install/slg_msgs:/home/parallels/ros2_ws/src/general/install/perception_interfaces:${AMENT_PREFIX_PATH} CMAKE_PREFIX_PATH=/home/parallels/ros2_ws/src/general/install/slg_msgs:/home/parallels/ros2_ws/src/general/install/perception_interfaces:/opt/ros/humble LD_LIBRARY_PATH=/home/parallels/ros2_ws/src/general/install/slg_msgs/lib:/home/parallels/ros2_ws/src/general/install/perception_interfaces/lib:${LD_LIBRARY_PATH} PYTHONPATH=/home/parallels/ros2_ws/src/general/install/slg_msgs/local/lib/python3.10/dist-packages:/home/parallels/ros2_ws/src/general/install/perception_interfaces/local/lib/python3.10/dist-packages:${PYTHONPATH} /usr/bin/cmake --build /home/parallels/ros2_ws/src/general/build/perception -- -j2 -l2
+[0.038s] -- Found ament_cmake: 1.3.9 (/opt/ros/humble/share/ament_cmake/cmake)
+[0.101s] -- Found rclcpp: 16.0.9 (/opt/ros/humble/share/rclcpp/cmake)
+[0.118s] -- Found rosidl_generator_c: 3.1.5 (/opt/ros/humble/share/rosidl_generator_c/cmake)
+[0.119s] -- Found rosidl_adapter: 3.1.5 (/opt/ros/humble/share/rosidl_adapter/cmake)
+[0.122s] -- Found rosidl_generator_cpp: 3.1.5 (/opt/ros/humble/share/rosidl_generator_cpp/cmake)
+[0.127s] -- Using all available rosidl_typesupport_c: rosidl_typesupport_fastrtps_c;rosidl_typesupport_introspection_c
+[0.135s] -- Using all available rosidl_typesupport_cpp: rosidl_typesupport_fastrtps_cpp;rosidl_typesupport_introspection_cpp
+[0.170s] -- Found rmw_implementation_cmake: 6.1.2 (/opt/ros/humble/share/rmw_implementation_cmake/cmake)
+[0.171s] -- Found rmw_fastrtps_cpp: 6.2.6 (/opt/ros/humble/share/rmw_fastrtps_cpp/cmake)
+[0.251s] -- Using RMW implementation 'rmw_fastrtps_cpp' as default
+[0.344s] -- Found rclcpp_components: 16.0.9 (/opt/ros/humble/share/rclcpp_components/cmake)
+[0.390s] -- Found composition: 0.20.4 (/opt/ros/humble/share/composition/cmake)
+[0.391s] -- Found sensor_msgs: 4.2.4 (/opt/ros/humble/share/sensor_msgs/cmake)
+[0.464s] -- Found slg_msgs: 3.8.0 (/home/parallels/ros2_ws/src/general/install/slg_msgs/share/slg_msgs/cmake)
+[0.505s] -- Found perception_interfaces: 0.0.0 (/home/parallels/ros2_ws/src/general/install/perception_interfaces/share/perception_interfaces/cmake)
+[0.545s] -- Found ament_lint_auto: 0.12.11 (/opt/ros/humble/share/ament_lint_auto/cmake)
+[0.586s] -- Added test 'cppcheck' to perform static code analysis on C / C++ code
+[0.586s] -- Configured cppcheck include dirs: /home/parallels/ros2_ws/src/general/perception/include
+[0.587s] -- Configured cppcheck exclude dirs and/or files: 
+[0.587s] -- Added test 'flake8' to check Python code syntax and style conventions
+[0.587s] -- Added test 'lint_cmake' to check CMake code style
+[0.587s] -- Added test 'pep257' to check Python code against some of the docstring style conventions in PEP 257
+[0.588s] -- Added test 'uncrustify' to check C / C++ code style
+[0.588s] -- Configured uncrustify additional arguments: 
+[0.589s] -- Added test 'xmllint' to check XML markup files
+[0.590s] -- Configuring done
+[0.618s] -- Generating done
+[0.619s] -- Build files have been written to: /home/parallels/ros2_ws/src/general/build/perception
+[0.632s] [35m[1mConsolidate compiler generated dependencies of target lidar_prop_detector_component[0m
+[0.635s] [  3%] [32mBuilding CXX object CMakeFiles/lidar_camera_fuser_component.dir/src/lidar_camera_fuser_component.cpp.o[0m
+[0.668s] [  7%] [32mBuilding CXX object CMakeFiles/lidar_prop_detector_component.dir/src/lidar_prop_detector_component.cpp.o[0m
+[12.947s] [ 11%] [32m[1mLinking CXX shared library liblidar_prop_detector_component.so[0m
+[13.454s] [ 11%] Built target lidar_prop_detector_component
+[13.474s] [35m[1mConsolidate compiler generated dependencies of target coord_finder_component[0m
+[13.501s] [ 15%] [32mBuilding CXX object CMakeFiles/coord_finder_component.dir/src/coord_finder_component.cpp.o[0m
+[14.933s] [ 19%] [32m[1mLinking CXX shared library liblidar_camera_fuser_component.so[0m
+[15.387s] [ 19%] Built target lidar_camera_fuser_component
+[15.406s] [ 23%] [32mBuilding CXX object CMakeFiles/mock_bbox_pub_component.dir/src/mock_bbox_pub_component.cpp.o[0m
+[18.987s] [ 26%] [32m[1mLinking CXX shared library libmock_bbox_pub_component.so[0m
+[19.146s] [ 26%] Built target mock_bbox_pub_component
+[19.162s] [35m[1mConsolidate compiler generated dependencies of target liblidar_calculations[0m
+[19.181s] [ 30%] [32mBuilding CXX object CMakeFiles/liblidar_calculations.dir/lib/lidar_calculations.cpp.o[0m
+[21.945s] [ 34%] [32m[1mLinking CXX shared library libcoord_finder_component.so[0m
+[22.443s] [ 34%] Built target coord_finder_component
+[22.459s] [35m[1mConsolidate compiler generated dependencies of target libhelpers[0m
+[22.472s] [ 38%] [32mBuilding CXX object CMakeFiles/libhelpers.dir/lib/helpers.cpp.o[0m
+[23.825s] [ 42%] [32m[1mLinking CXX static library liblibhelpers.a[0m
+[23.847s] [ 42%] Built target libhelpers
+[23.870s] [ 46%] [32mBuilding CXX object CMakeFiles/libbbox_calculations.dir/lib/bbox_calculations.cpp.o[0m
+[24.103s] [ 50%] [32m[1mLinking CXX static library libliblidar_calculations.a[0m
+[24.168s] [ 50%] Built target liblidar_calculations
+[24.177s] [35m[1mConsolidate compiler generated dependencies of target coord_finder_composition[0m
+[24.196s] [ 53%] [32mBuilding CXX object CMakeFiles/coord_finder_composition.dir/src/coord_finder_composition.cpp.o[0m
+[24.481s] [ 57%] [32m[1mLinking CXX static library liblibbbox_calculations.a[0m
+[24.497s] [ 57%] Built target libbbox_calculations
+[24.507s] [ 61%] [32mBuilding CXX object CMakeFiles/mock_bbox_pub_composition.dir/src/mock_bbox_pub_composition.cpp.o[0m
+[26.075s] [ 65%] [32m[1mLinking CXX executable coord_finder_composition[0m
+[26.230s] [ 65%] Built target coord_finder_composition
+[26.239s] [ 69%] [32mBuilding CXX object CMakeFiles/mock_coord_pub_component.dir/src/mock_coord_pub_component.cpp.o[0m
+[26.302s] [ 73%] [32m[1mLinking CXX executable mock_bbox_pub_composition[0m
+[26.396s] [ 73%] Built target mock_bbox_pub_composition
+[26.405s] [35m[1mConsolidate compiler generated dependencies of target lidar_prop_detector_composition[0m
+[26.424s] [ 76%] [32mBuilding CXX object CMakeFiles/lidar_prop_detector_composition.dir/src/lidar_prop_detector_composition.cpp.o[0m
+[28.299s] In file included from [01m[K/home/parallels/ros2_ws/src/general/perception/src/mock_coord_pub_component.cpp:1[m[K:
+[28.299s] [01m[K/home/parallels/ros2_ws/src/general/perception/include/perception/mock_coord_pub_component.hpp:34:49:[m[K [01;31m[Kerror: [m[K‘[01m[KCoordinates[m[K’ is not a member of ‘[01m[Kperception_interfaces::msg[m[K’
+[28.299s]    34 |   rclcpp::Publisher<perception_interfaces::msg::[01;31m[KCoordinates[m[K>::SharedPtr pub_;
+[28.300s]       |                                                 [01;31m[K^~~~~~~~~~~[m[K
+[28.300s] [01m[K/home/parallels/ros2_ws/src/general/perception/include/perception/mock_coord_pub_component.hpp:34:60:[m[K [01;31m[Kerror: [m[Ktemplate argument 1 is invalid
+[28.300s]    34 |   rclcpp::Publisher<perception_interfaces::msg::Coordinates[01;31m[K>[m[K::SharedPtr pub_;
+[28.300s]       |                                                            [01;31m[K^[m[K
+[28.300s] [01m[K/home/parallels/ros2_ws/src/general/perception/include/perception/mock_coord_pub_component.hpp:34:63:[m[K [01;31m[Kerror: [m[Kexpected ‘[01m[K;[m[K’ at end of member declaration
+[28.300s]    34 |   rclcpp::Publisher<perception_interfaces::msg::Coordinates>::[01;31m[KSharedPtr[m[K pub_;
+[28.300s]       |                                                               [01;31m[K^~~~~~~~~[m[K
+[28.300s]       |                                                                        [32m[K;[m[K
+[28.300s] [01m[K/home/parallels/ros2_ws/src/general/perception/include/perception/mock_coord_pub_component.hpp:34:73:[m[K [01;31m[Kerror: [m[K‘[01m[Kpub_[m[K’ does not name a type
+[28.300s]    34 |   rclcpp::Publisher<perception_interfaces::msg::Coordinates>::SharedPtr [01;31m[Kpub_[m[K;
+[28.300s]       |                                                                         [01;31m[K^~~~[m[K
+[28.300s] [01m[K/home/parallels/ros2_ws/src/general/perception/src/mock_coord_pub_component.cpp:[m[K In constructor ‘[01m[Kperception::MockCoordPub::MockCoordPub(const rclcpp::NodeOptions&)[m[K’:
+[28.300s] [01m[K/home/parallels/ros2_ws/src/general/perception/src/mock_coord_pub_component.cpp:10:7:[m[K [01;31m[Kerror: [m[K‘[01m[Kpub_[m[K’ was not declared in this scope
+[28.300s]    10 |       [01;31m[Kpub_[m[K = this->create_publisher<perception_interfaces::msg::Coordinates>("perception/mock_coord", 10);
+[28.300s]       |       [01;31m[K^~~~[m[K
+[28.300s] [01m[K/home/parallels/ros2_ws/src/general/perception/src/mock_coord_pub_component.cpp:10:65:[m[K [01;31m[Kerror: [m[K‘[01m[KCoordinates[m[K’ is not a member of ‘[01m[Kperception_interfaces::msg[m[K’
+[28.300s]    10 |       pub_ = this->create_publisher<perception_interfaces::msg::[01;31m[KCoordinates[m[K>("perception/mock_coord", 10);
+[28.301s]       |                                                                 [01;31m[K^~~~~~~~~~~[m[K
+[28.301s] [01m[K/home/parallels/ros2_ws/src/general/perception/src/mock_coord_pub_component.cpp:10:77:[m[K [01;31m[Kerror: [m[Kno matching function for call to ‘[01m[Kperception::MockCoordPub::create_publisher<<expression error> >(const char [22], int)[m[K’
+[28.301s]    10 |       pub_ = [01;31m[Kthis->create_publisher<perception_interfaces::msg::Coordinates>("perception/mock_coord", 10)[m[K;
+[28.301s]       |              [01;31m[K~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^~~~~~~~~~~~~~~~~~~~~~~~~~~~~[m[K
+[28.301s] In file included from [01m[K/opt/ros/humble/include/rclcpp/rclcpp/executors/single_threaded_executor.hpp:28[m[K,
+[28.301s]                  from [01m[K/opt/ros/humble/include/rclcpp/rclcpp/executors.hpp:22[m[K,
+[28.301s]                  from [01m[K/opt/ros/humble/include/rclcpp/rclcpp/rclcpp.hpp:155[m[K,
+[28.301s]                  from [01m[K/home/parallels/ros2_ws/src/general/perception/include/perception/mock_coord_pub_component.hpp:8[m[K,
+[28.301s]                  from [01m[K/home/parallels/ros2_ws/src/general/perception/src/mock_coord_pub_component.cpp:1[m[K:
+[28.301s] [01m[K/opt/ros/humble/include/rclcpp/rclcpp/node.hpp:195:3:[m[K [01;36m[Knote: [m[Kcandidate: ‘[01m[Ktemplate<class MessageT, class AllocatorT, class PublisherT> std::shared_ptr<PublisherT> rclcpp::Node::create_publisher(const string&, const rclcpp::QoS&, const rclcpp::PublisherOptionsWithAllocator<AllocatorT>&)[m[K’
+[28.301s]   195 |   [01;36m[Kcreate_publisher[m[K(
+[28.301s]       |   [01;36m[K^~~~~~~~~~~~~~~~[m[K
+[28.301s] [01m[K/opt/ros/humble/include/rclcpp/rclcpp/node.hpp:195:3:[m[K [01;36m[Knote: [m[K  template argument deduction/substitution failed:
+[28.301s] [01m[K/home/parallels/ros2_ws/src/general/perception/src/mock_coord_pub_component.cpp:10:77:[m[K [01;31m[Kerror: [m[Ktemplate argument 1 is invalid
+[28.301s]    10 |       pub_ = [01;31m[Kthis->create_publisher<perception_interfaces::msg::Coordinates>("perception/mock_coord", 10)[m[K;
+[28.301s]       |              [01;31m[K~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^~~~~~~~~~~~~~~~~~~~~~~~~~~~~[m[K
+[28.301s] [01m[K/home/parallels/ros2_ws/src/general/perception/src/mock_coord_pub_component.cpp:13:72:[m[K [01;31m[Kerror: [m[Kqualified-id in declaration before ‘[01m[K([m[K’ token
+[28.301s]    13 |   rcl_interfaces::msg::SetParametersResult MockCoordPub::param_callback[01;31m[K([m[Kconst std::vector<rclcpp::Parameter> &params)
+[28.301s]       |                                                                        [01;31m[K^[m[K
+[28.301s] [01m[K/home/parallels/ros2_ws/src/general/perception/src/mock_coord_pub_component.cpp:31:36:[m[K [01;31m[Kerror: [m[Kqualified-id in declaration before ‘[01m[K([m[K’ token
+[28.301s]    31 |   void MockCoordPub::timer_callback[01;31m[K([m[K)
+[28.301s]       |                                    [01;31m[K^[m[K
+[28.301s] In file included from [01m[K/opt/ros/humble/include/class_loader/class_loader/class_loader.hpp:56[m[K,
+[28.301s]                  from [01m[K/opt/ros/humble/include/rclcpp_components/rclcpp_components/register_node_macro.hpp:18[m[K,
+[28.301s]                  from [01m[K/home/parallels/ros2_ws/src/general/perception/src/mock_coord_pub_component.cpp:42[m[K:
+[28.301s] [01m[K/home/parallels/ros2_ws/src/general/perception/src/mock_coord_pub_component.cpp:[m[K At global scope:
+[28.301s] [01m[K/home/parallels/ros2_ws/src/general/perception/src/mock_coord_pub_component.cpp:44:1:[m[K [01;31m[Kerror: [m[Kexpected ‘[01m[K}[m[K’ at end of input
+[28.301s]    44 | [01;31m[KRCLCPP_COMPONENTS_REGISTER_NODE[m[K(perception::MockCoordPub)
+[28.301s]       | [01;31m[K^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~[m[K
+[28.301s] [01m[K/home/parallels/ros2_ws/src/general/perception/src/mock_coord_pub_component.cpp:4:1:[m[K [01;36m[Knote: [m[Kto match this ‘[01m[K{[m[K’
+[28.301s]     4 | [01;36m[K{[m[K
+[28.301s]       | [01;36m[K^[m[K
+[28.301s] gmake[2]: *** [CMakeFiles/mock_coord_pub_component.dir/build.make:76: CMakeFiles/mock_coord_pub_component.dir/src/mock_coord_pub_component.cpp.o] Error 1
+[28.301s] gmake[1]: *** [CMakeFiles/Makefile2:453: CMakeFiles/mock_coord_pub_component.dir/all] Error 2
+[28.301s] gmake[1]: *** Waiting for unfinished jobs....
+[29.104s] [ 80%] [32m[1mLinking CXX executable lidar_prop_detector_composition[0m
+[29.326s] [ 80%] Built target lidar_prop_detector_composition
+[29.327s] gmake: *** [Makefile:146: all] Error 2
+[29.345s] Invoked command in '/home/parallels/ros2_ws/src/general/build/perception' returned '2': AMENT_PREFIX_PATH=/home/parallels/ros2_ws/src/general/install/slg_msgs:/home/parallels/ros2_ws/src/general/install/perception_interfaces:${AMENT_PREFIX_PATH} CMAKE_PREFIX_PATH=/home/parallels/ros2_ws/src/general/install/slg_msgs:/home/parallels/ros2_ws/src/general/install/perception_interfaces:/opt/ros/humble LD_LIBRARY_PATH=/home/parallels/ros2_ws/src/general/install/slg_msgs/lib:/home/parallels/ros2_ws/src/general/install/perception_interfaces/lib:${LD_LIBRARY_PATH} PYTHONPATH=/home/parallels/ros2_ws/src/general/install/slg_msgs/local/lib/python3.10/dist-packages:/home/parallels/ros2_ws/src/general/install/perception_interfaces/local/lib/python3.10/dist-packages:${PYTHONPATH} /usr/bin/cmake --build /home/parallels/ros2_ws/src/general/build/perception -- -j2 -l2

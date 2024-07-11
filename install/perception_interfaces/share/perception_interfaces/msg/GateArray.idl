@@ -1,0 +1,13 @@
+// generated from rosidl_adapter/resource/msg.idl.em
+// with input from perception_interfaces/msg/GateArray.msg
+// generated code does not contain a copyright notice
+
+#include "perception_interfaces/msg/Gate.idl"
+
+module perception_interfaces {
+  module msg {
+    struct GateArray {
+      sequence<perception_interfaces::msg::Gate> gates;
+    };
+  };
+};

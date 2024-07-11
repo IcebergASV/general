@@ -1,0 +1,10 @@
+setup.py
+perception_interfaces/__init__.py
+perception_interfaces.egg-info/PKG-INFO
+perception_interfaces.egg-info/SOURCES.txt
+perception_interfaces.egg-info/dependency_links.txt
+perception_interfaces.egg-info/top_level.txt
+perception_interfaces/msg/__init__.py
+perception_interfaces/msg/_lidar_detected_prop.py
+perception_interfaces/msg/_lidar_detected_prop_array.py
+perception_interfaces/msg/_prop.py

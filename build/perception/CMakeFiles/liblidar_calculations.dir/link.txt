@@ -1,0 +1,2 @@
+/usr/bin/ar qc libliblidar_calculations.a CMakeFiles/liblidar_calculations.dir/lib/lidar_calculations.cpp.o
+/usr/bin/ranlib libliblidar_calculations.a

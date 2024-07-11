@@ -1,0 +1,21 @@
+[35m[1mConsolidate compiler generated dependencies of target lidar_prop_detector_component[0m
+[35m[1mConsolidate compiler generated dependencies of target coord_finder_component[0m
+[ 12%] Built target lidar_prop_detector_component
+[ 25%] Built target coord_finder_component
+[35m[1mConsolidate compiler generated dependencies of target liblidar_calculations[0m
+[35m[1mConsolidate compiler generated dependencies of target libhelpers[0m
+[ 37%] Built target libhelpers
+[ 50%] Built target liblidar_calculations
+[35m[1mConsolidate compiler generated dependencies of target coord_finder_composition[0m
+[ 56%] [32mBuilding CXX object CMakeFiles/mock_coord_pub_component.dir/src/mock_coord_pub_component.cpp.o[0m
+[ 68%] Built target coord_finder_composition
+[35m[1mConsolidate compiler generated dependencies of target lidar_prop_detector_composition[0m
+[ 81%] Built target lidar_prop_detector_composition
+In file included from [01m[K/home/parallels/ros2_ws/src/general/perception/src/mock_coord_pub_component.cpp:1[m[K:
+[01m[K/home/parallels/ros2_ws/src/general/perception/include/perception/mock_coord_pub_component.hpp:10:10:[m[K [01;31m[Kfatal error: [m[Kperception_interfaces/msg/bounding_box.hpp: No such file or directory
+   10 | #include [01;31m[K"perception_interfaces/msg/bounding_box.hpp"[m[K
+      |          [01;31m[K^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~[m[K
+compilation terminated.
+gmake[2]: *** [CMakeFiles/mock_coord_pub_component.dir/build.make:76: CMakeFiles/mock_coord_pub_component.dir/src/mock_coord_pub_component.cpp.o] Error 1
+gmake[1]: *** [CMakeFiles/Makefile2:309: CMakeFiles/mock_coord_pub_component.dir/all] Error 2
+gmake: *** [Makefile:146: all] Error 2

@@ -1,0 +1,289 @@
+[0.008s] Invoking command in '/home/parallels/ros2_ws/src/general/build/slg_msgs': CMAKE_PREFIX_PATH=/opt/ros/humble /usr/bin/cmake /home/parallels/ros2_ws/src/general/laser_segmentation/slg_msgs -DCMAKE_INSTALL_PREFIX=/home/parallels/ros2_ws/src/general/install/slg_msgs
+[0.110s] -- The C compiler identification is GNU 11.4.0
+[0.175s] -- The CXX compiler identification is GNU 11.4.0
+[0.186s] -- Detecting C compiler ABI info
+[0.214s] -- Detecting C compiler ABI info - done
+[0.218s] -- Check for working C compiler: /usr/lib/ccache/cc - skipped
+[0.219s] -- Detecting C compile features
+[0.219s] -- Detecting C compile features - done
+[0.221s] -- Detecting CXX compiler ABI info
+[0.255s] -- Detecting CXX compiler ABI info - done
+[0.259s] -- Check for working CXX compiler: /usr/lib/ccache/c++ - skipped
+[0.259s] -- Detecting CXX compile features
+[0.259s] -- Detecting CXX compile features - done
+[0.260s] -- Setting build type to Release as none was specified.
+[0.263s] -- Found ament_cmake: 1.3.9 (/opt/ros/humble/share/ament_cmake/cmake)
+[0.444s] -- Found Python3: /usr/bin/python3 (found version "3.10.12") found components: Interpreter 
+[0.503s] -- Found rosidl_default_generators: 1.2.0 (/opt/ros/humble/share/rosidl_default_generators/cmake)
+[0.507s] -- Using all available rosidl_typesupport_c: rosidl_typesupport_fastrtps_c;rosidl_typesupport_introspection_c
+[0.513s] -- Found rosidl_adapter: 3.1.5 (/opt/ros/humble/share/rosidl_adapter/cmake)
+[0.546s] -- Using all available rosidl_typesupport_cpp: rosidl_typesupport_fastrtps_cpp;rosidl_typesupport_introspection_cpp
+[0.566s] -- Found std_msgs: 4.2.4 (/opt/ros/humble/share/std_msgs/cmake)
+[0.600s] -- Found geometry_msgs: 4.2.4 (/opt/ros/humble/share/geometry_msgs/cmake)
+[0.781s] -- Found ament_cmake_ros: 0.10.0 (/opt/ros/humble/share/ament_cmake_ros/cmake)
+[0.911s] -- Using all available rosidl_typesupport_c: rosidl_typesupport_fastrtps_c;rosidl_typesupport_introspection_c
+[1.083s] -- Using all available rosidl_typesupport_cpp: rosidl_typesupport_fastrtps_cpp;rosidl_typesupport_introspection_cpp
+[1.093s] -- Found PythonInterp: /usr/bin/python3 (found suitable version "3.10.12", minimum required is "3.6") 
+[1.095s] -- Found python_cmake_module: 0.10.0 (/opt/ros/humble/share/python_cmake_module/cmake)
+[1.112s] -- Found PythonLibs: /usr/lib/aarch64-linux-gnu/libpython3.10.so (found suitable version "3.10.12", minimum required is "3.5") 
+[1.112s] -- Using PYTHON_EXECUTABLE: /usr/bin/python3
+[1.112s] -- Using PYTHON_INCLUDE_DIRS: /usr/include/python3.10
+[1.112s] -- Using PYTHON_LIBRARIES: /usr/lib/aarch64-linux-gnu/libpython3.10.so
+[1.129s] -- Found PythonExtra: .so  
+[1.155s] -- Found ament_lint_auto: 0.12.11 (/opt/ros/humble/share/ament_lint_auto/cmake)
+[1.169s] -- Found gtest sources under '/opt/ros/humble/src/gtest_vendor': C++ tests using 'Google Test' will be built
+[1.171s] -- Looking for pthread.h
+[1.243s] -- Looking for pthread.h - found
+[1.243s] -- Performing Test CMAKE_HAVE_LIBC_PTHREAD
+[1.407s] -- Performing Test CMAKE_HAVE_LIBC_PTHREAD - Success
+[1.408s] -- Found Threads: TRUE  
+[1.413s] -- Added test 'cppcheck' to perform static code analysis on C / C++ code
+[1.414s] -- Configured cppcheck include dirs: /home/parallels/ros2_ws/src/general/laser_segmentation/slg_msgs/include;$<BUILD_INTERFACE:/home/parallels/ros2_ws/src/general/laser_segmentation/slg_msgs/include>
+[1.414s] -- Configured cppcheck exclude dirs and/or files: 
+[1.415s] -- Added test 'cpplint' to check C / C++ code against the Google style
+[1.415s] -- Configured cpplint exclude dirs and/or files: 
+[1.415s] -- Added test 'lint_cmake' to check CMake code style
+[1.416s] -- Added test 'uncrustify' to check C / C++ code style
+[1.416s] -- Configured uncrustify additional arguments: 
+[1.416s] -- Added test 'xmllint' to check XML markup files
+[1.417s] -- Configuring done
+[1.440s] -- Generating done
+[1.442s] -- Build files have been written to: /home/parallels/ros2_ws/src/general/build/slg_msgs
+[1.447s] Invoked command in '/home/parallels/ros2_ws/src/general/build/slg_msgs' returned '0': CMAKE_PREFIX_PATH=/opt/ros/humble /usr/bin/cmake /home/parallels/ros2_ws/src/general/laser_segmentation/slg_msgs -DCMAKE_INSTALL_PREFIX=/home/parallels/ros2_ws/src/general/install/slg_msgs
+[1.447s] Invoking command in '/home/parallels/ros2_ws/src/general/build/slg_msgs': CMAKE_PREFIX_PATH=/opt/ros/humble /usr/bin/cmake --build /home/parallels/ros2_ws/src/general/build/slg_msgs -- -j2 -l2
+[1.479s] [  2%] [34m[1mGenerating C code for ROS interfaces[0m
+[1.479s] [  4%] [34m[1mGenerating C++ code for ROS interfaces[0m
+[1.843s] [  6%] [32mBuilding C object CMakeFiles/slg_msgs__rosidl_generator_c.dir/rosidl_generator_c/slg_msgs/msg/detail/segment__functions.c.o[0m
+[1.919s] [  6%] Built target slg_msgs__cpp
+[1.949s] [  8%] [32mBuilding C object CMakeFiles/slg_msgs__rosidl_generator_c.dir/rosidl_generator_c/slg_msgs/msg/detail/segment_array__functions.c.o[0m
+[1.982s] [  8%] Built target ament_cmake_python_copy_slg_msgs
+[2.023s] [ 10%] [32mBuilding CXX object gtest/CMakeFiles/gtest_main.dir/src/gtest_main.cc.o[0m
+[2.102s] [ 12%] [32m[1mLinking C shared library libslg_msgs__rosidl_generator_c.so[0m
+[2.175s] [ 12%] Built target slg_msgs__rosidl_generator_c
+[2.215s] [ 14%] [32mBuilding CXX object gtest/CMakeFiles/gtest.dir/src/gtest-all.cc.o[0m
+[3.164s] [ 16%] [32m[1mLinking CXX static library libgtest_main.a[0m
+[3.230s] [ 16%] Built target gtest_main
+[3.262s] [ 18%] [34m[1mGenerating C++ type support dispatch for ROS interfaces[0m
+[3.627s] [ 20%] [32mBuilding CXX object CMakeFiles/slg_msgs__rosidl_typesupport_cpp.dir/rosidl_typesupport_cpp/slg_msgs/msg/segment__type_support.cpp.o[0m
+[4.145s] [ 22%] [32mBuilding CXX object CMakeFiles/slg_msgs__rosidl_typesupport_cpp.dir/rosidl_typesupport_cpp/slg_msgs/msg/segment_array__type_support.cpp.o[0m
+[4.458s] [ 24%] [32m[1mLinking CXX shared library libslg_msgs__rosidl_typesupport_cpp.so[0m
+[4.502s] [ 24%] Built target slg_msgs__rosidl_typesupport_cpp
+[4.534s] [ 26%] [34m[1mGenerating C type support for eProsima Fast-RTPS[0m
+[5.086s] [ 28%] [32mBuilding CXX object CMakeFiles/slg_msgs__rosidl_typesupport_fastrtps_c.dir/rosidl_typesupport_fastrtps_c/slg_msgs/msg/detail/segment__type_support_c.cpp.o[0m
+[5.554s] [ 30%] [32mBuilding CXX object CMakeFiles/slg_msgs__rosidl_typesupport_fastrtps_c.dir/rosidl_typesupport_fastrtps_c/slg_msgs/msg/detail/segment_array__type_support_c.cpp.o[0m
+[5.977s] [ 32%] [32m[1mLinking CXX shared library libslg_msgs__rosidl_typesupport_fastrtps_c.so[0m
+[6.074s] [ 32%] Built target slg_msgs__rosidl_typesupport_fastrtps_c
+[6.078s] [ 34%] [34m[1mGenerating C introspection for ROS interfaces[0m
+[6.320s] [ 36%] [32mBuilding C object CMakeFiles/slg_msgs__rosidl_typesupport_introspection_c.dir/rosidl_typesupport_introspection_c/slg_msgs/msg/detail/segment__type_support.c.o[0m
+[6.373s] [ 38%] [32mBuilding C object CMakeFiles/slg_msgs__rosidl_typesupport_introspection_c.dir/rosidl_typesupport_introspection_c/slg_msgs/msg/detail/segment_array__type_support.c.o[0m
+[6.513s] [ 40%] [32m[1mLinking C shared library libslg_msgs__rosidl_typesupport_introspection_c.so[0m
+[6.570s] [ 40%] Built target slg_msgs__rosidl_typesupport_introspection_c
+[6.590s] [ 42%] [34m[1mGenerating C type support dispatch for ROS interfaces[0m
+[6.895s] [ 44%] [32mBuilding CXX object CMakeFiles/slg_msgs__rosidl_typesupport_c.dir/rosidl_typesupport_c/slg_msgs/msg/segment__type_support.cpp.o[0m
+[7.014s] [ 46%] [32mBuilding CXX object CMakeFiles/slg_msgs__rosidl_typesupport_c.dir/rosidl_typesupport_c/slg_msgs/msg/segment_array__type_support.cpp.o[0m
+[7.074s] [ 48%] [32m[1mLinking CXX shared library libslg_msgs__rosidl_typesupport_c.so[0m
+[7.146s] [ 48%] Built target slg_msgs__rosidl_typesupport_c
+[7.169s] [ 51%] [34m[1mGenerating C++ type support for eProsima Fast-RTPS[0m
+[7.505s] [ 53%] [32mBuilding CXX object CMakeFiles/slg_msgs__rosidl_typesupport_fastrtps_cpp.dir/rosidl_typesupport_fastrtps_cpp/slg_msgs/msg/detail/dds_fastrtps/segment__type_support.cpp.o[0m
+[7.877s] [ 55%] [32mBuilding CXX object CMakeFiles/slg_msgs__rosidl_typesupport_fastrtps_cpp.dir/rosidl_typesupport_fastrtps_cpp/slg_msgs/msg/detail/dds_fastrtps/segment_array__type_support.cpp.o[0m
+[8.199s] [ 57%] [32m[1mLinking CXX shared library libslg_msgs__rosidl_typesupport_fastrtps_cpp.so[0m
+[8.252s] [ 57%] Built target slg_msgs__rosidl_typesupport_fastrtps_cpp
+[8.266s] [ 59%] [34m[1mGenerating C++ introspection for ROS interfaces[0m
+[8.474s] [ 61%] [32mBuilding CXX object CMakeFiles/slg_msgs__rosidl_typesupport_introspection_cpp.dir/rosidl_typesupport_introspection_cpp/slg_msgs/msg/detail/segment__type_support.cpp.o[0m
+[8.792s] [ 63%] [32mBuilding CXX object CMakeFiles/slg_msgs__rosidl_typesupport_introspection_cpp.dir/rosidl_typesupport_introspection_cpp/slg_msgs/msg/detail/segment_array__type_support.cpp.o[0m
+[8.863s] [ 65%] [32m[1mLinking CXX static library libgtest.a[0m
+[8.899s] [ 65%] Built target gtest
+[9.056s] running egg_info
+[9.057s] creating slg_msgs.egg-info
+[9.064s] writing slg_msgs.egg-info/PKG-INFO
+[9.064s] writing dependency_links to slg_msgs.egg-info/dependency_links.txt
+[9.064s] writing top-level names to slg_msgs.egg-info/top_level.txt
+[9.064s] writing manifest file 'slg_msgs.egg-info/SOURCES.txt'
+[9.098s] reading manifest file 'slg_msgs.egg-info/SOURCES.txt'
+[9.099s] writing manifest file 'slg_msgs.egg-info/SOURCES.txt'
+[9.113s] [ 65%] Built target ament_cmake_python_build_slg_msgs_egg
+[9.120s] [ 67%] [32mBuilding CXX object test/CMakeFiles/test_point2d.dir/test_point2d.cpp.o[0m
+[9.195s] [ 69%] [32m[1mLinking CXX shared library libslg_msgs__rosidl_typesupport_introspection_cpp.so[0m
+[9.268s] [ 69%] Built target slg_msgs__rosidl_typesupport_introspection_cpp
+[9.275s] [ 71%] [32mBuilding CXX object test/CMakeFiles/test_polygon.dir/test_polygon.cpp.o[0m
+[10.373s] [ 73%] [32m[1mLinking CXX executable test_point2d[0m
+[10.423s] [ 73%] Built target test_point2d
+[10.430s] [ 75%] [32mBuilding CXX object test/CMakeFiles/test_segment2d.dir/test_segment2d.cpp.o[0m
+[10.916s] [ 77%] [32m[1mLinking CXX executable test_polygon[0m
+[10.962s] [ 77%] Built target test_polygon
+[10.969s] [ 77%] Built target slg_msgs
+[10.976s] [ 79%] [34m[1mGenerating Python code for ROS interfaces[0m
+[11.301s] [ 79%] Built target slg_msgs__py
+[11.308s] [ 81%] [32mBuilding C object CMakeFiles/slg_msgs__rosidl_generator_py.dir/rosidl_generator_py/slg_msgs/msg/_segment_s.c.o[0m
+[11.425s] [ 83%] [32mBuilding C object CMakeFiles/slg_msgs__rosidl_generator_py.dir/rosidl_generator_py/slg_msgs/msg/_segment_array_s.c.o[0m
+[11.528s] [ 85%] [32m[1mLinking C shared library rosidl_generator_py/slg_msgs/libslg_msgs__rosidl_generator_py.so[0m
+[11.547s] [ 85%] Built target slg_msgs__rosidl_generator_py
+[11.553s] [ 87%] [32mBuilding C object CMakeFiles/slg_msgs__rosidl_typesupport_fastrtps_c__pyext.dir/rosidl_generator_py/slg_msgs/_slg_msgs_s.ep.rosidl_typesupport_fastrtps_c.c.o[0m
+[11.661s] [ 89%] [32m[1mLinking C shared library rosidl_generator_py/slg_msgs/slg_msgs_s__rosidl_typesupport_fastrtps_c.cpython-310-aarch64-linux-gnu.so[0m
+[11.680s] [ 89%] Built target slg_msgs__rosidl_typesupport_fastrtps_c__pyext
+[11.687s] [ 91%] [32mBuilding C object CMakeFiles/slg_msgs__rosidl_typesupport_introspection_c__pyext.dir/rosidl_generator_py/slg_msgs/_slg_msgs_s.ep.rosidl_typesupport_introspection_c.c.o[0m
+[11.788s] [ 93%] [32m[1mLinking C shared library rosidl_generator_py/slg_msgs/slg_msgs_s__rosidl_typesupport_introspection_c.cpython-310-aarch64-linux-gnu.so[0m
+[11.807s] [ 93%] Built target slg_msgs__rosidl_typesupport_introspection_c__pyext
+[11.814s] [ 95%] [32mBuilding C object CMakeFiles/slg_msgs__rosidl_typesupport_c__pyext.dir/rosidl_generator_py/slg_msgs/_slg_msgs_s.ep.rosidl_typesupport_c.c.o[0m
+[11.916s] [ 97%] [32m[1mLinking C shared library rosidl_generator_py/slg_msgs/slg_msgs_s__rosidl_typesupport_c.cpython-310-aarch64-linux-gnu.so[0m
+[11.933s] [ 97%] Built target slg_msgs__rosidl_typesupport_c__pyext
+[12.137s] [100%] [32m[1mLinking CXX executable test_segment2d[0m
+[12.181s] [100%] Built target test_segment2d
+[12.187s] Invoked command in '/home/parallels/ros2_ws/src/general/build/slg_msgs' returned '0': CMAKE_PREFIX_PATH=/opt/ros/humble /usr/bin/cmake --build /home/parallels/ros2_ws/src/general/build/slg_msgs -- -j2 -l2
+[12.214s] Invoking command in '/home/parallels/ros2_ws/src/general/build/slg_msgs': CMAKE_PREFIX_PATH=/opt/ros/humble /usr/bin/cmake --install /home/parallels/ros2_ws/src/general/build/slg_msgs
+[12.217s] -- Install configuration: "Release"
+[12.217s] -- Installing: /home/parallels/ros2_ws/src/general/install/slg_msgs/share/ament_index/resource_index/rosidl_interfaces/slg_msgs
+[12.217s] -- Installing: /home/parallels/ros2_ws/src/general/install/slg_msgs/include/slg_msgs/slg_msgs
+[12.217s] -- Installing: /home/parallels/ros2_ws/src/general/install/slg_msgs/include/slg_msgs/slg_msgs/msg
+[12.217s] -- Installing: /home/parallels/ros2_ws/src/general/install/slg_msgs/include/slg_msgs/slg_msgs/msg/rosidl_generator_c__visibility_control.h
+[12.217s] -- Installing: /home/parallels/ros2_ws/src/general/install/slg_msgs/include/slg_msgs/slg_msgs/msg/detail
+[12.217s] -- Installing: /home/parallels/ros2_ws/src/general/install/slg_msgs/include/slg_msgs/slg_msgs/msg/detail/segment__functions.c
+[12.217s] -- Installing: /home/parallels/ros2_ws/src/general/install/slg_msgs/include/slg_msgs/slg_msgs/msg/detail/segment__functions.h
+[12.217s] -- Installing: /home/parallels/ros2_ws/src/general/install/slg_msgs/include/slg_msgs/slg_msgs/msg/detail/segment_array__struct.h
+[12.217s] -- Installing: /home/parallels/ros2_ws/src/general/install/slg_msgs/include/slg_msgs/slg_msgs/msg/detail/segment__struct.h
+[12.217s] -- Installing: /home/parallels/ros2_ws/src/general/install/slg_msgs/include/slg_msgs/slg_msgs/msg/detail/segment_array__functions.h
+[12.217s] -- Installing: /home/parallels/ros2_ws/src/general/install/slg_msgs/include/slg_msgs/slg_msgs/msg/detail/segment_array__type_support.h
+[12.217s] -- Installing: /home/parallels/ros2_ws/src/general/install/slg_msgs/include/slg_msgs/slg_msgs/msg/detail/segment__type_support.h
+[12.217s] -- Installing: /home/parallels/ros2_ws/src/general/install/slg_msgs/include/slg_msgs/slg_msgs/msg/detail/segment_array__functions.c
+[12.217s] -- Installing: /home/parallels/ros2_ws/src/general/install/slg_msgs/include/slg_msgs/slg_msgs/msg/segment_array.h
+[12.218s] -- Installing: /home/parallels/ros2_ws/src/general/install/slg_msgs/include/slg_msgs/slg_msgs/msg/segment.h
+[12.218s] -- Installing: /home/parallels/ros2_ws/src/general/install/slg_msgs/share/slg_msgs/environment/library_path.sh
+[12.218s] -- Installing: /home/parallels/ros2_ws/src/general/install/slg_msgs/share/slg_msgs/environment/library_path.dsv
+[12.218s] -- Installing: /home/parallels/ros2_ws/src/general/install/slg_msgs/lib/libslg_msgs__rosidl_generator_c.so
+[12.218s] -- Set runtime path of "/home/parallels/ros2_ws/src/general/install/slg_msgs/lib/libslg_msgs__rosidl_generator_c.so" to ""
+[12.218s] -- Up-to-date: /home/parallels/ros2_ws/src/general/install/slg_msgs/include/slg_msgs/slg_msgs
+[12.218s] -- Up-to-date: /home/parallels/ros2_ws/src/general/install/slg_msgs/include/slg_msgs/slg_msgs/msg
+[12.218s] -- Up-to-date: /home/parallels/ros2_ws/src/general/install/slg_msgs/include/slg_msgs/slg_msgs/msg/detail
+[12.218s] -- Installing: /home/parallels/ros2_ws/src/general/install/slg_msgs/include/slg_msgs/slg_msgs/msg/detail/segment_array__rosidl_typesupport_fastrtps_c.h
+[12.218s] -- Installing: /home/parallels/ros2_ws/src/general/install/slg_msgs/include/slg_msgs/slg_msgs/msg/detail/segment__rosidl_typesupport_fastrtps_c.h
+[12.218s] -- Installing: /home/parallels/ros2_ws/src/general/install/slg_msgs/include/slg_msgs/slg_msgs/msg/rosidl_typesupport_fastrtps_c__visibility_control.h
+[12.218s] -- Installing: /home/parallels/ros2_ws/src/general/install/slg_msgs/lib/libslg_msgs__rosidl_typesupport_fastrtps_c.so
+[12.218s] -- Set runtime path of "/home/parallels/ros2_ws/src/general/install/slg_msgs/lib/libslg_msgs__rosidl_typesupport_fastrtps_c.so" to ""
+[12.218s] -- Up-to-date: /home/parallels/ros2_ws/src/general/install/slg_msgs/include/slg_msgs/slg_msgs
+[12.218s] -- Up-to-date: /home/parallels/ros2_ws/src/general/install/slg_msgs/include/slg_msgs/slg_msgs/msg
+[12.218s] -- Up-to-date: /home/parallels/ros2_ws/src/general/install/slg_msgs/include/slg_msgs/slg_msgs/msg/detail
+[12.218s] -- Installing: /home/parallels/ros2_ws/src/general/install/slg_msgs/include/slg_msgs/slg_msgs/msg/detail/segment_array__type_support.c
+[12.218s] -- Installing: /home/parallels/ros2_ws/src/general/install/slg_msgs/include/slg_msgs/slg_msgs/msg/detail/segment__type_support.c
+[12.218s] -- Installing: /home/parallels/ros2_ws/src/general/install/slg_msgs/include/slg_msgs/slg_msgs/msg/detail/segment__rosidl_typesupport_introspection_c.h
+[12.219s] -- Installing: /home/parallels/ros2_ws/src/general/install/slg_msgs/include/slg_msgs/slg_msgs/msg/detail/segment_array__rosidl_typesupport_introspection_c.h
+[12.219s] -- Installing: /home/parallels/ros2_ws/src/general/install/slg_msgs/include/slg_msgs/slg_msgs/msg/rosidl_typesupport_introspection_c__visibility_control.h
+[12.219s] -- Installing: /home/parallels/ros2_ws/src/general/install/slg_msgs/lib/libslg_msgs__rosidl_typesupport_introspection_c.so
+[12.219s] -- Set runtime path of "/home/parallels/ros2_ws/src/general/install/slg_msgs/lib/libslg_msgs__rosidl_typesupport_introspection_c.so" to ""
+[12.219s] -- Installing: /home/parallels/ros2_ws/src/general/install/slg_msgs/lib/libslg_msgs__rosidl_typesupport_c.so
+[12.219s] -- Set runtime path of "/home/parallels/ros2_ws/src/general/install/slg_msgs/lib/libslg_msgs__rosidl_typesupport_c.so" to ""
+[12.219s] -- Up-to-date: /home/parallels/ros2_ws/src/general/install/slg_msgs/include/slg_msgs/slg_msgs
+[12.219s] -- Up-to-date: /home/parallels/ros2_ws/src/general/install/slg_msgs/include/slg_msgs/slg_msgs/msg
+[12.219s] -- Up-to-date: /home/parallels/ros2_ws/src/general/install/slg_msgs/include/slg_msgs/slg_msgs/msg/detail
+[12.219s] -- Installing: /home/parallels/ros2_ws/src/general/install/slg_msgs/include/slg_msgs/slg_msgs/msg/detail/segment_array__builder.hpp
+[12.219s] -- Installing: /home/parallels/ros2_ws/src/general/install/slg_msgs/include/slg_msgs/slg_msgs/msg/detail/segment_array__traits.hpp
+[12.219s] -- Installing: /home/parallels/ros2_ws/src/general/install/slg_msgs/include/slg_msgs/slg_msgs/msg/detail/segment__traits.hpp
+[12.219s] -- Installing: /home/parallels/ros2_ws/src/general/install/slg_msgs/include/slg_msgs/slg_msgs/msg/detail/segment_array__struct.hpp
+[12.219s] -- Installing: /home/parallels/ros2_ws/src/general/install/slg_msgs/include/slg_msgs/slg_msgs/msg/detail/segment__struct.hpp
+[12.219s] -- Installing: /home/parallels/ros2_ws/src/general/install/slg_msgs/include/slg_msgs/slg_msgs/msg/detail/segment__builder.hpp
+[12.219s] -- Installing: /home/parallels/ros2_ws/src/general/install/slg_msgs/include/slg_msgs/slg_msgs/msg/segment_array.hpp
+[12.219s] -- Installing: /home/parallels/ros2_ws/src/general/install/slg_msgs/include/slg_msgs/slg_msgs/msg/segment.hpp
+[12.219s] -- Up-to-date: /home/parallels/ros2_ws/src/general/install/slg_msgs/include/slg_msgs/slg_msgs
+[12.219s] -- Up-to-date: /home/parallels/ros2_ws/src/general/install/slg_msgs/include/slg_msgs/slg_msgs/msg
+[12.219s] -- Up-to-date: /home/parallels/ros2_ws/src/general/install/slg_msgs/include/slg_msgs/slg_msgs/msg/detail
+[12.219s] -- Installing: /home/parallels/ros2_ws/src/general/install/slg_msgs/include/slg_msgs/slg_msgs/msg/detail/segment__rosidl_typesupport_fastrtps_cpp.hpp
+[12.219s] -- Installing: /home/parallels/ros2_ws/src/general/install/slg_msgs/include/slg_msgs/slg_msgs/msg/detail/dds_fastrtps
+[12.219s] -- Installing: /home/parallels/ros2_ws/src/general/install/slg_msgs/include/slg_msgs/slg_msgs/msg/detail/segment_array__rosidl_typesupport_fastrtps_cpp.hpp
+[12.220s] -- Installing: /home/parallels/ros2_ws/src/general/install/slg_msgs/include/slg_msgs/slg_msgs/msg/rosidl_typesupport_fastrtps_cpp__visibility_control.h
+[12.220s] -- Installing: /home/parallels/ros2_ws/src/general/install/slg_msgs/lib/libslg_msgs__rosidl_typesupport_fastrtps_cpp.so
+[12.220s] -- Set runtime path of "/home/parallels/ros2_ws/src/general/install/slg_msgs/lib/libslg_msgs__rosidl_typesupport_fastrtps_cpp.so" to ""
+[12.220s] -- Up-to-date: /home/parallels/ros2_ws/src/general/install/slg_msgs/include/slg_msgs/slg_msgs
+[12.220s] -- Up-to-date: /home/parallels/ros2_ws/src/general/install/slg_msgs/include/slg_msgs/slg_msgs/msg
+[12.220s] -- Up-to-date: /home/parallels/ros2_ws/src/general/install/slg_msgs/include/slg_msgs/slg_msgs/msg/detail
+[12.220s] -- Installing: /home/parallels/ros2_ws/src/general/install/slg_msgs/include/slg_msgs/slg_msgs/msg/detail/segment_array__type_support.cpp
+[12.220s] -- Installing: /home/parallels/ros2_ws/src/general/install/slg_msgs/include/slg_msgs/slg_msgs/msg/detail/segment__type_support.cpp
+[12.220s] -- Installing: /home/parallels/ros2_ws/src/general/install/slg_msgs/include/slg_msgs/slg_msgs/msg/detail/segment_array__rosidl_typesupport_introspection_cpp.hpp
+[12.220s] -- Installing: /home/parallels/ros2_ws/src/general/install/slg_msgs/include/slg_msgs/slg_msgs/msg/detail/segment__rosidl_typesupport_introspection_cpp.hpp
+[12.220s] -- Installing: /home/parallels/ros2_ws/src/general/install/slg_msgs/lib/libslg_msgs__rosidl_typesupport_introspection_cpp.so
+[12.220s] -- Set runtime path of "/home/parallels/ros2_ws/src/general/install/slg_msgs/lib/libslg_msgs__rosidl_typesupport_introspection_cpp.so" to ""
+[12.220s] -- Installing: /home/parallels/ros2_ws/src/general/install/slg_msgs/lib/libslg_msgs__rosidl_typesupport_cpp.so
+[12.220s] -- Set runtime path of "/home/parallels/ros2_ws/src/general/install/slg_msgs/lib/libslg_msgs__rosidl_typesupport_cpp.so" to ""
+[12.220s] -- Installing: /home/parallels/ros2_ws/src/general/install/slg_msgs/share/slg_msgs/environment/pythonpath.sh
+[12.220s] -- Installing: /home/parallels/ros2_ws/src/general/install/slg_msgs/share/slg_msgs/environment/pythonpath.dsv
+[12.220s] -- Installing: /home/parallels/ros2_ws/src/general/install/slg_msgs/local/lib/python3.10/dist-packages/slg_msgs-3.8.0-py3.10.egg-info
+[12.220s] -- Installing: /home/parallels/ros2_ws/src/general/install/slg_msgs/local/lib/python3.10/dist-packages/slg_msgs-3.8.0-py3.10.egg-info/dependency_links.txt
+[12.220s] -- Installing: /home/parallels/ros2_ws/src/general/install/slg_msgs/local/lib/python3.10/dist-packages/slg_msgs-3.8.0-py3.10.egg-info/top_level.txt
+[12.221s] -- Installing: /home/parallels/ros2_ws/src/general/install/slg_msgs/local/lib/python3.10/dist-packages/slg_msgs-3.8.0-py3.10.egg-info/PKG-INFO
+[12.221s] -- Installing: /home/parallels/ros2_ws/src/general/install/slg_msgs/local/lib/python3.10/dist-packages/slg_msgs-3.8.0-py3.10.egg-info/SOURCES.txt
+[12.221s] -- Installing: /home/parallels/ros2_ws/src/general/install/slg_msgs/local/lib/python3.10/dist-packages/slg_msgs
+[12.221s] -- Installing: /home/parallels/ros2_ws/src/general/install/slg_msgs/local/lib/python3.10/dist-packages/slg_msgs/slg_msgs_s__rosidl_typesupport_introspection_c.cpython-310-aarch64-linux-gnu.so
+[12.221s] -- Installing: /home/parallels/ros2_ws/src/general/install/slg_msgs/local/lib/python3.10/dist-packages/slg_msgs/_slg_msgs_s.ep.rosidl_typesupport_c.c
+[12.221s] -- Installing: /home/parallels/ros2_ws/src/general/install/slg_msgs/local/lib/python3.10/dist-packages/slg_msgs/msg
+[12.221s] -- Installing: /home/parallels/ros2_ws/src/general/install/slg_msgs/local/lib/python3.10/dist-packages/slg_msgs/msg/_segment.py
+[12.221s] -- Installing: /home/parallels/ros2_ws/src/general/install/slg_msgs/local/lib/python3.10/dist-packages/slg_msgs/msg/_segment_array_s.c
+[12.221s] -- Installing: /home/parallels/ros2_ws/src/general/install/slg_msgs/local/lib/python3.10/dist-packages/slg_msgs/msg/__init__.py
+[12.221s] -- Installing: /home/parallels/ros2_ws/src/general/install/slg_msgs/local/lib/python3.10/dist-packages/slg_msgs/msg/_segment_s.c
+[12.221s] -- Installing: /home/parallels/ros2_ws/src/general/install/slg_msgs/local/lib/python3.10/dist-packages/slg_msgs/msg/_segment_array.py
+[12.221s] -- Installing: /home/parallels/ros2_ws/src/general/install/slg_msgs/local/lib/python3.10/dist-packages/slg_msgs/_slg_msgs_s.ep.rosidl_typesupport_introspection_c.c
+[12.221s] -- Installing: /home/parallels/ros2_ws/src/general/install/slg_msgs/local/lib/python3.10/dist-packages/slg_msgs/slg_msgs_s__rosidl_typesupport_fastrtps_c.cpython-310-aarch64-linux-gnu.so
+[12.221s] -- Installing: /home/parallels/ros2_ws/src/general/install/slg_msgs/local/lib/python3.10/dist-packages/slg_msgs/slg_msgs_s__rosidl_typesupport_c.cpython-310-aarch64-linux-gnu.so
+[12.221s] -- Installing: /home/parallels/ros2_ws/src/general/install/slg_msgs/local/lib/python3.10/dist-packages/slg_msgs/_slg_msgs_s.ep.rosidl_typesupport_fastrtps_c.c
+[12.221s] -- Installing: /home/parallels/ros2_ws/src/general/install/slg_msgs/local/lib/python3.10/dist-packages/slg_msgs/__init__.py
+[12.221s] -- Installing: /home/parallels/ros2_ws/src/general/install/slg_msgs/local/lib/python3.10/dist-packages/slg_msgs/libslg_msgs__rosidl_generator_py.so
+[12.236s] Listing '/home/parallels/ros2_ws/src/general/install/slg_msgs/local/lib/python3.10/dist-packages/slg_msgs'...
+[12.236s] Compiling '/home/parallels/ros2_ws/src/general/install/slg_msgs/local/lib/python3.10/dist-packages/slg_msgs/__init__.py'...
+[12.236s] Listing '/home/parallels/ros2_ws/src/general/install/slg_msgs/local/lib/python3.10/dist-packages/slg_msgs/msg'...
+[12.236s] Compiling '/home/parallels/ros2_ws/src/general/install/slg_msgs/local/lib/python3.10/dist-packages/slg_msgs/msg/__init__.py'...
+[12.236s] Compiling '/home/parallels/ros2_ws/src/general/install/slg_msgs/local/lib/python3.10/dist-packages/slg_msgs/msg/_segment.py'...
+[12.236s] Compiling '/home/parallels/ros2_ws/src/general/install/slg_msgs/local/lib/python3.10/dist-packages/slg_msgs/msg/_segment_array.py'...
+[12.239s] -- Installing: /home/parallels/ros2_ws/src/general/install/slg_msgs/local/lib/python3.10/dist-packages/slg_msgs/slg_msgs_s__rosidl_typesupport_fastrtps_c.cpython-310-aarch64-linux-gnu.so
+[12.239s] -- Set runtime path of "/home/parallels/ros2_ws/src/general/install/slg_msgs/local/lib/python3.10/dist-packages/slg_msgs/slg_msgs_s__rosidl_typesupport_fastrtps_c.cpython-310-aarch64-linux-gnu.so" to ""
+[12.239s] -- Installing: /home/parallels/ros2_ws/src/general/install/slg_msgs/local/lib/python3.10/dist-packages/slg_msgs/slg_msgs_s__rosidl_typesupport_introspection_c.cpython-310-aarch64-linux-gnu.so
+[12.239s] -- Set runtime path of "/home/parallels/ros2_ws/src/general/install/slg_msgs/local/lib/python3.10/dist-packages/slg_msgs/slg_msgs_s__rosidl_typesupport_introspection_c.cpython-310-aarch64-linux-gnu.so" to ""
+[12.239s] -- Installing: /home/parallels/ros2_ws/src/general/install/slg_msgs/local/lib/python3.10/dist-packages/slg_msgs/slg_msgs_s__rosidl_typesupport_c.cpython-310-aarch64-linux-gnu.so
+[12.239s] -- Set runtime path of "/home/parallels/ros2_ws/src/general/install/slg_msgs/local/lib/python3.10/dist-packages/slg_msgs/slg_msgs_s__rosidl_typesupport_c.cpython-310-aarch64-linux-gnu.so" to ""
+[12.239s] -- Installing: /home/parallels/ros2_ws/src/general/install/slg_msgs/lib/libslg_msgs__rosidl_generator_py.so
+[12.239s] -- Set runtime path of "/home/parallels/ros2_ws/src/general/install/slg_msgs/lib/libslg_msgs__rosidl_generator_py.so" to ""
+[12.240s] -- Installing: /home/parallels/ros2_ws/src/general/install/slg_msgs/share/slg_msgs/msg/Segment.idl
+[12.240s] -- Installing: /home/parallels/ros2_ws/src/general/install/slg_msgs/share/slg_msgs/msg/SegmentArray.idl
+[12.240s] -- Installing: /home/parallels/ros2_ws/src/general/install/slg_msgs/share/slg_msgs/msg/Segment.msg
+[12.240s] -- Installing: /home/parallels/ros2_ws/src/general/install/slg_msgs/share/slg_msgs/msg/SegmentArray.msg
+[12.240s] -- Up-to-date: /home/parallels/ros2_ws/src/general/install/slg_msgs/include/slg_msgs
+[12.240s] -- Installing: /home/parallels/ros2_ws/src/general/install/slg_msgs/include/slg_msgs/segment2D.hpp
+[12.240s] -- Installing: /home/parallels/ros2_ws/src/general/install/slg_msgs/include/slg_msgs/polygon.hpp
+[12.240s] -- Installing: /home/parallels/ros2_ws/src/general/install/slg_msgs/include/slg_msgs/point2D.hpp
+[12.240s] -- Installing: /home/parallels/ros2_ws/src/general/install/slg_msgs/share/ament_index/resource_index/package_run_dependencies/slg_msgs
+[12.240s] -- Installing: /home/parallels/ros2_ws/src/general/install/slg_msgs/share/ament_index/resource_index/parent_prefix_path/slg_msgs
+[12.240s] -- Installing: /home/parallels/ros2_ws/src/general/install/slg_msgs/share/slg_msgs/environment/ament_prefix_path.sh
+[12.240s] -- Installing: /home/parallels/ros2_ws/src/general/install/slg_msgs/share/slg_msgs/environment/ament_prefix_path.dsv
+[12.240s] -- Installing: /home/parallels/ros2_ws/src/general/install/slg_msgs/share/slg_msgs/environment/path.sh
+[12.240s] -- Installing: /home/parallels/ros2_ws/src/general/install/slg_msgs/share/slg_msgs/environment/path.dsv
+[12.240s] -- Installing: /home/parallels/ros2_ws/src/general/install/slg_msgs/share/slg_msgs/local_setup.bash
+[12.240s] -- Installing: /home/parallels/ros2_ws/src/general/install/slg_msgs/share/slg_msgs/local_setup.sh
+[12.240s] -- Installing: /home/parallels/ros2_ws/src/general/install/slg_msgs/share/slg_msgs/local_setup.zsh
+[12.241s] -- Installing: /home/parallels/ros2_ws/src/general/install/slg_msgs/share/slg_msgs/local_setup.dsv
+[12.241s] -- Installing: /home/parallels/ros2_ws/src/general/install/slg_msgs/share/slg_msgs/package.dsv
+[12.241s] -- Installing: /home/parallels/ros2_ws/src/general/install/slg_msgs/share/ament_index/resource_index/packages/slg_msgs
+[12.241s] -- Installing: /home/parallels/ros2_ws/src/general/install/slg_msgs/share/slg_msgs/cmake/export_slg_msgs__rosidl_generator_cExport.cmake
+[12.241s] -- Installing: /home/parallels/ros2_ws/src/general/install/slg_msgs/share/slg_msgs/cmake/export_slg_msgs__rosidl_generator_cExport-release.cmake
+[12.241s] -- Installing: /home/parallels/ros2_ws/src/general/install/slg_msgs/share/slg_msgs/cmake/export_slg_msgs__rosidl_typesupport_fastrtps_cExport.cmake
+[12.241s] -- Installing: /home/parallels/ros2_ws/src/general/install/slg_msgs/share/slg_msgs/cmake/export_slg_msgs__rosidl_typesupport_fastrtps_cExport-release.cmake
+[12.241s] -- Installing: /home/parallels/ros2_ws/src/general/install/slg_msgs/share/slg_msgs/cmake/slg_msgs__rosidl_typesupport_introspection_cExport.cmake
+[12.241s] -- Installing: /home/parallels/ros2_ws/src/general/install/slg_msgs/share/slg_msgs/cmake/slg_msgs__rosidl_typesupport_introspection_cExport-release.cmake
+[12.241s] -- Installing: /home/parallels/ros2_ws/src/general/install/slg_msgs/share/slg_msgs/cmake/slg_msgs__rosidl_typesupport_cExport.cmake
+[12.241s] -- Installing: /home/parallels/ros2_ws/src/general/install/slg_msgs/share/slg_msgs/cmake/slg_msgs__rosidl_typesupport_cExport-release.cmake
+[12.241s] -- Installing: /home/parallels/ros2_ws/src/general/install/slg_msgs/share/slg_msgs/cmake/export_slg_msgs__rosidl_generator_cppExport.cmake
+[12.241s] -- Installing: /home/parallels/ros2_ws/src/general/install/slg_msgs/share/slg_msgs/cmake/export_slg_msgs__rosidl_typesupport_fastrtps_cppExport.cmake
+[12.241s] -- Installing: /home/parallels/ros2_ws/src/general/install/slg_msgs/share/slg_msgs/cmake/export_slg_msgs__rosidl_typesupport_fastrtps_cppExport-release.cmake
+[12.242s] -- Installing: /home/parallels/ros2_ws/src/general/install/slg_msgs/share/slg_msgs/cmake/slg_msgs__rosidl_typesupport_introspection_cppExport.cmake
+[12.242s] -- Installing: /home/parallels/ros2_ws/src/general/install/slg_msgs/share/slg_msgs/cmake/slg_msgs__rosidl_typesupport_introspection_cppExport-release.cmake
+[12.242s] -- Installing: /home/parallels/ros2_ws/src/general/install/slg_msgs/share/slg_msgs/cmake/slg_msgs__rosidl_typesupport_cppExport.cmake
+[12.242s] -- Installing: /home/parallels/ros2_ws/src/general/install/slg_msgs/share/slg_msgs/cmake/slg_msgs__rosidl_typesupport_cppExport-release.cmake
+[12.242s] -- Installing: /home/parallels/ros2_ws/src/general/install/slg_msgs/share/slg_msgs/cmake/export_slg_msgs__rosidl_generator_pyExport.cmake
+[12.242s] -- Installing: /home/parallels/ros2_ws/src/general/install/slg_msgs/share/slg_msgs/cmake/export_slg_msgs__rosidl_generator_pyExport-release.cmake
+[12.242s] -- Installing: /home/parallels/ros2_ws/src/general/install/slg_msgs/share/slg_msgs/cmake/export_slg_msgsExport.cmake
+[12.242s] -- Installing: /home/parallels/ros2_ws/src/general/install/slg_msgs/share/slg_msgs/cmake/rosidl_cmake-extras.cmake
+[12.242s] -- Installing: /home/parallels/ros2_ws/src/general/install/slg_msgs/share/slg_msgs/cmake/ament_cmake_export_dependencies-extras.cmake
+[12.242s] -- Installing: /home/parallels/ros2_ws/src/general/install/slg_msgs/share/slg_msgs/cmake/ament_cmake_export_include_directories-extras.cmake
+[12.242s] -- Installing: /home/parallels/ros2_ws/src/general/install/slg_msgs/share/slg_msgs/cmake/ament_cmake_export_libraries-extras.cmake
+[12.242s] -- Installing: /home/parallels/ros2_ws/src/general/install/slg_msgs/share/slg_msgs/cmake/ament_cmake_export_targets-extras.cmake
+[12.242s] -- Installing: /home/parallels/ros2_ws/src/general/install/slg_msgs/share/slg_msgs/cmake/rosidl_cmake_export_typesupport_targets-extras.cmake
+[12.242s] -- Installing: /home/parallels/ros2_ws/src/general/install/slg_msgs/share/slg_msgs/cmake/rosidl_cmake_export_typesupport_libraries-extras.cmake
+[12.242s] -- Installing: /home/parallels/ros2_ws/src/general/install/slg_msgs/share/slg_msgs/cmake/slg_msgsConfig.cmake
+[12.243s] -- Installing: /home/parallels/ros2_ws/src/general/install/slg_msgs/share/slg_msgs/cmake/slg_msgsConfig-version.cmake
+[12.243s] -- Installing: /home/parallels/ros2_ws/src/general/install/slg_msgs/share/slg_msgs/package.xml
+[12.244s] Invoked command in '/home/parallels/ros2_ws/src/general/build/slg_msgs' returned '0': CMAKE_PREFIX_PATH=/opt/ros/humble /usr/bin/cmake --install /home/parallels/ros2_ws/src/general/build/slg_msgs

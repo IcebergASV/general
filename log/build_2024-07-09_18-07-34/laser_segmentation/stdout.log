@@ -1,0 +1,53 @@
+[35m[1mConsolidate compiler generated dependencies of target gtest_main[0m
+[35m[1mConsolidate compiler generated dependencies of target laser_segmentation_component[0m
+[ 11%] Built target gtest_main
+[ 41%] Built target laser_segmentation_component
+[35m[1mConsolidate compiler generated dependencies of target gtest[0m
+[35m[1mConsolidate compiler generated dependencies of target laser_segmentation[0m
+[ 52%] Built target gtest
+[ 64%] Built target laser_segmentation
+[35m[1mConsolidate compiler generated dependencies of target test_segmentations[0m
+[ 76%] Built target test_segmentations
+[35m[1mConsolidate compiler generated dependencies of target test_laser_segmentation[0m
+[35m[1mConsolidate compiler generated dependencies of target test_integration[0m
+[ 88%] Built target test_laser_segmentation
+[100%] Built target test_integration
+-- Install configuration: "Release"
+-- Installing: /home/parallels/ros2_ws/src/general/install/laser_segmentation/lib/liblaser_segmentation_component.so
+-- Set runtime path of "/home/parallels/ros2_ws/src/general/install/laser_segmentation/lib/liblaser_segmentation_component.so" to ""
+-- Installing: /home/parallels/ros2_ws/src/general/install/laser_segmentation/lib/laser_segmentation/laser_segmentation
+-- Set runtime path of "/home/parallels/ros2_ws/src/general/install/laser_segmentation/lib/laser_segmentation/laser_segmentation" to ""
+-- Installing: /home/parallels/ros2_ws/src/general/install/laser_segmentation/include/laser_segmentation
+-- Installing: /home/parallels/ros2_ws/src/general/install/laser_segmentation/include/laser_segmentation/parameter_handler.hpp
+-- Installing: /home/parallels/ros2_ws/src/general/install/laser_segmentation/include/laser_segmentation/parula.hpp
+-- Installing: /home/parallels/ros2_ws/src/general/install/laser_segmentation/include/laser_segmentation/laser_segmentation.hpp
+-- Installing: /home/parallels/ros2_ws/src/general/install/laser_segmentation/include/laser_segmentation/segmentation
+-- Installing: /home/parallels/ros2_ws/src/general/install/laser_segmentation/include/laser_segmentation/segmentation/segmentation.hpp
+-- Installing: /home/parallels/ros2_ws/src/general/install/laser_segmentation/include/laser_segmentation/segmentation/jump_distance.hpp
+-- Installing: /home/parallels/ros2_ws/src/general/install/laser_segmentation/include/laser_segmentation/segmentation/jump_distance_merge.hpp
+-- Installing: /home/parallels/ros2_ws/src/general/install/laser_segmentation/share/laser_segmentation//launch
+-- Installing: /home/parallels/ros2_ws/src/general/install/laser_segmentation/share/laser_segmentation//launch/segmentation.launch.py
+-- Installing: /home/parallels/ros2_ws/src/general/install/laser_segmentation/share/laser_segmentation//params
+-- Installing: /home/parallels/ros2_ws/src/general/install/laser_segmentation/share/laser_segmentation//params/default_params.yml
+-- Installing: /home/parallels/ros2_ws/src/general/install/laser_segmentation/share/laser_segmentation//params/close_steps_detect.yml
+-- Installing: /home/parallels/ros2_ws/src/general/install/laser_segmentation/share/laser_segmentation/environment/library_path.sh
+-- Installing: /home/parallels/ros2_ws/src/general/install/laser_segmentation/share/laser_segmentation/environment/library_path.dsv
+-- Installing: /home/parallels/ros2_ws/src/general/install/laser_segmentation/share/ament_index/resource_index/package_run_dependencies/laser_segmentation
+-- Installing: /home/parallels/ros2_ws/src/general/install/laser_segmentation/share/ament_index/resource_index/parent_prefix_path/laser_segmentation
+-- Installing: /home/parallels/ros2_ws/src/general/install/laser_segmentation/share/laser_segmentation/environment/ament_prefix_path.sh
+-- Installing: /home/parallels/ros2_ws/src/general/install/laser_segmentation/share/laser_segmentation/environment/ament_prefix_path.dsv
+-- Installing: /home/parallels/ros2_ws/src/general/install/laser_segmentation/share/laser_segmentation/environment/path.sh
+-- Installing: /home/parallels/ros2_ws/src/general/install/laser_segmentation/share/laser_segmentation/environment/path.dsv
+-- Installing: /home/parallels/ros2_ws/src/general/install/laser_segmentation/share/laser_segmentation/local_setup.bash
+-- Installing: /home/parallels/ros2_ws/src/general/install/laser_segmentation/share/laser_segmentation/local_setup.sh
+-- Installing: /home/parallels/ros2_ws/src/general/install/laser_segmentation/share/laser_segmentation/local_setup.zsh
+-- Installing: /home/parallels/ros2_ws/src/general/install/laser_segmentation/share/laser_segmentation/local_setup.dsv
+-- Installing: /home/parallels/ros2_ws/src/general/install/laser_segmentation/share/laser_segmentation/package.dsv
+-- Installing: /home/parallels/ros2_ws/src/general/install/laser_segmentation/share/ament_index/resource_index/packages/laser_segmentation
+-- Installing: /home/parallels/ros2_ws/src/general/install/laser_segmentation/share/ament_index/resource_index/rclcpp_components/laser_segmentation
+-- Installing: /home/parallels/ros2_ws/src/general/install/laser_segmentation/share/laser_segmentation/cmake/ament_cmake_export_include_directories-extras.cmake
+-- Installing: /home/parallels/ros2_ws/src/general/install/laser_segmentation/share/laser_segmentation/cmake/ament_cmake_export_libraries-extras.cmake
+-- Installing: /home/parallels/ros2_ws/src/general/install/laser_segmentation/share/laser_segmentation/cmake/ament_cmake_export_dependencies-extras.cmake
+-- Installing: /home/parallels/ros2_ws/src/general/install/laser_segmentation/share/laser_segmentation/cmake/laser_segmentationConfig.cmake
+-- Installing: /home/parallels/ros2_ws/src/general/install/laser_segmentation/share/laser_segmentation/cmake/laser_segmentationConfig-version.cmake
+-- Installing: /home/parallels/ros2_ws/src/general/install/laser_segmentation/share/laser_segmentation/package.xml

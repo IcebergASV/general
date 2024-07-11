@@ -1,0 +1,396 @@
+[0.063s] DEBUG:colcon:Command line arguments: ['/usr/bin/colcon', 'build']
+[0.063s] DEBUG:colcon:Parsed command line arguments: Namespace(log_base=None, log_level=None, verb_name='build', build_base='build', install_base='install', merge_install=False, symlink_install=False, test_result_base=None, continue_on_error=False, executor='parallel', parallel_workers=2, event_handlers=None, ignore_user_meta=False, metas=['./colcon.meta'], base_paths=['.'], packages_ignore=None, packages_ignore_regex=None, paths=None, packages_up_to=None, packages_up_to_regex=None, packages_above=None, packages_above_and_dependencies=None, packages_above_depth=None, packages_select_by_dep=None, packages_skip_by_dep=None, packages_skip_up_to=None, packages_select_build_failed=False, packages_skip_build_finished=False, packages_select_test_failures=False, packages_skip_test_passed=False, packages_select=None, packages_skip=None, packages_select_regex=None, packages_skip_regex=None, packages_start=None, packages_end=None, allow_overriding=[], cmake_args=None, cmake_target=None, cmake_target_skip_unavailable=False, cmake_clean_cache=False, cmake_clean_first=False, cmake_force_configure=False, ament_cmake_args=None, catkin_cmake_args=None, catkin_skip_building_tests=False, mixin_files=None, mixin=None, verb_parser=<colcon_mixin.mixin.mixin_argument.MixinArgumentDecorator object at 0xffffae2d7040>, verb_extension=<colcon_core.verb.build.BuildVerb object at 0xffffae2d6a70>, main=<bound method BuildVerb.main of <colcon_core.verb.build.BuildVerb object at 0xffffae2d6a70>>, mixin_verb=('build',))
+[0.085s] Level 1:colcon.colcon_core.package_discovery:discover_packages(colcon_meta) check parameters
+[0.085s] Level 1:colcon.colcon_core.package_discovery:discover_packages(recursive) check parameters
+[0.085s] Level 1:colcon.colcon_core.package_discovery:discover_packages(ignore) check parameters
+[0.085s] Level 1:colcon.colcon_core.package_discovery:discover_packages(path) check parameters
+[0.085s] Level 1:colcon.colcon_core.package_discovery:discover_packages(colcon_meta) discover
+[0.085s] Level 1:colcon.colcon_core.package_discovery:discover_packages(recursive) discover
+[0.085s] INFO:colcon.colcon_core.package_discovery:Crawling recursively for packages in '/home/parallels/ros2_ws/src/general'
+[0.085s] Level 1:colcon.colcon_core.package_identification:_identify(.) by extensions ['ignore', 'ignore_ament_install']
+[0.086s] Level 1:colcon.colcon_core.package_identification:_identify(.) by extension 'ignore'
+[0.086s] Level 1:colcon.colcon_core.package_identification:_identify(.) by extension 'ignore_ament_install'
+[0.086s] Level 1:colcon.colcon_core.package_identification:_identify(.) by extensions ['colcon_pkg']
+[0.086s] Level 1:colcon.colcon_core.package_identification:_identify(.) by extension 'colcon_pkg'
+[0.086s] Level 1:colcon.colcon_core.package_identification:_identify(.) by extensions ['colcon_meta']
+[0.086s] Level 1:colcon.colcon_core.package_identification:_identify(.) by extension 'colcon_meta'
+[0.086s] Level 1:colcon.colcon_core.package_identification:_identify(.) by extensions ['ros']
+[0.086s] Level 1:colcon.colcon_core.package_identification:_identify(.) by extension 'ros'
+[0.094s] Level 1:colcon.colcon_core.package_identification:_identify(.) by extensions ['cmake', 'python']
+[0.094s] Level 1:colcon.colcon_core.package_identification:_identify(.) by extension 'cmake'
+[0.094s] Level 1:colcon.colcon_core.package_identification:_identify(.) by extension 'python'
+[0.094s] Level 1:colcon.colcon_core.package_identification:_identify(.) by extensions ['python_setup_py']
+[0.094s] Level 1:colcon.colcon_core.package_identification:_identify(.) by extension 'python_setup_py'
+[0.094s] Level 1:colcon.colcon_core.package_identification:_identify(build) by extensions ['ignore', 'ignore_ament_install']
+[0.094s] Level 1:colcon.colcon_core.package_identification:_identify(build) by extension 'ignore'
+[0.094s] Level 1:colcon.colcon_core.package_identification:_identify(build) ignored
+[0.094s] Level 1:colcon.colcon_core.package_identification:_identify(install) by extensions ['ignore', 'ignore_ament_install']
+[0.094s] Level 1:colcon.colcon_core.package_identification:_identify(install) by extension 'ignore'
+[0.094s] Level 1:colcon.colcon_core.package_identification:_identify(install) ignored
+[0.094s] Level 1:colcon.colcon_core.package_identification:_identify(laser_segmentation) by extensions ['ignore', 'ignore_ament_install']
+[0.094s] Level 1:colcon.colcon_core.package_identification:_identify(laser_segmentation) by extension 'ignore'
+[0.094s] Level 1:colcon.colcon_core.package_identification:_identify(laser_segmentation) by extension 'ignore_ament_install'
+[0.094s] Level 1:colcon.colcon_core.package_identification:_identify(laser_segmentation) by extensions ['colcon_pkg']
+[0.094s] Level 1:colcon.colcon_core.package_identification:_identify(laser_segmentation) by extension 'colcon_pkg'
+[0.094s] Level 1:colcon.colcon_core.package_identification:_identify(laser_segmentation) by extensions ['colcon_meta']
+[0.094s] Level 1:colcon.colcon_core.package_identification:_identify(laser_segmentation) by extension 'colcon_meta'
+[0.094s] Level 1:colcon.colcon_core.package_identification:_identify(laser_segmentation) by extensions ['ros']
+[0.094s] Level 1:colcon.colcon_core.package_identification:_identify(laser_segmentation) by extension 'ros'
+[0.094s] Level 1:colcon.colcon_core.package_identification:_identify(laser_segmentation) by extensions ['cmake', 'python']
+[0.094s] Level 1:colcon.colcon_core.package_identification:_identify(laser_segmentation) by extension 'cmake'
+[0.094s] Level 1:colcon.colcon_core.package_identification:_identify(laser_segmentation) by extension 'python'
+[0.094s] Level 1:colcon.colcon_core.package_identification:_identify(laser_segmentation) by extensions ['python_setup_py']
+[0.094s] Level 1:colcon.colcon_core.package_identification:_identify(laser_segmentation) by extension 'python_setup_py'
+[0.094s] Level 1:colcon.colcon_core.package_identification:_identify(laser_segmentation/laser_segmentation) by extensions ['ignore', 'ignore_ament_install']
+[0.094s] Level 1:colcon.colcon_core.package_identification:_identify(laser_segmentation/laser_segmentation) by extension 'ignore'
+[0.094s] Level 1:colcon.colcon_core.package_identification:_identify(laser_segmentation/laser_segmentation) by extension 'ignore_ament_install'
+[0.094s] Level 1:colcon.colcon_core.package_identification:_identify(laser_segmentation/laser_segmentation) by extensions ['colcon_pkg']
+[0.094s] Level 1:colcon.colcon_core.package_identification:_identify(laser_segmentation/laser_segmentation) by extension 'colcon_pkg'
+[0.094s] Level 1:colcon.colcon_core.package_identification:_identify(laser_segmentation/laser_segmentation) by extensions ['colcon_meta']
+[0.094s] Level 1:colcon.colcon_core.package_identification:_identify(laser_segmentation/laser_segmentation) by extension 'colcon_meta'
+[0.094s] Level 1:colcon.colcon_core.package_identification:_identify(laser_segmentation/laser_segmentation) by extensions ['ros']
+[0.094s] Level 1:colcon.colcon_core.package_identification:_identify(laser_segmentation/laser_segmentation) by extension 'ros'
+[0.096s] DEBUG:colcon.colcon_core.package_identification:Package 'laser_segmentation/laser_segmentation' with type 'ros.ament_cmake' and name 'laser_segmentation'
+[0.096s] Level 1:colcon.colcon_core.package_identification:_identify(laser_segmentation/slg_msgs) by extensions ['ignore', 'ignore_ament_install']
+[0.096s] Level 1:colcon.colcon_core.package_identification:_identify(laser_segmentation/slg_msgs) by extension 'ignore'
+[0.096s] Level 1:colcon.colcon_core.package_identification:_identify(laser_segmentation/slg_msgs) by extension 'ignore_ament_install'
+[0.096s] Level 1:colcon.colcon_core.package_identification:_identify(laser_segmentation/slg_msgs) by extensions ['colcon_pkg']
+[0.096s] Level 1:colcon.colcon_core.package_identification:_identify(laser_segmentation/slg_msgs) by extension 'colcon_pkg'
+[0.096s] Level 1:colcon.colcon_core.package_identification:_identify(laser_segmentation/slg_msgs) by extensions ['colcon_meta']
+[0.096s] Level 1:colcon.colcon_core.package_identification:_identify(laser_segmentation/slg_msgs) by extension 'colcon_meta'
+[0.096s] Level 1:colcon.colcon_core.package_identification:_identify(laser_segmentation/slg_msgs) by extensions ['ros']
+[0.096s] Level 1:colcon.colcon_core.package_identification:_identify(laser_segmentation/slg_msgs) by extension 'ros'
+[0.096s] DEBUG:colcon.colcon_core.package_identification:Package 'laser_segmentation/slg_msgs' with type 'ros.ament_cmake' and name 'slg_msgs'
+[0.096s] Level 1:colcon.colcon_core.package_identification:_identify(log) by extensions ['ignore', 'ignore_ament_install']
+[0.096s] Level 1:colcon.colcon_core.package_identification:_identify(log) by extension 'ignore'
+[0.096s] Level 1:colcon.colcon_core.package_identification:_identify(log) ignored
+[0.096s] Level 1:colcon.colcon_core.package_identification:_identify(njord_tasks) by extensions ['ignore', 'ignore_ament_install']
+[0.096s] Level 1:colcon.colcon_core.package_identification:_identify(njord_tasks) by extension 'ignore'
+[0.096s] Level 1:colcon.colcon_core.package_identification:_identify(njord_tasks) by extension 'ignore_ament_install'
+[0.096s] Level 1:colcon.colcon_core.package_identification:_identify(njord_tasks) by extensions ['colcon_pkg']
+[0.097s] Level 1:colcon.colcon_core.package_identification:_identify(njord_tasks) by extension 'colcon_pkg'
+[0.097s] Level 1:colcon.colcon_core.package_identification:_identify(njord_tasks) by extensions ['colcon_meta']
+[0.097s] Level 1:colcon.colcon_core.package_identification:_identify(njord_tasks) by extension 'colcon_meta'
+[0.097s] Level 1:colcon.colcon_core.package_identification:_identify(njord_tasks) by extensions ['ros']
+[0.097s] Level 1:colcon.colcon_core.package_identification:_identify(njord_tasks) by extension 'ros'
+[0.097s] DEBUG:colcon.colcon_core.package_identification:Package 'njord_tasks' with type 'ros.ament_cmake' and name 'njord_tasks'
+[0.097s] Level 1:colcon.colcon_core.package_identification:_identify(perception) by extensions ['ignore', 'ignore_ament_install']
+[0.097s] Level 1:colcon.colcon_core.package_identification:_identify(perception) by extension 'ignore'
+[0.097s] Level 1:colcon.colcon_core.package_identification:_identify(perception) by extension 'ignore_ament_install'
+[0.097s] Level 1:colcon.colcon_core.package_identification:_identify(perception) by extensions ['colcon_pkg']
+[0.097s] Level 1:colcon.colcon_core.package_identification:_identify(perception) by extension 'colcon_pkg'
+[0.097s] Level 1:colcon.colcon_core.package_identification:_identify(perception) by extensions ['colcon_meta']
+[0.097s] Level 1:colcon.colcon_core.package_identification:_identify(perception) by extension 'colcon_meta'
+[0.097s] Level 1:colcon.colcon_core.package_identification:_identify(perception) by extensions ['ros']
+[0.097s] Level 1:colcon.colcon_core.package_identification:_identify(perception) by extension 'ros'
+[0.097s] DEBUG:colcon.colcon_core.package_identification:Package 'perception' with type 'ros.ament_cmake' and name 'perception'
+[0.097s] Level 1:colcon.colcon_core.package_identification:_identify(perception_interfaces) by extensions ['ignore', 'ignore_ament_install']
+[0.097s] Level 1:colcon.colcon_core.package_identification:_identify(perception_interfaces) by extension 'ignore'
+[0.097s] Level 1:colcon.colcon_core.package_identification:_identify(perception_interfaces) by extension 'ignore_ament_install'
+[0.097s] Level 1:colcon.colcon_core.package_identification:_identify(perception_interfaces) by extensions ['colcon_pkg']
+[0.097s] Level 1:colcon.colcon_core.package_identification:_identify(perception_interfaces) by extension 'colcon_pkg'
+[0.097s] Level 1:colcon.colcon_core.package_identification:_identify(perception_interfaces) by extensions ['colcon_meta']
+[0.097s] Level 1:colcon.colcon_core.package_identification:_identify(perception_interfaces) by extension 'colcon_meta'
+[0.097s] Level 1:colcon.colcon_core.package_identification:_identify(perception_interfaces) by extensions ['ros']
+[0.097s] Level 1:colcon.colcon_core.package_identification:_identify(perception_interfaces) by extension 'ros'
+[0.098s] DEBUG:colcon.colcon_core.package_identification:Package 'perception_interfaces' with type 'ros.ament_cmake' and name 'perception_interfaces'
+[0.098s] Level 1:colcon.colcon_core.package_discovery:discover_packages(recursive) using defaults
+[0.098s] Level 1:colcon.colcon_core.package_discovery:discover_packages(ignore) discover
+[0.098s] Level 1:colcon.colcon_core.package_discovery:discover_packages(ignore) using defaults
+[0.098s] Level 1:colcon.colcon_core.package_discovery:discover_packages(path) discover
+[0.098s] Level 1:colcon.colcon_core.package_discovery:discover_packages(path) using defaults
+[0.109s] Level 1:colcon.colcon_core.package_discovery:discover_packages(prefix_path) check parameters
+[0.109s] Level 1:colcon.colcon_core.package_discovery:discover_packages(prefix_path) discover
+[0.110s] DEBUG:colcon.colcon_installed_package_information.package_discovery:Found 17 installed packages in /home/parallels/ros2_ws/install
+[0.111s] DEBUG:colcon.colcon_installed_package_information.package_discovery:Found 4 installed packages in /home/parallels/ros2_ws/src/general/install
+[0.111s] DEBUG:colcon.colcon_installed_package_information.package_discovery:Found 0 installed packages in /home/parallels/ros2_ws/install/install
+[0.111s] DEBUG:colcon.colcon_installed_package_information.package_discovery:Found 296 installed packages in /opt/ros/humble
+[0.112s] Level 1:colcon.colcon_core.package_discovery:discover_packages(prefix_path) using defaults
+[0.145s] Level 5:colcon.colcon_core.verb:set package 'njord_tasks' build argument 'cmake_args' from command line to 'None'
+[0.145s] Level 5:colcon.colcon_core.verb:set package 'njord_tasks' build argument 'cmake_target' from command line to 'None'
+[0.145s] Level 5:colcon.colcon_core.verb:set package 'njord_tasks' build argument 'cmake_target_skip_unavailable' from command line to 'False'
+[0.145s] Level 5:colcon.colcon_core.verb:set package 'njord_tasks' build argument 'cmake_clean_cache' from command line to 'False'
+[0.145s] Level 5:colcon.colcon_core.verb:set package 'njord_tasks' build argument 'cmake_clean_first' from command line to 'False'
+[0.145s] Level 5:colcon.colcon_core.verb:set package 'njord_tasks' build argument 'cmake_force_configure' from command line to 'False'
+[0.145s] Level 5:colcon.colcon_core.verb:set package 'njord_tasks' build argument 'ament_cmake_args' from command line to 'None'
+[0.145s] Level 5:colcon.colcon_core.verb:set package 'njord_tasks' build argument 'catkin_cmake_args' from command line to 'None'
+[0.145s] Level 5:colcon.colcon_core.verb:set package 'njord_tasks' build argument 'catkin_skip_building_tests' from command line to 'False'
+[0.145s] DEBUG:colcon.colcon_core.verb:Building package 'njord_tasks' with the following arguments: {'ament_cmake_args': None, 'build_base': '/home/parallels/ros2_ws/src/general/build/njord_tasks', 'catkin_cmake_args': None, 'catkin_skip_building_tests': False, 'cmake_args': None, 'cmake_clean_cache': False, 'cmake_clean_first': False, 'cmake_force_configure': False, 'cmake_target': None, 'cmake_target_skip_unavailable': False, 'install_base': '/home/parallels/ros2_ws/src/general/install/njord_tasks', 'merge_install': False, 'path': '/home/parallels/ros2_ws/src/general/njord_tasks', 'symlink_install': False, 'test_result_base': None}
+[0.145s] Level 5:colcon.colcon_core.verb:set package 'perception_interfaces' build argument 'cmake_args' from command line to 'None'
+[0.145s] Level 5:colcon.colcon_core.verb:set package 'perception_interfaces' build argument 'cmake_target' from command line to 'None'
+[0.145s] Level 5:colcon.colcon_core.verb:set package 'perception_interfaces' build argument 'cmake_target_skip_unavailable' from command line to 'False'
+[0.145s] Level 5:colcon.colcon_core.verb:set package 'perception_interfaces' build argument 'cmake_clean_cache' from command line to 'False'
+[0.145s] Level 5:colcon.colcon_core.verb:set package 'perception_interfaces' build argument 'cmake_clean_first' from command line to 'False'
+[0.145s] Level 5:colcon.colcon_core.verb:set package 'perception_interfaces' build argument 'cmake_force_configure' from command line to 'False'
+[0.145s] Level 5:colcon.colcon_core.verb:set package 'perception_interfaces' build argument 'ament_cmake_args' from command line to 'None'
+[0.145s] Level 5:colcon.colcon_core.verb:set package 'perception_interfaces' build argument 'catkin_cmake_args' from command line to 'None'
+[0.145s] Level 5:colcon.colcon_core.verb:set package 'perception_interfaces' build argument 'catkin_skip_building_tests' from command line to 'False'
+[0.145s] DEBUG:colcon.colcon_core.verb:Building package 'perception_interfaces' with the following arguments: {'ament_cmake_args': None, 'build_base': '/home/parallels/ros2_ws/src/general/build/perception_interfaces', 'catkin_cmake_args': None, 'catkin_skip_building_tests': False, 'cmake_args': None, 'cmake_clean_cache': False, 'cmake_clean_first': False, 'cmake_force_configure': False, 'cmake_target': None, 'cmake_target_skip_unavailable': False, 'install_base': '/home/parallels/ros2_ws/src/general/install/perception_interfaces', 'merge_install': False, 'path': '/home/parallels/ros2_ws/src/general/perception_interfaces', 'symlink_install': False, 'test_result_base': None}
+[0.145s] Level 5:colcon.colcon_core.verb:set package 'slg_msgs' build argument 'cmake_args' from command line to 'None'
+[0.145s] Level 5:colcon.colcon_core.verb:set package 'slg_msgs' build argument 'cmake_target' from command line to 'None'
+[0.145s] Level 5:colcon.colcon_core.verb:set package 'slg_msgs' build argument 'cmake_target_skip_unavailable' from command line to 'False'
+[0.145s] Level 5:colcon.colcon_core.verb:set package 'slg_msgs' build argument 'cmake_clean_cache' from command line to 'False'
+[0.145s] Level 5:colcon.colcon_core.verb:set package 'slg_msgs' build argument 'cmake_clean_first' from command line to 'False'
+[0.145s] Level 5:colcon.colcon_core.verb:set package 'slg_msgs' build argument 'cmake_force_configure' from command line to 'False'
+[0.145s] Level 5:colcon.colcon_core.verb:set package 'slg_msgs' build argument 'ament_cmake_args' from command line to 'None'
+[0.145s] Level 5:colcon.colcon_core.verb:set package 'slg_msgs' build argument 'catkin_cmake_args' from command line to 'None'
+[0.145s] Level 5:colcon.colcon_core.verb:set package 'slg_msgs' build argument 'catkin_skip_building_tests' from command line to 'False'
+[0.145s] DEBUG:colcon.colcon_core.verb:Building package 'slg_msgs' with the following arguments: {'ament_cmake_args': None, 'build_base': '/home/parallels/ros2_ws/src/general/build/slg_msgs', 'catkin_cmake_args': None, 'catkin_skip_building_tests': False, 'cmake_args': None, 'cmake_clean_cache': False, 'cmake_clean_first': False, 'cmake_force_configure': False, 'cmake_target': None, 'cmake_target_skip_unavailable': False, 'install_base': '/home/parallels/ros2_ws/src/general/install/slg_msgs', 'merge_install': False, 'path': '/home/parallels/ros2_ws/src/general/laser_segmentation/slg_msgs', 'symlink_install': False, 'test_result_base': None}
+[0.145s] Level 5:colcon.colcon_core.verb:set package 'laser_segmentation' build argument 'cmake_args' from command line to 'None'
+[0.145s] Level 5:colcon.colcon_core.verb:set package 'laser_segmentation' build argument 'cmake_target' from command line to 'None'
+[0.145s] Level 5:colcon.colcon_core.verb:set package 'laser_segmentation' build argument 'cmake_target_skip_unavailable' from command line to 'False'
+[0.145s] Level 5:colcon.colcon_core.verb:set package 'laser_segmentation' build argument 'cmake_clean_cache' from command line to 'False'
+[0.145s] Level 5:colcon.colcon_core.verb:set package 'laser_segmentation' build argument 'cmake_clean_first' from command line to 'False'
+[0.145s] Level 5:colcon.colcon_core.verb:set package 'laser_segmentation' build argument 'cmake_force_configure' from command line to 'False'
+[0.145s] Level 5:colcon.colcon_core.verb:set package 'laser_segmentation' build argument 'ament_cmake_args' from command line to 'None'
+[0.145s] Level 5:colcon.colcon_core.verb:set package 'laser_segmentation' build argument 'catkin_cmake_args' from command line to 'None'
+[0.145s] Level 5:colcon.colcon_core.verb:set package 'laser_segmentation' build argument 'catkin_skip_building_tests' from command line to 'False'
+[0.146s] DEBUG:colcon.colcon_core.verb:Building package 'laser_segmentation' with the following arguments: {'ament_cmake_args': None, 'build_base': '/home/parallels/ros2_ws/src/general/build/laser_segmentation', 'catkin_cmake_args': None, 'catkin_skip_building_tests': False, 'cmake_args': None, 'cmake_clean_cache': False, 'cmake_clean_first': False, 'cmake_force_configure': False, 'cmake_target': None, 'cmake_target_skip_unavailable': False, 'install_base': '/home/parallels/ros2_ws/src/general/install/laser_segmentation', 'merge_install': False, 'path': '/home/parallels/ros2_ws/src/general/laser_segmentation/laser_segmentation', 'symlink_install': False, 'test_result_base': None}
+[0.146s] Level 5:colcon.colcon_core.verb:set package 'perception' build argument 'cmake_args' from command line to 'None'
+[0.146s] Level 5:colcon.colcon_core.verb:set package 'perception' build argument 'cmake_target' from command line to 'None'
+[0.146s] Level 5:colcon.colcon_core.verb:set package 'perception' build argument 'cmake_target_skip_unavailable' from command line to 'False'
+[0.146s] Level 5:colcon.colcon_core.verb:set package 'perception' build argument 'cmake_clean_cache' from command line to 'False'
+[0.146s] Level 5:colcon.colcon_core.verb:set package 'perception' build argument 'cmake_clean_first' from command line to 'False'
+[0.146s] Level 5:colcon.colcon_core.verb:set package 'perception' build argument 'cmake_force_configure' from command line to 'False'
+[0.146s] Level 5:colcon.colcon_core.verb:set package 'perception' build argument 'ament_cmake_args' from command line to 'None'
+[0.146s] Level 5:colcon.colcon_core.verb:set package 'perception' build argument 'catkin_cmake_args' from command line to 'None'
+[0.146s] Level 5:colcon.colcon_core.verb:set package 'perception' build argument 'catkin_skip_building_tests' from command line to 'False'
+[0.146s] DEBUG:colcon.colcon_core.verb:Building package 'perception' with the following arguments: {'ament_cmake_args': None, 'build_base': '/home/parallels/ros2_ws/src/general/build/perception', 'catkin_cmake_args': None, 'catkin_skip_building_tests': False, 'cmake_args': None, 'cmake_clean_cache': False, 'cmake_clean_first': False, 'cmake_force_configure': False, 'cmake_target': None, 'cmake_target_skip_unavailable': False, 'install_base': '/home/parallels/ros2_ws/src/general/install/perception', 'merge_install': False, 'path': '/home/parallels/ros2_ws/src/general/perception', 'symlink_install': False, 'test_result_base': None}
+[0.146s] INFO:colcon.colcon_core.executor:Executing jobs using 'parallel' executor
+[0.146s] DEBUG:colcon.colcon_parallel_executor.executor.parallel:run_until_complete
+[0.146s] INFO:colcon.colcon_ros.task.ament_cmake.build:Building ROS package in '/home/parallels/ros2_ws/src/general/laser_segmentation/slg_msgs' with build type 'ament_cmake'
+[0.147s] INFO:colcon.colcon_cmake.task.cmake.build:Building CMake package in '/home/parallels/ros2_ws/src/general/laser_segmentation/slg_msgs'
+[0.148s] INFO:colcon.colcon_core.plugin_system:Skipping extension 'colcon_core.shell.bat': Not used on non-Windows systems
+[0.148s] INFO:colcon.colcon_core.shell:Skip shell extension 'powershell' for command environment: Not usable outside of PowerShell
+[0.148s] DEBUG:colcon.colcon_core.shell:Skip shell extension 'dsv' for command environment
+[0.151s] INFO:colcon.colcon_ros.task.ament_cmake.build:Building ROS package in '/home/parallels/ros2_ws/src/general/perception_interfaces' with build type 'ament_cmake'
+[0.151s] INFO:colcon.colcon_cmake.task.cmake.build:Building CMake package in '/home/parallels/ros2_ws/src/general/perception_interfaces'
+[0.151s] INFO:colcon.colcon_core.shell:Skip shell extension 'powershell' for command environment: Not usable outside of PowerShell
+[0.151s] DEBUG:colcon.colcon_core.shell:Skip shell extension 'dsv' for command environment
+[0.156s] DEBUG:colcon.colcon_core.event_handler.log_command:Invoking command in '/home/parallels/ros2_ws/src/general/build/slg_msgs': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/home/parallels/ros2_ws/install/ardupilot_dds_tests:/opt/ros/humble /usr/bin/cmake --build /home/parallels/ros2_ws/src/general/build/slg_msgs -- -j2 -l2
+[0.172s] DEBUG:colcon.colcon_core.event_handler.log_command:Invoking command in '/home/parallels/ros2_ws/src/general/build/perception_interfaces': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/home/parallels/ros2_ws/install/ardupilot_dds_tests:/opt/ros/humble /usr/bin/cmake --build /home/parallels/ros2_ws/src/general/build/perception_interfaces -- -j2 -l2
+[0.568s] DEBUG:colcon.colcon_core.event_handler.log_command:Invoked command in '/home/parallels/ros2_ws/src/general/build/perception_interfaces' returned '0': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/home/parallels/ros2_ws/install/ardupilot_dds_tests:/opt/ros/humble /usr/bin/cmake --build /home/parallels/ros2_ws/src/general/build/perception_interfaces -- -j2 -l2
+[0.592s] DEBUG:colcon.colcon_core.event_handler.log_command:Invoked command in '/home/parallels/ros2_ws/src/general/build/slg_msgs' returned '0': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/home/parallels/ros2_ws/install/ardupilot_dds_tests:/opt/ros/humble /usr/bin/cmake --build /home/parallels/ros2_ws/src/general/build/slg_msgs -- -j2 -l2
+[0.632s] DEBUG:colcon.colcon_core.event_handler.log_command:Invoking command in '/home/parallels/ros2_ws/src/general/build/perception_interfaces': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/home/parallels/ros2_ws/install/ardupilot_dds_tests:/opt/ros/humble /usr/bin/cmake --install /home/parallels/ros2_ws/src/general/build/perception_interfaces
+[0.645s] DEBUG:colcon.colcon_core.event_handler.log_command:Invoking command in '/home/parallels/ros2_ws/src/general/build/slg_msgs': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/home/parallels/ros2_ws/install/ardupilot_dds_tests:/opt/ros/humble /usr/bin/cmake --install /home/parallels/ros2_ws/src/general/build/slg_msgs
+[0.672s] Level 1:colcon.colcon_core.environment:create_environment_scripts_only(perception_interfaces)
+[0.677s] Level 1:colcon.colcon_core.environment:checking '/home/parallels/ros2_ws/src/general/install/perception_interfaces' for CMake module files
+[0.678s] Level 1:colcon.colcon_core.environment:checking '/home/parallels/ros2_ws/src/general/install/perception_interfaces' for CMake config files
+[0.678s] Level 1:colcon.colcon_core.shell:create_environment_hook('perception_interfaces', 'cmake_prefix_path')
+[0.678s] INFO:colcon.colcon_core.shell:Creating environment hook '/home/parallels/ros2_ws/src/general/install/perception_interfaces/share/perception_interfaces/hook/cmake_prefix_path.ps1'
+[0.679s] DEBUG:colcon.colcon_core.event_handler.log_command:Invoked command in '/home/parallels/ros2_ws/src/general/build/perception_interfaces' returned '0': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/home/parallels/ros2_ws/install/ardupilot_dds_tests:/opt/ros/humble /usr/bin/cmake --install /home/parallels/ros2_ws/src/general/build/perception_interfaces
+[0.681s] INFO:colcon.colcon_core.shell:Creating environment descriptor '/home/parallels/ros2_ws/src/general/install/perception_interfaces/share/perception_interfaces/hook/cmake_prefix_path.dsv'
+[0.681s] INFO:colcon.colcon_core.shell:Creating environment hook '/home/parallels/ros2_ws/src/general/install/perception_interfaces/share/perception_interfaces/hook/cmake_prefix_path.sh'
+[0.682s] Level 1:colcon.colcon_core.environment:checking '/home/parallels/ros2_ws/src/general/install/perception_interfaces/lib'
+[0.682s] Level 1:colcon.colcon_core.shell:create_environment_hook('perception_interfaces', 'ld_library_path_lib')
+[0.682s] INFO:colcon.colcon_core.shell:Creating environment hook '/home/parallels/ros2_ws/src/general/install/perception_interfaces/share/perception_interfaces/hook/ld_library_path_lib.ps1'
+[0.682s] INFO:colcon.colcon_core.shell:Creating environment descriptor '/home/parallels/ros2_ws/src/general/install/perception_interfaces/share/perception_interfaces/hook/ld_library_path_lib.dsv'
+[0.682s] INFO:colcon.colcon_core.shell:Creating environment hook '/home/parallels/ros2_ws/src/general/install/perception_interfaces/share/perception_interfaces/hook/ld_library_path_lib.sh'
+[0.682s] Level 1:colcon.colcon_core.environment:checking '/home/parallels/ros2_ws/src/general/install/perception_interfaces/bin'
+[0.682s] Level 1:colcon.colcon_core.environment:checking '/home/parallels/ros2_ws/src/general/install/perception_interfaces/lib/pkgconfig/perception_interfaces.pc'
+[0.682s] Level 1:colcon.colcon_core.environment:checking '/home/parallels/ros2_ws/src/general/install/perception_interfaces/lib/python3.10/site-packages'
+[0.683s] Level 1:colcon.colcon_core.environment:checking '/home/parallels/ros2_ws/src/general/install/perception_interfaces/bin'
+[0.683s] INFO:colcon.colcon_core.shell:Creating package script '/home/parallels/ros2_ws/src/general/install/perception_interfaces/share/perception_interfaces/package.ps1'
+[0.683s] INFO:colcon.colcon_core.shell:Creating package descriptor '/home/parallels/ros2_ws/src/general/install/perception_interfaces/share/perception_interfaces/package.dsv'
+[0.683s] INFO:colcon.colcon_core.shell:Creating package script '/home/parallels/ros2_ws/src/general/install/perception_interfaces/share/perception_interfaces/package.sh'
+[0.684s] INFO:colcon.colcon_core.shell:Creating package script '/home/parallels/ros2_ws/src/general/install/perception_interfaces/share/perception_interfaces/package.bash'
+[0.684s] INFO:colcon.colcon_core.shell:Creating package script '/home/parallels/ros2_ws/src/general/install/perception_interfaces/share/perception_interfaces/package.zsh'
+[0.684s] Level 1:colcon.colcon_core.environment:create_file_with_runtime_dependencies(/home/parallels/ros2_ws/src/general/install/perception_interfaces/share/colcon-core/packages/perception_interfaces)
+[0.685s] Level 1:colcon.colcon_core.environment:create_environment_scripts_only(slg_msgs)
+[0.685s] Level 1:colcon.colcon_core.environment:checking '/home/parallels/ros2_ws/src/general/install/slg_msgs' for CMake module files
+[0.685s] Level 1:colcon.colcon_core.environment:checking '/home/parallels/ros2_ws/src/general/install/slg_msgs' for CMake config files
+[0.686s] Level 1:colcon.colcon_core.shell:create_environment_hook('slg_msgs', 'cmake_prefix_path')
+[0.686s] INFO:colcon.colcon_core.shell:Creating environment hook '/home/parallels/ros2_ws/src/general/install/slg_msgs/share/slg_msgs/hook/cmake_prefix_path.ps1'
+[0.686s] INFO:colcon.colcon_core.shell:Creating environment descriptor '/home/parallels/ros2_ws/src/general/install/slg_msgs/share/slg_msgs/hook/cmake_prefix_path.dsv'
+[0.686s] INFO:colcon.colcon_core.shell:Creating environment hook '/home/parallels/ros2_ws/src/general/install/slg_msgs/share/slg_msgs/hook/cmake_prefix_path.sh'
+[0.686s] Level 1:colcon.colcon_core.environment:checking '/home/parallels/ros2_ws/src/general/install/slg_msgs/lib'
+[0.686s] Level 1:colcon.colcon_core.shell:create_environment_hook('slg_msgs', 'ld_library_path_lib')
+[0.686s] INFO:colcon.colcon_core.shell:Creating environment hook '/home/parallels/ros2_ws/src/general/install/slg_msgs/share/slg_msgs/hook/ld_library_path_lib.ps1'
+[0.686s] INFO:colcon.colcon_core.shell:Creating environment descriptor '/home/parallels/ros2_ws/src/general/install/slg_msgs/share/slg_msgs/hook/ld_library_path_lib.dsv'
+[0.687s] INFO:colcon.colcon_core.shell:Creating environment hook '/home/parallels/ros2_ws/src/general/install/slg_msgs/share/slg_msgs/hook/ld_library_path_lib.sh'
+[0.687s] Level 1:colcon.colcon_core.environment:checking '/home/parallels/ros2_ws/src/general/install/slg_msgs/bin'
+[0.687s] DEBUG:colcon.colcon_core.event_handler.log_command:Invoked command in '/home/parallels/ros2_ws/src/general/build/slg_msgs' returned '0': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/home/parallels/ros2_ws/install/ardupilot_dds_tests:/opt/ros/humble /usr/bin/cmake --install /home/parallels/ros2_ws/src/general/build/slg_msgs
+[0.687s] Level 1:colcon.colcon_core.environment:checking '/home/parallels/ros2_ws/src/general/install/slg_msgs/lib/pkgconfig/slg_msgs.pc'
+[0.687s] Level 1:colcon.colcon_core.environment:checking '/home/parallels/ros2_ws/src/general/install/slg_msgs/lib/python3.10/site-packages'
+[0.687s] Level 1:colcon.colcon_core.environment:checking '/home/parallels/ros2_ws/src/general/install/slg_msgs/bin'
+[0.687s] INFO:colcon.colcon_core.shell:Creating package script '/home/parallels/ros2_ws/src/general/install/slg_msgs/share/slg_msgs/package.ps1'
+[0.688s] INFO:colcon.colcon_core.shell:Creating package descriptor '/home/parallels/ros2_ws/src/general/install/slg_msgs/share/slg_msgs/package.dsv'
+[0.688s] INFO:colcon.colcon_core.shell:Creating package script '/home/parallels/ros2_ws/src/general/install/slg_msgs/share/slg_msgs/package.sh'
+[0.688s] INFO:colcon.colcon_core.shell:Creating package script '/home/parallels/ros2_ws/src/general/install/slg_msgs/share/slg_msgs/package.bash'
+[0.688s] INFO:colcon.colcon_core.shell:Creating package script '/home/parallels/ros2_ws/src/general/install/slg_msgs/share/slg_msgs/package.zsh'
+[0.688s] Level 1:colcon.colcon_core.environment:create_file_with_runtime_dependencies(/home/parallels/ros2_ws/src/general/install/slg_msgs/share/colcon-core/packages/slg_msgs)
+[0.729s] Level 1:colcon.colcon_core.environment:create_environment_scripts_only(slg_msgs)
+[0.729s] Level 1:colcon.colcon_core.environment:checking '/home/parallels/ros2_ws/src/general/install/slg_msgs' for CMake module files
+[0.730s] Level 1:colcon.colcon_core.environment:checking '/home/parallels/ros2_ws/src/general/install/slg_msgs' for CMake config files
+[0.730s] Level 1:colcon.colcon_core.shell:create_environment_hook('slg_msgs', 'cmake_prefix_path')
+[0.730s] INFO:colcon.colcon_core.shell:Creating environment hook '/home/parallels/ros2_ws/src/general/install/slg_msgs/share/slg_msgs/hook/cmake_prefix_path.ps1'
+[0.730s] INFO:colcon.colcon_core.shell:Creating environment descriptor '/home/parallels/ros2_ws/src/general/install/slg_msgs/share/slg_msgs/hook/cmake_prefix_path.dsv'
+[0.730s] INFO:colcon.colcon_core.shell:Creating environment hook '/home/parallels/ros2_ws/src/general/install/slg_msgs/share/slg_msgs/hook/cmake_prefix_path.sh'
+[0.730s] Level 1:colcon.colcon_core.environment:checking '/home/parallels/ros2_ws/src/general/install/slg_msgs/lib'
+[0.730s] Level 1:colcon.colcon_core.shell:create_environment_hook('slg_msgs', 'ld_library_path_lib')
+[0.731s] INFO:colcon.colcon_core.shell:Creating environment hook '/home/parallels/ros2_ws/src/general/install/slg_msgs/share/slg_msgs/hook/ld_library_path_lib.ps1'
+[0.731s] INFO:colcon.colcon_core.shell:Creating environment descriptor '/home/parallels/ros2_ws/src/general/install/slg_msgs/share/slg_msgs/hook/ld_library_path_lib.dsv'
+[0.731s] INFO:colcon.colcon_core.shell:Creating environment hook '/home/parallels/ros2_ws/src/general/install/slg_msgs/share/slg_msgs/hook/ld_library_path_lib.sh'
+[0.731s] Level 1:colcon.colcon_core.environment:checking '/home/parallels/ros2_ws/src/general/install/slg_msgs/bin'
+[0.731s] Level 1:colcon.colcon_core.environment:checking '/home/parallels/ros2_ws/src/general/install/slg_msgs/lib/pkgconfig/slg_msgs.pc'
+[0.731s] Level 1:colcon.colcon_core.environment:checking '/home/parallels/ros2_ws/src/general/install/slg_msgs/lib/python3.10/site-packages'
+[0.731s] Level 1:colcon.colcon_core.environment:checking '/home/parallels/ros2_ws/src/general/install/slg_msgs/bin'
+[0.731s] INFO:colcon.colcon_core.shell:Creating package script '/home/parallels/ros2_ws/src/general/install/slg_msgs/share/slg_msgs/package.ps1'
+[0.732s] INFO:colcon.colcon_core.shell:Creating package descriptor '/home/parallels/ros2_ws/src/general/install/slg_msgs/share/slg_msgs/package.dsv'
+[0.732s] INFO:colcon.colcon_core.shell:Creating package script '/home/parallels/ros2_ws/src/general/install/slg_msgs/share/slg_msgs/package.sh'
+[0.732s] INFO:colcon.colcon_core.shell:Creating package script '/home/parallels/ros2_ws/src/general/install/slg_msgs/share/slg_msgs/package.bash'
+[0.732s] INFO:colcon.colcon_core.shell:Creating package script '/home/parallels/ros2_ws/src/general/install/slg_msgs/share/slg_msgs/package.zsh'
+[0.732s] Level 1:colcon.colcon_core.environment:create_file_with_runtime_dependencies(/home/parallels/ros2_ws/src/general/install/slg_msgs/share/colcon-core/packages/slg_msgs)
+[0.733s] INFO:colcon.colcon_ros.task.ament_cmake.build:Building ROS package in '/home/parallels/ros2_ws/src/general/njord_tasks' with build type 'ament_cmake'
+[0.733s] INFO:colcon.colcon_cmake.task.cmake.build:Building CMake package in '/home/parallels/ros2_ws/src/general/njord_tasks'
+[0.733s] INFO:colcon.colcon_core.shell:Skip shell extension 'powershell' for command environment: Not usable outside of PowerShell
+[0.733s] DEBUG:colcon.colcon_core.shell:Skip shell extension 'dsv' for command environment
+[0.737s] DEBUG:colcon.colcon_core.event_handler.log_command:Invoking command in '/home/parallels/ros2_ws/src/general/build/njord_tasks': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/home/parallels/ros2_ws/install/ardupilot_dds_tests:/opt/ros/humble /usr/bin/cmake --build /home/parallels/ros2_ws/src/general/build/njord_tasks -- -j2 -l2
+[0.739s] Level 1:colcon.colcon_core.environment:create_environment_scripts_only(perception_interfaces)
+[0.739s] Level 1:colcon.colcon_core.environment:checking '/home/parallels/ros2_ws/src/general/install/perception_interfaces' for CMake module files
+[0.739s] Level 1:colcon.colcon_core.environment:checking '/home/parallels/ros2_ws/src/general/install/perception_interfaces' for CMake config files
+[0.739s] Level 1:colcon.colcon_core.shell:create_environment_hook('perception_interfaces', 'cmake_prefix_path')
+[0.739s] INFO:colcon.colcon_core.shell:Creating environment hook '/home/parallels/ros2_ws/src/general/install/perception_interfaces/share/perception_interfaces/hook/cmake_prefix_path.ps1'
+[0.740s] INFO:colcon.colcon_core.shell:Creating environment descriptor '/home/parallels/ros2_ws/src/general/install/perception_interfaces/share/perception_interfaces/hook/cmake_prefix_path.dsv'
+[0.740s] INFO:colcon.colcon_core.shell:Creating environment hook '/home/parallels/ros2_ws/src/general/install/perception_interfaces/share/perception_interfaces/hook/cmake_prefix_path.sh'
+[0.740s] Level 1:colcon.colcon_core.environment:checking '/home/parallels/ros2_ws/src/general/install/perception_interfaces/lib'
+[0.740s] Level 1:colcon.colcon_core.shell:create_environment_hook('perception_interfaces', 'ld_library_path_lib')
+[0.740s] INFO:colcon.colcon_core.shell:Creating environment hook '/home/parallels/ros2_ws/src/general/install/perception_interfaces/share/perception_interfaces/hook/ld_library_path_lib.ps1'
+[0.740s] INFO:colcon.colcon_core.shell:Creating environment descriptor '/home/parallels/ros2_ws/src/general/install/perception_interfaces/share/perception_interfaces/hook/ld_library_path_lib.dsv'
+[0.740s] INFO:colcon.colcon_core.shell:Creating environment hook '/home/parallels/ros2_ws/src/general/install/perception_interfaces/share/perception_interfaces/hook/ld_library_path_lib.sh'
+[0.740s] Level 1:colcon.colcon_core.environment:checking '/home/parallels/ros2_ws/src/general/install/perception_interfaces/bin'
+[0.740s] Level 1:colcon.colcon_core.environment:checking '/home/parallels/ros2_ws/src/general/install/perception_interfaces/lib/pkgconfig/perception_interfaces.pc'
+[0.740s] Level 1:colcon.colcon_core.environment:checking '/home/parallels/ros2_ws/src/general/install/perception_interfaces/lib/python3.10/site-packages'
+[0.741s] Level 1:colcon.colcon_core.environment:checking '/home/parallels/ros2_ws/src/general/install/perception_interfaces/bin'
+[0.741s] INFO:colcon.colcon_core.shell:Creating package script '/home/parallels/ros2_ws/src/general/install/perception_interfaces/share/perception_interfaces/package.ps1'
+[0.741s] INFO:colcon.colcon_core.shell:Creating package descriptor '/home/parallels/ros2_ws/src/general/install/perception_interfaces/share/perception_interfaces/package.dsv'
+[0.741s] INFO:colcon.colcon_core.shell:Creating package script '/home/parallels/ros2_ws/src/general/install/perception_interfaces/share/perception_interfaces/package.sh'
+[0.741s] INFO:colcon.colcon_core.shell:Creating package script '/home/parallels/ros2_ws/src/general/install/perception_interfaces/share/perception_interfaces/package.bash'
+[0.741s] INFO:colcon.colcon_core.shell:Creating package script '/home/parallels/ros2_ws/src/general/install/perception_interfaces/share/perception_interfaces/package.zsh'
+[0.741s] Level 1:colcon.colcon_core.environment:create_file_with_runtime_dependencies(/home/parallels/ros2_ws/src/general/install/perception_interfaces/share/colcon-core/packages/perception_interfaces)
+[0.742s] INFO:colcon.colcon_ros.task.ament_cmake.build:Building ROS package in '/home/parallels/ros2_ws/src/general/laser_segmentation/laser_segmentation' with build type 'ament_cmake'
+[0.742s] INFO:colcon.colcon_cmake.task.cmake.build:Building CMake package in '/home/parallels/ros2_ws/src/general/laser_segmentation/laser_segmentation'
+[0.742s] INFO:colcon.colcon_core.shell:Skip shell extension 'powershell' for command environment: Not usable outside of PowerShell
+[0.742s] DEBUG:colcon.colcon_core.shell:Skip shell extension 'dsv' for command environment
+[0.748s] DEBUG:colcon.colcon_core.event_handler.log_command:Invoking command in '/home/parallels/ros2_ws/src/general/build/laser_segmentation': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/home/parallels/ros2_ws/install/ardupilot_dds_tests:/opt/ros/humble /usr/bin/cmake --build /home/parallels/ros2_ws/src/general/build/laser_segmentation -- -j2 -l2
+[0.763s] DEBUG:colcon.colcon_core.event_handler.log_command:Invoked command in '/home/parallels/ros2_ws/src/general/build/njord_tasks' returned '0': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/home/parallels/ros2_ws/install/ardupilot_dds_tests:/opt/ros/humble /usr/bin/cmake --build /home/parallels/ros2_ws/src/general/build/njord_tasks -- -j2 -l2
+[0.783s] DEBUG:colcon.colcon_core.event_handler.log_command:Invoking command in '/home/parallels/ros2_ws/src/general/build/njord_tasks': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/home/parallels/ros2_ws/install/ardupilot_dds_tests:/opt/ros/humble /usr/bin/cmake --install /home/parallels/ros2_ws/src/general/build/njord_tasks
+[0.795s] Level 1:colcon.colcon_core.environment:create_environment_scripts_only(njord_tasks)
+[0.795s] Level 1:colcon.colcon_core.environment:checking '/home/parallels/ros2_ws/src/general/install/njord_tasks' for CMake module files
+[0.795s] Level 1:colcon.colcon_core.environment:checking '/home/parallels/ros2_ws/src/general/install/njord_tasks' for CMake config files
+[0.795s] Level 1:colcon.colcon_core.shell:create_environment_hook('njord_tasks', 'cmake_prefix_path')
+[0.795s] INFO:colcon.colcon_core.shell:Creating environment hook '/home/parallels/ros2_ws/src/general/install/njord_tasks/share/njord_tasks/hook/cmake_prefix_path.ps1'
+[0.795s] INFO:colcon.colcon_core.shell:Creating environment descriptor '/home/parallels/ros2_ws/src/general/install/njord_tasks/share/njord_tasks/hook/cmake_prefix_path.dsv'
+[0.796s] INFO:colcon.colcon_core.shell:Creating environment hook '/home/parallels/ros2_ws/src/general/install/njord_tasks/share/njord_tasks/hook/cmake_prefix_path.sh'
+[0.796s] Level 1:colcon.colcon_core.environment:checking '/home/parallels/ros2_ws/src/general/install/njord_tasks/bin'
+[0.796s] Level 1:colcon.colcon_core.environment:checking '/home/parallels/ros2_ws/src/general/install/njord_tasks/lib/pkgconfig/njord_tasks.pc'
+[0.796s] Level 1:colcon.colcon_core.environment:checking '/home/parallels/ros2_ws/src/general/install/njord_tasks/lib/python3.10/site-packages'
+[0.796s] Level 1:colcon.colcon_core.environment:checking '/home/parallels/ros2_ws/src/general/install/njord_tasks/bin'
+[0.796s] INFO:colcon.colcon_core.shell:Creating package script '/home/parallels/ros2_ws/src/general/install/njord_tasks/share/njord_tasks/package.ps1'
+[0.796s] INFO:colcon.colcon_core.shell:Creating package descriptor '/home/parallels/ros2_ws/src/general/install/njord_tasks/share/njord_tasks/package.dsv'
+[0.797s] INFO:colcon.colcon_core.shell:Creating package script '/home/parallels/ros2_ws/src/general/install/njord_tasks/share/njord_tasks/package.sh'
+[0.797s] INFO:colcon.colcon_core.shell:Creating package script '/home/parallels/ros2_ws/src/general/install/njord_tasks/share/njord_tasks/package.bash'
+[0.797s] INFO:colcon.colcon_core.shell:Creating package script '/home/parallels/ros2_ws/src/general/install/njord_tasks/share/njord_tasks/package.zsh'
+[0.797s] Level 1:colcon.colcon_core.environment:create_file_with_runtime_dependencies(/home/parallels/ros2_ws/src/general/install/njord_tasks/share/colcon-core/packages/njord_tasks)
+[0.797s] DEBUG:colcon.colcon_core.event_handler.log_command:Invoked command in '/home/parallels/ros2_ws/src/general/build/njord_tasks' returned '0': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/home/parallels/ros2_ws/install/ardupilot_dds_tests:/opt/ros/humble /usr/bin/cmake --install /home/parallels/ros2_ws/src/general/build/njord_tasks
+[0.810s] Level 1:colcon.colcon_core.environment:create_environment_scripts_only(njord_tasks)
+[0.810s] Level 1:colcon.colcon_core.environment:checking '/home/parallels/ros2_ws/src/general/install/njord_tasks' for CMake module files
+[0.811s] Level 1:colcon.colcon_core.environment:checking '/home/parallels/ros2_ws/src/general/install/njord_tasks' for CMake config files
+[0.811s] Level 1:colcon.colcon_core.shell:create_environment_hook('njord_tasks', 'cmake_prefix_path')
+[0.811s] INFO:colcon.colcon_core.shell:Creating environment hook '/home/parallels/ros2_ws/src/general/install/njord_tasks/share/njord_tasks/hook/cmake_prefix_path.ps1'
+[0.811s] INFO:colcon.colcon_core.shell:Creating environment descriptor '/home/parallels/ros2_ws/src/general/install/njord_tasks/share/njord_tasks/hook/cmake_prefix_path.dsv'
+[0.811s] INFO:colcon.colcon_core.shell:Creating environment hook '/home/parallels/ros2_ws/src/general/install/njord_tasks/share/njord_tasks/hook/cmake_prefix_path.sh'
+[0.811s] Level 1:colcon.colcon_core.environment:checking '/home/parallels/ros2_ws/src/general/install/njord_tasks/bin'
+[0.811s] Level 1:colcon.colcon_core.environment:checking '/home/parallels/ros2_ws/src/general/install/njord_tasks/lib/pkgconfig/njord_tasks.pc'
+[0.811s] Level 1:colcon.colcon_core.environment:checking '/home/parallels/ros2_ws/src/general/install/njord_tasks/lib/python3.10/site-packages'
+[0.812s] Level 1:colcon.colcon_core.environment:checking '/home/parallels/ros2_ws/src/general/install/njord_tasks/bin'
+[0.812s] INFO:colcon.colcon_core.shell:Creating package script '/home/parallels/ros2_ws/src/general/install/njord_tasks/share/njord_tasks/package.ps1'
+[0.812s] INFO:colcon.colcon_core.shell:Creating package descriptor '/home/parallels/ros2_ws/src/general/install/njord_tasks/share/njord_tasks/package.dsv'
+[0.812s] INFO:colcon.colcon_core.shell:Creating package script '/home/parallels/ros2_ws/src/general/install/njord_tasks/share/njord_tasks/package.sh'
+[0.812s] INFO:colcon.colcon_core.shell:Creating package script '/home/parallels/ros2_ws/src/general/install/njord_tasks/share/njord_tasks/package.bash'
+[0.812s] INFO:colcon.colcon_core.shell:Creating package script '/home/parallels/ros2_ws/src/general/install/njord_tasks/share/njord_tasks/package.zsh'
+[0.812s] Level 1:colcon.colcon_core.environment:create_file_with_runtime_dependencies(/home/parallels/ros2_ws/src/general/install/njord_tasks/share/colcon-core/packages/njord_tasks)
+[0.813s] INFO:colcon.colcon_ros.task.ament_cmake.build:Building ROS package in '/home/parallels/ros2_ws/src/general/perception' with build type 'ament_cmake'
+[0.813s] INFO:colcon.colcon_cmake.task.cmake.build:Building CMake package in '/home/parallels/ros2_ws/src/general/perception'
+[0.813s] INFO:colcon.colcon_core.shell:Skip shell extension 'powershell' for command environment: Not usable outside of PowerShell
+[0.813s] DEBUG:colcon.colcon_core.shell:Skip shell extension 'dsv' for command environment
+[0.821s] DEBUG:colcon.colcon_core.event_handler.log_command:Invoking command in '/home/parallels/ros2_ws/src/general/build/perception': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/home/parallels/ros2_ws/install/ardupilot_dds_tests:/opt/ros/humble /usr/bin/cmake --build /home/parallels/ros2_ws/src/general/build/perception -- -j2 -l2
+[0.893s] DEBUG:colcon.colcon_core.event_handler.log_command:Invoked command in '/home/parallels/ros2_ws/src/general/build/laser_segmentation' returned '0': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/home/parallels/ros2_ws/install/ardupilot_dds_tests:/opt/ros/humble /usr/bin/cmake --build /home/parallels/ros2_ws/src/general/build/laser_segmentation -- -j2 -l2
+[0.927s] DEBUG:colcon.colcon_core.event_handler.log_command:Invoking command in '/home/parallels/ros2_ws/src/general/build/laser_segmentation': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/home/parallels/ros2_ws/install/ardupilot_dds_tests:/opt/ros/humble /usr/bin/cmake --install /home/parallels/ros2_ws/src/general/build/laser_segmentation
+[0.944s] Level 1:colcon.colcon_core.environment:create_environment_scripts_only(laser_segmentation)
+[0.944s] DEBUG:colcon.colcon_core.event_handler.log_command:Invoked command in '/home/parallels/ros2_ws/src/general/build/laser_segmentation' returned '0': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/home/parallels/ros2_ws/install/ardupilot_dds_tests:/opt/ros/humble /usr/bin/cmake --install /home/parallels/ros2_ws/src/general/build/laser_segmentation
+[0.945s] Level 1:colcon.colcon_core.environment:checking '/home/parallels/ros2_ws/src/general/install/laser_segmentation' for CMake module files
+[0.945s] Level 1:colcon.colcon_core.environment:checking '/home/parallels/ros2_ws/src/general/install/laser_segmentation' for CMake config files
+[0.945s] Level 1:colcon.colcon_core.shell:create_environment_hook('laser_segmentation', 'cmake_prefix_path')
+[0.945s] INFO:colcon.colcon_core.shell:Creating environment hook '/home/parallels/ros2_ws/src/general/install/laser_segmentation/share/laser_segmentation/hook/cmake_prefix_path.ps1'
+[0.945s] INFO:colcon.colcon_core.shell:Creating environment descriptor '/home/parallels/ros2_ws/src/general/install/laser_segmentation/share/laser_segmentation/hook/cmake_prefix_path.dsv'
+[0.945s] INFO:colcon.colcon_core.shell:Creating environment hook '/home/parallels/ros2_ws/src/general/install/laser_segmentation/share/laser_segmentation/hook/cmake_prefix_path.sh'
+[0.946s] Level 1:colcon.colcon_core.environment:checking '/home/parallels/ros2_ws/src/general/install/laser_segmentation/lib'
+[0.946s] Level 1:colcon.colcon_core.shell:create_environment_hook('laser_segmentation', 'ld_library_path_lib')
+[0.946s] INFO:colcon.colcon_core.shell:Creating environment hook '/home/parallels/ros2_ws/src/general/install/laser_segmentation/share/laser_segmentation/hook/ld_library_path_lib.ps1'
+[0.946s] INFO:colcon.colcon_core.shell:Creating environment descriptor '/home/parallels/ros2_ws/src/general/install/laser_segmentation/share/laser_segmentation/hook/ld_library_path_lib.dsv'
+[0.946s] INFO:colcon.colcon_core.shell:Creating environment hook '/home/parallels/ros2_ws/src/general/install/laser_segmentation/share/laser_segmentation/hook/ld_library_path_lib.sh'
+[0.946s] Level 1:colcon.colcon_core.environment:checking '/home/parallels/ros2_ws/src/general/install/laser_segmentation/bin'
+[0.946s] Level 1:colcon.colcon_core.environment:checking '/home/parallels/ros2_ws/src/general/install/laser_segmentation/lib/pkgconfig/laser_segmentation.pc'
+[0.946s] Level 1:colcon.colcon_core.environment:checking '/home/parallels/ros2_ws/src/general/install/laser_segmentation/lib/python3.10/site-packages'
+[0.946s] Level 1:colcon.colcon_core.environment:checking '/home/parallels/ros2_ws/src/general/install/laser_segmentation/bin'
+[0.946s] INFO:colcon.colcon_core.shell:Creating package script '/home/parallels/ros2_ws/src/general/install/laser_segmentation/share/laser_segmentation/package.ps1'
+[0.947s] INFO:colcon.colcon_core.shell:Creating package descriptor '/home/parallels/ros2_ws/src/general/install/laser_segmentation/share/laser_segmentation/package.dsv'
+[0.947s] INFO:colcon.colcon_core.shell:Creating package script '/home/parallels/ros2_ws/src/general/install/laser_segmentation/share/laser_segmentation/package.sh'
+[0.947s] INFO:colcon.colcon_core.shell:Creating package script '/home/parallels/ros2_ws/src/general/install/laser_segmentation/share/laser_segmentation/package.bash'
+[0.947s] INFO:colcon.colcon_core.shell:Creating package script '/home/parallels/ros2_ws/src/general/install/laser_segmentation/share/laser_segmentation/package.zsh'
+[0.947s] Level 1:colcon.colcon_core.environment:create_file_with_runtime_dependencies(/home/parallels/ros2_ws/src/general/install/laser_segmentation/share/colcon-core/packages/laser_segmentation)
+[0.967s] Level 1:colcon.colcon_core.environment:create_environment_scripts_only(laser_segmentation)
+[0.967s] Level 1:colcon.colcon_core.environment:checking '/home/parallels/ros2_ws/src/general/install/laser_segmentation' for CMake module files
+[0.967s] Level 1:colcon.colcon_core.environment:checking '/home/parallels/ros2_ws/src/general/install/laser_segmentation' for CMake config files
+[0.967s] Level 1:colcon.colcon_core.shell:create_environment_hook('laser_segmentation', 'cmake_prefix_path')
+[0.967s] INFO:colcon.colcon_core.shell:Creating environment hook '/home/parallels/ros2_ws/src/general/install/laser_segmentation/share/laser_segmentation/hook/cmake_prefix_path.ps1'
+[0.968s] INFO:colcon.colcon_core.shell:Creating environment descriptor '/home/parallels/ros2_ws/src/general/install/laser_segmentation/share/laser_segmentation/hook/cmake_prefix_path.dsv'
+[0.968s] INFO:colcon.colcon_core.shell:Creating environment hook '/home/parallels/ros2_ws/src/general/install/laser_segmentation/share/laser_segmentation/hook/cmake_prefix_path.sh'
+[0.968s] Level 1:colcon.colcon_core.environment:checking '/home/parallels/ros2_ws/src/general/install/laser_segmentation/lib'
+[0.968s] Level 1:colcon.colcon_core.shell:create_environment_hook('laser_segmentation', 'ld_library_path_lib')
+[0.968s] INFO:colcon.colcon_core.shell:Creating environment hook '/home/parallels/ros2_ws/src/general/install/laser_segmentation/share/laser_segmentation/hook/ld_library_path_lib.ps1'
+[0.968s] INFO:colcon.colcon_core.shell:Creating environment descriptor '/home/parallels/ros2_ws/src/general/install/laser_segmentation/share/laser_segmentation/hook/ld_library_path_lib.dsv'
+[0.968s] INFO:colcon.colcon_core.shell:Creating environment hook '/home/parallels/ros2_ws/src/general/install/laser_segmentation/share/laser_segmentation/hook/ld_library_path_lib.sh'
+[0.968s] Level 1:colcon.colcon_core.environment:checking '/home/parallels/ros2_ws/src/general/install/laser_segmentation/bin'
+[0.968s] Level 1:colcon.colcon_core.environment:checking '/home/parallels/ros2_ws/src/general/install/laser_segmentation/lib/pkgconfig/laser_segmentation.pc'
+[0.969s] Level 1:colcon.colcon_core.environment:checking '/home/parallels/ros2_ws/src/general/install/laser_segmentation/lib/python3.10/site-packages'
+[0.969s] Level 1:colcon.colcon_core.environment:checking '/home/parallels/ros2_ws/src/general/install/laser_segmentation/bin'
+[0.969s] INFO:colcon.colcon_core.shell:Creating package script '/home/parallels/ros2_ws/src/general/install/laser_segmentation/share/laser_segmentation/package.ps1'
+[0.969s] INFO:colcon.colcon_core.shell:Creating package descriptor '/home/parallels/ros2_ws/src/general/install/laser_segmentation/share/laser_segmentation/package.dsv'
+[0.969s] INFO:colcon.colcon_core.shell:Creating package script '/home/parallels/ros2_ws/src/general/install/laser_segmentation/share/laser_segmentation/package.sh'
+[0.969s] INFO:colcon.colcon_core.shell:Creating package script '/home/parallels/ros2_ws/src/general/install/laser_segmentation/share/laser_segmentation/package.bash'
+[0.970s] INFO:colcon.colcon_core.shell:Creating package script '/home/parallels/ros2_ws/src/general/install/laser_segmentation/share/laser_segmentation/package.zsh'
+[0.970s] Level 1:colcon.colcon_core.environment:create_file_with_runtime_dependencies(/home/parallels/ros2_ws/src/general/install/laser_segmentation/share/colcon-core/packages/laser_segmentation)
+[1.220s] DEBUG:colcon.colcon_core.event_handler.log_command:Invoked command in '/home/parallels/ros2_ws/src/general/build/perception' returned '2': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/home/parallels/ros2_ws/install/ardupilot_dds_tests:/opt/ros/humble /usr/bin/cmake --build /home/parallels/ros2_ws/src/general/build/perception -- -j2 -l2
+[1.240s] Level 1:colcon.colcon_core.environment:create_environment_scripts_only(perception)
+[1.241s] Level 1:colcon.colcon_core.environment:checking '/home/parallels/ros2_ws/src/general/install/perception' for CMake module files
+[1.241s] Level 1:colcon.colcon_core.environment:checking '/home/parallels/ros2_ws/src/general/install/perception' for CMake config files
+[1.241s] Level 1:colcon.colcon_core.environment:checking '/home/parallels/ros2_ws/src/general/install/perception/bin'
+[1.241s] Level 1:colcon.colcon_core.environment:checking '/home/parallels/ros2_ws/src/general/install/perception/lib/pkgconfig/perception.pc'
+[1.241s] Level 1:colcon.colcon_core.environment:checking '/home/parallels/ros2_ws/src/general/install/perception/lib/python3.10/site-packages'
+[1.241s] Level 1:colcon.colcon_core.environment:checking '/home/parallels/ros2_ws/src/general/install/perception/bin'
+[1.242s] INFO:colcon.colcon_core.shell:Creating package script '/home/parallels/ros2_ws/src/general/install/perception/share/perception/package.ps1'
+[1.242s] INFO:colcon.colcon_core.shell:Creating package descriptor '/home/parallels/ros2_ws/src/general/install/perception/share/perception/package.dsv'
+[1.242s] INFO:colcon.colcon_core.shell:Creating package script '/home/parallels/ros2_ws/src/general/install/perception/share/perception/package.sh'
+[1.242s] INFO:colcon.colcon_core.shell:Creating package script '/home/parallels/ros2_ws/src/general/install/perception/share/perception/package.bash'
+[1.242s] INFO:colcon.colcon_core.shell:Creating package script '/home/parallels/ros2_ws/src/general/install/perception/share/perception/package.zsh'
+[1.242s] Level 1:colcon.colcon_core.environment:create_file_with_runtime_dependencies(/home/parallels/ros2_ws/src/general/install/perception/share/colcon-core/packages/perception)
+[1.253s] DEBUG:colcon.colcon_parallel_executor.executor.parallel:closing loop
+[1.253s] DEBUG:colcon.colcon_parallel_executor.executor.parallel:loop closed
+[1.253s] DEBUG:colcon.colcon_parallel_executor.executor.parallel:run_until_complete finished with '2'
+[1.253s] DEBUG:colcon.colcon_core.event_reactor:joining thread
+[1.257s] INFO:colcon.colcon_core.plugin_system:Skipping extension 'colcon_notification.desktop_notification.terminal_notifier': Not used on non-Darwin systems
+[1.257s] INFO:colcon.colcon_core.plugin_system:Skipping extension 'colcon_notification.desktop_notification.win32': Not used on non-Windows systems
+[1.257s] INFO:colcon.colcon_notification.desktop_notification:Sending desktop notification using 'notify2'
+[1.279s] DEBUG:colcon.colcon_core.event_reactor:joined thread
+[1.279s] INFO:colcon.colcon_core.shell:Creating prefix script '/home/parallels/ros2_ws/src/general/install/local_setup.ps1'
+[1.280s] INFO:colcon.colcon_core.shell:Creating prefix util module '/home/parallels/ros2_ws/src/general/install/_local_setup_util_ps1.py'
+[1.280s] INFO:colcon.colcon_core.shell:Creating prefix chain script '/home/parallels/ros2_ws/src/general/install/setup.ps1'
+[1.281s] INFO:colcon.colcon_core.shell:Creating prefix script '/home/parallels/ros2_ws/src/general/install/local_setup.sh'
+[1.281s] INFO:colcon.colcon_core.shell:Creating prefix util module '/home/parallels/ros2_ws/src/general/install/_local_setup_util_sh.py'
+[1.282s] INFO:colcon.colcon_core.shell:Creating prefix chain script '/home/parallels/ros2_ws/src/general/install/setup.sh'
+[1.282s] INFO:colcon.colcon_core.shell:Creating prefix script '/home/parallels/ros2_ws/src/general/install/local_setup.bash'
+[1.282s] INFO:colcon.colcon_core.shell:Creating prefix chain script '/home/parallels/ros2_ws/src/general/install/setup.bash'
+[1.283s] INFO:colcon.colcon_core.shell:Creating prefix script '/home/parallels/ros2_ws/src/general/install/local_setup.zsh'
+[1.283s] INFO:colcon.colcon_core.shell:Creating prefix chain script '/home/parallels/ros2_ws/src/general/install/setup.zsh'

@@ -1,0 +1,21 @@
+// generated from rosidl_adapter/resource/msg.idl.em
+// with input from perception_interfaces/msg/Prop.msg
+// generated code does not contain a copyright notice
+
+#include "geometry_msgs/msg/Point.idl"
+
+module perception_interfaces {
+  module msg {
+    struct Prop {
+      int32 id;
+
+      string label;
+
+      geometry_msgs::msg::Point point;
+
+      float radius;
+
+      float probability;
+    };
+  };
+};

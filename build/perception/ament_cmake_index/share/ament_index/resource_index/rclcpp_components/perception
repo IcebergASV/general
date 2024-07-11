@@ -1,0 +1,4 @@
+perception::LidarCameraFuser;lib/liblidar_camera_fuser_component.so
+perception::LidarPropDetector;lib/liblidar_prop_detector_component.so
+perception::CoordFinder;lib/libcoord_finder_component.so
+perception::MockBBoxPub;lib/libmock_bbox_pub_component.so

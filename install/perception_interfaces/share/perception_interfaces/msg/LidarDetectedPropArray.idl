@@ -1,0 +1,13 @@
+// generated from rosidl_adapter/resource/msg.idl.em
+// with input from perception_interfaces/msg/LidarDetectedPropArray.msg
+// generated code does not contain a copyright notice
+
+#include "perception_interfaces/msg/LidarDetectedProp.idl"
+
+module perception_interfaces {
+  module msg {
+    struct LidarDetectedPropArray {
+      sequence<perception_interfaces::msg::LidarDetectedProp> lidar_detected_props;
+    };
+  };
+};

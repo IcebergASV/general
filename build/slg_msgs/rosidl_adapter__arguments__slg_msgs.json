@@ -1,0 +1,7 @@
+{
+  "package_name": "slg_msgs",
+  "non_idl_tuples": [
+    "/home/parallels/ros2_ws/src/general/laser_segmentation/slg_msgs:msg/Segment.msg",
+    "/home/parallels/ros2_ws/src/general/laser_segmentation/slg_msgs:msg/SegmentArray.msg"
+  ]
+}
