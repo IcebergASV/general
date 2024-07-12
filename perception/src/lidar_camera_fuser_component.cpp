@@ -53,12 +53,14 @@ namespace perception
         bool red_marker_within_bbox = getClosestLidarPropWithinBBoxRange(red_box, msg->props, red_marker);
         bool green_marker_within_bbox = getClosestLidarPropWithinBBoxRange(green_box, msg->props, green_marker);
 
-        RCLCPP_DEBUG(this->get_logger(), "Red marker at (%f, %f), Green Marker at (%f, %f)", red_marker.point.x, red_marker.point.y, green_marker.point.x, green_marker.point.y);
+        RCLCPP_INFO(this->get_logger(), "Red marker at (%f, %f), Green Marker at (%f, %f)", red_marker.point.x, red_marker.point.y, green_marker.point.x, green_marker.point.y);
 
         if (red_marker_within_bbox && green_marker_within_bbox)
         {
+          RCLCPP_INFO(this->get_logger(), "Lidar-Detected markers within both bounding boxes");
           if (propsWithinBounds(red_marker, green_marker))
           {
+            RCLCPP_INFO(this->get_logger(), "Gate Found");
             perception_interfaces::msg::Gate gate = helpers::createGate(red_marker, green_marker);
             pub_->publish(gate); 
           }
@@ -128,8 +130,12 @@ namespace perception
     {
       return true;
     }
-
-    return false;
+    else 
+    {
+      RCLCPP_INFO(this->get_logger(), "Prop Angle not within bounding box angles");
+      return false;
+    }
+    return false;    
   }
 
   perception_interfaces::msg::Prop LidarCameraFuser::getClosestProp(std::vector<perception_interfaces::msg::Prop> props)
