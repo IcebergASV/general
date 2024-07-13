@@ -39,7 +39,7 @@ def generate_launch_description():
                     [
                         FindPackageShare("perception"),
                         "launch",
-                        "manual_composition.launch.py",
+                        "perception_composition.launch.py",
                     ]
                 ),
             ]
