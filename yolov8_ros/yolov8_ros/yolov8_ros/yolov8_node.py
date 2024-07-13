@@ -38,11 +38,14 @@ from std_srvs.srv import SetBool
 from sensor_msgs.msg import Image
 from yolov8_msgs.msg import Point2D
 from yolov8_msgs.msg import BoundingBox2D
+from yolov8_msgs.msg import IcebergBoundingBox2D
 from yolov8_msgs.msg import Mask
 from yolov8_msgs.msg import KeyPoint2D
 from yolov8_msgs.msg import KeyPoint2DArray
 from yolov8_msgs.msg import Detection
 from yolov8_msgs.msg import DetectionArray
+from yolov8_msgs.msg import IcebergDetection
+from yolov8_msgs.msg import IcebergDetectionArray
 
 
 class Yolov8Node(LifecycleNode):
@@ -87,6 +90,8 @@ class Yolov8Node(LifecycleNode):
 
         self._pub = self.create_lifecycle_publisher(
             DetectionArray, "detections", 10)
+        self._iceberg_pub = self.create_lifecycle_publisher(
+            IcebergDetectionArray, "iceberg_detections", 10)
         self._srv = self.create_service(
             SetBool, "enable", self.enable_cb
         )
@@ -138,6 +143,7 @@ class Yolov8Node(LifecycleNode):
         self.get_logger().info(f"Cleaning up {self.get_name()}")
 
         self.destroy_publisher(self._pub)
+        self.destroy_publisher(self._iceberg_pub) 
 
         del self.image_qos_profile
 
@@ -173,6 +179,38 @@ class Yolov8Node(LifecycleNode):
             msg.center.position.y = float(box[1])
             msg.size.x = float(box[2])
             msg.size.y = float(box[3])
+
+            # append msg
+            boxes_list.append(msg)
+
+        return boxes_list
+    
+    def iceberg_parse_boxes(self, results: Results) -> List[IcebergBoundingBox2D]:
+
+        boxes_list = []
+
+        box_data: Boxes
+        for box_data in results.boxes:
+
+            msg = IcebergBoundingBox2D()
+
+            # get boxes values
+            box = box_data.xywh[0]
+            x_center, y_center, width, height = float(box[0]), float(box[1]), float(box[2]), float(box[3])
+            xmin = int(x_center - width / 2)
+            xmax = int(x_center + width / 2)
+            ymin = int(y_center - height / 2)
+            ymax = int(y_center + height / 2)
+
+            # msg.center.position.x = x_center
+            # msg.center.position.y = y_center
+            # msg.size.x = width
+            # msg.size.y = height
+
+            msg.xmin = xmin
+            msg.ymin = ymin
+            msg.xmax = xmax
+            msg.ymax = ymax
 
             # append msg
             boxes_list.append(msg)
@@ -249,6 +287,8 @@ class Yolov8Node(LifecycleNode):
             if results.boxes:
                 hypothesis = self.parse_hypothesis(results)
                 boxes = self.parse_boxes(results)
+                iceberg_boxes = self.iceberg_parse_boxes(results)
+                
 
             if results.masks:
                 masks = self.parse_masks(results)
@@ -259,9 +299,13 @@ class Yolov8Node(LifecycleNode):
             # create detection msgs
             detections_msg = DetectionArray()
 
+            iceberg_detections_msg = IcebergDetectionArray()
+
             for i in range(len(results)):
 
                 aux_msg = Detection()
+
+                iceberg_aux_msg = IcebergDetection()
 
                 if results.boxes:
                     aux_msg.class_id = hypothesis[i]["class_id"]
@@ -269,6 +313,12 @@ class Yolov8Node(LifecycleNode):
                     aux_msg.score = hypothesis[i]["score"]
 
                     aux_msg.bbox = boxes[i]
+            
+                    iceberg_aux_msg.class_id = hypothesis[i]["class_id"]
+                    iceberg_aux_msg.class_name = hypothesis[i]["class_name"]
+                    iceberg_aux_msg.score = hypothesis[i]["score"]
+
+                    iceberg_aux_msg.bbox = iceberg_boxes[i]                    
 
                 if results.masks:
                     aux_msg.mask = masks[i]
@@ -278,9 +328,12 @@ class Yolov8Node(LifecycleNode):
 
                 detections_msg.detections.append(aux_msg)
 
+                iceberg_detections_msg.icebergdetections.append(iceberg_aux_msg)
+
             # publish detections
             detections_msg.header = msg.header
             self._pub.publish(detections_msg)
+            self._iceberg_pub.publish(iceberg_detections_msg)
 
             del results
             del cv_image
