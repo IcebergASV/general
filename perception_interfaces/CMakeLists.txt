@@ -12,8 +12,11 @@ find_package(rosidl_default_generators REQUIRED)
 
 set(msg_files
   "msg/Prop.msg"
-  "msg/LidarDetectedProp.msg"
-  "msg/LidarDetectedPropArray.msg"
+  "msg/PropArray.msg"
+  "msg/BoundingBox.msg"
+  "msg/BoundingBoxes.msg"
+  "msg/Gate.msg"
+  "msg/GateArray.msg"
 )
 
 rosidl_generate_interfaces(${PROJECT_NAME}

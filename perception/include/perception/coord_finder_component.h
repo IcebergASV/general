@@ -6,8 +6,8 @@
 #include "geometry_msgs/msg/pose_stamped.hpp"
 #include "geometry_msgs/msg/quaternion.hpp"
 #include "perception_interfaces/msg/prop.hpp"
-#include "perception_interfaces/msg/lidar_detected_prop.hpp"
-#include "perception_interfaces/msg/lidar_detected_prop_array.hpp"
+#include "perception_interfaces/msg/prop.hpp"
+#include "perception_interfaces/msg/prop_array.hpp"
 
 using std::placeholders::_1;
 
@@ -21,13 +21,13 @@ public:
 
 protected:
   void poseCallback(const geometry_msgs::msg::PoseStamped::SharedPtr msg);
-  void propCallback(const perception_interfaces::msg::LidarDetectedPropArray::SharedPtr msg);
+  void propCallback(const perception_interfaces::msg::PropArray::SharedPtr msg);
 
 private:
   geometry_msgs::msg::PoseStamped pose_msg_;
-  perception_interfaces::msg::LidarDetectedPropArray prop_msg_;
+  perception_interfaces::msg::PropArray prop_msg_;
 
-  rclcpp::Subscription<perception_interfaces::msg::LidarDetectedPropArray>::SharedPtr prop_sub_;
+  rclcpp::Subscription<perception_interfaces::msg::PropArray>::SharedPtr prop_sub_;
   rclcpp::Subscription<geometry_msgs::msg::PoseStamped>::SharedPtr pose_sub_;
   
   rclcpp::Publisher<perception_interfaces::msg::Prop>::SharedPtr prop_coords_pub_;
