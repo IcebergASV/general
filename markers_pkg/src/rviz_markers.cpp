@@ -4,8 +4,8 @@
 #include "geometry_msgs/msg/point.hpp"
 #include "geometry_msgs/msg/pose_stamped.hpp"
 #include "nav_msgs/msg/odometry.hpp"
-#include "markers_pkg/msg/prop.hpp"
-#include "markers_pkg/msg/prop_array.hpp"
+#include "markers_pkg_interfaces/msg/prop.hpp"
+#include "markers_pkg_interfaces/msg/prop_array.hpp"
 
 using std::placeholders::_1;
 
@@ -19,7 +19,7 @@ public:
         rmw_qos_profile_t qos_profile = rmw_qos_profile_sensor_data;
         auto qos = rclcpp::QoS(rclcpp::QoSInitialization(qos_profile.history, 5), qos_profile);
 
-        subscription_ = this->create_subscription<markers_pkg::msg::PropArray>("props", 10, std::bind(&PropSubscriber::props_callback, this, _1));
+        subscription_ = this->create_subscription<markers_pkg_interfaces::msg::PropArray>("props", 10, std::bind(&PropSubscriber::props_callback, this, _1));
         subscription2_ = this->create_subscription<geometry_msgs::msg::PoseStamped>("/mavros/setpoint_position/local", 10, std::bind(&PropSubscriber::waypoint_callback, this, _1));
         subscription3_ = this->create_subscription<geometry_msgs::msg::PoseStamped>("/mavros/local_position/pose", qos, std::bind(&PropSubscriber::trail_callback, this, _1));
 
@@ -28,12 +28,12 @@ public:
     std::vector<geometry_msgs::msg::Point> robot_trail;
 
 private:
-    void props_callback(const markers_pkg::msg::PropArray msg)
+    void props_callback(const markers_pkg_interfaces::msg::PropArray msg)
     {
         auto publisher = this->create_publisher<visualization_msgs::msg::MarkerArray>("markerArray", 10);
         RCLCPP_INFO(this->get_logger(), "Received array.");
         visualization_msgs::msg::MarkerArray ar;
-        markers_pkg::msg::PropArray propArray = msg;
+        markers_pkg_interfaces::msg::PropArray propArray = msg;
         for (int i = 0; (unsigned)i < propArray.props.size(); i++) {
             visualization_msgs::msg::Marker marker;
             marker.header.frame_id = "odom";
@@ -164,7 +164,7 @@ private:
         publisher2->publish(robot);
     }
     
-    std::shared_ptr<rclcpp::Subscription<markers_pkg::msg::PropArray>> subscription_;
+    std::shared_ptr<rclcpp::Subscription<markers_pkg_interfaces::msg::PropArray>> subscription_;
     std::shared_ptr<rclcpp::Subscription<geometry_msgs::msg::PoseStamped>> subscription2_;
     std::shared_ptr<rclcpp::Subscription<geometry_msgs::msg::PoseStamped>> subscription3_;
 };

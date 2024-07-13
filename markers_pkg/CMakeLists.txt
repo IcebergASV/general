@@ -10,8 +10,9 @@ find_package(ament_cmake REQUIRED)
 find_package(rclcpp REQUIRED)
 find_package(visualization_msgs REQUIRED)
 find_package(nav_msgs REQUIRED)
-find_package(rosidl_default_generators REQUIRED)
-find_package(markers_pkg REQUIRED)
+# HS: find_package(rosidl_default_generators REQUIRED)
+# HS: find_package(markers_pkg REQUIRED)
+find_package(markers_pkg_interfaces REQUIRED)
 
 if(BUILD_TESTING)
   find_package(ament_lint_auto REQUIRED)
@@ -25,25 +26,28 @@ if(BUILD_TESTING)
   ament_lint_auto_find_test_dependencies()
 endif()
 
-rosidl_generate_interfaces(${PROJECT_NAME}
-  "msg/Prop.msg"
-  "msg/PropArray.msg"
-  "msg/Waypoint.msg"
-)
-
-ament_export_dependencies(rosidl_default_runtime)
+# HS: Commented block below
+# rosidl_generate_interfaces(${PROJECT_NAME}
+#   "msg/Prop.msg"
+#   "msg/PropArray.msg"
+#   "msg/Waypoint.msg"
+# )
+# ament_export_dependencies(rosidl_default_runtime)
 
 add_executable(test_markers src/test_markers.cpp)
 ament_target_dependencies(test_markers rclcpp visualization_msgs)
 
 add_executable(subscribe_markers src/subscribe_markers.cpp)
-ament_target_dependencies(subscribe_markers rclcpp visualization_msgs nav_msgs rosidl_default_generators markers_pkg)
+ament_target_dependencies(subscribe_markers rclcpp visualization_msgs nav_msgs markers_pkg_interfaces)
+# HS: ament_target_dependencies(subscribe_markers rclcpp visualization_msgs nav_msgs rosidl_default_generators markers_pkg)
 
 add_executable(publish_markers src/publish_markers.cpp)
-ament_target_dependencies(publish_markers rclcpp visualization_msgs rosidl_default_generators markers_pkg)
+ament_target_dependencies(publish_markers rclcpp visualization_msgs markers_pkg_interfaces)
+# HS: ament_target_dependencies(publish_markers rclcpp visualization_msgs rosidl_default_generators markers_pkg)
 
 add_executable(rviz_markers src/rviz_markers.cpp)
-ament_target_dependencies(rviz_markers rclcpp visualization_msgs nav_msgs rosidl_default_generators markers_pkg)
+ament_target_dependencies(rviz_markers rclcpp visualization_msgs nav_msgs markers_pkg_interfaces)
+# HS: ament_target_dependencies(rviz_markers rclcpp visualization_msgs nav_msgs rosidl_default_generators markers_pkg)
 
 
 install(TARGETS

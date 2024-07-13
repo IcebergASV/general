@@ -2,9 +2,9 @@
 #include "visualization_msgs/msg/marker.hpp"
 #include "visualization_msgs/msg/marker_array.hpp"
 #include "geometry_msgs/msg/point.hpp"
-#include "markers_pkg/msg/prop.hpp"
-#include "markers_pkg/msg/prop_array.hpp"
-#include "markers_pkg/msg/waypoint.hpp"
+#include "markers_pkg_interfaces/msg/prop.hpp"
+#include "markers_pkg_interfaces/msg/prop_array.hpp"
+#include "markers_pkg_interfaces/msg/waypoint.hpp"
 
 int main(int argc, char * argv[])
 {
@@ -12,30 +12,30 @@ int main(int argc, char * argv[])
 
     auto node = rclcpp::Node::make_shared("FakePropPub");
 
-    auto publisher = node->create_publisher<markers_pkg::msg::PropArray>("props", 10);
-    auto publisher2 = node->create_publisher<markers_pkg::msg::Waypoint>("waypoint", 10);
+    auto publisher = node->create_publisher<markers_pkg_interfaces::msg::PropArray>("props", 10);
+    auto publisher2 = node->create_publisher<markers_pkg_interfaces::msg::Waypoint>("waypoint", 10);
 
-    markers_pkg::msg::Prop p1;
+    markers_pkg_interfaces::msg::Prop p1;
     p1.color = "red";
     p1.x = 1;
     p1.y = 1;
 
-    markers_pkg::msg::Prop p2;
+    markers_pkg_interfaces::msg::Prop p2;
     p2.color = "blue";
     p2.x = 1;
     p2.y = -1;
 
-    markers_pkg::msg::Prop p3;
+    markers_pkg_interfaces::msg::Prop p3;
     p3.color = "green";
     p3.x = 3;
     p3.y = 3;
 
-    markers_pkg::msg::PropArray ar;
+    markers_pkg_interfaces::msg::PropArray ar;
     ar.props.push_back(p1);
     ar.props.push_back(p2);
     ar.props.push_back(p3);
     
-    markers_pkg::msg::Waypoint wp;
+    markers_pkg_interfaces::msg::Waypoint wp;
     wp.x = 1;
     wp.y = 0;
 
