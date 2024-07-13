@@ -202,11 +202,6 @@ class Yolov8Node(LifecycleNode):
             ymin = int(y_center - height / 2)
             ymax = int(y_center + height / 2)
 
-            # msg.center.position.x = x_center
-            # msg.center.position.y = y_center
-            # msg.size.x = width
-            # msg.size.y = height
-
             msg.xmin = xmin
             msg.ymin = ymin
             msg.xmax = xmax
