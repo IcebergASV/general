@@ -1,6 +1,6 @@
 #include <memory>
 
-#include "perception/coord_finder_component.h"
+#include "perception/gate_coord_finder_component.hpp"
 #include "rclcpp/rclcpp.hpp"
 
 int main(int argc, char *argv[]) 
@@ -12,9 +12,9 @@ int main(int argc, char *argv[])
   rclcpp::executors::SingleThreadedExecutor exec;
   rclcpp::NodeOptions options;
 
-  auto coord_finder = std::make_shared<perception::CoordFinder>(options);
+  auto gate_coord_finder = std::make_shared<perception::GateCoordFinder>(options);
   
-  exec.add_node(coord_finder);
+  exec.add_node(gate_coord_finder);
   exec.spin();
 
   rclcpp::shutdown();

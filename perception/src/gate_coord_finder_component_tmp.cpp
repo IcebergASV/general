@@ -1,4 +1,6 @@
-#include "perception/gate_coord_finder_component.hpp"
+#include <cmath>
+
+#include "perception/coord_finder_component.h"
 
 double getGazeboHeading(const geometry_msgs::msg::Quaternion q)
 {
@@ -11,25 +13,26 @@ double getGazeboHeading(const geometry_msgs::msg::Quaternion q)
 
 namespace perception
 {
-  GateCoordFinder::GateCoordFinder(const rclcpp::NodeOptions & options)
-  : Node("gate_coord_finder", options)
+
+  CoordFinder::CoordFinder(const rclcpp::NodeOptions & options)
+  : Node("coord_finder", options), new_gate_(false)
   {
     rmw_qos_profile_t qos_profile = rmw_qos_profile_sensor_data;
     auto qos = rclcpp::QoS(rclcpp::QoSInitialization(qos_profile.history, 5), qos_profile);
 
-    gate_sub_ = this->create_subscription<perception_interfaces::msg::Gate>("/perception/relative_gates", 10, std::bind(&GateCoordFinder::gateCallback, this, _1));
-    pose_sub_ = this->create_subscription<geometry_msgs::msg::PoseStamped>("/mavros/local_position/pose", qos, std::bind(&GateCoordFinder::poseCallback, this, _1));
-    gate_coords_pub_ = this->create_publisher<perception_interfaces::msg::Gate>("perception/gate_coords", 10);
+    prop_sub_ = this->create_subscription<perception_interfaces::msg::Gate>("/perception/relative_gates", 10, std::bind(&CoordFinder::gateCallback, this, _1));
+    pose_sub_ = this->create_subscription<geometry_msgs::msg::PoseStamped>("/mavros/local_position/pose", qos, std::bind(&CoordFinder::poseCallback, this, _1));
+    prop_coords_pub_ = this->create_publisher<perception_interfaces::msg::Gate>("perception/gate_coords", 10);
   }
 
-  void GateCoordFinder::gateCallback(const perception_interfaces::msg::Gate::SharedPtr msg)
+  void CoordFinder::gateCallback(const perception_interfaces::msg::Gate::SharedPtr msg)
   {
     //if (msg->gates.size() >0)
     gate_msg_ = *msg;
     new_gate_ = true;
   }
 
-  void GateCoordFinder::poseCallback(const geometry_msgs::msg::PoseStamped::SharedPtr msg)
+  void CoordFinder::poseCallback(const geometry_msgs::msg::PoseStamped::SharedPtr msg)
   {
     // check that the prop msg has been set before publishing a prop
     if (!new_gate_)
@@ -42,18 +45,18 @@ namespace perception
     pose_msg_ = *msg;
     gate_with_local_coords.red_marker = relativeToLocalCoords(gate_msg_.red_marker);
     gate_with_local_coords.green_marker = relativeToLocalCoords(gate_msg_.green_marker);
-    gate_coords_pub_->publish(gate_with_local_coords);
+    prop_coords_pub_->publish(gate_with_local_coords);
     new_gate_ = false;
   }
 
-  bool GateCoordFinder::isValidLabel(std::string label)
+  bool CoordFinder::isValidLabel(std::string label)
   {
     std::vector<std::string> prop_labels = {"red_marker", "green_marker", "red_buoy", "green_buoy", "yellow_buoy", "blue_buoy", "black_buoy", "marker", "buoy"};
     auto it = std::find(prop_labels.begin(), prop_labels.end(), label);
     return it != prop_labels.end();
   }
 
-  perception_interfaces::msg::Prop GateCoordFinder::relativeToLocalCoords(perception_interfaces::msg::Prop relative_prop)
+  perception_interfaces::msg::Prop CoordFinder::relativeToLocalCoords(perception_interfaces::msg::Prop relative_prop)
   {
     if (relative_prop.point.x == 0.0 && relative_prop.point.y)
     {
@@ -88,7 +91,10 @@ namespace perception
     RCLCPP_INFO(this->get_logger(), "y prop = %f", prop_y);
     return prop_coords_msg;
   }
+
+
 }
+
 #include "rclcpp_components/register_node_macro.hpp"
 
-RCLCPP_COMPONENTS_REGISTER_NODE(perception::GateCoordFinder)
+RCLCPP_COMPONENTS_REGISTER_NODE(perception::CoordFinder)

@@ -27,13 +27,13 @@ def generate_launch_description():
             parameters=[config], 
             arguments=['--ros-args', '--log-level', LaunchConfiguration('log_level')]
         ),
-        Node(
-            package='perception',
-            executable='coord_finder_composition',
-            namespace='',
-            output='screen',
-            arguments=['--ros-args', '--log-level', LaunchConfiguration('log_level')]
-        ),
+        #Node(
+        #    package='perception',
+        #    executable='coord_finder_composition',
+        #    namespace='',
+        #    output='screen',
+        #    arguments=['--ros-args', '--log-level', LaunchConfiguration('log_level')]
+        #),
         Node(
             package='perception',
             executable='lidar_camera_fuser_composition',
@@ -45,6 +45,14 @@ def generate_launch_description():
         Node(
             package='perception',
             executable='mock_bbox_pub_composition',
+            namespace='',
+            output='screen',
+            parameters=[config], 
+            arguments=['--ros-args', '--log-level', LaunchConfiguration('log_level')]
+        ),
+        Node(
+            package='perception',
+            executable='gate_coord_finder_composition',
             namespace='',
             output='screen',
             parameters=[config], 

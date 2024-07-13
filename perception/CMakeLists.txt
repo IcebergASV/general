@@ -169,3 +169,29 @@ install(TARGETS
   DESTINATION lib/${PROJECT_NAME})
 
 ament_package()
+add_library(gate_coord_finder_component SHARED src/gate_coord_finder_component.cpp)
+target_compile_definitions(gate_coord_finder_component PRIVATE "COMPOSITION_BUILDING_DLL")
+ament_target_dependencies(gate_coord_finder_component
+  "rclcpp"
+  "rclcpp_components"
+  "std_msgs"
+  "geometry_msgs"
+  "perception_interfaces")
+rclcpp_components_register_nodes(gate_coord_finder_component "perception::GateCoordFinder")
+set(node_plugins "perception::GateCoordFinder;$<TARGET_FILE:gate_coord_finder_component>\n")
+install(TARGETS
+  gate_coord_finder_component
+  ARCHIVE DESTINATION lib
+  LIBRARY DESTINATION lib
+  RUNTIME DESTINATION bin)
+
+# Add executable for gate_coord_finder
+add_executable(gate_coord_finder_composition
+  src/gate_coord_finder_composition.cpp)
+target_link_libraries(gate_coord_finder_composition
+gate_coord_finder_component)
+ament_target_dependencies(gate_coord_finder_composition
+  rclcpp)
+install(TARGETS
+  gate_coord_finder_composition
+  DESTINATION lib/${PROJECT_NAME})
