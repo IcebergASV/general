@@ -24,9 +24,16 @@ if(BUILD_TESTING)
   ament_lint_auto_find_test_dependencies()
 endif()
 
+include_directories(include)
+
 # Install launch files.
 install(DIRECTORY
   launch
+  DESTINATION share/${PROJECT_NAME}
+)
+
+install(DIRECTORY
+  config
   DESTINATION share/${PROJECT_NAME}
 )
 
@@ -54,4 +61,28 @@ ament_target_dependencies(maneuvering_composition
   rclcpp)
 install(TARGETS
   maneuvering_composition
+  DESTINATION lib/${PROJECT_NAME})
+add_library(test_node_component SHARED src/test_node_component.cpp)
+target_compile_definitions(test_node_component PRIVATE "COMPOSITION_BUILDING_DLL")
+ament_target_dependencies(test_node_component
+  "rclcpp"
+  "rclcpp_components"
+  "std_msgs")
+rclcpp_components_register_nodes(test_node_component "njord_tasks::TestNode")
+set(node_plugins "njord_tasks::TestNode;$<TARGET_FILE:test_node_component>\n")
+install(TARGETS
+  test_node_component
+  ARCHIVE DESTINATION lib
+  LIBRARY DESTINATION lib
+  RUNTIME DESTINATION bin)
+
+# Add executable for test_node
+add_executable(test_node_composition
+  src/test_node_composition.cpp)
+target_link_libraries(test_node_composition
+test_node_component)
+ament_target_dependencies(test_node_composition
+  rclcpp)
+install(TARGETS
+  test_node_composition
   DESTINATION lib/${PROJECT_NAME})
