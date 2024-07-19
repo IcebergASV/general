@@ -1,0 +1,7 @@
+maneuvering_node:
+  ros__parameters:
+    wp1_x: 5.0
+    wp1_y: 3.0
+    wp2_x: 10.0
+    wp2_y: 10.0
+    turn_angle: 2.0
