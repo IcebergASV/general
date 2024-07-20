@@ -6,6 +6,8 @@ namespace njord_tasks
   : Node("maneuvering", options)
   {
     state_sub_ = this->create_subscription<mavros_msgs::msg::State>("/mavros/state", 10, std::bind(&Maneuvering::stateCallback, this, _1));
+    //velocity_pub_ = this->create_publisher<std_msgs::msg::String>("topic", 10);
+    timer_ = this->create_wall_timer(500ms, std::bind(&Maneuvering::timerCallback, this));
 
     Maneuvering::getParam<int>("wait_time", p_wait_time_, 0, "Time to wait in miliseconds");
     Maneuvering::getParam<double>("speed_factor", p_speed_factor_, 0.0, "Used to scale robot speed by this factor");
@@ -30,6 +32,12 @@ namespace njord_tasks
    return result;
   }
 
+  void Maneuvering::timerCallback()
+  {
+    RCLCPP_INFO(this->get_logger(), "Hello");
+    return;
+  }
+
   void Maneuvering::stateCallback(const mavros_msgs::msg::State::SharedPtr msg)
   {
     mavros_msgs::msg::State current_state = *msg;
@@ -45,6 +53,8 @@ namespace njord_tasks
     }
     return;
   }
+
+
 }
 #include "rclcpp_components/register_node_macro.hpp"
 

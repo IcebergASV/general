@@ -4,11 +4,11 @@
 #include <rclcpp/rclcpp.hpp>
 #include <std_msgs/msg/int32.hpp>
 #include <std_msgs/msg/float64.hpp>
-
+#include <chrono>
 #include <mavros_msgs/msg/state.hpp>
 
 using std::placeholders::_1;
-
+using namespace std::chrono_literals;
 namespace njord_tasks
 {
 
@@ -20,9 +20,10 @@ public:
 private:
     rcl_interfaces::msg::SetParametersResult param_callback(const std::vector<rclcpp::Parameter> &params);
     void stateCallback(const mavros_msgs::msg::State::SharedPtr msg);
-
+    void timerCallback();
     rclcpp::Subscription<mavros_msgs::msg::State>::SharedPtr state_sub_;
     rclcpp::node_interfaces::OnSetParametersCallbackHandle::SharedPtr on_set_parameters_callback_handle_;
+    rclcpp::TimerBase::SharedPtr timer_;
 
     bool in_guided_;
     int p_wait_time_;
