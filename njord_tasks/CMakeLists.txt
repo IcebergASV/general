@@ -12,6 +12,7 @@ find_package(rclcpp_components REQUIRED)
 find_package(composition REQUIRED)
 find_package(sensor_msgs REQUIRED)
 find_package(mavros_msgs REQUIRED)
+find_package(geographic_msgs REQUIRED)
 
 if(BUILD_TESTING)
   find_package(ament_lint_auto REQUIRED)
@@ -42,7 +43,7 @@ add_library(libtask_lib
   lib/task_lib.cpp
 )
 ament_target_dependencies(libtask_lib
-  "geometry_msgs"
+  "geographic_msgs"
   "rclcpp"
   "mavros_msgs"
   "sensor_msgs"
@@ -56,7 +57,8 @@ ament_target_dependencies(maneuvering_component
   "rclcpp_components"
   "std_msgs"
   "mavros_msgs"
-  "sensor_msgs")
+  "sensor_msgs"
+  "geographic_msgs")
 rclcpp_components_register_nodes(maneuvering_component "njord_tasks::Maneuvering")
 set(node_plugins "njord_tasks::Maneuvering;$<TARGET_FILE:maneuvering_component>\n")
 install(TARGETS

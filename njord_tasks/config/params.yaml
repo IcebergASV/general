@@ -2,7 +2,8 @@ maneuvering:
   ros__parameters:
     wait_time: 100 # miliseconds
     speed_factor: 1.0 # m/s
-    start_lat: 52.2
-    start_lon: 47.5
+    global_wp_reached_rad: 3.0 # meters
+    start_lat: -35.3733845
+    start_lon: 149.164378
     finish_lat: 52.7
     finish_lon: 47.4

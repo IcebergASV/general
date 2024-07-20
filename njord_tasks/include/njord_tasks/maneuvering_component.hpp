@@ -7,7 +7,7 @@
 #include <chrono>
 #include <mavros_msgs/msg/state.hpp>
 #include "sensor_msgs/msg/nav_sat_fix.hpp"
-
+#include "geographic_msgs/msg/geo_pose_stamped.hpp"
 using std::placeholders::_1;
 using namespace std::chrono_literals;
 namespace njord_tasks
@@ -22,21 +22,24 @@ private:
     rcl_interfaces::msg::SetParametersResult param_callback(const std::vector<rclcpp::Parameter> &params);
     void stateCallback(const mavros_msgs::msg::State::SharedPtr msg);
     void timerCallback();
+    void poseCallback(const geographic_msgs::msg::GeoPoseStamped::SharedPtr msg);
     rclcpp::Subscription<mavros_msgs::msg::State>::SharedPtr state_sub_;
     rclcpp::node_interfaces::OnSetParametersCallbackHandle::SharedPtr on_set_parameters_callback_handle_;
     rclcpp::TimerBase::SharedPtr timer_;
+    rclcpp::Subscription<geographic_msgs::msg::GeoPoseStamped>::SharedPtr pose_sub_;
 
     void maneuver();
 
     
     int    p_wait_time_;
     double p_speed_factor_;
+    double p_global_wp_reached_rad_;
     double p_start_lat_;
     double p_start_lon_;
     double p_finish_lat_;
     double p_finish_lon_;
     
-    sensor_msgs::msg::NavSatFix current_global_pose_;
+    geographic_msgs::msg::GeoPoseStamped current_global_pose_;
     bool in_guided_;
 
     enum States {WAIT_FOR_GUIDED, WAIT_TO_REACH_START, MANEUVER, WAIT_TO_REACH_FINISH, COMPLETE}; 
