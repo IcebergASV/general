@@ -7,9 +7,10 @@ endif()
 
 # find dependencies
 find_package(ament_cmake REQUIRED)
-# uncomment the following section in order to fill in
-# further dependencies manually.
-# find_package(<dependency> REQUIRED)
+find_package(rclcpp REQUIRED)
+find_package(rclcpp_components REQUIRED)
+find_package(composition REQUIRED)
+find_package(sensor_msgs REQUIRED)
 
 if(BUILD_TESTING)
   find_package(ament_lint_auto REQUIRED)
@@ -23,13 +24,46 @@ if(BUILD_TESTING)
   ament_lint_auto_find_test_dependencies()
 endif()
 
+include_directories(include)
+
 # Install launch files.
 install(DIRECTORY
   launch
   DESTINATION share/${PROJECT_NAME}
 )
 
+install(DIRECTORY
+  config
+  DESTINATION share/${PROJECT_NAME}
+)
+
 ament_package()
+add_library(maneuvering_component SHARED src/maneuvering_component.cpp)
+
+target_compile_definitions(maneuvering_component PRIVATE "COMPOSITION_BUILDING_DLL")
+ament_target_dependencies(maneuvering_component
+  "rclcpp"
+  "rclcpp_components"
+  "std_msgs")
+rclcpp_components_register_nodes(maneuvering_component "njord_tasks::Maneuvering")
+set(node_plugins "njord_tasks::Maneuvering;$<TARGET_FILE:maneuvering_component>\n")
+install(TARGETS
+  maneuvering_component
+  ARCHIVE DESTINATION lib
+  LIBRARY DESTINATION lib
+  RUNTIME DESTINATION bin)
+
+# Add executable for maneuvering
+add_executable(maneuvering_composition
+  src/maneuvering_composition.cpp)
+target_link_libraries(maneuvering_composition
+maneuvering_component)
+ament_target_dependencies(maneuvering_composition
+  rclcpp)
+install(TARGETS
+  maneuvering_composition
+  DESTINATION lib/${PROJECT_NAME})
+
 add_library(navigation_component SHARED src/navigation_component.cpp)
 target_compile_definitions(navigation_component PRIVATE "COMPOSITION_BUILDING_DLL")
 ament_target_dependencies(navigation_component
@@ -54,3 +88,4 @@ ament_target_dependencies(navigation_composition
 install(TARGETS
   navigation_composition
   DESTINATION lib/${PROJECT_NAME})
+
