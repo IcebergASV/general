@@ -1,5 +1,10 @@
 #include "njord_tasks/maneuvering_component.hpp"
 #include "njord_tasks/lib/task_lib.hpp"
+void wait()
+{
+  rclcpp::Rate rate(1);
+  rate.sleep();
+}
 namespace njord_tasks
 {
   Maneuvering::Maneuvering(const rclcpp::NodeOptions & options)
@@ -14,6 +19,7 @@ namespace njord_tasks
     on_set_parameters_callback_handle_ = this->add_on_set_parameters_callback(std::bind(&Maneuvering::param_callback, this, std::placeholders::_1));
 
     in_guided_ = false;
+    status_ = States::WAIT_FOR_GUIDED;
   }
 
   rcl_interfaces::msg::SetParametersResult Maneuvering::param_callback(const std::vector<rclcpp::Parameter> &params)
@@ -34,8 +40,81 @@ namespace njord_tasks
 
   void Maneuvering::timerCallback()
   {
-    RCLCPP_INFO(this->get_logger(), "Hello");
-    return;
+    RCLCPP_DEBUG(this->get_logger(), "timerCallback");
+    switch (status_)
+    {
+    case States::WAIT_FOR_GUIDED:
+    {
+      if (in_guided_)
+      {
+        RCLCPP_INFO(this->get_logger(), "In GUIDED mode, Heading to Maneuvering start point");
+        // Send start point
+        status_ = States::WAIT_TO_REACH_START;
+      }
+      else 
+      {
+        wait();
+      }
+      break;
+    }
+
+    case States::WAIT_TO_REACH_START:
+    {
+      if (task_lib::isReached(p_start_pnt_))
+      {
+        RCLCPP_INFO(this->get_logger(), "Reached start point, starting to maneuver");
+        status_ = States::MANEUVER;
+      }
+      else 
+      {
+        RCLCPP_INFO(this->get_logger(), "Waiting to reach start point"); // TODO Add in distance to start point
+        wait();
+      }
+      break;
+    }
+
+    case States::MANEUVER
+    {
+      if (clear_path_to_finish)
+      {
+        RCLCPP_INFO(this->get_logger(), "Detected clear path to finish, heading to finish point");
+        // send finish point
+        status_ = States::WAIT_TO_REACH_FINISH;
+      }
+      else 
+      {
+        if (red_marker_to_left_of_green)
+        {
+          move();
+        }
+        else 
+        {
+          RCLCPP_INFO(this->get_logger(), "Unexpected Obstacles detected, waiting for gate to be detected");  // TODO Add more description into what robot sees
+          wait();
+        }
+      }
+      break;
+    }
+
+    case States::WAIT_TO_REACH_FINISH
+    {
+      if if (task_lib::isReached(p_finish_pnt_))
+      {
+        RCLCPP_INFO(this->get_logger(), "Reached finish point, task complete!");
+        status_ = States::COMPLETE;
+      }
+      else 
+      {
+        RCLCPP_INFO(this->get_logger(), "Waiting to reach finish point"); // TODO Add in distance to start point
+        wait();
+      }
+      break;
+    }
+
+    case States::COMPLETE
+    {
+      RCLCPP_INFO(this->get_logger(), "Complete!");
+    }
   }
 
   void Maneuvering::stateCallback(const mavros_msgs::msg::State::SharedPtr msg)
@@ -44,7 +123,6 @@ namespace njord_tasks
     in_guided_ = task_lib::inGuided(current_state);
     if (in_guided_)
     {
-      RCLCPP_INFO(this->get_logger(), "In GUIDED mode, starting Maneuvering task");
       state_sub_.reset();
     }
     else 
@@ -55,6 +133,7 @@ namespace njord_tasks
   }
 
 
+}
 }
 #include "rclcpp_components/register_node_macro.hpp"
 

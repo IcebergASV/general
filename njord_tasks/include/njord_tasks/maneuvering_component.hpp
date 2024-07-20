@@ -29,6 +29,9 @@ private:
     int p_wait_time_;
     double p_speed_factor_;
 
+    enum States {WAIT_FOR_GUIDED, WAIT_TO_REACH_START, MANEUVER, WAIT_TO_REACH_FINISH, COMPLETE}; 
+    States status_;
+
     template <typename T>
     void getParam(std::string param_name, T& param, T default_value, std::string desc)
     {
