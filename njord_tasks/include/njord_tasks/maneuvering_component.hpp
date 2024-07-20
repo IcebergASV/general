@@ -6,6 +6,7 @@
 #include <std_msgs/msg/float64.hpp>
 #include <chrono>
 #include <mavros_msgs/msg/state.hpp>
+#include "sensor_msgs/msg/nav_sat_fix.hpp"
 
 using std::placeholders::_1;
 using namespace std::chrono_literals;
@@ -25,9 +26,18 @@ private:
     rclcpp::node_interfaces::OnSetParametersCallbackHandle::SharedPtr on_set_parameters_callback_handle_;
     rclcpp::TimerBase::SharedPtr timer_;
 
-    bool in_guided_;
-    int p_wait_time_;
+    void maneuver();
+
+    
+    int    p_wait_time_;
     double p_speed_factor_;
+    double p_start_lat_;
+    double p_start_lon_;
+    double p_finish_lat_;
+    double p_finish_lon_;
+    
+    sensor_msgs::msg::NavSatFix current_global_pose_;
+    bool in_guided_;
 
     enum States {WAIT_FOR_GUIDED, WAIT_TO_REACH_START, MANEUVER, WAIT_TO_REACH_FINISH, COMPLETE}; 
     States status_;

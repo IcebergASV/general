@@ -12,4 +12,10 @@ namespace task_lib
 
         return false;
     }
+    
+    bool isReached(double lat, double lon, const sensor_msgs::msg::NavSatFix& global_pose)
+    {
+        // TODO
+        return true;
+    }
 }

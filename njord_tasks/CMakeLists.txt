@@ -45,6 +45,7 @@ ament_target_dependencies(libtask_lib
   "geometry_msgs"
   "rclcpp"
   "mavros_msgs"
+  "sensor_msgs"
 )
 
 ament_package()
@@ -54,7 +55,8 @@ ament_target_dependencies(maneuvering_component
   "rclcpp"
   "rclcpp_components"
   "std_msgs"
-  "mavros_msgs")
+  "mavros_msgs"
+  "sensor_msgs")
 rclcpp_components_register_nodes(maneuvering_component "njord_tasks::Maneuvering")
 set(node_plugins "njord_tasks::Maneuvering;$<TARGET_FILE:maneuvering_component>\n")
 install(TARGETS
