@@ -1,0 +1,4 @@
+maneuvering:
+  ros__parameters:
+    wait_time: 100 # miliseconds
+    speed_factor: 1.0 # m/s

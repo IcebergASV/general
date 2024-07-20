@@ -11,6 +11,7 @@ find_package(rclcpp REQUIRED)
 find_package(rclcpp_components REQUIRED)
 find_package(composition REQUIRED)
 find_package(sensor_msgs REQUIRED)
+find_package(mavros_msgs REQUIRED)
 
 if(BUILD_TESTING)
   find_package(ament_lint_auto REQUIRED)
@@ -37,13 +38,23 @@ install(DIRECTORY
   DESTINATION share/${PROJECT_NAME}
 )
 
+add_library(libtask_lib
+  lib/task_lib.cpp
+)
+ament_target_dependencies(libtask_lib
+  "geometry_msgs"
+  "rclcpp"
+  "mavros_msgs"
+)
+
 ament_package()
 add_library(maneuvering_component SHARED src/maneuvering_component.cpp)
 target_compile_definitions(maneuvering_component PRIVATE "COMPOSITION_BUILDING_DLL")
 ament_target_dependencies(maneuvering_component
   "rclcpp"
   "rclcpp_components"
-  "std_msgs")
+  "std_msgs"
+  "mavros_msgs")
 rclcpp_components_register_nodes(maneuvering_component "njord_tasks::Maneuvering")
 set(node_plugins "njord_tasks::Maneuvering;$<TARGET_FILE:maneuvering_component>\n")
 install(TARGETS
@@ -62,27 +73,8 @@ ament_target_dependencies(maneuvering_composition
 install(TARGETS
   maneuvering_composition
   DESTINATION lib/${PROJECT_NAME})
-add_library(test_node_component SHARED src/test_node_component.cpp)
-target_compile_definitions(test_node_component PRIVATE "COMPOSITION_BUILDING_DLL")
-ament_target_dependencies(test_node_component
-  "rclcpp"
-  "rclcpp_components"
-  "std_msgs")
-rclcpp_components_register_nodes(test_node_component "njord_tasks::TestNode")
-set(node_plugins "njord_tasks::TestNode;$<TARGET_FILE:test_node_component>\n")
-install(TARGETS
-  test_node_component
-  ARCHIVE DESTINATION lib
-  LIBRARY DESTINATION lib
-  RUNTIME DESTINATION bin)
 
-# Add executable for test_node
-add_executable(test_node_composition
-  src/test_node_composition.cpp)
-target_link_libraries(test_node_composition
-test_node_component)
-ament_target_dependencies(test_node_composition
-  rclcpp)
-install(TARGETS
-  test_node_composition
-  DESTINATION lib/${PROJECT_NAME})
+target_link_libraries(maneuvering_composition
+  ${YAML_CPP_LIBRARIES}
+  libtask_lib
+)
