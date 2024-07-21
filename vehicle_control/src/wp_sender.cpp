@@ -75,14 +75,16 @@ class WaypointSender : public rclcpp::Node
       }
     }
 
-    void calculateWaypointStraightAhead()
+    geometry_msgs::msg::PoseStamped calculateWaypointStraightAhead()
     {
 
         // Create a new waypoint
         geometry_msgs::msg::PoseStamped local_position; 
         local_position.header = current_local_position_.header;
-        local_position.pose.position.x = 1;
-        local_position.pose.position.y = 2;
+        double x = 3;
+        double y = -3;
+        local_position.pose.position.x = y;
+        local_position.pose.position.y = -x;
 
         tf2::Quaternion orientation;
         tf2::fromMsg(current_local_position_.pose.orientation, orientation);
@@ -90,19 +92,19 @@ class WaypointSender : public rclcpp::Node
         tf2::Matrix3x3(orientation).getRPY(roll, pitch, yaw);
 
         local_position.pose.orientation = tf2::toMsg(tf2::Quaternion(0, 0, yaw, 1));
-        local_to_relative_grace(local_position, current_local_position_ );
+        geometry_msgs::msg::PoseStamped waypoint = local_to_relative_grace(local_position, current_local_position_ );
         //geometry_msgs::msg::PoseStamped waypoint = local_to_relative(local_position, current_local_position_);
       //RCLCPP_INFO(this->get_logger(), "Current position: x=%f, y=%f, z=%f", current_local_position_.pose.position.x, current_local_position_.pose.position.y, current_local_position_.pose.position.z);
       //RCLCPP_INFO(this->get_logger(), "Waypoint position: x=%f, y=%f, z=%f", waypoint.pose.position.x, waypoint.pose.position.y, waypoint.pose.position.z);
 
-      //return waypoint;
+      return waypoint;
     }
 
     void publishStraightAheadWaypoint()
     {
       //publish waypoint
-      //waypoint_publisher->publish(calculateWaypointStraightAhead());
-      calculateWaypointStraightAhead();
+      waypoint_publisher->publish(calculateWaypointStraightAhead());
+      //calculateWaypointStraightAhead();
     }
 
     geometry_msgs::msg::PoseStamped local_to_relative(
@@ -158,7 +160,7 @@ class WaypointSender : public rclcpp::Node
         return relative_position;
     }
 
-    void local_to_relative_grace(const geometry_msgs::msg::PoseStamped &rel_pose, const geometry_msgs::msg::PoseStamped &local_pose)
+    geometry_msgs::msg::PoseStamped local_to_relative_grace(const geometry_msgs::msg::PoseStamped &rel_pose, const geometry_msgs::msg::PoseStamped &local_pose)
     {
       // radius = std::sqrt(rel_pose.pose.position.y * rel_pose.pose.position.y + rel_pose.pose.position.x * rel_pose.pose.position.x);
       //double angle = std::atan2(rel_pose.pose.position.y, rel_pose.pose.position.x);
@@ -183,6 +185,13 @@ class WaypointSender : public rclcpp::Node
       RCLCPP_INFO(this->get_logger(), "x aligned: %f, y aligned: %f", prop_x_aligned, prop_y_aligned);
       RCLCPP_INFO(this->get_logger(), "boatx: %f, boaty: %f", local_pose.pose.position.x, local_pose.pose.position.y);
       RCLCPP_INFO(this->get_logger(), "xprime: %f, yprime: %f", x_prime, y_prime);
+
+      geometry_msgs::msg::PoseStamped relative_position;
+      relative_position.header.frame_id = "base_link";  // Frame of reference for the robot
+      relative_position.pose.position.x = x_prime;
+      relative_position.pose.position.y = y_prime;
+
+      return relative_position;
     }
 
     void printMatrix(const Eigen::Matrix3d &matrix)
