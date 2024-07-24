@@ -7,11 +7,13 @@ import gpiod
 class LedController():
     #Adding the line values from the RasberryPI model sheet and the command in the terminal: gpioinfo gpiochip0
     #Output Pins for the LED Tower
-    RED_LED_LINE = 27 #gpio32 on jetson
-    YELLOW_LED_LINE = 22 #gpio27 on jetson
-    GREEN_LED_LINE = 5 #gpio8 on jetson
+    RED_LED_LINE = 27 #gpio27
+    YELLOW_LED_LINE = 22 #gpio22
+    GREEN_LED_LINE = 5 #gpio5
 
-    KILL_SWITCH_LINE = 17 #This will be an input pin. It needs to be able to sustain the voltage being given to it. Pin 17, 22, or 25 should work fine #gpio35 on jetson
+    KILL_SWITCH_LINE = 17 #This will be an input pin. It needs to be able to sustain the voltage being given to it (3.3V in this case). Pin 17, 22, or 25 should work fine gpio17 is being used.
+    
+    #Setup the GPIO Pins upon start of the program
     def __init__(self):
         chip = gpiod.Chip('/dev/gpiochip0') #This is an important step so that the correct pins are chosen
 
@@ -30,28 +32,34 @@ class LedController():
 
         self._kill_switch_line.request(consumer='kill_switch_input',type=gpiod.LINE_REQ_DIR_IN)
         
+        #Turn off all the lights in the tower
         self._red_line.set_value(0)
         self._green_line.set_value(0)
         self._yellow_line.set_value(0)
 
     def led_tower_control(self, guided_mode):
-        kill_switch_activated = (self._kill_switch_line.get_value() == 1) #Checks 
-        print(self._red_line.get_value())
-        print(self._yellow_line.get_value())
-        print(self._green_line.get_value())
+        kill_switch_activated = (self._kill_switch_line.get_value() == 0) #The kill switch opens the circuit.
+                                                                            #When no current is passing to the input pin, it reads 0.
+        
+        #print statements that can help in debugging (ONLY USE IT FOR DEBUGING)\/
+        #print("RED LED:", self._red_line.get_value())
+        #print("YELLOW LED:", self._yellow_line.get_value())
+        #print("GREEN LED: ", self._green_line.get_value())
+        
         if kill_switch_activated:
             self._yellow_line.set_value(0)
             self._green_line.set_value(0)
             self._red_line.set_value(1)
-        elif guided_mode:
+        elif guided_mode: #Guided mode is autonomous mode
             self._red_line.set_value(0)
             self._yellow_line.set_value(0)
             self._green_line.set_value(1)
-        else:
+        else: #If the kill switch is not on and the boat is not in guided mode, it must be in Manual mode (RC mode)!!
             self._red_line.set_value(0)
             self._green_line.set_value(0)
             self._yellow_line.set_value(1)
 
+    #Upon termination of the program, turn off all the lights, and release all the pins
     def __del__(self):
         self._red_line.set_value(0)
         self._green_line.set_value(0)
@@ -73,23 +81,25 @@ class MavrosStateSubscriber(Node):
             self.state_callback,
             10)
         self.subscription  # prevent unused variable warning
-        self.led_tower = LedController()
+        self.led_tower = LedController() #Instantiate the LED tower controller to set the GPIOs
 
     def state_callback(self, msg):
-        guided = msg.guided
-        self.led_tower.led_tower_control(guided)
-        self.get_logger().info(f'Autonomous: {guided}')
+        guided = msg.guided #Get the value of guided
+        self.led_tower.led_tower_control(guided) #pass that to the led tower so that it sets the LED light properly
+
+        #print statement that can help in debugging (ONLY USE IT FOR DEBUGING)\/
+        #self.get_logger().info(f'Autonomous: {guided}')
 
 def main(args=None):
-    rclpy.init(args=args)
+    try: #Stop the coe gracefully when CTRL+C is clicked. Otherwise the keyboardinterrupt error will show up
+        rclpy.init(args=args)
 
-    mavros_state_subscriber = MavrosStateSubscriber()
+        mavros_state_subscriber = MavrosStateSubscriber()
 
-    rclpy.spin(mavros_state_subscriber)
-
-    # Destroy the node explicitly
-    mavros_state_subscriber.destroy_node()
-    rclpy.shutdown()
+        rclpy.spin(mavros_state_subscriber)
+    except:
+        # Destroy the node
+        mavros_state_subscriber.destroy_node()
 
 if __name__ == '__main__':
     main()
