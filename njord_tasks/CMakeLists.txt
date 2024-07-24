@@ -39,6 +39,7 @@ install(DIRECTORY
 
 ament_package()
 add_library(maneuvering_component SHARED src/maneuvering_component.cpp)
+
 target_compile_definitions(maneuvering_component PRIVATE "COMPOSITION_BUILDING_DLL")
 ament_target_dependencies(maneuvering_component
   "rclcpp"
@@ -61,5 +62,30 @@ ament_target_dependencies(maneuvering_composition
   rclcpp)
 install(TARGETS
   maneuvering_composition
+  DESTINATION lib/${PROJECT_NAME})
+
+add_library(navigation_component SHARED src/navigation_component.cpp)
+target_compile_definitions(navigation_component PRIVATE "COMPOSITION_BUILDING_DLL")
+ament_target_dependencies(navigation_component
+  "rclcpp"
+  "rclcpp_components"
+  "std_msgs")
+rclcpp_components_register_nodes(navigation_component "njord_tasks::navigation")
+set(node_plugins "njord_tasks::navigation;$<TARGET_FILE:navigation_component>\n")
+install(TARGETS
+  navigation_component
+  ARCHIVE DESTINATION lib
+  LIBRARY DESTINATION lib
+  RUNTIME DESTINATION bin)
+
+# Add executable for navigation
+add_executable(navigation_composition
+  src/navigation_composition.cpp)
+target_link_libraries(navigation_composition
+navigation_component)
+ament_target_dependencies(navigation_composition
+  rclcpp)
+install(TARGETS
+  navigation_composition
   DESTINATION lib/${PROJECT_NAME})
 
