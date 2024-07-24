@@ -3,7 +3,14 @@ from rclpy.node import Node
 from mavros_msgs.msg import State
 import gpiod
 
+#To build the code use: colcon build --packages-select mavros_subscriber_for_led_tower
+#Don't forget to do: source install/setup.bash 
+#To run the code use: ros2 run mavros_subscriber_for_led_tower listner
+
+
 #pinout for pi:https://www.etechnophiles.com/raspberry-pi-4-gpio-pinout-specifications-and-schematic/
+
+#The LedController Class is used for communication with the RasberryPI GPIO pins 27, 22, 5, and 17. Those pins can be changed by changing the class variables *_LINE
 class LedController():
     #Adding the line values from the RasberryPI model sheet and the command in the terminal: gpioinfo gpiochip0
     #Output Pins for the LED Tower
