@@ -4,6 +4,7 @@
 #include "mavros_msgs/msg/state.hpp"
 #include "mavros_msgs/msg/waypoint_reached.hpp"
 #include "geometry_msgs/msg/pose_stamped.hpp"
+#include "geographic_msgs/msg/geo_pose_stamped.hpp"
 #include "tf2_geometry_msgs/tf2_geometry_msgs.hpp"
 #include <tf2/LinearMath/Quaternion.h>
 #include <tf2/LinearMath/Matrix3x3.h>
@@ -29,7 +30,20 @@ class WaypointSender : public rclcpp::Node
         wp_reached_subscriber = this->create_subscription<mavros_msgs::msg::WaypointReached>("/mavros/mission/reached", 10, std::bind(&WaypointSender::wpReachedCallback, this, std::placeholders::_1));
 
         // Publisher to publish the calculated waypoint
-        waypoint_publisher = this->create_publisher<geometry_msgs::msg::PoseStamped>("/mavros/setpoint_position/local", 10);
+        local_waypoint_publisher = this->create_publisher<geometry_msgs::msg::PoseStamped>("/mavros/setpoint_position/local", 10);
+        global_waypoint_publisher = this->create_publisher<geographic_msgs::msg::GeoPoseStamped>("/mavros/setpoint_position/global", 10);
+
+        this->declare_parameter<bool>("use_local_wp", false);
+
+        if (this->get_parameter("use_local_wp", use_local_wp))
+        {
+          // Log retrieved values
+          RCLCPP_INFO(this->get_logger(), "Using Local Waypoints: %s", use_local_wp ? "true" : "false");
+        }
+        else
+        {
+          RCLCPP_WARN(this->get_logger(), "Failed to get 'use_local_wp' parameter");
+        }
 
         in_guided_ = false;
         previous_guided_state_ = false;
@@ -46,7 +60,14 @@ class WaypointSender : public rclcpp::Node
         {
           RCLCPP_INFO(this->get_logger(), "Guided mode: true");
           in_guided_ = true;
-          publish_local_waypoint();
+          if (use_local_wp)
+          {
+            publish_local_waypoint();
+          }
+          else
+          {
+            publish_global_waypoint();
+          }
         }
         else
         {
@@ -66,7 +87,8 @@ class WaypointSender : public rclcpp::Node
 
       if (wp_reached_counter < wp_reached_max_count && msg.wp_seq == 0)
       {
-        publish_local_waypoint();
+        //publish_local_waypoint();
+        publish_global_waypoint();
         wp_reached_counter++;
       }
       else
@@ -90,7 +112,15 @@ class WaypointSender : public rclcpp::Node
       RCLCPP_INFO(this->get_logger(), "Current Local position: x=%f, y=%f, z=%f", local_position.pose.position.x, local_position.pose.position.y, local_position.pose.position.z);
       RCLCPP_INFO(this->get_logger(), "Waypoint position: x=%f, y=%f, z=%f", waypoint.pose.position.x, waypoint.pose.position.y, waypoint.pose.position.z);
       
-      waypoint_publisher->publish(waypoint);
+      local_waypoint_publisher->publish(waypoint);
+    }
+
+    void publish_global_waypoint()
+    {
+      geographic_msgs::msg::GeoPoseStamped global_waypoint;
+      global_waypoint.pose.position.latitude = -35.9632622;  // Example latitude
+      global_waypoint.pose.position.longitude = 149.9652373;  // Example longitude
+      global_waypoint_publisher->publish(global_waypoint);
     }
 
     geometry_msgs::msg::PoseStamped rel_to_local_cord_converter(const geometry_msgs::msg::PoseStamped &rel_pose, const geometry_msgs::msg::PoseStamped &local_pose)
@@ -127,10 +157,12 @@ class WaypointSender : public rclcpp::Node
     rclcpp::Subscription<geometry_msgs::msg::PoseStamped>::SharedPtr pose_subscriber_;
     rclcpp::Subscription<mavros_msgs::msg::WaypointReached>::SharedPtr wp_reached_subscriber;
 
-    rclcpp::Publisher<geometry_msgs::msg::PoseStamped>::SharedPtr waypoint_publisher;
+    rclcpp::Publisher<geometry_msgs::msg::PoseStamped>::SharedPtr local_waypoint_publisher;
+    rclcpp::Publisher<geographic_msgs::msg::GeoPoseStamped>::SharedPtr global_waypoint_publisher;
 
     bool in_guided_;
     bool previous_guided_state_;
+    bool use_local_wp;
     int wp_reached_counter;
     int wp_reached_max_count;
 
