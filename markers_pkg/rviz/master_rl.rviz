@@ -8,9 +8,19 @@ Panels:
         - /WildThumper1
         - /WildThumper1/Odometry1/Topic1
         - /WildThumper1/Odometry1/Shape1
+        - /WildThumper1/LaserScan1/Topic1
+        - /Local Waypoints1
+        - /Local Waypoints1/Topic1
+        - /Lidar Segments1
+        - /Lidar Segments1/Topic1
+        - /Image1
+        - /Image1/Topic1
+        - /Pose1
         - /Pose1/Topic1
+        - /Camera1
+        - /Camera1/Topic1
       Splitter Ratio: 0.5
-    Tree Height: 620
+    Tree Height: 426
   - Class: rviz_common/Selection
     Name: Selection
   - Class: rviz_common/Tool Properties
@@ -134,14 +144,14 @@ Visualization Manager:
           Position Transformer: XYZ
           Selectable: true
           Size (Pixels): 3
-          Size (m): 0.05000000074505806
+          Size (m): 0.10000000149011612
           Style: Flat Squares
           Topic:
             Depth: 5
             Durability Policy: Volatile
             Filter size: 10
             History Policy: Keep Last
-            Reliability Policy: Reliable
+            Reliability Policy: Best Effort
             Value: /scan
           Use Fixed Frame: true
           Use rainbow: true
@@ -165,7 +175,7 @@ Visualization Manager:
         Durability Policy: Volatile
         Filter size: 10
         History Policy: Keep Last
-        Reliability Policy: Reliable
+        Reliability Policy: Best Effort
         Value: /mavros/setpoint_position/local
       Value: true
     - Class: rviz_default_plugins/MarkerArray
@@ -177,7 +187,7 @@ Visualization Manager:
         Depth: 5
         Durability Policy: Volatile
         History Policy: Keep Last
-        Reliability Policy: Reliable
+        Reliability Policy: Best Effort
         Value: /segments/visualization
       Value: true
     - Class: rviz_default_plugins/Image
@@ -191,7 +201,7 @@ Visualization Manager:
         Depth: 5
         Durability Policy: Volatile
         History Policy: Keep Last
-        Reliability Policy: Reliable
+        Reliability Policy: Best Effort
         Value: /yolov8_ros/dbg_image
       Value: true
     - Alpha: 1
@@ -214,6 +224,33 @@ Visualization Manager:
         Reliability Policy: Best Effort
         Value: /mavros/local_position/pose
       Value: true
+    - Class: rviz_default_plugins/Camera
+      Enabled: true
+      Far Plane Distance: 100
+      Image Rendering: background and overlay
+      Name: Camera
+      Overlay Alpha: 0.5
+      Topic:
+        Depth: 5
+        Durability Policy: Volatile
+        History Policy: Keep Last
+        Reliability Policy: Best Effort
+        Value: /camera/camera/color/image_raw
+      Value: true
+      Visibility:
+        Image: true
+        Lidar Segments: true
+        Local Waypoints: true
+        Pose: true
+        Value: true
+        WildThumper:
+          Axes: true
+          Grid: true
+          LaserScan: true
+          Odometry: true
+          TF: true
+          Value: true
+      Zoom Factor: 1
   Enabled: true
   Global Options:
     Background Color: 48; 48; 48
@@ -260,27 +297,29 @@ Visualization Manager:
   Views:
     Current:
       Class: rviz_default_plugins/Orbit
-      Distance: 1.7216997146606445
+      Distance: 17.6116943359375
       Enable Stereo Rendering:
         Stereo Eye Separation: 0.05999999865889549
         Stereo Focal Distance: 1
         Swap Stereo Eyes: false
         Value: false
       Focal Point:
-        X: -0.3000640869140625
-        Y: -0.9472863078117371
-        Z: 1.4329134225845337
+        X: 4.860546112060547
+        Y: -0.9196818470954895
+        Z: 0.3389119803905487
       Focal Shape Fixed Size: true
       Focal Shape Size: 0.05000000074505806
       Invert Z Axis: false
       Name: Current View
       Near Clip Distance: 0.009999999776482582
-      Pitch: 0.7597951889038086
+      Pitch: 0.6097952723503113
       Target Frame: <Fixed Frame>
       Value: Orbit (rviz)
-      Yaw: 3.9985556602478027
+      Yaw: 3.4785635471343994
     Saved: ~
 Window Geometry:
+  Camera:
+    collapsed: false
   Displays:
     collapsed: false
   Height: 839
@@ -288,7 +327,7 @@ Window Geometry:
   Hide Right Dock: false
   Image:
     collapsed: false
-  QMainWindow State: 000000ff00000000fd00000004000000000000027d000002a9fc020000000afb0000001200530065006c0065006300740069006f006e00000001e10000009b0000005c00fffffffb0000001e0054006f006f006c002000500072006f007000650072007400690065007302000001ed000001df00000185000000a3fb000000120056006900650077007300200054006f006f02000001df000002110000018500000122fb000000200054006f006f006c002000500072006f0070006500720074006900650073003203000002880000011d000002210000017afb000000100044006900730070006c006100790073010000003d000002a9000000c900fffffffb0000002000730065006c0065006300740069006f006e00200062007500660066006500720200000138000000aa0000023a00000294fb00000014005700690064006500530074006500720065006f02000000e6000000d2000003ee0000030bfb0000000c004b0069006e0065006300740200000186000001060000030c00000261fb0000000a0049006d006100670065000000019c0000012a0000002800fffffffb0000000a0049006d00610067006503000004a9000001b3000002420000018d000000010000010f0000029bfc0200000003fb0000001e0054006f006f006c002000500072006f00700065007200740069006500730100000041000000780000000000000000fb0000000a00560069006500770073000000002c0000029b000000a400fffffffb0000001200530065006c0065006300740069006f006e010000025a000000b200000000000000000000000200000490000000a9fc0100000001fb0000000a00560069006500770073030000004e00000080000002e10000019700000003000005a00000003efc0100000002fb0000000800540069006d00650100000000000005a00000027900fffffffb0000000800540069006d006501000000000000045000000000000000000000031d000002a900000004000000040000000800000008fc0000000100000002000000010000000a0054006f006f006c00730100000000ffffffff0000000000000000
+  QMainWindow State: 000000ff00000000fd000000040000000000000156000002a9fc020000000bfb0000001200530065006c0065006300740069006f006e00000001e10000009b0000005c00fffffffb0000001e0054006f006f006c002000500072006f007000650072007400690065007302000001ed000001df00000185000000a3fb000000120056006900650077007300200054006f006f02000001df000002110000018500000122fb000000200054006f006f006c002000500072006f0070006500720074006900650073003203000002880000011d000002210000017afb000000100044006900730070006c006100790073010000003d000001e7000000c900fffffffb0000002000730065006c0065006300740069006f006e00200062007500660066006500720200000138000000aa0000023a00000294fb00000014005700690064006500530074006500720065006f02000000e6000000d2000003ee0000030bfb0000000c004b0069006e0065006300740200000186000001060000030c00000261fb0000000a0049006d006100670065000000019c0000012a0000002800fffffffb0000000a0049006d00610067006503000004a9000001b3000002420000018dfb0000000c00430061006d006500720061010000022a000000bc0000002800ffffff000000010000010f0000029bfc0200000003fb0000001e0054006f006f006c002000500072006f00700065007200740069006500730100000041000000780000000000000000fb0000000a00560069006500770073000000002c0000029b000000a400fffffffb0000001200530065006c0065006300740069006f006e010000025a000000b200000000000000000000000200000490000000a9fc0100000001fb0000000a00560069006500770073030000004e00000080000002e10000019700000003000003cd0000003efc0100000002fb0000000800540069006d00650100000000000003cd0000027900fffffffb0000000800540069006d0065010000000000000450000000000000000000000271000002a900000004000000040000000800000008fc0000000100000002000000010000000a0054006f006f006c00730100000000ffffffff0000000000000000
   Selection:
     collapsed: false
   Time:
@@ -297,6 +336,6 @@ Window Geometry:
     collapsed: false
   Views:
     collapsed: false
-  Width: 1440
-  X: 347
-  Y: 152
+  Width: 973
+  X: 659
+  Y: 193
