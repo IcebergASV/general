@@ -24,19 +24,10 @@ def generate_launch_description():
         condition=IfCondition(LaunchConfiguration("rviz")),
     )
 
-    odom_map_tf = Node(
-        package='tf2_ros',
-        executable='static_transform_publisher',
-        name='static_transform_publisher',
-        output='screen',
-        arguments=['0', '0', '0', '0', '0', '0', '1', 'odom', 'map']
-    )
-
     return LaunchDescription([
         DeclareLaunchArgument(
             "rviz", default_value="true", description="Open RViz."
         ),
-        odom_map_tf,
         rviz,
 
     ])
