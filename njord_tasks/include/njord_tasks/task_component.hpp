@@ -6,7 +6,8 @@
 #include "mavros_msgs/msg/state.hpp"
 #include "geographic_msgs/msg/geo_pose_stamped.hpp"
 #include "mavros_msgs/msg/waypoint_reached.hpp"
-
+#include "njord_tasks_interfaces/action/task_signal.hpp"
+#include "rclcpp_action/rclcpp_action.hpp"
 
 using std::placeholders::_1;
 using namespace std::chrono_literals;
@@ -33,6 +34,7 @@ private:
     rclcpp::Subscription<geographic_msgs::msg::GeoPoseStamped>::SharedPtr pose_sub_;
     rclcpp::Subscription<mavros_msgs::msg::WaypointReached>::SharedPtr wp_reached_sub_;
     rclcpp::Publisher<geographic_msgs::msg::GeoPoseStamped>::SharedPtr wp_pub_;
+    rclcpp_action::Client<njord_tasks_interfaces::action::TaskSignal>::SharedPtr task_signal_client_ptr_;
     int    p_wait_time_;
     double p_global_wp_reached_rad_;
     double p_start_lat_;

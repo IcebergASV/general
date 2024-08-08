@@ -12,6 +12,7 @@ namespace njord_tasks
     wp_reached_sub_ = this->create_subscription<mavros_msgs::msg::WaypointReached>("/mavros/mission/reached", 10, std::bind(&Task::wpReachedCallback, this, _1));
     timer_ = this->create_wall_timer(500ms, std::bind(&Task::timerCallback, this));
     wp_pub_ = this->create_publisher<geographic_msgs::msg::GeoPoseStamped>("/mavros/setpoint_position/global", 10);
+    task_signal_client_ptr_ = rclcpp_action::create_client<njord_tasks_interfaces::action::TaskSignal>(this,"task_to_execute");
 
     Task::getParam<int>("wait_time", p_wait_time_, 0, "Time to wait in miliseconds");
     Task::getParam<double>("global_wp_reached_rad", p_global_wp_reached_rad_, 0.0, "Global waypoint reached radius in meters");
@@ -96,6 +97,52 @@ namespace njord_tasks
     wp_reached_ = true;
   }
 
+  void goal_response_callback(const GoalHandleFibonacci::SharedPtr & goal_handle)
+  {
+    if (!goal_handle) {
+      RCLCPP_ERROR(this->get_logger(), "Goal was rejected by server");
+    } else {
+      RCLCPP_INFO(this->get_logger(), "Goal accepted by server, waiting for result");
+    }
+  }
+
+  void feedback_callback(
+    GoalHandleFibonacci::SharedPtr,
+    const std::shared_ptr<const Fibonacci::Feedback> feedback)
+  {
+    std::stringstream ss;
+    ss << "Next number in sequence received: ";
+    for (auto number : feedback->partial_sequence) {
+      ss << number << " ";
+    }
+    RCLCPP_INFO(this->get_logger(), ss.str().c_str());
+  }
+
+  void result_callback(const GoalHandleFibonacci::WrappedResult & result)
+  {
+    switch (result.code) {
+      case rclcpp_action::ResultCode::SUCCEEDED:
+        break;
+      case rclcpp_action::ResultCode::ABORTED:
+        RCLCPP_ERROR(this->get_logger(), "Goal was aborted");
+        return;
+      case rclcpp_action::ResultCode::CANCELED:
+        RCLCPP_ERROR(this->get_logger(), "Goal was canceled");
+        return;
+      default:
+        RCLCPP_ERROR(this->get_logger(), "Unknown result code");
+        return;
+    }
+    std::stringstream ss;
+    ss << "Result received: ";
+    for (auto number : result.result->sequence) {
+      ss << number << " ";
+    }
+    RCLCPP_INFO(this->get_logger(), ss.str().c_str());
+    rclcpp::shutdown();
+  }
+
+  
   void Task::timerCallback()
   {
     RCLCPP_DEBUG(this->get_logger(), "timerCallback");
@@ -135,6 +182,17 @@ namespace njord_tasks
 
     case States::TASK:
     {
+      if (!task_signal_client_ptr_->wait_for_action_server()) {
+        RCLCPP_ERROR(this->get_logger(), "Action server not available after waiting");
+        rclcpp::shutdown();
+      }
+      send_goal_options.goal_response_callback =
+        std::bind(&Task::goal_response_callback, this, _1);
+      send_goal_options.feedback_callback =
+        std::bind(&Task::feedback_callback, this, _1, _2);
+      send_goal_options.result_callback =
+        std::bind(&Task::result_callback, this, _1);
+      task_signal_client_ptr_->async_send_goal(goal_msg, send_goal_options);
       if (true)//clear_path_to_finish)
       {
         RCLCPP_INFO(this->get_logger(), "Task finished, heading to finish point");

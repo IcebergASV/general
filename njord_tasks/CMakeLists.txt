@@ -13,6 +13,7 @@ find_package(composition REQUIRED)
 find_package(sensor_msgs REQUIRED)
 find_package(mavros_msgs REQUIRED)
 find_package(geographic_msgs REQUIRED)
+find_package(njord_tasks_interfaces REQUIRED)
 
 if(BUILD_TESTING)
   find_package(ament_lint_auto REQUIRED)
@@ -116,7 +117,8 @@ ament_target_dependencies(task_component
   "rclcpp_components"
   "std_msgs"
   "mavros_msgs"
-  "geographic_msgs")
+  "geographic_msgs"
+  "njord_tasks_interfaces")
 rclcpp_components_register_nodes(task_component "njord_tasks::Task")
 set(node_plugins "njord_tasks::Task;$<TARGET_FILE:task_component>\n")
 install(TARGETS
@@ -133,7 +135,7 @@ add_executable(task_composition
 target_link_libraries(task_composition
 task_component)
 ament_target_dependencies(task_composition
-  rclcpp)
+  rclcpp njord_tasks_interfaces)
 install(TARGETS
   task_composition
   DESTINATION lib/${PROJECT_NAME})
