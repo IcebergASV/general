@@ -2,12 +2,14 @@
 #define task_HPP
 
 #include <rclcpp/rclcpp.hpp>
-#include <std_msgs/msg/int32.hpp>
-#include <std_msgs/msg/float64.hpp>
+#include <chrono>
 #include "mavros_msgs/msg/state.hpp"
+#include "geographic_msgs/msg/geo_pose_stamped.hpp"
+#include "mavros_msgs/msg/waypoint_reached.hpp"
+
 
 using std::placeholders::_1;
-
+using namespace std::chrono_literals;
 namespace njord_tasks
 {
 
@@ -17,18 +19,34 @@ public:
     explicit Task(const rclcpp::NodeOptions & options);
 
 private:
-    void callback(const std_msgs::msg::Int32::SharedPtr msg);
     rcl_interfaces::msg::SetParametersResult param_callback(const std::vector<rclcpp::Parameter> &params);
-    void state_callback(const mavros_msgs::msg::State::SharedPtr msg);
-
+    void stateCallback(const mavros_msgs::msg::State::SharedPtr msg);
+    void poseCallback(const geographic_msgs::msg::GeoPoseStamped::SharedPtr msg);
+    void wpReachedCallback(const mavros_msgs::msg::WaypointReached msg);
+    void wait();
+    void timerCallback();
+    void publishGlobalWP(double lat, double lon);
+    
+    rclcpp::TimerBase::SharedPtr timer_;
     rclcpp::Subscription<mavros_msgs::msg::State>::SharedPtr state_sub_;
-    rclcpp::Subscription<std_msgs::msg::Int32>::SharedPtr example_sub_;
-    rclcpp::Publisher<std_msgs::msg::Float64>::SharedPtr example_pub_;
     rclcpp::node_interfaces::OnSetParametersCallbackHandle::SharedPtr on_set_parameters_callback_handle_;
+    rclcpp::Subscription<geographic_msgs::msg::GeoPoseStamped>::SharedPtr pose_sub_;
+    rclcpp::Subscription<mavros_msgs::msg::WaypointReached>::SharedPtr wp_reached_sub_;
+    rclcpp::Publisher<geographic_msgs::msg::GeoPoseStamped>::SharedPtr wp_pub_;
+    int    p_wait_time_;
+    double p_global_wp_reached_rad_;
+    double p_start_lat_;
+    double p_start_lon_;
+    double p_finish_lat_;
+    double p_finish_lon_;
 
-    int p_multiplier_;
-    double p_adder_;
     bool in_guided_;
+    bool wp_reached_;
+
+    geographic_msgs::msg::GeoPoseStamped current_global_pose_;
+
+    enum States {WAIT_FOR_GUIDED, WAIT_TO_REACH_START, TASK, WAIT_TO_REACH_FINISH, COMPLETE}; 
+    States status_;
 
     template <typename T>
     void getParam(std::string param_name, T& param, T default_value, std::string desc)

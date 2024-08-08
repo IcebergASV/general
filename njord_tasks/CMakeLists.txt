@@ -115,7 +115,8 @@ ament_target_dependencies(task_component
   "rclcpp"
   "rclcpp_components"
   "std_msgs"
-  "mavros_msgs")
+  "mavros_msgs"
+  "geographic_msgs")
 rclcpp_components_register_nodes(task_component "njord_tasks::Task")
 set(node_plugins "njord_tasks::Task;$<TARGET_FILE:task_component>\n")
 install(TARGETS
@@ -123,6 +124,8 @@ install(TARGETS
   ARCHIVE DESTINATION lib
   LIBRARY DESTINATION lib
   RUNTIME DESTINATION bin)
+
+
 
 # Add executable for task
 add_executable(task_composition
@@ -134,3 +137,8 @@ ament_target_dependencies(task_composition
 install(TARGETS
   task_composition
   DESTINATION lib/${PROJECT_NAME})
+
+target_link_libraries(task_composition
+  ${YAML_CPP_LIBRARIES}
+  libtask_lib
+)
