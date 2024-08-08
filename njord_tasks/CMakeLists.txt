@@ -11,6 +11,7 @@ find_package(rclcpp REQUIRED)
 find_package(rclcpp_components REQUIRED)
 find_package(composition REQUIRED)
 find_package(sensor_msgs REQUIRED)
+find_package(mavros_msgs REQUIRED)
 
 if(BUILD_TESTING)
   find_package(ament_lint_auto REQUIRED)
@@ -89,3 +90,28 @@ install(TARGETS
   navigation_composition
   DESTINATION lib/${PROJECT_NAME})
 
+add_library(task_component SHARED src/task_component.cpp)
+target_compile_definitions(task_component PRIVATE "COMPOSITION_BUILDING_DLL")
+ament_target_dependencies(task_component
+  "rclcpp"
+  "rclcpp_components"
+  "std_msgs"
+  "mavros_msgs")
+rclcpp_components_register_nodes(task_component "njord_tasks::Task")
+set(node_plugins "njord_tasks::Task;$<TARGET_FILE:task_component>\n")
+install(TARGETS
+  task_component
+  ARCHIVE DESTINATION lib
+  LIBRARY DESTINATION lib
+  RUNTIME DESTINATION bin)
+
+# Add executable for task
+add_executable(task_composition
+  src/task_composition.cpp)
+target_link_libraries(task_composition
+task_component)
+ament_target_dependencies(task_composition
+  rclcpp)
+install(TARGETS
+  task_composition
+  DESTINATION lib/${PROJECT_NAME})
