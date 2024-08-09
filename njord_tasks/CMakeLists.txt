@@ -60,7 +60,8 @@ ament_target_dependencies(maneuvering_component
   "std_msgs"
   "mavros_msgs"
   "sensor_msgs"
-  "geographic_msgs")
+  "geographic_msgs"
+  "njord_tasks_interfaces")
 rclcpp_components_register_nodes(maneuvering_component "njord_tasks::Maneuvering")
 set(node_plugins "njord_tasks::Maneuvering;$<TARGET_FILE:maneuvering_component>\n")
 install(TARGETS
@@ -75,7 +76,7 @@ add_executable(maneuvering_composition
 target_link_libraries(maneuvering_composition
 maneuvering_component)
 ament_target_dependencies(maneuvering_composition
-  rclcpp)
+  rclcpp njord_tasks_interfaces)
 install(TARGETS
   maneuvering_composition
   DESTINATION lib/${PROJECT_NAME})
