@@ -27,7 +27,7 @@ The package that listens to mavros topic and changes the led tower light from th
  	ros2 run mavros_subscriber_for_led_tower listner
 
 ## PI GPIO Pinout
-![PI GPIO Pinout](https://images.app.goo.gl/ttdA4ZrtSoVLN1jW9)
+![PI GPIO Pinout](https://i.sstatic.net/nQG4G.jpg)
 
 ### Pinout Connections for LED Tower
 
