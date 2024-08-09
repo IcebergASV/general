@@ -8,16 +8,18 @@ endif()
 # find dependencies
 find_package(ament_cmake REQUIRED)
 find_package(geometry_msgs REQUIRED)
+find_package(geographic_msgs REQUIRED)
 find_package(rosidl_default_generators REQUIRED)
 
 set(files
   "msg/Task.msg"
   "action/TaskSignal.action"
+  "msg/StartTask.msg"
 )
 
 rosidl_generate_interfaces(${PROJECT_NAME}
   ${files}
-  DEPENDENCIES std_msgs geometry_msgs
+  DEPENDENCIES std_msgs geometry_msgs geographic_msgs
 )
 
 ament_export_dependencies(rosidl_default_runtime)
