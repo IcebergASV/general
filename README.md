@@ -24,4 +24,4 @@ The package that listens to mavros topic and changes the led tower light from th
 	cd ros2_ws/
 	colcon build --packages-select mavros_subscriber_for_led_tower
  	source install/setup.bash
- 	ros2 run mavros_subscriber_for_led_tower listener
+ 	ros2 run mavros_subscriber_for_led_tower listner
