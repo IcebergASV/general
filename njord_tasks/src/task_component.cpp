@@ -12,8 +12,8 @@ namespace njord_tasks
     wp_reached_sub_ = this->create_subscription<mavros_msgs::msg::WaypointReached>("/mavros/mission/reached", 10, std::bind(&Task::wpReachedCallback, this, _1));
     timer_ = this->create_wall_timer(500ms, std::bind(&Task::timerCallback, this));
     wp_pub_ = this->create_publisher<geographic_msgs::msg::GeoPoseStamped>("/mavros/setpoint_position/global", 10);
-    task_signal_client_ptr_ = rclcpp_action::create_client<njord_tasks_interfaces::action::TaskSignal>(this,"task_to_execute");
-
+    start_task_pub_ = this->create_publisher<njord_tasks_interfaces::msg::StartTask>("/njord_tasks/task_to_execute", 10);
+    task_complete_sub_ = this->create_subscription<std_msgs::msg::Int32>("/njord_tasks/task_completion_status", 10, std::bind(&Task::taskStatusCallback, this, _1));
     Task::getParam<int>("wait_time", p_wait_time_, 0, "Time to wait in miliseconds");
     Task::getParam<double>("global_wp_reached_rad", p_global_wp_reached_rad_, 0.0, "Global waypoint reached radius in meters");
     Task::getParam<double>("start_lat", p_start_lat_, 0.0, "Starting latitude");
@@ -24,6 +24,7 @@ namespace njord_tasks
 
     in_guided_ = false;
     wp_reached_ = false;
+    task_complete_ = false;
   }
 
   void Task::wait()
@@ -63,7 +64,7 @@ namespace njord_tasks
     }
     else 
     {
-      RCLCPP_INFO(this->get_logger(), "Waiting for GUIDED, currently in %s mode.", current_state.mode.c_str());
+      RCLCPP_INFO_ONCE(this->get_logger(), "Waiting for GUIDED, currently in %s mode.", current_state.mode.c_str());
     }
     return;
   }
@@ -97,51 +98,28 @@ namespace njord_tasks
     wp_reached_ = true;
   }
 
-  void goal_response_callback(const GoalHandleFibonacci::SharedPtr & goal_handle)
+  void Task::taskStatusCallback(const std_msgs::msg::Int32::SharedPtr msg)
   {
-    if (!goal_handle) {
-      RCLCPP_ERROR(this->get_logger(), "Goal was rejected by server");
-    } else {
-      RCLCPP_INFO(this->get_logger(), "Goal accepted by server, waiting for result");
+    if (msg->data == 1)
+    {
+      task_complete_ = true;
+      RCLCPP_INFO(this->get_logger(), "Task complete with success");
     }
+    else{
+      RCLCPP_INFO(this->get_logger(), "Task failed");
+    }      
   }
 
-  void feedback_callback(
-    GoalHandleFibonacci::SharedPtr,
-    const std::shared_ptr<const Fibonacci::Feedback> feedback)
+  void Task::publishStartTaskSignal()
   {
-    std::stringstream ss;
-    ss << "Next number in sequence received: ";
-    for (auto number : feedback->partial_sequence) {
-      ss << number << " ";
-    }
-    RCLCPP_INFO(this->get_logger(), ss.str().c_str());
+    njord_tasks_interfaces::msg::StartTask start_task;
+    start_task.task.current_task = njord_tasks_interfaces::msg::Task::NAVIGATION;
+    start_task.start_pnt.latitude = p_start_lat_;
+    start_task.start_pnt.longitude = p_start_lon_;
+    start_task.finish_pnt.latitude = p_finish_lat_;
+    start_task.finish_pnt.longitude = p_finish_lon_;
+    start_task_pub_->publish(start_task);
   }
-
-  void result_callback(const GoalHandleFibonacci::WrappedResult & result)
-  {
-    switch (result.code) {
-      case rclcpp_action::ResultCode::SUCCEEDED:
-        break;
-      case rclcpp_action::ResultCode::ABORTED:
-        RCLCPP_ERROR(this->get_logger(), "Goal was aborted");
-        return;
-      case rclcpp_action::ResultCode::CANCELED:
-        RCLCPP_ERROR(this->get_logger(), "Goal was canceled");
-        return;
-      default:
-        RCLCPP_ERROR(this->get_logger(), "Unknown result code");
-        return;
-    }
-    std::stringstream ss;
-    ss << "Result received: ";
-    for (auto number : result.result->sequence) {
-      ss << number << " ";
-    }
-    RCLCPP_INFO(this->get_logger(), ss.str().c_str());
-    rclcpp::shutdown();
-  }
-
   
   void Task::timerCallback()
   {
@@ -170,11 +148,12 @@ namespace njord_tasks
       {
         wp_reached_ = false;
         RCLCPP_INFO(this->get_logger(), "Reached start point, starting task");
+        publishStartTaskSignal();
         status_ = States::TASK;
       }
       else 
       {
-        RCLCPP_INFO(this->get_logger(), "Waiting to reach start point"); // TODO Add in distance to start point
+        RCLCPP_INFO_ONCE(this->get_logger(), "Waiting to reach start point"); // TODO Add in distance to start point
         wait();
       }
       break;
@@ -182,35 +161,16 @@ namespace njord_tasks
 
     case States::TASK:
     {
-      if (!task_signal_client_ptr_->wait_for_action_server()) {
-        RCLCPP_ERROR(this->get_logger(), "Action server not available after waiting");
-        rclcpp::shutdown();
-      }
-      send_goal_options.goal_response_callback =
-        std::bind(&Task::goal_response_callback, this, _1);
-      send_goal_options.feedback_callback =
-        std::bind(&Task::feedback_callback, this, _1, _2);
-      send_goal_options.result_callback =
-        std::bind(&Task::result_callback, this, _1);
-      task_signal_client_ptr_->async_send_goal(goal_msg, send_goal_options);
-      if (true)//clear_path_to_finish)
+      if(task_complete_)
       {
-        RCLCPP_INFO(this->get_logger(), "Task finished, heading to finish point");
+        RCLCPP_INFO(this->get_logger(), "Heading to finish point");
         publishGlobalWP(p_finish_lat_, p_finish_lon_);
-
         status_ = States::WAIT_TO_REACH_FINISH;
       }
       else 
       {
-        if (true)//red_marker_to_left_of_green)
-        {
-          //maneuver();
-        }
-        else 
-        {
-          RCLCPP_INFO(this->get_logger(), "Unexpected Obstacles detected, waiting for gate to be detected");  // TODO Add more description into what robot sees
-          wait();
-        }
+        RCLCPP_INFO_ONCE(this->get_logger(), "Waiting for task to complete");
+        wait();
       }
       break;
     }
@@ -225,7 +185,7 @@ namespace njord_tasks
       }
       else 
       {
-        RCLCPP_INFO(this->get_logger(), "Waiting to reach finish point"); // TODO Add in distance to start point
+        RCLCPP_INFO_ONCE(this->get_logger(), "Waiting to reach finish point"); // TODO Add in distance to start point
         wait();
       }
       break;
@@ -233,7 +193,7 @@ namespace njord_tasks
 
     case States::COMPLETE:
     {
-      RCLCPP_INFO(this->get_logger(), "Complete!");
+      RCLCPP_INFO_ONCE(this->get_logger(), "Complete!");
     }
   }
   }

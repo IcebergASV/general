@@ -7,7 +7,9 @@
 #include "geographic_msgs/msg/geo_pose_stamped.hpp"
 #include "mavros_msgs/msg/waypoint_reached.hpp"
 #include "njord_tasks_interfaces/action/task_signal.hpp"
-#include "rclcpp_action/rclcpp_action.hpp"
+#include "njord_tasks_interfaces/msg/start_task.hpp"
+#include "njord_tasks_interfaces/msg/task.hpp"
+#include "std_msgs/msg/int32.hpp"
 
 using std::placeholders::_1;
 using namespace std::chrono_literals;
@@ -27,14 +29,19 @@ private:
     void wait();
     void timerCallback();
     void publishGlobalWP(double lat, double lon);
+    void publishStartTaskSignal();
+    void taskStatusCallback(const std_msgs::msg::Int32::SharedPtr msg);
     
     rclcpp::TimerBase::SharedPtr timer_;
     rclcpp::Subscription<mavros_msgs::msg::State>::SharedPtr state_sub_;
     rclcpp::node_interfaces::OnSetParametersCallbackHandle::SharedPtr on_set_parameters_callback_handle_;
     rclcpp::Subscription<geographic_msgs::msg::GeoPoseStamped>::SharedPtr pose_sub_;
     rclcpp::Subscription<mavros_msgs::msg::WaypointReached>::SharedPtr wp_reached_sub_;
+    rclcpp::Subscription<std_msgs::msg::Int32>::SharedPtr task_complete_sub_;
+
     rclcpp::Publisher<geographic_msgs::msg::GeoPoseStamped>::SharedPtr wp_pub_;
-    rclcpp_action::Client<njord_tasks_interfaces::action::TaskSignal>::SharedPtr task_signal_client_ptr_;
+    rclcpp::Publisher<njord_tasks_interfaces::msg::StartTask>::SharedPtr start_task_pub_;
+
     int    p_wait_time_;
     double p_global_wp_reached_rad_;
     double p_start_lat_;
@@ -44,6 +51,7 @@ private:
 
     bool in_guided_;
     bool wp_reached_;
+    bool task_complete_;
 
     geographic_msgs::msg::GeoPoseStamped current_global_pose_;
 
