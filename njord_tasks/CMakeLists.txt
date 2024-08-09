@@ -12,6 +12,8 @@ find_package(rclcpp_components REQUIRED)
 find_package(composition REQUIRED)
 find_package(sensor_msgs REQUIRED)
 find_package(mavros_msgs REQUIRED)
+find_package(geographic_msgs REQUIRED)
+find_package(njord_tasks_interfaces REQUIRED)
 
 if(BUILD_TESTING)
   find_package(ament_lint_auto REQUIRED)
@@ -38,6 +40,16 @@ install(DIRECTORY
   DESTINATION share/${PROJECT_NAME}
 )
 
+add_library(libtask_lib
+  lib/task_lib.cpp
+)
+ament_target_dependencies(libtask_lib
+  "geographic_msgs"
+  "rclcpp"
+  "mavros_msgs"
+  "sensor_msgs"
+)
+
 ament_package()
 add_library(maneuvering_component SHARED src/maneuvering_component.cpp)
 
@@ -45,7 +57,10 @@ target_compile_definitions(maneuvering_component PRIVATE "COMPOSITION_BUILDING_D
 ament_target_dependencies(maneuvering_component
   "rclcpp"
   "rclcpp_components"
-  "std_msgs")
+  "std_msgs"
+  "mavros_msgs"
+  "sensor_msgs"
+  "geographic_msgs")
 rclcpp_components_register_nodes(maneuvering_component "njord_tasks::Maneuvering")
 set(node_plugins "njord_tasks::Maneuvering;$<TARGET_FILE:maneuvering_component>\n")
 install(TARGETS
@@ -64,6 +79,11 @@ ament_target_dependencies(maneuvering_composition
 install(TARGETS
   maneuvering_composition
   DESTINATION lib/${PROJECT_NAME})
+
+target_link_libraries(maneuvering_composition
+  ${YAML_CPP_LIBRARIES}
+  libtask_lib
+)
 
 add_library(navigation_component SHARED src/navigation_component.cpp)
 target_compile_definitions(navigation_component PRIVATE "COMPOSITION_BUILDING_DLL")
@@ -96,7 +116,9 @@ ament_target_dependencies(task_component
   "rclcpp"
   "rclcpp_components"
   "std_msgs"
-  "mavros_msgs")
+  "mavros_msgs"
+  "geographic_msgs"
+  "njord_tasks_interfaces")
 rclcpp_components_register_nodes(task_component "njord_tasks::Task")
 set(node_plugins "njord_tasks::Task;$<TARGET_FILE:task_component>\n")
 install(TARGETS
@@ -105,13 +127,20 @@ install(TARGETS
   LIBRARY DESTINATION lib
   RUNTIME DESTINATION bin)
 
+
+
 # Add executable for task
 add_executable(task_composition
   src/task_composition.cpp)
 target_link_libraries(task_composition
 task_component)
 ament_target_dependencies(task_composition
-  rclcpp)
+  rclcpp njord_tasks_interfaces)
 install(TARGETS
   task_composition
   DESTINATION lib/${PROJECT_NAME})
+
+target_link_libraries(task_composition
+  ${YAML_CPP_LIBRARIES}
+  libtask_lib
+)

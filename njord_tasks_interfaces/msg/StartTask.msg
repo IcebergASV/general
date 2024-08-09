@@ -1,0 +1,3 @@
+Task task
+geographic_msgs/GeoPoint start_pnt
+geographic_msgs/GeoPoint finish_pnt
