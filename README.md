@@ -25,3 +25,13 @@ The package that listens to mavros topic and changes the led tower light from th
 	colcon build --packages-select mavros_subscriber_for_led_tower
  	source install/setup.bash
  	ros2 run mavros_subscriber_for_led_tower listner
+
+## PI GPIO Pinout
+![PI GPIO Pinout](https://images.app.goo.gl/ttdA4ZrtSoVLN1jW9)
+
+### Pinout Connections for LED Tower
+
+- Pin 13 (GPIO27) is for red
+- Pin 15 (GPIO22) is for yellow
+- Pin 29 (GPIO05) is for green
+- Pin 11 (GPIO17) is for the input of the kill switch
