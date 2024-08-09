@@ -17,7 +17,7 @@ namespace njord_tasks
   {
     rcl_interfaces::msg::SetParametersResult result;
 
-    if (params[0].get_name() == "distance_to_move") { p_distance_to_move_ = params[0].as_int(); }
+    if (params[0].get_name() == "distance_to_move") { p_distance_to_move_ = params[0].as_double(); }
     else if (params[0].get_name() == "angle_from_buoys") { p_angle_from_buoys_ = params[0].as_double(); }
     else {
       RCLCPP_ERROR(this->get_logger(), "Invalid Param");
