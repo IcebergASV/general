@@ -76,20 +76,16 @@ namespace njord_tasks
     rate.sleep();
   }
 
-  // Function to get and sort detections based on class name
   std::vector<yolov8_msgs::msg::Detection> Maneuvering::filterAndSortLeftToRight(const yolov8_msgs::msg::DetectionArray detection_array, const std::string& class_name)
   {
-    // Vector to store filtered detections
     std::vector<yolov8_msgs::msg::Detection> filtered_detections;
 
-    // Iterate over all detections
     for (const auto& detection : detection_array.detections) {
         if (detection.class_name == class_name) {
             filtered_detections.push_back(detection);
         }
     }
 
-    // Sort detections by the x value of the center of the bounding box
     std::sort(filtered_detections.begin(), filtered_detections.end(),
         [](const yolov8_msgs::msg::Detection& a, const yolov8_msgs::msg::Detection& b) {
             double center_a_x = a.bbox.center.position.x;
@@ -117,23 +113,28 @@ namespace njord_tasks
     double angle;
     if (red_buoys.size() == 0) // move to left of left most green [0]
     {
+      RCLCPP_INFO(this->get_logger(), "Detected only green buoys");
       angle = bbox_calculations::pixelToAngle(p_camera_fov_, p_camera_res_x_, green_buoys[0].bbox.center.position.x);
+      RCLCPP_INFO(this->get_logger(), "Left most green buoy detected at %f degrees", angle*180/M_PI);
       angle = angle + p_angle_from_buoys_;
+      RCLCPP_INFO(this->get_logger(), "Heading towards %f degrees", angle*180/M_PI);
     }
     else if (green_buoys.size() == 0) // move to the right of rightmost red [last]
     {
+      RCLCPP_INFO(this->get_logger(), "Detected only red buoys");
       angle = bbox_calculations::pixelToAngle(p_camera_fov_, p_camera_res_x_, red_buoys[red_buoys.size()-1].bbox.center.position.x);
+      RCLCPP_INFO(this->get_logger(), "Right most red buoy detected at %f degrees", angle*180/M_PI);
       angle = angle - p_angle_from_buoys_;
+      RCLCPP_INFO(this->get_logger(), "Heading towards %f degrees", angle*180/M_PI);
     }
     else // move inbetween red [last] and green [0]
     {
+      
       double red_angle = bbox_calculations::pixelToAngle(p_camera_fov_, p_camera_res_x_, red_buoys[red_buoys.size()-1].bbox.center.position.x);
       double green_angle = bbox_calculations::pixelToAngle(p_camera_fov_, p_camera_res_x_, green_buoys[0].bbox.center.position.x);
-
       angle = (red_angle + green_angle)/2;
+      RCLCPP_INFO(this->get_logger(), "Detected red buoy at %f degrees and green buoy at %f degrees, heading towards %f degrees", red_angle, green_angle, angle);
     }
-
-    // relative to local
     geometry_msgs::msg::Point relative_coords = task_lib::polarToCartesian(p_distance_to_move_, angle);
 
     geometry_msgs::msg::PoseStamped wp = task_lib::getRelativeWPMsg(relative_coords.x, relative_coords.y);
@@ -157,6 +158,7 @@ namespace njord_tasks
     case States::CHECK_IF_AT_FINISH:
     {
       wait();
+      RCLCPP_INFO(this->get_logger(), "Checking if reached finish point");
       if (global_pose_updated_ && atFinish())
       {
         global_pose_updated_ = false;
@@ -175,6 +177,8 @@ namespace njord_tasks
 
     case States::HEAD_TO_FINISH:
     {
+      RCLCPP_INFO(this->get_logger(), "Heading towards finish point");
+
       sendFinishPnt();
       status_ = States::CHECK_IF_AT_FINISH;
       break;
@@ -182,6 +186,7 @@ namespace njord_tasks
 
     case States::MANEUVER:
     {
+      RCLCPP_INFO(this->get_logger(), "Maneuvering through buoys");
       geometry_msgs::msg::PoseStamped wp = getWPFromBuoys();
       local_wp_pub_->publish(wp);
       status_ = States::CHECK_IF_AT_FINISH;
