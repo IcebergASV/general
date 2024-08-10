@@ -48,4 +48,15 @@ namespace task_lib
         double c = 2 * asin(sqrt(a));
         return rad * c;
     }
+
+    geographic_msgs::msg::GeoPoseStamped getGlobalWPMsg(double lat, double lon)
+    {
+        geographic_msgs::msg::GeoPoseStamped msg;
+        msg.header.stamp = this->get_clock()->now();
+        msg.header.frame_id = "map";  // or use an appropriate frame_id
+
+        msg.pose.position.latitude = lat;
+        msg.pose.position.longitude = lon;
+        return msg;
+    }
 }
