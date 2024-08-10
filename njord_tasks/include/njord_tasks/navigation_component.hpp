@@ -4,6 +4,9 @@
 #include <rclcpp/rclcpp.hpp>
 #include <std_msgs/msg/int32.hpp>
 #include <std_msgs/msg/float64.hpp>
+#include "njord_tasks_interfaces/action/task_signal.hpp"
+#include "njord_tasks_interfaces/msg/start_task.hpp"
+#include "njord_tasks_interfaces/msg/task.hpp"
 
 using std::placeholders::_1;
 
@@ -16,10 +19,10 @@ public:
     explicit navigation(const rclcpp::NodeOptions & options);
 
 private:
-    void callback(const std_msgs::msg::Int32::SharedPtr msg);
+    void callback(const njord_tasks_interfaces::msg::StartTask::SharedPtr msg);
     rcl_interfaces::msg::SetParametersResult param_callback(const std::vector<rclcpp::Parameter> &params);
 
-    rclcpp::Subscription<std_msgs::msg::Int32>::SharedPtr example_sub_;
+    rclcpp::Subscription<njord_tasks_interfaces::msg::StartTask>::SharedPtr example_sub_;
     rclcpp::Publisher<std_msgs::msg::Float64>::SharedPtr example_pub_;
     rclcpp::node_interfaces::OnSetParametersCallbackHandle::SharedPtr on_set_parameters_callback_handle_;
 

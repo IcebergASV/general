@@ -11,6 +11,11 @@ def generate_launch_description():
         'config',
         'params.yaml'
         )
+    nav_waypoints = os.path.join(
+        get_package_share_directory('njord_tasks'),
+        'config',
+        'navigation_waypoints.yaml'
+        )
 
     log_level_launch_arg = DeclareLaunchArgument(
         'log_level',
@@ -22,6 +27,14 @@ def generate_launch_description():
         Node(
             package='njord_tasks',
             executable='task_composition',
+            namespace='',
+            output='screen',
+            parameters=[config], 
+            arguments=['--ros-args', '--log-level', LaunchConfiguration('log_level')]
+        ),
+        Node(
+            package='njord_tasks',
+            executable='navigation_composition',
             namespace='',
             output='screen',
             parameters=[config], 
