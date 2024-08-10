@@ -1,0 +1,31 @@
+ros2 topic pub /yolo/detections yolov8_msgs/msg/DetectionArray "{detections: [
+    {
+        class_id: 1,
+        class_name: 'red_buoy',
+        score: 0.95,
+        id: '1',
+        bbox: {x: 100, y: 150, width: 50, height: 75},
+        bbox3d: {x: 1.0, y: 2.0, z: 3.0, length: 1.5, width: 1.0, height: 1.0},
+        mask: {},
+        keypoints: {},
+        keypoints3d: {},
+        center: {x: 125, y: 187.5},
+        size: {width: 50, height: 75}
+    },
+    {
+        class_id: 2,
+        class_name: 'green_buoy',
+        score: 0.85,
+        id: '2',
+        bbox: {x: 200, y: 250, width: 60, height: 80},
+        bbox3d: {x: 2.0, y: 3.0, z: 4.0, length: 2.0, width: 1.5, height: 1.2},
+        mask: {},
+        keypoints: {},
+        keypoints3d: {},
+        center: {x: 230, y: 290},
+        size: {width: 60, height: 80}
+    }
+]}"
+
+
+ros2 topic pub --once /mavros/setpoint_position/local geometry_msgs/msg/PoseStamped "{ header: { frame_id: 'body' }, pose: { position: { x: 1.0, y: 2.0, z: 0.0 }, orientation: { x: 0.0, y: 0.0, z: 0.0, w: 1.0 } } }"

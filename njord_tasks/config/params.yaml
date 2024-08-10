@@ -2,10 +2,10 @@ task:
   ros__parameters:
     wait_time: 100 # miliseconds
     global_wp_reached_rad: 3.0 # meters
-    start_lat: -35.3632622
-    start_lon: 149.1652373
-    finish_lat: -35.3632222
-    finish_lon: 149.1654373
+    start_lat: -35.3632222
+    start_lon: 149.1654373
+    finish_lat: -35.3632622
+    finish_lon: 149.1652373
 maneuvering:
   ros__parameters:
     distance_to_move: 10.0 # meters

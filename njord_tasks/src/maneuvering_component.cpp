@@ -6,9 +6,12 @@ namespace njord_tasks
   Maneuvering::Maneuvering(const rclcpp::NodeOptions & options)
   : Node("maneuvering", options)
   {
+    rmw_qos_profile_t qos_profile = rmw_qos_profile_sensor_data;
+    auto qos = rclcpp::QoS(rclcpp::QoSInitialization(qos_profile.history, 5), qos_profile);
     task_to_execute_sub_ = this->create_subscription<njord_tasks_interfaces::msg::StartTask>("/njord_tasks/task_to_execute", 10, std::bind(&Maneuvering::taskToExecuteCallback, this, _1));
     bbox_sub_ = this->create_subscription<yolov8_msgs::msg::DetectionArray>("/yolo/detections", 10, std::bind(&Maneuvering::bboxCallback, this, _1));
-
+    wp_reached_sub_ = this->create_subscription<mavros_msgs::msg::WaypointReached>("/mavros/mission/reached", 10, std::bind(&Maneuvering::wpReachedCallback, this, _1));
+    global_pose_sub_ = this->create_subscription<sensor_msgs::msg::NavSatFix>("/mavros/global_position/global", qos, std::bind(&Maneuvering::poseCallback, this, _1));
     task_completion_status_pub_ = this->create_publisher<std_msgs::msg::Int32>("njord_tasks/task_completion_status", 10);
     global_wp_pub_ = this->create_publisher<geographic_msgs::msg::GeoPoseStamped>("mavros/setpoint_position/global", 10);
     local_wp_pub_ = this->create_publisher<geometry_msgs::msg::PoseStamped>("mavros/setpoint_position/local", 10);
@@ -24,6 +27,7 @@ namespace njord_tasks
     global_pose_updated_ = false;
     bboxes_updated_ = false;
     start_task_ = false;
+    wp_reached_ = false;
   }
 
   rcl_interfaces::msg::SetParametersResult Maneuvering::param_callback(const std::vector<rclcpp::Parameter> &params)
@@ -45,16 +49,16 @@ namespace njord_tasks
     return result;
   }
 
-  void Maneuvering::poseCallback(const geographic_msgs::msg::GeoPoseStamped::SharedPtr msg)
+  void Maneuvering::poseCallback(const sensor_msgs::msg::NavSatFix::SharedPtr msg)
   {
     current_global_pose_ = *msg;
     global_pose_updated_ = true;
     // Extract latitude and longitude from the message
-    double latitude = msg->pose.position.latitude;
-    double longitude = msg->pose.position.longitude;
+    double latitude = msg->latitude;
+    double longitude = msg->longitude;
 
     // Log the values
-    RCLCPP_INFO(this->get_logger(), "Latitude: %f, Longitude: %f", latitude, longitude);
+    RCLCPP_DEBUG(this->get_logger(), "Latitude: %f, Longitude: %f", latitude, longitude);
   }
 
   void Maneuvering::bboxCallback(const yolov8_msgs::msg::DetectionArray::SharedPtr msg)
@@ -74,6 +78,13 @@ namespace njord_tasks
   {
     rclcpp::Rate rate(1);
     rate.sleep();
+  }
+
+  void Maneuvering::wpReachedCallback(const mavros_msgs::msg::WaypointReached msg)
+  {
+    RCLCPP_INFO(this->get_logger(), "Waypoint Reached");
+    mavros_msgs::msg::WaypointReached wpr = msg;
+    wp_reached_ = true;
   }
 
   std::vector<yolov8_msgs::msg::Detection> Maneuvering::filterAndSortLeftToRight(const yolov8_msgs::msg::DetectionArray detection_array, const std::string& class_name)
@@ -142,69 +153,68 @@ namespace njord_tasks
     return wp; 
   }
 
-  bool Maneuvering::atFinish()
-  {
-    if (task_lib::isReached(finish_pnt_.latitude, finish_pnt_.longitude, current_global_pose_, p_wp_reached_radius_))
-    {
-      return true;
-    }
-    return false;
+  // bool Maneuvering::atFinish()
+  // {
+  //   if (task_lib::isReached(finish_pnt_.latitude, finish_pnt_.longitude, current_global_pose_, p_wp_reached_radius_))
+  //   {
+  //     return true;
+  //   }
+  //   return false;
 
-  }
+  // }
   void Maneuvering::timerCallback()
   {
-   switch (status_)
+    if (start_task_)
     {
-    case States::CHECK_IF_AT_FINISH:
-    {
-      wait();
-      RCLCPP_INFO(this->get_logger(), "Checking if reached finish point");
-      if (global_pose_updated_ && atFinish())
+      switch (status_)
       {
-        global_pose_updated_ = false;
-        status_ = States::TASK_COMPLETE;
+        case States::CHECK_FOR_BUOYS:
+        {
+          wait();
+          RCLCPP_INFO(this->get_logger(), "Checking for buoys");
+          if (bboxes_updated_) 
+          {
+            status_ = States::MANEUVER;
+            bboxes_updated_ = false;
+          }
+          else{
+            status_ = States::HEAD_TO_FINISH;
+          }
+          break;
+        }
+
+        case States::HEAD_TO_FINISH:
+        {
+          wp_reached_ = false;
+          RCLCPP_INFO(this->get_logger(), "No buoys detected, Heading towards finish point");
+
+          sendFinishPnt();
+          status_ = States::CHECK_FOR_BUOYS;
+          break;
+        }
+
+        case States::MANEUVER:
+        {
+          RCLCPP_INFO(this->get_logger(), "Maneuvering through buoys");
+          geometry_msgs::msg::PoseStamped wp = getWPFromBuoys();
+          local_wp_pub_->publish(wp);
+          status_ = States::CHECK_FOR_BUOYS;
+          break;
+        }
+
+        // case States::TASK_COMPLETE:
+        // {
+        //   RCLCPP_INFO_ONCE(this->get_logger(), "Maneuvering Complete!");
+
+        // }
       }
-      else if (bboxes_updated_) 
-      {
-        status_ = States::MANEUVER;
-        bboxes_updated_ = false;
-      }
-      else{
-        status_ = States::HEAD_TO_FINISH;
-      }
-      break;
     }
-
-    case States::HEAD_TO_FINISH:
-    {
-      RCLCPP_INFO(this->get_logger(), "Heading towards finish point");
-
-      sendFinishPnt();
-      status_ = States::CHECK_IF_AT_FINISH;
-      break;
-    }
-
-    case States::MANEUVER:
-    {
-      RCLCPP_INFO(this->get_logger(), "Maneuvering through buoys");
-      geometry_msgs::msg::PoseStamped wp = getWPFromBuoys();
-      local_wp_pub_->publish(wp);
-      status_ = States::CHECK_IF_AT_FINISH;
-      break;
-    }
-
-    case States::TASK_COMPLETE:
-    {
-      RCLCPP_INFO_ONCE(this->get_logger(), "Maneuvering Complete!");
-
-    }
-  }
   }
   void Maneuvering::taskToExecuteCallback(const njord_tasks_interfaces::msg::StartTask::SharedPtr msg)
   {
     finish_pnt_ = msg->finish_pnt;
     start_task_ = true;
-    RCLCPP_DEBUG(this->get_logger(), "taskToExecuteCallback");
+    RCLCPP_INFO(this->get_logger(), "Starting maneuvering task");
  
   }
 }
