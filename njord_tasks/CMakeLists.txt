@@ -14,6 +14,8 @@ find_package(sensor_msgs REQUIRED)
 find_package(mavros_msgs REQUIRED)
 find_package(geographic_msgs REQUIRED)
 find_package(njord_tasks_interfaces REQUIRED)
+find_package(perception_interfaces REQUIRED)
+find_package(yolov8_msgs REQUIRED)
 
 if(BUILD_TESTING)
   find_package(ament_lint_auto REQUIRED)
@@ -50,6 +52,15 @@ ament_target_dependencies(libtask_lib
   "sensor_msgs"
 )
 
+add_library(libbbox_calculations
+  lib/bbox_calculations.cpp
+)
+ament_target_dependencies(libbbox_calculations
+  "geometry_msgs"
+  "rclcpp"
+  "perception_interfaces"
+)
+
 ament_package()
 add_library(maneuvering_component SHARED src/maneuvering_component.cpp)
 
@@ -61,7 +72,8 @@ ament_target_dependencies(maneuvering_component
   "mavros_msgs"
   "sensor_msgs"
   "geographic_msgs"
-  "njord_tasks_interfaces")
+  "njord_tasks_interfaces"
+  "yolov8_msgs")
 rclcpp_components_register_nodes(maneuvering_component "njord_tasks::Maneuvering")
 set(node_plugins "njord_tasks::Maneuvering;$<TARGET_FILE:maneuvering_component>\n")
 install(TARGETS
@@ -84,6 +96,7 @@ install(TARGETS
 target_link_libraries(maneuvering_composition
   ${YAML_CPP_LIBRARIES}
   libtask_lib
+  libbbox_calculations
 )
 
 add_library(navigation_component SHARED src/navigation_component.cpp)

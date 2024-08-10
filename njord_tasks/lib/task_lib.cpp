@@ -49,14 +49,62 @@ namespace task_lib
         return rad * c;
     }
 
+    geometry_msgs::msg::Point relativePolarToLocalCoords(double radius, double angle, geometry_msgs::msg::Pose local_pose)
+    {
+       
+        geometry_msgs::msg::Point local_coords;
+        // Convert relative coordinates to local coordinates 
+        double heading = quaternionToHeading(local_pose.orientation);
+        double x_aligned = radius*cos(angle-((M_PI/2)-heading));
+        double y_aligned = radius*sin(angle-((M_PI/2)-heading));
+        double x =  local_pose.position.x + x_aligned;
+        double y =  local_pose.position.y + y_aligned;
+
+        local_coords.x = -y; // FIGURE OUT IF THIS SHOULD BE SWAPPED IN REAL LIFE TODO
+        local_coords.y = x; // FIGURE OUT IF THIS SHOULD BE SWAPPED IN REAL LIFE TODO
+        RCLCPP_DEBUG(logger, "x robot = %f", local_pose.position.y);
+        RCLCPP_DEBUG(logger, "y robot = %f", -local_pose.position.x);
+        RCLCPP_DEBUG(logger, "x target = %f", x);
+        RCLCPP_DEBUG(logger, "y target = %f", y);
+        return local_coords;
+    }
+
+    double quaternionToHeading(const geometry_msgs::msg::Quaternion q)
+    {
+        double siny_cosp = 2 * (q.w * q.z + q.x * q.y);
+        double cosy_cosp = 1 - 2 * (q.y * q.y + q.z * q.z);
+        double heading = std::atan2(siny_cosp, cosy_cosp);
+        return heading;
+    }
+
     geographic_msgs::msg::GeoPoseStamped getGlobalWPMsg(double lat, double lon)
     {
         geographic_msgs::msg::GeoPoseStamped msg;
-        msg.header.stamp = this->get_clock()->now();
         msg.header.frame_id = "map";  // or use an appropriate frame_id
 
         msg.pose.position.latitude = lat;
         msg.pose.position.longitude = lon;
         return msg;
+    }
+
+    geometry_msgs::msg::PoseStamped getRelativeWPMsg(double x, double y)
+    {
+        geometry_msgs::msg::PoseStamped msg;
+        msg.header.frame_id = "body";  // or use an appropriate frame_id
+
+        msg.pose.position.x = x;
+        msg.pose.position.y = y;
+        return msg;
+    }
+
+    geometry_msgs::msg::Point polarToCartesian(double radius, double angle)
+    {
+        double x = radius * cos(angle);
+        double y = radius * sin(angle);
+
+        geometry_msgs::msg::Point cartesian;
+        cartesian.x = x;
+        cartesian.y = y;
+        return cartesian;
     }
 }

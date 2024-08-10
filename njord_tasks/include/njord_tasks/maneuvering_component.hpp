@@ -4,9 +4,14 @@
 #include <rclcpp/rclcpp.hpp>
 #include <std_msgs/msg/int32.hpp>
 #include "njord_tasks_interfaces/msg/start_task.hpp"
+#include "geographic_msgs/msg/geo_pose_stamped.hpp"
+#include "geometry_msgs/msg/pose_stamped.hpp"
+#include "yolov8_msgs/msg/detection_array.hpp"
+#include <string>
+#include <chrono>
 
 using std::placeholders::_1;
-
+using namespace std::chrono_literals;
 namespace njord_tasks
 {
 
@@ -20,25 +25,41 @@ private:
     rcl_interfaces::msg::SetParametersResult param_callback(const std::vector<rclcpp::Parameter> &params);
     void poseCallback(const geographic_msgs::msg::GeoPoseStamped::SharedPtr msg);
     bool atFinish();
+    void timerCallback();
+    void bboxCallback(const yolov8_msgs::msg::DetectionArray::SharedPtr msg);
+    void sendFinishPnt();
+    void wait();
+    std::vector<yolov8_msgs::msg::Detection> filterAndSortLeftToRight(const yolov8_msgs::msg::DetectionArray detection_array, const std::string& class_name);
+    geometry_msgs::msg::PoseStamped getWPFromBuoys();
 
 
-
+    rclcpp::TimerBase::SharedPtr timer_;
     rclcpp::Subscription<njord_tasks_interfaces::msg::StartTask>::SharedPtr task_to_execute_sub_;
     rclcpp::Publisher<std_msgs::msg::Int32>::SharedPtr task_completion_status_pub_;
     rclcpp::node_interfaces::OnSetParametersCallbackHandle::SharedPtr on_set_parameters_callback_handle_;
     rclcpp::Subscription<geographic_msgs::msg::GeoPoseStamped>::SharedPtr pose_sub_;
+    rclcpp::Subscription<yolov8_msgs::msg::DetectionArray>::SharedPtr bbox_sub_;
     rclcpp::Publisher<geographic_msgs::msg::GeoPoseStamped>::SharedPtr global_wp_pub_;
+    rclcpp::Publisher<geometry_msgs::msg::PoseStamped>::SharedPtr local_wp_pub_;
 
     double p_distance_to_move_;
     double p_angle_from_buoys_;
     double p_wp_reached_radius_;
+    int p_camera_res_x_;
+    int p_camera_fov_;
+
+    const std::string red_buoy_str = "red_buoy";
+    const std::string green_buoy_str = "green_buoy";
 
     enum States {CHECK_IF_AT_FINISH, HEAD_TO_FINISH, MANEUVER, TASK_COMPLETE}; 
     States status_;
 
     geographic_msgs::msg::GeoPoseStamped current_global_pose_;
     bool global_pose_updated_;
+    bool bboxes_updated_;
     geographic_msgs::msg::GeoPoint finish_pnt_;
+    yolov8_msgs::msg::DetectionArray bboxes_;
+    bool start_task_;
 
     template <typename T>
     void getParam(std::string param_name, T& param, T default_value, std::string desc)
