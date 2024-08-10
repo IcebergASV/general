@@ -10,3 +10,4 @@ maneuvering:
   ros__parameters:
     distance_to_move: 10.0 # meters
     angle_from_buoys: 10.0 # degrees
+    wp_reached_radius: 1.0 #meters

@@ -19,6 +19,10 @@ private:
     void taskToExecuteCallback(const njord_tasks_interfaces::msg::StartTask::SharedPtr msg);
     rcl_interfaces::msg::SetParametersResult param_callback(const std::vector<rclcpp::Parameter> &params);
     void poseCallback(const geographic_msgs::msg::GeoPoseStamped::SharedPtr msg);
+    bool atFinish();
+
+
+
     rclcpp::Subscription<njord_tasks_interfaces::msg::StartTask>::SharedPtr task_to_execute_sub_;
     rclcpp::Publisher<std_msgs::msg::Int32>::SharedPtr task_completion_status_pub_;
     rclcpp::node_interfaces::OnSetParametersCallbackHandle::SharedPtr on_set_parameters_callback_handle_;
@@ -27,8 +31,9 @@ private:
 
     double p_distance_to_move_;
     double p_angle_from_buoys_;
+    double p_wp_reached_radius_;
 
-    enum States {WAIT_FOR_GUIDED, WAIT_TO_REACH_START, TASK, WAIT_TO_REACH_FINISH, COMPLETE}; 
+    enum States {CHECK_IF_AT_FINISH, HEAD_TO_FINISH, MANEUVER, TASK_COMPLETE}; 
     States status_;
 
     geographic_msgs::msg::GeoPoseStamped current_global_pose_;
