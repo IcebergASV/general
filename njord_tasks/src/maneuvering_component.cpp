@@ -1,178 +1,238 @@
 #include "njord_tasks/maneuvering_component.hpp"
+#include "njord_tasks/lib/bbox_calculations.hpp"
 #include "njord_tasks/lib/task_lib.hpp"
-void wait()
-{
-  rclcpp::Rate rate(1);
-  rate.sleep();
-}
+
 namespace njord_tasks
 {
   Maneuvering::Maneuvering(const rclcpp::NodeOptions & options)
   : Node("maneuvering", options)
-  { rmw_qos_profile_t qos_profile = rmw_qos_profile_sensor_data;
+  {
+    rmw_qos_profile_t qos_profile = rmw_qos_profile_sensor_data;
     auto qos = rclcpp::QoS(rclcpp::QoSInitialization(qos_profile.history, 5), qos_profile);
-    state_sub_ = this->create_subscription<mavros_msgs::msg::State>("/mavros/state", 10, std::bind(&Maneuvering::stateCallback, this, _1));
-    //velocity_pub_ = this->create_publisher<std_msgs::msg::String>("topic", 10);
-    timer_ = this->create_wall_timer(500ms, std::bind(&Maneuvering::timerCallback, this));
-    pose_sub_ = this->create_subscription<geographic_msgs::msg::GeoPoseStamped>("/mavros/global_position/pose", qos, std::bind(&Maneuvering::poseCallback, this, _1));
-    Maneuvering::getParam<int>("wait_time", p_wait_time_, 0, "Time to wait in miliseconds");
-    Maneuvering::getParam<double>("speed_factor", p_speed_factor_, 0.0, "Used to scale robot speed by this factor");
-    Maneuvering::getParam<double>("global_wp_reached_rad", p_global_wp_reached_rad_, 0.0, "Global waypoint reached radius in meters");
-    Maneuvering::getParam<double>("start_lat", p_start_lat_, 0.0, "Starting latitude");
-    Maneuvering::getParam<double>("start_lon", p_start_lon_, 0.0, "Starting longitude");
-    Maneuvering::getParam<double>("finish_lat", p_finish_lat_, 0.0, "Finish latitude");
-    Maneuvering::getParam<double>("finish_lon", p_finish_lon_, 0.0, "Finish longitude");
+    task_to_execute_sub_ = this->create_subscription<njord_tasks_interfaces::msg::StartTask>("/njord_tasks/task_to_execute", 10, std::bind(&Maneuvering::taskToExecuteCallback, this, _1));
+    bbox_sub_ = this->create_subscription<yolov8_msgs::msg::DetectionArray>("/yolo/detections", 10, std::bind(&Maneuvering::bboxCallback, this, _1));
+    wp_reached_sub_ = this->create_subscription<mavros_msgs::msg::WaypointReached>("/mavros/mission/reached", 10, std::bind(&Maneuvering::wpReachedCallback, this, _1));
+    global_pose_sub_ = this->create_subscription<sensor_msgs::msg::NavSatFix>("/mavros/global_position/global", qos, std::bind(&Maneuvering::globalPoseCallback, this, _1));
+    local_pose_sub_ = this->create_subscription<geometry_msgs::msg::PoseStamped>("/mavros/local_position/pose", qos, std::bind(&Maneuvering::localPoseCallback, this, _1));
+    task_completion_status_pub_ = this->create_publisher<std_msgs::msg::Int32>("njord_tasks/task_completion_status", 10);
+    global_wp_pub_ = this->create_publisher<geographic_msgs::msg::GeoPoseStamped>("mavros/setpoint_position/global", 10);
+    local_wp_pub_ = this->create_publisher<geometry_msgs::msg::PoseStamped>("mavros/setpoint_position/local", 10);
+    timer_ = this->create_wall_timer(10000ms, std::bind(&Maneuvering::timerCallback, this));
+
+    Maneuvering::getParam<double>("distance_to_move", p_distance_to_move_, 0.0, "Sets a wp this far away");
+    Maneuvering::getParam<double>("angle_from_buoys", p_angle_from_buoys_, 0.0, "Angles the wp this far from a single buoy");
+    Maneuvering::getParam<double>("wp_reached_radius", p_wp_reached_radius_, 0.0, "Within this many meters to reach point");
+    Maneuvering::getParam<int>("camera_res_x", p_camera_res_x_, 0, "Resolution width of camera");
+    Maneuvering::getParam<int>("camera_fov", p_camera_fov_, 0, "Camera field of view");
     on_set_parameters_callback_handle_ = this->add_on_set_parameters_callback(std::bind(&Maneuvering::param_callback, this, std::placeholders::_1));
 
-    in_guided_ = false;
-    status_ = States::WAIT_FOR_GUIDED;
+    global_pose_updated_ = false;
+    bboxes_updated_ = false;
+    start_task_ = false;
+    wp_reached_ = false;
   }
 
   rcl_interfaces::msg::SetParametersResult Maneuvering::param_callback(const std::vector<rclcpp::Parameter> &params)
   {
     rcl_interfaces::msg::SetParametersResult result;
 
-    if (params[0].get_name() == "wait_time") { p_wait_time_ = params[0].as_int(); }
-    else if (params[0].get_name() == "speed_factor") { p_speed_factor_ = params[0].as_double(); }
-    else if (params[0].get_name() == "global_wp_reached_rad") { p_global_wp_reached_rad_ = params[0].as_double(); }
-    else if (params[0].get_name() == "start_lat") { p_start_lat_ = params[0].as_double(); }
-    else if (params[0].get_name() == "start_lon") { p_start_lon_ = params[0].as_double(); }
-    else if (params[0].get_name() == "finish_lat") { p_finish_lat_ = params[0].as_double(); }
-    else if (params[0].get_name() == "finish_lon") { p_finish_lon_ = params[0].as_double(); }
+    if (params[0].get_name() == "distance_to_move") { p_distance_to_move_ = params[0].as_double(); }
+    else if (params[0].get_name() == "angle_from_buoys") { p_angle_from_buoys_ = params[0].as_double(); }
+    else if (params[0].get_name() == "wp_reached_radius") { p_wp_reached_radius_ = params[0].as_double(); }
+    else if (params[0].get_name() == "camera_res_x") { p_camera_res_x_ = params[0].as_int(); }
+    else if (params[0].get_name() == "camera_fov") { p_camera_fov_ = params[0].as_int(); }
     else {
       RCLCPP_ERROR(this->get_logger(), "Invalid Param");
       result.successful = false;
       return result;
     }
+
     result.successful = true;
     return result;
   }
-  void Maneuvering::maneuver()
-  {
-    return;
-  }
-  void Maneuvering::stateCallback(const mavros_msgs::msg::State::SharedPtr msg)
-  {
-    mavros_msgs::msg::State current_state = *msg;
-    in_guided_ = task_lib::inGuided(current_state);
-    if (in_guided_)
-    {
-      state_sub_.reset();
-    }
-    else 
-    {
-      RCLCPP_INFO(this->get_logger(), "Waiting for GUIDED, currently in %s mode.", current_state.mode.c_str());
-    }
-    return;
-  }
 
-  void Maneuvering::poseCallback(const geographic_msgs::msg::GeoPoseStamped::SharedPtr msg)
+  void Maneuvering::globalPoseCallback(const sensor_msgs::msg::NavSatFix::SharedPtr msg)
   {
     current_global_pose_ = *msg;
+    global_pose_updated_ = true;
     // Extract latitude and longitude from the message
-    double latitude = msg->pose.position.latitude;
-    double longitude = msg->pose.position.longitude;
+    double latitude = msg->latitude;
+    double longitude = msg->longitude;
 
     // Log the values
-    RCLCPP_INFO(this->get_logger(), "Latitude: %f, Longitude: %f", latitude, longitude);
+    RCLCPP_DEBUG(this->get_logger(), "Latitude: %f, Longitude: %f", latitude, longitude);
   }
-  
+
+  void Maneuvering::localPoseCallback(const geometry_msgs::msg::PoseStamped::SharedPtr msg)
+  {
+    current_local_pose_ = *msg;
+    local_pose_updated_ = true;
+    // Extract latitude and longitude from the message
+    double x = msg->pose.position.x;
+    double y = msg->pose.position.y;
+
+    // Log the values
+    RCLCPP_DEBUG(this->get_logger(), "Local Pose: x: %f, y: %f", x, y);
+  }
+
+  void Maneuvering::bboxCallback(const yolov8_msgs::msg::DetectionArray::SharedPtr msg)
+  {
+    bboxes_ = *msg;
+    bboxes_updated_ = true;
+
+  }
+
+  void Maneuvering::sendFinishPnt()
+  {
+    geographic_msgs::msg::GeoPoseStamped finish_wp = task_lib::getGlobalWPMsg(finish_pnt_.latitude, finish_pnt_.longitude);
+    global_wp_pub_->publish(finish_wp);
+  }
+
+  void Maneuvering::wait()
+  {
+    rclcpp::Rate rate(1);
+    rate.sleep();
+  }
+
+  void Maneuvering::wpReachedCallback(const mavros_msgs::msg::WaypointReached msg)
+  {
+    RCLCPP_INFO(this->get_logger(), "Waypoint Reached");
+    mavros_msgs::msg::WaypointReached wpr = msg;
+    wp_reached_ = true;
+  }
+
+  std::vector<yolov8_msgs::msg::Detection> Maneuvering::filterAndSortLeftToRight(const yolov8_msgs::msg::DetectionArray detection_array, const std::string& class_name)
+  {
+    std::vector<yolov8_msgs::msg::Detection> filtered_detections;
+
+    for (const auto& detection : detection_array.detections) {
+        if (detection.class_name == class_name) {
+            filtered_detections.push_back(detection);
+        }
+    }
+
+    std::sort(filtered_detections.begin(), filtered_detections.end(),
+        [](const yolov8_msgs::msg::Detection& a, const yolov8_msgs::msg::Detection& b) {
+            double center_a_x = a.bbox.center.position.x;
+            double center_b_x = b.bbox.center.position.x;
+            return center_a_x < center_b_x;
+        });
+
+    return filtered_detections;
+  }
+
+  geometry_msgs::msg::PoseStamped Maneuvering::getWPFromBuoys()
+  {
+
+    std::vector<yolov8_msgs::msg::Detection> red_buoys = filterAndSortLeftToRight(bboxes_, red_buoy_str);
+    std::vector<yolov8_msgs::msg::Detection> green_buoys = filterAndSortLeftToRight(bboxes_, green_buoy_str);
+
+    // red - green
+    // right most red , left most green
+
+    if (red_buoys.size() == 0 && green_buoys.size() == 0)
+    {
+      RCLCPP_INFO(this->get_logger(), "No buoys detected"); //TODO HANDLE
+    }
+
+    double angle;
+    if (red_buoys.size() == 0) // move to left of left most green [0]
+    {
+      RCLCPP_INFO(this->get_logger(), "Detected only green buoys");
+      angle = bbox_calculations::pixelToAngle(p_camera_fov_, p_camera_res_x_, green_buoys[0].bbox.center.position.x);
+      RCLCPP_INFO(this->get_logger(), "Left most green buoy detected at %f degrees", angle*180/M_PI);
+      angle = angle + p_angle_from_buoys_*M_PI/180;
+      RCLCPP_INFO(this->get_logger(), "Heading towards %f degrees", angle*180/M_PI);
+    }
+    else if (green_buoys.size() == 0) // move to the right of rightmost red [last]
+    {
+      RCLCPP_INFO(this->get_logger(), "Detected only red buoys");
+      angle = bbox_calculations::pixelToAngle(p_camera_fov_, p_camera_res_x_, red_buoys[red_buoys.size()-1].bbox.center.position.x);
+      RCLCPP_INFO(this->get_logger(), "Right most red buoy detected at %f degrees", angle*180/M_PI);
+      angle = angle - p_angle_from_buoys_*M_PI/180;
+      RCLCPP_INFO(this->get_logger(), "Heading towards %f degrees", angle*180/M_PI);
+    }
+    else // move inbetween red [last] and green [0]
+    {
+      
+      double red_angle = bbox_calculations::pixelToAngle(p_camera_fov_, p_camera_res_x_, red_buoys[red_buoys.size()-1].bbox.center.position.x);
+      double green_angle = bbox_calculations::pixelToAngle(p_camera_fov_, p_camera_res_x_, green_buoys[0].bbox.center.position.x);
+      angle = (red_angle + green_angle)/2;
+      RCLCPP_INFO(this->get_logger(), "Detected red buoy at %f degrees and green buoy at %f degrees, heading towards %f degrees", red_angle*180/M_PI, green_angle*180/M_PI, angle*180/M_PI);
+    }
+    angle = angle - M_PI/2;
+    geometry_msgs::msg::PoseStamped wp = task_lib::relativePolarToLocalCoords(p_distance_to_move_, angle, current_local_pose_);
+    // RCLCPP_INFO(this->get_logger(), "Local WP: x: %f, y: %f", local_coords.x, local_coords.y);
+    // geometry_msgs::msg::PoseStamped wp = task_lib::getLocalWPMsg(local_coords.x, local_coords.y);
+
+    return wp; 
+  }
+
+  // bool Maneuvering::atFinish()
+  // {
+  //   if (task_lib::isReached(finish_pnt_.latitude, finish_pnt_.longitude, current_global_pose_, p_wp_reached_radius_))
+  //   {
+  //     return true;
+  //   }
+  //   return false;
+
+  // }
   void Maneuvering::timerCallback()
   {
-    RCLCPP_DEBUG(this->get_logger(), "timerCallback");
-    switch (status_)
+    if (start_task_)
     {
-    case States::WAIT_FOR_GUIDED:
-    {
-      if (in_guided_)
+      switch (status_)
       {
-        RCLCPP_INFO(this->get_logger(), "In GUIDED mode, Heading to Maneuvering start point");
-        // Send start point
-//         ros2 topic pub /mavros/setpoint_position/global geographic_msgs/msg/GeoPoseStamped "{"{
-//   header: {
-//     stamp: {sec: 0, nanosec: 0},
-//     frame_id: 'map'
-//   },
-//   pose: {
-//     position: {latitude: 47.397742, longitude: 8.545594, altitude: 488.0},
-//     orientation: {x: 0.0, y: 0.0, z: 0.0, w: 1.0}
-//   }
-// }"
-
-        status_ = States::WAIT_TO_REACH_START;
-      }
-      else 
-      {
-        wait();
-      }
-      break;
-    }
-
-    case States::WAIT_TO_REACH_START:
-    {
-      if (task_lib::isReached(p_start_lat_, p_start_lon_, current_global_pose_, p_global_wp_reached_rad_))
-      {
-        RCLCPP_INFO(this->get_logger(), "Reached start point, starting to maneuver");
-        status_ = States::MANEUVER;
-      }
-      else 
-      {
-        RCLCPP_INFO(this->get_logger(), "Waiting to reach start point"); // TODO Add in distance to start point
-        wait();
-      }
-      break;
-    }
-
-    case States::MANEUVER:
-    {
-      if (true)//clear_path_to_finish)
-      {
-        RCLCPP_INFO(this->get_logger(), "Detected clear path to finish, heading to finish point");
-        // send finish point
-        status_ = States::WAIT_TO_REACH_FINISH;
-      }
-      else 
-      {
-        if (true)//red_marker_to_left_of_green)
+        case States::CHECK_FOR_BUOYS:
         {
-          maneuver();
-        }
-        else 
-        {
-          RCLCPP_INFO(this->get_logger(), "Unexpected Obstacles detected, waiting for gate to be detected");  // TODO Add more description into what robot sees
           wait();
+          RCLCPP_INFO(this->get_logger(), "Checking for buoys");
+          if (bboxes_updated_ && local_pose_updated_) 
+          {
+            status_ = States::MANEUVER;
+            bboxes_updated_ = false;
+            local_pose_updated_ = false;
+          }
+          else{
+            status_ = States::HEAD_TO_FINISH;
+          }
+          break;
         }
-      }
-      break;
-    }
 
-    case States::WAIT_TO_REACH_FINISH:
-    {
-      if (task_lib::isReached(p_finish_lat_, p_finish_lon_, current_global_pose_, p_global_wp_reached_rad_))
-      {
-        RCLCPP_INFO(this->get_logger(), "Reached finish point, task complete!");
-        status_ = States::COMPLETE;
-      }
-      else 
-      {
-        RCLCPP_INFO(this->get_logger(), "Waiting to reach finish point"); // TODO Add in distance to start point
-        wait();
-      }
-      break;
-    }
+        case States::HEAD_TO_FINISH:
+        {
+          wp_reached_ = false;
+          RCLCPP_INFO(this->get_logger(), "No buoys detected, Heading towards finish point");
 
-    case States::COMPLETE:
-    {
-      RCLCPP_INFO(this->get_logger(), "Complete!");
+          sendFinishPnt();
+          status_ = States::CHECK_FOR_BUOYS;
+          break;
+        }
+
+        case States::MANEUVER:
+        {
+          RCLCPP_INFO(this->get_logger(), "Maneuvering through buoys");
+          geometry_msgs::msg::PoseStamped wp = getWPFromBuoys();
+          local_wp_pub_->publish(wp);
+          status_ = States::CHECK_FOR_BUOYS;
+          break;
+        }
+
+        // case States::TASK_COMPLETE:
+        // {
+        //   RCLCPP_INFO_ONCE(this->get_logger(), "Maneuvering Complete!");
+
+        // }
+      }
     }
   }
-
-
-
-
-
-
-}
+  void Maneuvering::taskToExecuteCallback(const njord_tasks_interfaces::msg::StartTask::SharedPtr msg)
+  {
+    finish_pnt_ = msg->finish_pnt;
+    start_task_ = true;
+    RCLCPP_INFO(this->get_logger(), "Starting maneuvering task");
+ 
+  }
 }
 #include "rclcpp_components/register_node_macro.hpp"
 

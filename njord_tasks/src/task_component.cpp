@@ -113,7 +113,7 @@ namespace njord_tasks
   void Task::publishStartTaskSignal()
   {
     njord_tasks_interfaces::msg::StartTask start_task;
-    start_task.task.current_task = njord_tasks_interfaces::msg::Task::NAVIGATION;
+    start_task.task.current_task = njord_tasks_interfaces::msg::Task::MANEUVERING;
     start_task.start_pnt.latitude = p_start_lat_;
     start_task.start_pnt.longitude = p_start_lon_;
     start_task.finish_pnt.latitude = p_finish_lat_;
