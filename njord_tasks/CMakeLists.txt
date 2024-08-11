@@ -144,3 +144,32 @@ target_link_libraries(task_composition
   ${YAML_CPP_LIBRARIES}
   libtask_lib
 )
+add_library(collision_avoidance_component SHARED src/collision_avoidance_component.cpp)
+target_compile_definitions(collision_avoidance_component PRIVATE "COMPOSITION_BUILDING_DLL")
+ament_target_dependencies(collision_avoidance_component
+  "rclcpp"
+  "rclcpp_components"
+  "std_msgs"
+  "mavros_msgs")
+rclcpp_components_register_nodes(collision_avoidance_component "njord_tasks::CollisionAvoidance")
+set(node_plugins "njord_tasks::CollisionAvoidance;$<TARGET_FILE:collision_avoidance_component>\n")
+install(TARGETS
+  collision_avoidance_component
+  ARCHIVE DESTINATION lib
+  LIBRARY DESTINATION lib
+  RUNTIME DESTINATION bin)
+
+# Add executable for collision_avoidance
+add_executable(collision_avoidance_composition
+  src/collision_avoidance_composition.cpp)
+target_link_libraries(collision_avoidance_composition
+collision_avoidance_component)
+ament_target_dependencies(collision_avoidance_composition
+  rclcpp)
+target_link_libraries(collision_avoidance_composition
+${YAML_CPP_LIBRARIES}
+libtask_lib
+)
+install(TARGETS
+  collision_avoidance_composition
+  DESTINATION lib/${PROJECT_NAME})

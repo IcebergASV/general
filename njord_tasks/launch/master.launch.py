@@ -15,23 +15,23 @@ from launch_ros.substitutions import FindPackageShare
 
 
 def generate_launch_description():
-    pkg_perception = get_package_share_directory("perception")
-    pkg_laser_segmentation = get_package_share_directory("laser_segmentation")
-    pkg_yolov8_bringup = get_package_share_directory("yolov8_bringup")
+    # pkg_perception = get_package_share_directory("perception")
+    # pkg_laser_segmentation = get_package_share_directory("laser_segmentation")
+    # pkg_yolov8_bringup = get_package_share_directory("yolov8_bringup")
 
-    laser_segmentation = IncludeLaunchDescription(
-        PythonLaunchDescriptionSource(
-            [
-                PathJoinSubstitution(
-                    [
-                        FindPackageShare("laser_segmentation"),
-                        "launch",
-                        "segmentation.launch.py",
-                    ]
-                ),
-            ]
-        )
-    )
+    # laser_segmentation = IncludeLaunchDescription(
+    #     PythonLaunchDescriptionSource(
+    #         [
+    #             PathJoinSubstitution(
+    #                 [
+    #                     FindPackageShare("laser_segmentation"),
+    #                     "launch",
+    #                     "segmentation.launch.py",
+    #                 ]
+    #             ),
+    #         ]
+    #     )
+    # )
     # yolov8_launch = IncludeLaunchDescription(
     #     PythonLaunchDescriptionSource(
     #         [
