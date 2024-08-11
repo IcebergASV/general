@@ -181,7 +181,6 @@ namespace njord_tasks
       {
         case States::CHECK_FOR_BUOYS:
         {
-          wait();
           RCLCPP_INFO(this->get_logger(), "Checking for buoys");
           if (bboxes_updated_ && local_pose_updated_) 
           {
@@ -201,6 +200,7 @@ namespace njord_tasks
           RCLCPP_INFO(this->get_logger(), "No buoys detected, Heading towards finish point");
 
           sendFinishPnt();
+          wait();
           status_ = States::CHECK_FOR_BUOYS;
           break;
         }
@@ -211,6 +211,7 @@ namespace njord_tasks
           geometry_msgs::msg::PoseStamped wp;
           getWPFromBuoys(wp);
           local_wp_pub_->publish(wp);
+          wait();
           status_ = States::CHECK_FOR_BUOYS;
           break;
         }
