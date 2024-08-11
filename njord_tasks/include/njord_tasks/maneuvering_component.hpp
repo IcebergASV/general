@@ -30,7 +30,6 @@ private:
     rcl_interfaces::msg::SetParametersResult param_callback(const std::vector<rclcpp::Parameter> &params);
     void globalPoseCallback(const sensor_msgs::msg::NavSatFix::SharedPtr msg);
     void localPoseCallback(const geometry_msgs::msg::PoseStamped::SharedPtr msg);
-    //bool atFinish();
     void timerCallback();
     void bboxCallback(const yolov8_msgs::msg::DetectionArray::SharedPtr msg);
     void sendFinishPnt();
@@ -60,16 +59,17 @@ private:
     const std::string red_buoy_str = "red_buoy";
     const std::string green_buoy_str = "green_buoy";
 
-    enum States {CHECK_FOR_BUOYS, HEAD_TO_FINISH, MANEUVER, TASK_COMPLETE}; 
+    enum States {CHECK_FOR_BUOYS, HEAD_TO_FINISH, MANEUVER}; 
     States status_;
 
     sensor_msgs::msg::NavSatFix current_global_pose_;
     geometry_msgs::msg::PoseStamped current_local_pose_;
+    geographic_msgs::msg::GeoPoint finish_pnt_;
+    yolov8_msgs::msg::DetectionArray bboxes_;
+
     bool global_pose_updated_;
     bool local_pose_updated_;
     bool bboxes_updated_;
-    geographic_msgs::msg::GeoPoint finish_pnt_;
-    yolov8_msgs::msg::DetectionArray bboxes_;
     bool start_task_;
     bool wp_reached_;
 

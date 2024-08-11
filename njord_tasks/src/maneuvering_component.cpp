@@ -9,11 +9,13 @@ namespace njord_tasks
   {
     rmw_qos_profile_t qos_profile = rmw_qos_profile_sensor_data;
     auto qos = rclcpp::QoS(rclcpp::QoSInitialization(qos_profile.history, 5), qos_profile);
+
     task_to_execute_sub_ = this->create_subscription<njord_tasks_interfaces::msg::StartTask>("/njord_tasks/task_to_execute", 10, std::bind(&Maneuvering::taskToExecuteCallback, this, _1));
     bbox_sub_ = this->create_subscription<yolov8_msgs::msg::DetectionArray>("/yolo/detections", 10, std::bind(&Maneuvering::bboxCallback, this, _1));
     wp_reached_sub_ = this->create_subscription<mavros_msgs::msg::WaypointReached>("/mavros/mission/reached", 10, std::bind(&Maneuvering::wpReachedCallback, this, _1));
     global_pose_sub_ = this->create_subscription<sensor_msgs::msg::NavSatFix>("/mavros/global_position/global", qos, std::bind(&Maneuvering::globalPoseCallback, this, _1));
     local_pose_sub_ = this->create_subscription<geometry_msgs::msg::PoseStamped>("/mavros/local_position/pose", qos, std::bind(&Maneuvering::localPoseCallback, this, _1));
+
     task_completion_status_pub_ = this->create_publisher<std_msgs::msg::Int32>("njord_tasks/task_completion_status", 10);
     global_wp_pub_ = this->create_publisher<geographic_msgs::msg::GeoPoseStamped>("mavros/setpoint_position/global", 10);
     local_wp_pub_ = this->create_publisher<geometry_msgs::msg::PoseStamped>("mavros/setpoint_position/local", 10);
@@ -27,6 +29,7 @@ namespace njord_tasks
     on_set_parameters_callback_handle_ = this->add_on_set_parameters_callback(std::bind(&Maneuvering::param_callback, this, std::placeholders::_1));
 
     global_pose_updated_ = false;
+    local_pose_updated_ = false;
     bboxes_updated_ = false;
     start_task_ = false;
     wp_reached_ = false;
@@ -55,31 +58,20 @@ namespace njord_tasks
   {
     current_global_pose_ = *msg;
     global_pose_updated_ = true;
-    // Extract latitude and longitude from the message
-    double latitude = msg->latitude;
-    double longitude = msg->longitude;
-
-    // Log the values
-    RCLCPP_DEBUG(this->get_logger(), "Latitude: %f, Longitude: %f", latitude, longitude);
+    RCLCPP_DEBUG(this->get_logger(), "Latitude: %f, Longitude: %f", current_global_pose_->latitude, current_global_pose_->longitude);
   }
 
   void Maneuvering::localPoseCallback(const geometry_msgs::msg::PoseStamped::SharedPtr msg)
   {
     current_local_pose_ = *msg;
     local_pose_updated_ = true;
-    // Extract latitude and longitude from the message
-    double x = msg->pose.position.x;
-    double y = msg->pose.position.y;
-
-    // Log the values
-    RCLCPP_DEBUG(this->get_logger(), "Local Pose: x: %f, y: %f", x, y);
+    RCLCPP_DEBUG(this->get_logger(), "Local Pose: x: %f, y: %f", msg->pose.position.x, msg->pose.position.y);
   }
 
   void Maneuvering::bboxCallback(const yolov8_msgs::msg::DetectionArray::SharedPtr msg)
   {
     bboxes_ = *msg;
     bboxes_updated_ = true;
-
   }
 
   void Maneuvering::sendFinishPnt()
@@ -127,16 +119,13 @@ namespace njord_tasks
     std::vector<yolov8_msgs::msg::Detection> red_buoys = filterAndSortLeftToRight(bboxes_, red_buoy_str);
     std::vector<yolov8_msgs::msg::Detection> green_buoys = filterAndSortLeftToRight(bboxes_, green_buoy_str);
 
-    // red - green
-    // right most red , left most green
-
     if (red_buoys.size() == 0 && green_buoys.size() == 0)
     {
-      RCLCPP_INFO(this->get_logger(), "No buoys detected"); //TODO HANDLE
+      RCLCPP_WARN(this->get_logger(), "No buoys detected"); //TODO HANDLE
     }
 
     double angle;
-    if (red_buoys.size() == 0) // move to left of left most green [0]
+    if (red_buoys.size() == 0) // move to left of left most green
     {
       RCLCPP_INFO(this->get_logger(), "Detected only green buoys");
       angle = bbox_calculations::pixelToAngle(p_camera_fov_, p_camera_res_x_, green_buoys[0].bbox.center.position.x);
@@ -144,7 +133,7 @@ namespace njord_tasks
       angle = angle + p_angle_from_buoys_*M_PI/180;
       RCLCPP_INFO(this->get_logger(), "Heading towards %f degrees", angle*180/M_PI);
     }
-    else if (green_buoys.size() == 0) // move to the right of rightmost red [last]
+    else if (green_buoys.size() == 0) // move to the right of rightmost red
     {
       RCLCPP_INFO(this->get_logger(), "Detected only red buoys");
       angle = bbox_calculations::pixelToAngle(p_camera_fov_, p_camera_res_x_, red_buoys[red_buoys.size()-1].bbox.center.position.x);
@@ -152,7 +141,7 @@ namespace njord_tasks
       angle = angle - p_angle_from_buoys_*M_PI/180;
       RCLCPP_INFO(this->get_logger(), "Heading towards %f degrees", angle*180/M_PI);
     }
-    else // move inbetween red [last] and green [0]
+    else // move in between innermost red and green
     {
       
       double red_angle = bbox_calculations::pixelToAngle(p_camera_fov_, p_camera_res_x_, red_buoys[red_buoys.size()-1].bbox.center.position.x);
@@ -162,21 +151,9 @@ namespace njord_tasks
     }
     angle = angle - M_PI/2;
     geometry_msgs::msg::PoseStamped wp = task_lib::relativePolarToLocalCoords(p_distance_to_move_, angle, current_local_pose_);
-    // RCLCPP_INFO(this->get_logger(), "Local WP: x: %f, y: %f", local_coords.x, local_coords.y);
-    // geometry_msgs::msg::PoseStamped wp = task_lib::getLocalWPMsg(local_coords.x, local_coords.y);
-
     return wp; 
   }
 
-  // bool Maneuvering::atFinish()
-  // {
-  //   if (task_lib::isReached(finish_pnt_.latitude, finish_pnt_.longitude, current_global_pose_, p_wp_reached_radius_))
-  //   {
-  //     return true;
-  //   }
-  //   return false;
-
-  // }
   void Maneuvering::timerCallback()
   {
     if (start_task_)
