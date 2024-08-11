@@ -11,6 +11,9 @@
 #include <chrono>
 #include "mavros_msgs/msg/waypoint_reached.hpp"
 #include "sensor_msgs/msg/nav_sat_fix.hpp"
+#include <tf2/LinearMath/Quaternion.h>
+#include <tf2/LinearMath/Matrix3x3.h>
+#include <Eigen/Dense>
 
 using std::placeholders::_1;
 using namespace std::chrono_literals;
@@ -25,7 +28,8 @@ public:
 private:
     void taskToExecuteCallback(const njord_tasks_interfaces::msg::StartTask::SharedPtr msg);
     rcl_interfaces::msg::SetParametersResult param_callback(const std::vector<rclcpp::Parameter> &params);
-    void poseCallback(const sensor_msgs::msg::NavSatFix::SharedPtr msg);
+    void globalPoseCallback(const sensor_msgs::msg::NavSatFix::SharedPtr msg);
+    void localPoseCallback(const geometry_msgs::msg::PoseStamped::SharedPtr msg);
     //bool atFinish();
     void timerCallback();
     void bboxCallback(const yolov8_msgs::msg::DetectionArray::SharedPtr msg);
@@ -41,6 +45,7 @@ private:
     rclcpp::Publisher<std_msgs::msg::Int32>::SharedPtr task_completion_status_pub_;
     rclcpp::node_interfaces::OnSetParametersCallbackHandle::SharedPtr on_set_parameters_callback_handle_;
     rclcpp::Subscription<sensor_msgs::msg::NavSatFix>::SharedPtr global_pose_sub_;
+    rclcpp::Subscription<geometry_msgs::msg::PoseStamped>::SharedPtr local_pose_sub_;
     rclcpp::Subscription<yolov8_msgs::msg::DetectionArray>::SharedPtr bbox_sub_;
     rclcpp::Publisher<geographic_msgs::msg::GeoPoseStamped>::SharedPtr global_wp_pub_;
     rclcpp::Publisher<geometry_msgs::msg::PoseStamped>::SharedPtr local_wp_pub_;
@@ -59,7 +64,9 @@ private:
     States status_;
 
     sensor_msgs::msg::NavSatFix current_global_pose_;
+    geometry_msgs::msg::PoseStamped current_local_pose_;
     bool global_pose_updated_;
+    bool local_pose_updated_;
     bool bboxes_updated_;
     geographic_msgs::msg::GeoPoint finish_pnt_;
     yolov8_msgs::msg::DetectionArray bboxes_;
