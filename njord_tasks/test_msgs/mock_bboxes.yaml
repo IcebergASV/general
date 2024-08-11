@@ -1,7 +1,7 @@
 ros2 topic pub /yolo/detections yolov8_msgs/msg/DetectionArray "{detections: [
     {
         class_id: 1,
-        class_name: 'red_buoy',
+        class_name: 'green_buoy',
         score: 0.95,
         id: '1',
         bbox: {center: {position: {x: 150, y: 200}}, size: {x: 30, y: 100}},
