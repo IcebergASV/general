@@ -11,7 +11,7 @@ namespace njord_tasks
 
   void navigation::callback(const njord_tasks_interfaces::msg::StartTask::SharedPtr msg)
   {
-      RCLCPP_INFO(this->get_logger(), "Hello World")
+      RCLCPP_INFO(this->get_logger(), "Call backs")
      
       if(msg->task.current_task == NAVIGATION){
 
