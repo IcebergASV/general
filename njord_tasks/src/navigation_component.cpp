@@ -30,8 +30,20 @@ namespace njord_tasks
       {
         RCLCPP_INFO(this->get_logger(), "Starting task");
 
+        // Set way point to first 
+        
+        status_ = GOING_TO_WAYPOINT;
         break;
       }
+      case States::GOING_TO_WAYPOINT:
+      {
+
+      }
+      case States::REACHED_WAYPOINT:
+      {
+
+      }
+      
 
 
 
