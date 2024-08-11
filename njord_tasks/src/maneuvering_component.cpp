@@ -19,7 +19,7 @@ namespace njord_tasks
     task_completion_status_pub_ = this->create_publisher<std_msgs::msg::Int32>("njord_tasks/task_completion_status", 10);
     global_wp_pub_ = this->create_publisher<geographic_msgs::msg::GeoPoseStamped>("mavros/setpoint_position/global", 10);
     local_wp_pub_ = this->create_publisher<geometry_msgs::msg::PoseStamped>("mavros/setpoint_position/local", 10);
-    timer_ = this->create_wall_timer(10000ms, std::bind(&Maneuvering::timerCallback, this));
+    timer_ = this->create_wall_timer(500ms, std::bind(&Maneuvering::timerCallback, this));
 
     Maneuvering::getParam<double>("distance_to_move", p_distance_to_move_, 0.0, "Sets a wp this far away");
     Maneuvering::getParam<double>("angle_from_buoys", p_angle_from_buoys_, 0.0, "Angles the wp this far from a single buoy");
@@ -85,8 +85,8 @@ namespace njord_tasks
 
   void Maneuvering::wait()
   {
-    rclcpp::Rate rate(1);
-    rate.sleep();
+    std::chrono::duration<double> duration(10.0);
+    std::this_thread::sleep_for(duration);
   }
 
   void Maneuvering::wpReachedCallback(const mavros_msgs::msg::WaypointReached msg)

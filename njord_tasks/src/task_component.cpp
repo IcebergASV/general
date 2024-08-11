@@ -132,7 +132,7 @@ namespace njord_tasks
       {
         RCLCPP_INFO(this->get_logger(), "In GUIDED mode, Starting task");
         //publishGlobalWP(p_start_lat_, p_start_lon_);
-
+        publishStartTaskSignal();
         status_ = States::TASK;
       }
       else 
