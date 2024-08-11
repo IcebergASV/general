@@ -92,10 +92,10 @@ namespace task_lib
       double prop_y_aligned = rel_x*sin(heading) + rel_y*cos(heading);
       double x_prime =  local_pose.pose.position.x + prop_x_aligned;
       double y_prime =  local_pose.pose.position.y + prop_y_aligned;
-      RCLCPP_INFO(logger, "rel x: %f, rel y: %f", rel_pose.pose.position.x, rel_pose.pose.position.y);
-      RCLCPP_INFO(logger, "x aligned: %f, y aligned: %f", prop_x_aligned, prop_y_aligned);
-      RCLCPP_INFO(logger, "boatx: %f, boaty: %f", local_pose.pose.position.x, local_pose.pose.position.y);
-      RCLCPP_INFO(logger, "xprime: %f, yprime: %f", x_prime, y_prime);
+      RCLCPP_DEBUG(logger, "rel x: %f, rel y: %f", rel_pose.pose.position.x, rel_pose.pose.position.y);
+      RCLCPP_DEBUG(logger, "x aligned: %f, y aligned: %f", prop_x_aligned, prop_y_aligned);
+      RCLCPP_DEBUG(logger, "boatx: %f, boaty: %f", local_pose.pose.position.x, local_pose.pose.position.y);
+      RCLCPP_DEBUG(logger, "xprime: %f, yprime: %f", x_prime, y_prime);
 
       geometry_msgs::msg::PoseStamped relative_position;
       //relative_position.header.frame_id = "base_link";  // Frame of reference for the robot
