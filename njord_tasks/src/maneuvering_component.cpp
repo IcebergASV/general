@@ -26,6 +26,10 @@ namespace njord_tasks
     Maneuvering::getParam<double>("wp_reached_radius", p_wp_reached_radius_, 0.0, "Within this many meters to reach point");
     Maneuvering::getParam<int>("camera_res_x", p_camera_res_x_, 0, "Resolution width of camera");
     Maneuvering::getParam<int>("camera_fov", p_camera_fov_, 0, "Camera field of view");
+    Maneuvering::getParam<double>("wait_time", p_wait_time_, 0.0, "Wait period to give robot time to move towards wp before sending new wp");
+    Maneuvering::getParam<int>("testing_angles", p_testing_angles_, 0, "");
+    Maneuvering::getParam<double>("test_angle", p_test_angle_, 0.0, "");
+
     on_set_parameters_callback_handle_ = this->add_on_set_parameters_callback(std::bind(&Maneuvering::param_callback, this, std::placeholders::_1));
 
     global_pose_updated_ = false;
@@ -44,6 +48,9 @@ namespace njord_tasks
     else if (params[0].get_name() == "wp_reached_radius") { p_wp_reached_radius_ = params[0].as_double(); }
     else if (params[0].get_name() == "camera_res_x") { p_camera_res_x_ = params[0].as_int(); }
     else if (params[0].get_name() == "camera_fov") { p_camera_fov_ = params[0].as_int(); }
+    else if (params[0].get_name() == "wait_time") { p_wait_time_ = params[0].as_double(); }
+    else if (params[0].get_name() == "testing_angles") { p_testing_angles_ = params[0].as_int(); }
+    else if (params[0].get_name() == "test_angle") { p_test_angle_ = params[0].as_double(); }
     else {
       RCLCPP_ERROR(this->get_logger(), "Invalid Param");
       result.successful = false;
@@ -85,7 +92,7 @@ namespace njord_tasks
 
   void Maneuvering::wait()
   {
-    std::chrono::duration<double> duration(10.0);
+    std::chrono::duration<double> duration(p_wait_time_);
     std::this_thread::sleep_for(duration);
   }
 
@@ -133,7 +140,7 @@ namespace njord_tasks
     std::vector<yolov8_msgs::msg::Detection> red_buoys = filterAndSortLeftToRight(bboxes_, red_buoy_str_);
     std::vector<yolov8_msgs::msg::Detection> green_buoys = filterAndSortLeftToRight(bboxes_, green_buoy_str_);
 
-    if (red_buoys.size() == 0 && green_buoys.size() == 0)
+    if ((red_buoys.size() == 0 && green_buoys.size() == 0) && !(p_testing_angles_ == 1))
     {
       RCLCPP_WARN(this->get_logger(), "No red or green buoys detected"); //TODO HANDLE
       return;
@@ -168,6 +175,11 @@ namespace njord_tasks
     {
       RCLCPP_WARN(this->get_logger(), "ERROR COUNTING BUOYS");
     }
+    if(p_testing_angles_)
+    {
+      angle = p_test_angle_*M_PI/180;
+      RCLCPP_WARN(this->get_logger(), "Sending test angle %f", angle*180/M_PI);
+    }
     angle = angle - M_PI/2;
     wp = task_lib::relativePolarToLocalCoords(p_distance_to_move_, angle, current_local_pose_);
     return;
@@ -182,7 +194,7 @@ namespace njord_tasks
         case States::CHECK_FOR_BUOYS:
         {
           RCLCPP_INFO(this->get_logger(), "Checking for buoys");
-          if (bboxes_updated_ && local_pose_updated_) 
+          if ((bboxes_updated_ && local_pose_updated_) || (p_testing_angles_ == 1)) 
           {
             status_ = States::MANEUVER;
             bboxes_updated_ = false;
