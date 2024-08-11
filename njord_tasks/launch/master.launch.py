@@ -19,19 +19,19 @@ def generate_launch_description():
     pkg_laser_segmentation = get_package_share_directory("laser_segmentation")
     pkg_yolov8_bringup = get_package_share_directory("yolov8_bringup")
 
-    laser_segmentation = IncludeLaunchDescription(
-        PythonLaunchDescriptionSource(
-            [
-                PathJoinSubstitution(
-                    [
-                        FindPackageShare("laser_segmentation"),
-                        "launch",
-                        "segmentation.launch.py",
-                    ]
-                ),
-            ]
-        )
-    )
+    # laser_segmentation = IncludeLaunchDescription(
+    #     PythonLaunchDescriptionSource(
+    #         [
+    #             PathJoinSubstitution(
+    #                 [
+    #                     FindPackageShare("laser_segmentation"),
+    #                     "launch",
+    #                     "segmentation.launch.py",
+    #                 ]
+    #             ),
+    #         ]
+    #     )
+    # )
     # yolov8_launch = IncludeLaunchDescription(
     #     PythonLaunchDescriptionSource(
     #         [
@@ -63,6 +63,19 @@ def generate_launch_description():
     #         ]
     #     )
     # )
+    njord_tasks = IncludeLaunchDescription(
+        PythonLaunchDescriptionSource(
+            [
+                PathJoinSubstitution(
+                    [
+                        FindPackageShare("njord_tasks"),
+                        "launch",
+                        "njord_tasks.launch.py",
+                    ]
+                ),
+            ]
+        )
+    )
 
     odom_map_tf = Node(
         package='tf2_ros',
@@ -77,6 +90,7 @@ def generate_launch_description():
             odom_map_tf,
             #perception,
             # yolov8_launch,
-            laser_segmentation,
+            #laser_segmentation,
+            njord_tasks,
         ]
     )
