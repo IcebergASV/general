@@ -56,6 +56,7 @@ private:
     double p_wp_reached_radius_;
     int p_camera_res_x_;
     int p_camera_fov_;
+    double p_wait_time_;
 
     const std::string red_buoy_str_ = "red_buoy";
     const std::string green_buoy_str_ = "green_buoy";

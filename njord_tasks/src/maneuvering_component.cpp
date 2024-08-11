@@ -26,6 +26,7 @@ namespace njord_tasks
     Maneuvering::getParam<double>("wp_reached_radius", p_wp_reached_radius_, 0.0, "Within this many meters to reach point");
     Maneuvering::getParam<int>("camera_res_x", p_camera_res_x_, 0, "Resolution width of camera");
     Maneuvering::getParam<int>("camera_fov", p_camera_fov_, 0, "Camera field of view");
+    Maneuvering::getParam<double>("wait_time", p_wait_time_, 0.0, "Wait period to give robot time to move towards wp before sending new wp");
     on_set_parameters_callback_handle_ = this->add_on_set_parameters_callback(std::bind(&Maneuvering::param_callback, this, std::placeholders::_1));
 
     global_pose_updated_ = false;
@@ -44,6 +45,7 @@ namespace njord_tasks
     else if (params[0].get_name() == "wp_reached_radius") { p_wp_reached_radius_ = params[0].as_double(); }
     else if (params[0].get_name() == "camera_res_x") { p_camera_res_x_ = params[0].as_int(); }
     else if (params[0].get_name() == "camera_fov") { p_camera_fov_ = params[0].as_int(); }
+    else if (params[0].get_name() == "wait_time") { p_wait_time_ = params[0].as_double(); }
     else {
       RCLCPP_ERROR(this->get_logger(), "Invalid Param");
       result.successful = false;
@@ -85,7 +87,7 @@ namespace njord_tasks
 
   void Maneuvering::wait()
   {
-    std::chrono::duration<double> duration(10.0);
+    std::chrono::duration<double> duration(p_wait_time_);
     std::this_thread::sleep_for(duration);
   }
 
