@@ -141,4 +141,23 @@ namespace task_lib
         cartesian.y = y;
         return cartesian;
     }
+
+    geographic_msgs::msg::GeoPoseStamped translate_lat_lon(double lat, double lon, double x, double y){
+
+        const double earth_radius_m = 6371000;
+
+        double delta_lat = y / earth_radius_m;
+        double delta_lon = x / (earth_radius_m * cos(M_PI * (lat/180)));
+
+        double new_lat = lat + (delta_lat * (180/M_PI));
+        double new_lon = lon + (delta_lon * (180/M_PI));
+
+        geographic_msgs::msg::GeoPoseStamped translated_point;
+
+        translated_point.pose.position.latitude = new_lat;
+        translated_point.pose.position.longitude = new_lon;
+        translated_point.pose.position.altitude = 0;
+
+        return translated_point;
+    }
 }

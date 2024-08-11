@@ -8,6 +8,7 @@
 #include "njord_tasks_interfaces/action/task_signal.hpp"
 #include "njord_tasks_interfaces/msg/start_task.hpp"
 #include "njord_tasks_interfaces/msg/task.hpp"
+#include "geographic_msgs/msg/geo_pose_stamped.hpp"
 
 using std::placeholders::_1;
 using namespace std::chrono_literals;
@@ -32,6 +33,9 @@ private:
 
     enum States {WAIT_FOR_START, START_TASK, GOING_TO_WAYPOINT, REACHED_WAYPOINT, GOING_TO_FINISH, COMPLETE}; 
     States status_ = States::WAIT_FOR_START;
+
+    geographic_msgs::msg::GeoPoseStamped next_point;
+    std::vector<std::pair<double, double>> test;
 
     template <typename T>
     void getParam(std::string param_name, T& param, T default_value, std::string desc)

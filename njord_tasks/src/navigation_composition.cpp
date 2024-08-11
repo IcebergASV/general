@@ -1,6 +1,7 @@
 #include <memory>
 
 #include "njord_tasks/navigation_component.hpp"
+
 #include "rclcpp/rclcpp.hpp"
 
 int main(int argc, char *argv[]) 

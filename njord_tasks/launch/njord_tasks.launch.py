@@ -37,7 +37,7 @@ def generate_launch_description():
             executable='navigation_composition',
             namespace='',
             output='screen',
-            parameters=[config], 
+            parameters=[nav_waypoints], 
             arguments=['--ros-args', '--log-level', LaunchConfiguration('log_level')]
         ),
     ])

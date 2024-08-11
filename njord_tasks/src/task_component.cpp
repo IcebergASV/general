@@ -115,7 +115,7 @@ namespace njord_tasks
   {
      RCLCPP_INFO(this->get_logger(), "Publishing task");
     njord_tasks_interfaces::msg::StartTask start_task;
-    start_task.task.current_task = njord_tasks_interfaces::msg::Task::MANEUVERING;
+    start_task.task.current_task = njord_tasks_interfaces::msg::Task::NAVIGATION;
     start_task.start_pnt.latitude = p_start_lat_;
     start_task.start_pnt.longitude = p_start_lon_;
     start_task.finish_pnt.latitude = p_finish_lat_;
@@ -132,10 +132,10 @@ namespace njord_tasks
     {
       if (in_guided_)
       {
-        RCLCPP_INFO(this->get_logger(), "In GUIDED mode, Heading to start point");
-        publishGlobalWP(p_start_lat_, p_start_lon_);
-
-        status_ = States::WAIT_TO_REACH_START;
+        RCLCPP_INFO(this->get_logger(), "In GUIDED mode, Starting task");
+        //publishGlobalWP(p_start_lat_, p_start_lon_);
+        publishStartTaskSignal();
+        status_ = States::TASK;
       }
       else 
       {
