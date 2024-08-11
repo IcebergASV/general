@@ -17,6 +17,7 @@
   <depend>slg_msgs</depend>
   <depend>geometry_msgs</depend>
   <depend>perception_interfaces</depend>
+  <depend>yolov8_msgs</depend>
 
 
 

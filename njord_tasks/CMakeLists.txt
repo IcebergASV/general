@@ -138,6 +138,17 @@ target_link_libraries(task_composition
   libtask_lib
 )
 
+add_executable(bbox_visualization src/bbox_visualization.cpp)
+
+# Link the executable with dependencies
+ament_target_dependencies(bbox_visualization
+  rclcpp
+  visualization_msgs
+  yolov8_msgs
+  tf2
+  tf2_geometry_msgs
+)
+
 add_executable(navigation_composition
   src/navigation_composition.cpp)
 target_link_libraries(navigation_composition

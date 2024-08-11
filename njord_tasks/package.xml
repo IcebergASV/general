@@ -15,6 +15,8 @@
   <depend>sensor_msgs</depend>
   <depend>njord_tasks_interfaces</depend>
   <depend>geographic_msgs</depend>
+  <depend>visualization_msgs</depend>
+  <depend>yolov8_msgs</depend>
   <test_depend>ament_lint_auto</test_depend>
   <test_depend>ament_lint_common</test_depend>
 

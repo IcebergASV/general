@@ -23,9 +23,9 @@ public:
 
 private:
     rcl_interfaces::msg::SetParametersResult param_callback(const std::vector<rclcpp::Parameter> &params);
-    void stateCallback(const mavros_msgs::msg::State::SharedPtr msg);
+    void stateCallback(const std_msgs::msg::Int32::SharedPtr msg);
     void poseCallback(const geographic_msgs::msg::GeoPoseStamped::SharedPtr msg);
-    void wpReachedCallback(const mavros_msgs::msg::WaypointReached msg);
+    void wpReachedCallback(const std_msgs::msg::Int32::SharedPtr msg);
     void wait();
     void timerCallback();
     void publishGlobalWP(double lat, double lon);
@@ -33,10 +33,10 @@ private:
     void taskStatusCallback(const std_msgs::msg::Int32::SharedPtr msg);
     
     rclcpp::TimerBase::SharedPtr timer_;
-    rclcpp::Subscription<mavros_msgs::msg::State>::SharedPtr state_sub_;
+    rclcpp::Subscription<std_msgs::msg::Int32>::SharedPtr state_sub_;
     rclcpp::node_interfaces::OnSetParametersCallbackHandle::SharedPtr on_set_parameters_callback_handle_;
     rclcpp::Subscription<geographic_msgs::msg::GeoPoseStamped>::SharedPtr pose_sub_;
-    rclcpp::Subscription<mavros_msgs::msg::WaypointReached>::SharedPtr wp_reached_sub_;
+    rclcpp::Subscription<std_msgs::msg::Int32>::SharedPtr wp_reached_sub_;
     rclcpp::Subscription<std_msgs::msg::Int32>::SharedPtr task_complete_sub_;
 
     rclcpp::Publisher<geographic_msgs::msg::GeoPoseStamped>::SharedPtr wp_pub_;

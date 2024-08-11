@@ -6,21 +6,44 @@ namespace njord_tasks
   : Node("navigation", options)
   {
     example_sub_ = this->create_subscription<njord_tasks_interfaces::msg::StartTask>("/njord_tasks/task_to_execute", 10, std::bind(&navigation::callback, this, _1));
-    example_pub_ = this->create_publisher<std_msgs::msg::Float64>("njord_tasks/publishing_topic", 10);
+    timer_ = this->create_wall_timer(500ms, std::bind(&navigation::timerCallback, this));
   }
 
   void navigation::callback(const njord_tasks_interfaces::msg::StartTask::SharedPtr msg)
   {
-      RCLCPP_INFO(this->get_logger(), "Hello World")
-     
-      if(msg->task.current_task == NAVIGATION){
+       if(msg->task.current_task == njord_tasks_interfaces::msg::Task::NAVIGATION){
+        status_ = States::START_TASK;
+       }
+  }
 
+  
 
-
-
+  void navigation::timerCallback(){
+    switch (status_){
+      case States::WAIT_FOR_START:
+      {
+        RCLCPP_INFO(this->get_logger(), "Waiting for task to start");
+        break;
 
       }
+      case States::START_TASK:
+      {
+        RCLCPP_INFO(this->get_logger(), "Starting task");
+
+        break;
+      }
+
+
+
+
+
+
+    }
+
+
+
   }
+  
 }
 #include "rclcpp_components/register_node_macro.hpp"
 
