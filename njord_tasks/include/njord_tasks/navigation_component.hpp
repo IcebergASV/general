@@ -9,6 +9,7 @@
 #include "njord_tasks_interfaces/msg/start_task.hpp"
 #include "njord_tasks_interfaces/msg/task.hpp"
 #include "geographic_msgs/msg/geo_pose_stamped.hpp"
+#include "mavros_msgs/msg/waypoint_reached.hpp"
 
 using std::placeholders::_1;
 using namespace std::chrono_literals;
@@ -23,14 +24,15 @@ public:
 private:
     void callback(const njord_tasks_interfaces::msg::StartTask::SharedPtr msg);
     void timerCallback();
-    void wpReachedCallback(const std_msgs::msg::Int32::SharedPtr msg);
+    void wpReachedCallback(const mavros_msgs::msg::WaypointReached msg);
 
     rclcpp::TimerBase::SharedPtr timer_;
     rcl_interfaces::msg::SetParametersResult param_callback(const std::vector<rclcpp::Parameter> &params);
 
     rclcpp::Subscription<njord_tasks_interfaces::msg::StartTask>::SharedPtr example_sub_;
-    rclcpp::Subscription<std_msgs::msg::Int32>::SharedPtr wp_reached_sub_;
+    rclcpp::Subscription<mavros_msgs::msg::WaypointReached>::SharedPtr wp_reached_sub_;
     rclcpp::node_interfaces::OnSetParametersCallbackHandle::SharedPtr on_set_parameters_callback_handle_;
+    rclcpp::Publisher<geographic_msgs::msg::GeoPoseStamped>::SharedPtr wp_pub_;
 
     bool wp_reached_;
 

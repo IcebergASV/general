@@ -7,7 +7,8 @@ namespace njord_tasks
   : Node("navigation", options)
   {
     example_sub_ = this->create_subscription<njord_tasks_interfaces::msg::StartTask>("/njord_tasks/task_to_execute", 10, std::bind(&navigation::callback, this, _1));
-    wp_reached_sub_ = this->create_subscription<std_msgs::msg::Int32>("/njord_tasks/wp_reached_test", 10, std::bind(&navigation::wpReachedCallback, this, _1));
+    wp_reached_sub_ = this->create_subscription<mavros_msgs::msg::WaypointReached>("/mavros/mission/reached", 10, std::bind(&navigation::wpReachedCallback, this, _1));
+    wp_pub_ = this->create_publisher<geographic_msgs::msg::GeoPoseStamped>("/mavros/setpoint_position/global", 10);
     timer_ = this->create_wall_timer(500ms, std::bind(&navigation::timerCallback, this));
     
     navigation::getParam("nav_points", point_list_1D, std::vector<double>{}, "List of 2D points");
@@ -15,8 +16,6 @@ namespace njord_tasks
 
     number_of_points = static_cast<int32_t>(point_list_2D.size());
     index_of_current_point = 0;
-
-
   }
 
   void navigation::callback(const njord_tasks_interfaces::msg::StartTask::SharedPtr msg)
@@ -30,10 +29,10 @@ namespace njord_tasks
        }
   }
 
-  void navigation::wpReachedCallback(const std_msgs::msg::Int32::SharedPtr msg)
+  void navigation::wpReachedCallback(const mavros_msgs::msg::WaypointReached msg)
   {
     RCLCPP_INFO(this->get_logger(), "Waypoint Reached");
-    //mavros_msgs::msg::WaypointReached wpr = msg;
+    mavros_msgs::msg::WaypointReached wpr = msg;
     wp_reached_ = true;
   }
 
@@ -56,7 +55,9 @@ namespace njord_tasks
         RCLCPP_INFO(this->get_logger(), "Publishing x: %.4f, y: %.4f", point_list_2D[index_of_current_point][0], point_list_2D[index_of_current_point][1]);
         RCLCPP_INFO(this->get_logger(), "GeoPoseStamped created with latitude: %.8f, longitude: %.8f", 
                 current_point.pose.position.latitude, current_point.pose.position.longitude);
+        
         wp_reached_ = false;
+        wp_pub_.publish(current)
         status_ = GOING_TO_WAYPOINT;
         break;
       }

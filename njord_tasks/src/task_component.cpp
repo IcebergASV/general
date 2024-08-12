@@ -7,9 +7,9 @@ namespace njord_tasks
   {
     rmw_qos_profile_t qos_profile = rmw_qos_profile_sensor_data;
     auto qos = rclcpp::QoS(rclcpp::QoSInitialization(qos_profile.history, 5), qos_profile);
-    state_sub_ = this->create_subscription<std_msgs::msg::Int32>("/njord_tasks/state_test", 10, std::bind(&Task::stateCallback, this, _1));
+    state_sub_ = this->create_subscription<mavros_msgs::msg::State>("/mavros/state", 10, std::bind(&Task::stateCallback, this, _1));
     pose_sub_ = this->create_subscription<geographic_msgs::msg::GeoPoseStamped>("/mavros/global_position/pose", qos, std::bind(&Task::poseCallback, this, _1));
-    wp_reached_sub_ = this->create_subscription<std_msgs::msg::Int32>("/njord_tasks/wp_reached_test", 10, std::bind(&Task::wpReachedCallback, this, _1));
+    wp_reached_sub_ = this->create_subscription<mavros_msgs::msg::WaypointReached>("/mavros/mission/reached", 10, std::bind(&Task::wpReachedCallback, this, _1));
     timer_ = this->create_wall_timer(500ms, std::bind(&Task::timerCallback, this));
     wp_pub_ = this->create_publisher<geographic_msgs::msg::GeoPoseStamped>("/mavros/setpoint_position/global", 10);
     start_task_pub_ = this->create_publisher<njord_tasks_interfaces::msg::StartTask>("/njord_tasks/task_to_execute", 10);
@@ -53,19 +53,18 @@ namespace njord_tasks
     return result;
   }
 
-  void Task::stateCallback(const std_msgs::msg::Int32::SharedPtr msg)
+  void Task::stateCallback(const mavros_msgs::msg::State::SharedPtr msg)
   {
-    // mavros_msgs::msg::State current_state = *msg;
-    // in_guided_ = task_lib::inGuided(current_state);
-    if (msg->data == 1)
+    mavros_msgs::msg::State current_state = *msg;
+    in_guided_ = task_lib::inGuided(current_state);
+    if (in_guided_)
     {
       RCLCPP_INFO_ONCE(this->get_logger(), "In Guided Mode");
-      in_guided_ = true;
       state_sub_.reset();
     }
     else 
     {
-      // RCLCPP_INFO_ONCE(this->get_logger(), "Waiting for GUIDED, currently in %s mode.", current_state.mode.c_str());
+      RCLCPP_INFO_ONCE(this->get_logger(), "Waiting for GUIDED, currently in %s mode.", current_state.mode.c_str());
     }
     return;
   }
@@ -92,10 +91,10 @@ namespace njord_tasks
     wp_pub_->publish(msg);
     RCLCPP_INFO(this->get_logger(), "Published GeoPose: lat=%.6f, lon=%.6f", msg.pose.position.latitude, msg.pose.position.longitude);
   }
-  void Task::wpReachedCallback(const std_msgs::msg::Int32::SharedPtr msg)
+  void Task::wpReachedCallback(const mavros_msgs::msg::WaypointReached msg)
   {
     RCLCPP_INFO(this->get_logger(), "Waypoint Reached");
-    //mavros_msgs::msg::WaypointReached wpr = msg;
+    mavros_msgs::msg::WaypointReached wpr = msg;
     wp_reached_ = true;
   }
 
@@ -113,9 +112,8 @@ namespace njord_tasks
 
   void Task::publishStartTaskSignal()
   {
-     RCLCPP_INFO(this->get_logger(), "Publishing task");
     njord_tasks_interfaces::msg::StartTask start_task;
-    start_task.task.current_task = njord_tasks_interfaces::msg::Task::NAVIGATION;
+    start_task.task.current_task = njord_tasks_interfaces::msg::Task::MANEUVERING;
     start_task.start_pnt.latitude = p_start_lat_;
     start_task.start_pnt.longitude = p_start_lon_;
     start_task.finish_pnt.latitude = p_finish_lat_;
