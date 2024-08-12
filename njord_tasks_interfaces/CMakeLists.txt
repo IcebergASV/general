@@ -15,6 +15,8 @@ set(files
   "msg/Task.msg"
   "action/TaskSignal.action"
   "msg/StartTask.msg"
+  "msg/SimplifiedDetection.msg"
+  "msg/SimplifiedDetectionArray.msg"
 )
 
 rosidl_generate_interfaces(${PROJECT_NAME}

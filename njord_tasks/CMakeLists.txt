@@ -154,6 +154,14 @@ install(TARGETS
   LIBRARY DESTINATION lib
   RUNTIME DESTINATION bin)
 
+  # Add executable for navigation
+  add_executable(detection_filter
+  src/detection_filter.cpp)
+  ament_target_dependencies(detection_filter
+  rclcpp yolov8_msgs njord_tasks_interfaces)
+  install(TARGETS
+  detection_filter
+  DESTINATION lib/${PROJECT_NAME})
 
 
 # Add executable for task
