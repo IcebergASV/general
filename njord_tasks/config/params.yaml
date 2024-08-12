@@ -2,7 +2,17 @@ task:
   ros__parameters:
     wait_time: 100 # miliseconds
     global_wp_reached_rad: 3.0 # meters
-    start_lat: -35.3633545
-    start_lon: 149.1653442
-    finish_lat: -35.3632621
-    finish_lon: 149.1652374
+    start_lat: 63.26480 #-35.3632222
+    start_lon: 10.25448 #149.1654373
+    finish_lat: 63.26445
+    finish_lon: 10.25413
+maneuvering:
+  ros__parameters:
+    distance_to_move: 30.0 # meters
+    angle_from_buoys: 20.0 # degrees
+    wp_reached_radius: 1.0 #meters
+    camera_res_x: 1920
+    camera_fov: 70
+    wait_time: 5.0 # seconds
+    testing_angles: 0
+    test_angle: 90.0

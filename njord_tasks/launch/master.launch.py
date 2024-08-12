@@ -63,6 +63,19 @@ def generate_launch_description():
     #         ]
     #     )
     # )
+    njord_tasks = IncludeLaunchDescription(
+        PythonLaunchDescriptionSource(
+            [
+                PathJoinSubstitution(
+                    [
+                        FindPackageShare("njord_tasks"),
+                        "launch",
+                        "njord_tasks.launch.py",
+                    ]
+                ),
+            ]
+        )
+    )
 
     odom_map_tf = Node(
         package='tf2_ros',
@@ -72,11 +85,45 @@ def generate_launch_description():
         arguments=['0', '0', '0', '0', '0', '0', '1', 'laser', 'odom']
     )
 
+    # yolo = Node(
+    #     package='yolov8_bringup',
+    #     executable='yolov8_node',  # Replace with your actual executable name
+    #     name='yolov8_node',
+    #     output='screen',
+    #     parameters=[{
+    #         'model': '/home/icebergasv/ros2_ws/src/general/yolov8_ros/weights/mark_tII.pt',
+    #         'input_image_topic': '/camera/camera/color_image_raw'
+    #     }],
+    # )
+    yolov8_launch = IncludeLaunchDescription(
+        PythonLaunchDescriptionSource(
+            [
+                PathJoinSubstitution(
+                    [
+                        FindPackageShare("yolov8_bringup"),
+                        "launch",
+                        "yolov8.launch.py",
+                    ]
+                )
+            ],
+            ),
+            launch_arguments={
+                'input_image_topic': '/camera/camera/color/image_raw',
+                'model': '/home/icebergasv/ros2_ws/src/general/yolov8_ros/weights/mark_tII.pt'
+            }.items()
+    )
     return LaunchDescription(
         [
             odom_map_tf,
             #perception,
-            # yolov8_launch,
-            laser_segmentation,
+            yolov8_launch,
+            #laser_segmentation,
+            #yolo,
+            njord_tasks,
         ]
     )
+
+
+#ros2 launch yolov8_bringup yolov8.launch.py model:=src/general/yolov8_ros/weights/mark_tII.pt input_image_topic:=/camera/camera/color_image_raw
+
+
