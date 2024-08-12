@@ -70,32 +70,51 @@ namespace njord_tasks
       });
   }
   
+  // need to start by sending finish pnt
   void CollisionAvoidance::timerCallback()
-  {
-    RCLCPP_DEBUG(this->get_logger(), "timerCallback");
-    switch (status_)
+  { 
+    if (start_task_)
     {
-      case States::WAIT_FOR_GUIDED:
+
+      RCLCPP_DEBUG(this->get_logger(), "timerCallback");
+      switch (status_)
       {
-        if (in_guided_)
+        case States::CHECK_FOR_OBSTACLES:
         {
-          RCLCPP_INFO(this->get_logger(), "In GUIDED mode");
-          std::this_thread::sleep_for(std::chrono::seconds(1));
-          status_ = States::HOLD;
+          if (obstacles_)
+          {
+            change_mode("HOLD");
+            status_ = States::HOLD;
+          }
+          else
+          {
+            if (prev_in_hold_)
+            {
+              prev_in_hold_ = false;
+              change_mode("GUIDED");
+              status_ = States::SEND_FINISH_PNT;
+            }
+            // else - continue
+          }
+          break;
         }
-        else 
+        case States::HOLD:
         {
           wait();
+          prev_in_hold_ = true;
+          change_mode("GUIDED");
+          status_ = States::SEND_FINISH_PNT;
         }
-        break;
-      }
-
-      case States::HOLD:
-      {
-        change_mode("HOLD");
-        std::this_thread::sleep_for(std::chrono::seconds(1));
-        change_mode("GUIDED");
-        break;
+        case States::SEND_FINISH_PNT:
+        {
+          if (in_guided_)
+          {
+            RCLCPP_INFO(this->get_logger(), "In GUIDED mode");
+            sendFinishPnt();
+            status_ = States::CHECK_FOR_OBSTACLES;
+          }
+          break;
+        }
       }
     }
   }
