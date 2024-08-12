@@ -57,18 +57,21 @@ namespace njord_tasks
                 current_point.pose.position.latitude, current_point.pose.position.longitude);
         
         wp_reached_ = false;
-        wp_pub_.publish(current)
+        //wp_pub_.publish(current_point);
         status_ = GOING_TO_WAYPOINT;
         break;
       }
       case States::GOING_TO_WAYPOINT:
       {
         if(wp_reached_){
-          
           index_of_current_point += 1;
           if(index_of_current_point == number_of_points){
             RCLCPP_INFO(this->get_logger(), "GeoPoseStamped created with latitude: %.8f, longitude: %.8f", 
                 finish_lat, finish_lon);
+            //current_point.pos.position.latitude = finish_lat;
+            //current_point.pos.position.longitude = finish_lon;
+            // wp_pub_.publish(current_point);
+            
             status_ = GOING_TO_FINISH;
             break;
           }
@@ -89,7 +92,7 @@ namespace njord_tasks
         RCLCPP_INFO(this->get_logger(), "Publishing x: %.4f, y: %.4f", point_list_2D[index_of_current_point][0], point_list_2D[index_of_current_point][1]);
         RCLCPP_INFO(this->get_logger(), "GeoPoseStamped created with latitude: %.8f, longitude: %.8f", 
                 current_point.pose.position.latitude, current_point.pose.position.longitude);
-        
+        //wp_pub_.publish(current_point);
         status_ = GOING_TO_WAYPOINT;
         break;
 
