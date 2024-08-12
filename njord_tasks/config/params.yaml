@@ -8,11 +8,11 @@ task:
     finish_lon: 149.1652373
 maneuvering:
   ros__parameters:
-    distance_to_move: 10.0 # meters
-    angle_from_buoys: 10.0 # degrees
+    distance_to_move: 30.0 # meters
+    angle_from_buoys: 20.0 # degrees
     wp_reached_radius: 1.0 #meters
     camera_res_x: 1920
     camera_fov: 70
-    wait_time: 10.0 # seconds
+    wait_time: 5.0 # seconds
     testing_angles: 0
     test_angle: 90.0
