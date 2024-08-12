@@ -1,0 +1,1 @@
+njord_tasks_interfaces/SimplifiedDetection[] detections
