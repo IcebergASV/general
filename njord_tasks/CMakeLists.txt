@@ -18,6 +18,7 @@ find_package(perception_interfaces REQUIRED)
 find_package(yolov8_msgs REQUIRED)
 find_package(tf2 REQUIRED)
 find_package(tf2_geometry_msgs REQUIRED)
+find_package(yaml-cpp REQUIRED)
 
 include_directories(
     include
@@ -121,7 +122,8 @@ ament_target_dependencies(navigation_component
   "std_msgs"
   "mavros_msgs"
   "geographic_msgs"
-  "njord_tasks_interfaces")
+  "njord_tasks_interfaces"
+  "yaml-cpp")
 rclcpp_components_register_nodes(navigation_component "njord_tasks::Task")
 set(node_plugins "njord_tasks::Task;$<TARGET_FILE:navigation_component>\n")
 install(TARGETS
