@@ -27,7 +27,7 @@ private:
     void detections_callback(const yolov8_msgs::msg::DetectionArray::SharedPtr msg)
     {
         if (msg->detections.empty()) {
-            RCLCPP_INFO(this->get_logger(), "No detections received.");
+            RCLCPP_DEBUG(this->get_logger(), "No detections received.");
             return;
         }
 

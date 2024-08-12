@@ -11,8 +11,8 @@ maneuvering:
     distance_to_move: 30.0 # meters
     angle_from_buoys: 20.0 # degrees
     wp_reached_radius: 1.0 #meters
-    camera_res_x: 1920
+    camera_res_x: 640
     camera_fov: 70
-    wait_time: 5.0 # seconds
+    wait_time: 1.0 # seconds
     testing_angles: 0
     test_angle: 90.0
