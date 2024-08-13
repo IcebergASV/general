@@ -19,6 +19,7 @@ find_package(yolov8_msgs REQUIRED)
 find_package(tf2 REQUIRED)
 find_package(tf2_geometry_msgs REQUIRED)
 find_package(slg_msgs REQUIRED)
+find_package(visualization_msgs REQUIRED)
 
 include_directories(
     include
@@ -191,7 +192,8 @@ ament_target_dependencies(collision_avoidance_component
   "mavros_msgs"
   "geographic_msgs"
   "njord_tasks_interfaces"
-  "slg_msgs")
+  "slg_msgs"
+  "visualization_msgs")
 rclcpp_components_register_nodes(collision_avoidance_component "njord_tasks::CollisionAvoidance")
 set(node_plugins "njord_tasks::CollisionAvoidance;$<TARGET_FILE:collision_avoidance_component>\n")
 install(TARGETS

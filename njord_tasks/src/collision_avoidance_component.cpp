@@ -29,7 +29,7 @@ namespace njord_tasks
     state_sub_ = this->create_subscription<mavros_msgs::msg::State>("/mavros/state", 10, std::bind(&CollisionAvoidance::stateCallback, this, _1));
     timer_ = this->create_wall_timer(500ms, std::bind(&CollisionAvoidance::timerCallback, this));
     set_mode_client_ = this->create_client<mavros_msgs::srv::SetMode>("/mavros/set_mode");
-  
+    obstacle_viz_points_pub_ = this->create_publisher<visualization_msgs::msg::MarkerArray>("njord_tasks/obstacle_visualization", 10);
     start_task_ = false;
     obstacles_ = false;
     prev_in_hold_ = false;
@@ -98,6 +98,7 @@ namespace njord_tasks
   void CollisionAvoidance::laserSegmentCallback(const slg_msgs::msg::SegmentArray::SharedPtr msg)
   {
     int obstacle_cnt = 0;
+    std::vector<slg_msgs::msg::Segment> obstacle_segments;
     if (msg->segments.size() > 0)
     {
       for (slg_msgs::msg::Segment segment : msg->segments)
@@ -108,6 +109,7 @@ namespace njord_tasks
           if ((length >= p_obstacle_length_ - p_obstacle_length_range_) && (length >= p_obstacle_length_ + p_obstacle_length_range_))
           {
             obstacle_cnt++;
+            obstacle_segments.push_back(segment);
           }
         }
       }
@@ -116,6 +118,11 @@ namespace njord_tasks
         RCLCPP_INFO_THROTTLE(this->get_logger(), *this->get_clock(), 10000, "Obstacles Detected: %u", obstacle_cnt);
         obstacles_ = true;
       }
+      else
+      {
+        obstacles_ = false;
+      }
+      obstacle_viz_points_pub_->publish(create_segment_viz_points(obstacle_segments));
     }
     else
     {
@@ -192,13 +199,105 @@ namespace njord_tasks
     }
   }
 
-  // void CollisionAvoidance::callback(const std_msgs::msg::Int32::SharedPtr msg)
-  // {
-  //   std_msgs::msg::Float64 new_value;
-  //   new_value.data = msg->data *p_multiplier_ + p_adder_;
+visualization_msgs::msg::MarkerArray CollisionAvoidance::create_segment_viz_points(
+  std::vector<slg_msgs::msg::Segment> segment_list)
+{
+  // Create the visualization message
+  visualization_msgs::msg::MarkerArray viz_array;
 
-  //   //example_pub_->publish(new_value);
+  // Create a deletion marker to clear the previous points
+  visualization_msgs::msg::Marker deletion_marker;
+  //deletion_marker.header = header;
+  deletion_marker.action = visualization_msgs::msg::Marker::DELETEALL;
+  viz_array.markers.push_back(deletion_marker);
+
+  // Create a marker point
+  visualization_msgs::msg::Marker viz_points;
+  //viz_points.header = header;
+  viz_points.lifetime = rclcpp::Duration(0, 10);
+  viz_points.ns = "segments";
+  viz_points.type = visualization_msgs::msg::Marker::POINTS;
+  viz_points.action = visualization_msgs::msg::Marker::ADD;
+  viz_points.scale.x = viz_points.scale.y = 0.02;
+
+  // Create a marker centroid
+  visualization_msgs::msg::Marker viz_centroids;
+  //viz_centroids.header = header;
+  viz_centroids.lifetime = rclcpp::Duration(0, 10);
+  viz_centroids.ns = "centroids";
+  viz_centroids.type = visualization_msgs::msg::Marker::CUBE;
+  viz_centroids.action = visualization_msgs::msg::Marker::ADD;
+  viz_centroids.scale.x = viz_centroids.scale.y = viz_centroids.scale.z = 0.05;
+
+  // Create a marker id text
+  visualization_msgs::msg::Marker viz_text;
+  //viz_text.header = header;
+  viz_text.lifetime = rclcpp::Duration(0, 10);
+  viz_text.ns = "id";
+  viz_text.type = visualization_msgs::msg::Marker::TEXT_VIEW_FACING;
+  viz_text.action = visualization_msgs::msg::Marker::ADD;
+  viz_text.scale.z = 0.25;
+  viz_text.color.r = 1.0;
+  viz_text.color.g = 1.0;
+  viz_text.color.b = 1.0;
+  viz_text.color.a = 1.0;
+
+  // Show the segments and the id
+  for (std::vector<slg_msgs::msg::Segment>::size_type i = 0; i < segment_list.size(); i++) {
+    viz_points.id = i;
+    viz_text.id = i;
+    viz_centroids.id = i;
+
+    // Change the color of the segment
+    std_msgs::msg::ColorRGBA color;
+    color.r = 250; color.g = 237; color.b = 49;
+    viz_points.color = color;
+    viz_centroids.color = color;
+
+    // Iterate over the points of the segment
+    slg_msgs::msg::Segment current_segment = segment_list[i];
+    for (const auto & point : current_segment.points) {
+      viz_points.points.push_back(point);
+    }
+
+    // Get position of the text
+    // viz_text.text = std::to_string(current_segment.id());
+    // viz_text.pose.position = current_segment.centroid();
+    // viz_text.pose.position.z = 0.10;
+
+    // Place centroid under text
+    // viz_centroids.pose.position = current_segment.centroid();
+    // viz_centroids.pose.position.z = 0.0;
+
+    // Push to arrays
+    viz_array.markers.push_back(viz_points);
+    // viz_array.markers.push_back(viz_centroids);
+    // viz_array.markers.push_back(viz_text);
+
+    // Clear markers
+    viz_points.points.clear();
+  }
+
+  // std_msgs::msg::ColorRGBA CollisionAvoidance::get_palette_color(unsigned int index)
+  // {
+  //   std_msgs::msg::ColorRGBA color;
+  //   switch (index % 8) {
+  //     case 0: color.r = 255; color.g = 051; color.b = 051; break;
+  //     case 2: color.r = 255; color.g = 153; color.b = 051; break;
+  //     case 4: color.r = 255; color.g = 255; color.b = 051; break;
+  //     case 6: color.r = 153; color.g = 051; color.b = 051; break;
+  //     case 1: color.r = 051; color.g = 255; color.b = 051; break;
+  //     case 3: color.r = 051; color.g = 255; color.b = 153; break;
+  //     case 5: color.r = 051; color.g = 153; color.b = 255; break;
+  //     case 7: color.r = 255; color.g = 051; color.b = 255; break;
+  //   }
+
+  //   color.r /= 255.0; color.g /= 255.0; color.b /= 255.0; color.a = 1.0;
+  //   return color;
   // }
+
+  return viz_array;
+}
 }
 #include "rclcpp_components/register_node_macro.hpp"
 

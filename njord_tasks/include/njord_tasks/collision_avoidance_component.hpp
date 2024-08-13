@@ -11,6 +11,9 @@
 #include "njord_tasks_interfaces/msg/start_task.hpp"
 #include "slg_msgs/msg/segment_array.hpp"
 #include "slg_msgs/msg/segment.hpp"
+#include "visualization_msgs/msg/marker_array.hpp"
+#include "slg_msgs/segment2D.hpp"
+#include "std_msgs/msg/color_rgba.hpp"
 
 using std::placeholders::_1;
 using namespace std::chrono_literals;
@@ -30,7 +33,8 @@ private:
     void stateCallback(const mavros_msgs::msg::State::SharedPtr msg);
     void sendFinishPnt();
     void laserSegmentCallback(const slg_msgs::msg::SegmentArray::SharedPtr msg);
-
+    //std_msgs::msg::ColorRGBA get_palette_color(unsigned int index);
+    visualization_msgs::msg::MarkerArray create_segment_viz_points(std::vector<slg_msgs::msg::Segment> segment_list);
     rclcpp::Subscription<slg_msgs::msg::SegmentArray>::SharedPtr laser_segments_sub_;
     rclcpp::Subscription<njord_tasks_interfaces::msg::StartTask>::SharedPtr task_to_execute_sub_;
     rclcpp::Subscription<mavros_msgs::msg::State>::SharedPtr state_sub_;
@@ -38,6 +42,7 @@ private:
     rclcpp::Client<mavros_msgs::srv::SetMode>::SharedPtr set_mode_client_;
     rclcpp::TimerBase::SharedPtr timer_;
     rclcpp::Publisher<geographic_msgs::msg::GeoPoseStamped>::SharedPtr global_wp_pub_;
+    rclcpp::Publisher<visualization_msgs::msg::MarkerArray>::SharedPtr obstacle_viz_points_pub_;
 
     double p_finish_lat_;
     double p_finish_lon_;
