@@ -1,5 +1,6 @@
 #include "njord_tasks/collision_avoidance_component.hpp"
 #include "njord_tasks/lib/task_lib.hpp"
+#include "njord_tasks/lib/lidar_calculations.hpp"
 
 void wait()
 {
@@ -13,10 +14,15 @@ namespace njord_tasks
   {
     CollisionAvoidance::getParam<double>("finish_lat", p_finish_lat_, 0.0, " " );
     CollisionAvoidance::getParam<double>("finish_lon", p_finish_lon_, 0.0, " ");
+    CollisionAvoidance::getParam<double>("min_dist", p_min_dist_, 0.0, " ");
+    CollisionAvoidance::getParam<double>("max_dist", p_max_dist_, 0.0, " ");
+    CollisionAvoidance::getParam<double>("fov", p_fov_, 0, " ");
+    CollisionAvoidance::getParam<double>("obstacle_length", p_obstacle_length_, 0.0, " ");
+    CollisionAvoidance::getParam<double>("obstacle_length_range", p_obstacle_length_range_, 0.0, " ");
     
     on_set_parameters_callback_handle_ = this->add_on_set_parameters_callback(std::bind(&CollisionAvoidance::param_callback, this, std::placeholders::_1));
 
-    task_to_execute_sub_ = this->create_subscription<njord_tasks_interfaces::msg::StartTask>("/njord_tasks/task_to_execute", 10, std::bind(&CollisionAvoidance::taskToExecuteCallback, this, _1));
+    task_to_execute_sub_ = this->create_subscription<njord_tasks_interfaces::msg::StartTask>("/njord_tasks/task_to_execute", 10, std::bind(&CollisionAvoidance::taskToExecuteCallback));
     global_wp_pub_ = this->create_publisher<geographic_msgs::msg::GeoPoseStamped>("mavros/setpoint_position/global", 10);
 
     laser_segments_sub_ = this->create_subscription<slg_msgs::msg::SegmentArray>("segments", 10, std::bind(&CollisionAvoidance::laserSegmentCallback, this, _1));
@@ -27,6 +33,8 @@ namespace njord_tasks
     start_task_ = false;
     obstacles_ = false;
     prev_in_hold_ = false;
+
+    status_ = States::CHECK_FOR_OBSTACLES;
   }
 
   rcl_interfaces::msg::SetParametersResult CollisionAvoidance::param_callback(const std::vector<rclcpp::Parameter> &params)
@@ -35,6 +43,13 @@ namespace njord_tasks
 
     if (params[0].get_name() == "finish_lat") { p_finish_lat_ = params[0].as_double(); }
     else if (params[0].get_name() == "finish_lon") { p_finish_lon_ = params[0].as_double(); }
+    else if (params[0].get_name() == "min_dist") { p_min_dist_ = params[0].as_double(); }
+    else if (params[0].get_name() == "max_dist") { p_max_dist_ = params[0].as_double(); }
+    else if (params[0].get_name() == "fov") { p_fov_ = params[0].as_double(); }
+    else if (params[0].get_name() == "obstacle_length") { p_obstacle_length_ = params[0].as_double(); }
+    else if (params[0].get_name() == "obstacle_length_range") { p_obstacle_length_range_ = params[0].as_double(); }
+
+
     else {
       RCLCPP_ERROR(this->get_logger(), "Invalid Param");
       result.successful = false;
@@ -71,7 +86,7 @@ namespace njord_tasks
       });
   }
 
-  void CollisionAvoidance::taskToExecuteCallback(const njord_tasks_interfaces::msg::StartTask::SharedPtr msg)
+  void CollisionAvoidance::taskToExecuteCallback()
   {
     start_task_ = true;
     RCLCPP_INFO(this->get_logger(), "Starting CollisionAvoidance task");
@@ -80,22 +95,25 @@ namespace njord_tasks
 
   void CollisionAvoidance::laserSegmentCallback(const slg_msgs::msg::SegmentArray::SharedPtr msg)
   {
+    int obstacle_cnt = 0;
     if (msg->segments.size() > 0)
     {
-      // perception_interfaces::msg::PropArray lidar_detected_prop_array;
-      // for (slg_msgs::msg::Segment segment : msg->segments)
-      // {
-      //   std::vector<geometry_msgs::msg::Point> filtered_points = lidar_calculations::getPointsWithinBounds(segment.points, p_min_lidar_dist_, p_max_lidar_dist_, p_lidar_fov_);
-
-      //   if (lidar_calculations::hasEnoughPoints(filtered_points.size(), p_min_points_in_segment_))
-      //   {
-      //     attemptToCreateAndAddLidarDetectedProp(filtered_points, lidar_detected_prop_array);
-      //   }
-      // }
-      // if (lidar_detected_prop_array.props.size() > 0)
-      // {
-      //   pub_->publish(lidar_detected_prop_array);
-      // }
+      for (slg_msgs::msg::Segment segment : msg->segments)
+      {
+        if (lidar_calculations::segmentInFOV(segment.points, p_min_dist_, p_max_dist_, p_fov_))
+        {
+          double length = lidar_calculations::getSegmentLength(segment.points);
+          if ((length >= p_obstacle_length_ - p_obstacle_length_range_) && (length >= p_obstacle_length_ + p_obstacle_length_range_))
+          {
+            obstacle_cnt++;
+          }
+        }
+      }
+      RCLCPP_INFO(this->get_logger(), "Obstacles Detected: %u", obstacle_cnt);
+      if (obstacle_cnt > 0)
+      {
+        obstacles_ = true;
+      }
     }
     else
     {
