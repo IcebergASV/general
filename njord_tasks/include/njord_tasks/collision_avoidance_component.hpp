@@ -28,13 +28,16 @@ private:
     rclcpp::node_interfaces::OnSetParametersCallbackHandle::SharedPtr on_set_parameters_callback_handle_;
     rclcpp::Client<mavros_msgs::srv::SetMode>::SharedPtr set_mode_client_;
     rclcpp::TimerBase::SharedPtr timer_;
+    rclcpp::Publisher<geographic_msgs::msg::GeoPoseStamped>::SharedPtr global_wp_pub_;
 
     int p_multiplier_;
     double p_adder_;
 
     bool in_guided_;
+    bool start_task_;
+    bool obstacles_;
 
-    enum States {WAIT_FOR_GUIDED, HOLD}; 
+    enum States {CHECK_FOR_OBSTACLES, HOLD, SEND_FINISH_PNT}; 
     States status_;
 
     void change_mode(const std::string &mode);

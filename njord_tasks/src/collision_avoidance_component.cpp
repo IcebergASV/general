@@ -15,9 +15,15 @@ namespace njord_tasks
     CollisionAvoidance::getParam<double>("adder", p_adder_, 0, "Adds this double to a number");
     on_set_parameters_callback_handle_ = this->add_on_set_parameters_callback(std::bind(&CollisionAvoidance::param_callback, this, std::placeholders::_1));
 
+    task_to_execute_sub_ = this->create_subscription<njord_tasks_interfaces::msg::StartTask>("/njord_tasks/task_to_execute", 10, std::bind(&Maneuvering::taskToExecuteCallback, this, _1));
+    global_wp_pub_ = this->create_publisher<geographic_msgs::msg::GeoPoseStamped>("mavros/setpoint_position/global", 10);
+
     state_sub_ = this->create_subscription<mavros_msgs::msg::State>("/mavros/state", 10, std::bind(&CollisionAvoidance::stateCallback, this, _1));
     timer_ = this->create_wall_timer(500ms, std::bind(&CollisionAvoidance::timerCallback, this));
     set_mode_client_ = this->create_client<mavros_msgs::srv::SetMode>("/mavros/set_mode");
+  
+    start_task_ = false;
+    obstacles_ = false;
   }
 
   rcl_interfaces::msg::SetParametersResult CollisionAvoidance::param_callback(const std::vector<rclcpp::Parameter> &params)
@@ -69,13 +75,26 @@ namespace njord_tasks
           }
       });
   }
+
+  void Maneuvering::taskToExecuteCallback(const njord_tasks_interfaces::msg::StartTask::SharedPtr msg)
+  {
+    finish_pnt_ = msg->finish_pnt;
+    start_task_ = true;
+    RCLCPP_INFO(this->get_logger(), "Starting maneuvering task");
+ 
+  }
+
+  void Maneuvering::sendFinishPnt()
+  {
+    geographic_msgs::msg::GeoPoseStamped finish_wp = task_lib::getGlobalWPMsg(finish_pnt_.latitude, finish_pnt_.longitude);
+    global_wp_pub_->publish(finish_wp);
+  }
   
   // need to start by sending finish pnt
   void CollisionAvoidance::timerCallback()
   { 
     if (start_task_)
     {
-
       RCLCPP_DEBUG(this->get_logger(), "timerCallback");
       switch (status_)
       {
@@ -102,8 +121,8 @@ namespace njord_tasks
         {
           wait();
           prev_in_hold_ = true;
-          change_mode("GUIDED");
-          status_ = States::SEND_FINISH_PNT;
+          //change_mode("GUIDED");
+          status_ = States::CHECK_FOR_OBSTACLES;
         }
         case States::SEND_FINISH_PNT:
         {
