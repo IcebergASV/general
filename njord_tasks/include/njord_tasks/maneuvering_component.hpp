@@ -59,9 +59,11 @@ private:
     double p_wait_time_;
     int p_testing_angles_;
     double p_test_angle_;
+    double p_finish_lat_;
+    double p_finish_lon_;
 
     const std::string red_buoy_str_ = "red_buoy";
-    const std::string green_buoy_str_ = "green_buoy";
+    const std::string green_buoy_str_ = "Green";
 
     enum States {CHECK_FOR_BUOYS, HEAD_TO_FINISH, MANEUVER}; 
     States status_;

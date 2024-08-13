@@ -109,7 +109,7 @@ def generate_launch_description():
             ),
             launch_arguments={
                 'input_image_topic': '/camera/camera/color/image_raw',
-                'model': '/home/icebergasv/ros2_ws/src/general/yolov8_ros/weights/mark_tII.pt'
+                'model': '/home/icebergasv/ros2_ws/src/general/yolov8_ros/weights/comp_markI.pt'
             }.items()
     )
     return LaunchDescription(
