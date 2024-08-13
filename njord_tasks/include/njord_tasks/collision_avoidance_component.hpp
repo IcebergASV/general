@@ -7,6 +7,10 @@
 #include "mavros_msgs/srv/set_mode.hpp"
 #include <mavros_msgs/msg/state.hpp>
 #include <chrono>
+#include "geographic_msgs/msg/geo_pose_stamped.hpp"
+#include "njord_tasks_interfaces/msg/start_task.hpp"
+#include "slg_msgs/msg/segment_array.hpp"
+#include "slg_msgs/msg/segment.hpp"
 
 using std::placeholders::_1;
 using namespace std::chrono_literals;
@@ -20,22 +24,28 @@ public:
     explicit CollisionAvoidance(const rclcpp::NodeOptions & options);
 
 private:
+    void taskToExecuteCallback(const njord_tasks_interfaces::msg::StartTask::SharedPtr msg);
     // void callback(const std_msgs::msg::Int32::SharedPtr msg);
     rcl_interfaces::msg::SetParametersResult param_callback(const std::vector<rclcpp::Parameter> &params);
     void stateCallback(const mavros_msgs::msg::State::SharedPtr msg);
+    void sendFinishPnt();
+    void laserSegmentCallback(const slg_msgs::msg::SegmentArray::SharedPtr msg);
 
+    rclcpp::Subscription<slg_msgs::msg::SegmentArray>::SharedPtr laser_segments_sub_;
+    rclcpp::Subscription<njord_tasks_interfaces::msg::StartTask>::SharedPtr task_to_execute_sub_;
     rclcpp::Subscription<mavros_msgs::msg::State>::SharedPtr state_sub_;
     rclcpp::node_interfaces::OnSetParametersCallbackHandle::SharedPtr on_set_parameters_callback_handle_;
     rclcpp::Client<mavros_msgs::srv::SetMode>::SharedPtr set_mode_client_;
     rclcpp::TimerBase::SharedPtr timer_;
     rclcpp::Publisher<geographic_msgs::msg::GeoPoseStamped>::SharedPtr global_wp_pub_;
 
-    int p_multiplier_;
-    double p_adder_;
+    double p_finish_lat_;
+    double p_finish_lon_;
 
     bool in_guided_;
     bool start_task_;
     bool obstacles_;
+    bool prev_in_hold_;
 
     enum States {CHECK_FOR_OBSTACLES, HOLD, SEND_FINISH_PNT}; 
     States status_;
