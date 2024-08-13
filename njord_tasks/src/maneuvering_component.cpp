@@ -29,6 +29,8 @@ namespace njord_tasks
     Maneuvering::getParam<double>("wait_time", p_wait_time_, 0.0, "Wait period to give robot time to move towards wp before sending new wp");
     Maneuvering::getParam<int>("testing_angles", p_testing_angles_, 0, "");
     Maneuvering::getParam<double>("test_angle", p_test_angle_, 0.0, "");
+    Maneuvering::getParam<double>("finish_lat", p_finish_lat_, 0.0, "Finish latitude");
+    Maneuvering::getParam<double>("finish_lon", p_finish_lon_, 0.0, "Finish longitude");
 
     on_set_parameters_callback_handle_ = this->add_on_set_parameters_callback(std::bind(&Maneuvering::param_callback, this, std::placeholders::_1));
 
@@ -51,6 +53,8 @@ namespace njord_tasks
     else if (params[0].get_name() == "wait_time") { p_wait_time_ = params[0].as_double(); }
     else if (params[0].get_name() == "testing_angles") { p_testing_angles_ = params[0].as_int(); }
     else if (params[0].get_name() == "test_angle") { p_test_angle_ = params[0].as_double(); }
+    else if (params[0].get_name() == "finish_lat") { p_finish_lat_ = params[0].as_double(); }
+    else if (params[0].get_name() == "finish_lon") { p_finish_lon_ = params[0].as_double(); }
     else {
       RCLCPP_ERROR(this->get_logger(), "Invalid Param");
       result.successful = false;
@@ -86,8 +90,9 @@ namespace njord_tasks
 
   void Maneuvering::sendFinishPnt()
   {
-    geographic_msgs::msg::GeoPoseStamped finish_wp = task_lib::getGlobalWPMsg(finish_pnt_.latitude, finish_pnt_.longitude);
+    geographic_msgs::msg::GeoPoseStamped finish_wp = task_lib::getGlobalWPMsg(p_finish_lat_, p_finish_lon_);
     global_wp_pub_->publish(finish_wp);
+    RCLCPP_INFO(this->get_logger(), "Finish WP: lat=%f, lon=%f", finish_wp.pose.position.latitude, finish_wp.pose.position.longitude);
   }
 
   void Maneuvering::wait()

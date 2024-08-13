@@ -16,3 +16,5 @@ maneuvering:
     wait_time: 1.0 # seconds
     testing_angles: 0
     test_angle: 90.0
+    finish_lat: 63.26445
+    finish_lon: 10.25413
