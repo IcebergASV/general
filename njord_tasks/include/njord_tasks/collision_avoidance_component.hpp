@@ -24,7 +24,7 @@ public:
     explicit CollisionAvoidance(const rclcpp::NodeOptions & options);
 
 private:
-    void taskToExecuteCallback();
+    void taskToExecuteCallback(const njord_tasks_interfaces::msg::StartTask::SharedPtr msg);
     // void callback(const std_msgs::msg::Int32::SharedPtr msg);
     rcl_interfaces::msg::SetParametersResult param_callback(const std::vector<rclcpp::Parameter> &params);
     void stateCallback(const mavros_msgs::msg::State::SharedPtr msg);

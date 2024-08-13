@@ -22,7 +22,7 @@ namespace njord_tasks
     
     on_set_parameters_callback_handle_ = this->add_on_set_parameters_callback(std::bind(&CollisionAvoidance::param_callback, this, std::placeholders::_1));
 
-    task_to_execute_sub_ = this->create_subscription<njord_tasks_interfaces::msg::StartTask>("/njord_tasks/task_to_execute", 10, std::bind(&CollisionAvoidance::taskToExecuteCallback));
+    task_to_execute_sub_ = this->create_subscription<njord_tasks_interfaces::msg::StartTask>("/njord_tasks/task_to_execute", 10, std::bind(&CollisionAvoidance::taskToExecuteCallback, this, _1));
     global_wp_pub_ = this->create_publisher<geographic_msgs::msg::GeoPoseStamped>("mavros/setpoint_position/global", 10);
 
     laser_segments_sub_ = this->create_subscription<slg_msgs::msg::SegmentArray>("segments", 10, std::bind(&CollisionAvoidance::laserSegmentCallback, this, _1));
@@ -34,7 +34,7 @@ namespace njord_tasks
     obstacles_ = false;
     prev_in_hold_ = false;
 
-    status_ = States::CHECK_FOR_OBSTACLES;
+    status_ = States::SEND_FINISH_PNT;
   }
 
   rcl_interfaces::msg::SetParametersResult CollisionAvoidance::param_callback(const std::vector<rclcpp::Parameter> &params)
@@ -86,10 +86,12 @@ namespace njord_tasks
       });
   }
 
-  void CollisionAvoidance::taskToExecuteCallback()
+  void CollisionAvoidance::taskToExecuteCallback(const njord_tasks_interfaces::msg::StartTask::SharedPtr msg)
   {
     start_task_ = true;
-    RCLCPP_INFO(this->get_logger(), "Starting CollisionAvoidance task");
+    double just_doing_this_temporarily_to_avoid_build_warnings = msg->start_pnt.latitude;
+    RCLCPP_DEBUG(this->get_logger(), "lol %f", just_doing_this_temporarily_to_avoid_build_warnings);
+    RCLCPP_INFO(this->get_logger(), "Starting Collision Avoidance task");
  
   }
 
@@ -109,15 +111,15 @@ namespace njord_tasks
           }
         }
       }
-      RCLCPP_INFO(this->get_logger(), "Obstacles Detected: %u", obstacle_cnt);
       if (obstacle_cnt > 0)
       {
+        RCLCPP_INFO_THROTTLE(this->get_logger(), *this->get_clock(), 10000, "Obstacles Detected: %u", obstacle_cnt);
         obstacles_ = true;
       }
     }
     else
     {
-      RCLCPP_WARN(this->get_logger(), "No segments in message");
+      RCLCPP_DEBUG(this->get_logger(), "No segments detected");
     }
   }
 
@@ -137,36 +139,51 @@ namespace njord_tasks
       {
         case States::CHECK_FOR_OBSTACLES:
         {
+          RCLCPP_INFO(this->get_logger(), "Checking for obstacles");
           if (obstacles_)
           {
-            change_mode("HOLD");
+            if (prev_in_hold_)
+            {
+              RCLCPP_INFO(this->get_logger(), "Obstacle(s) still detected, remaining in HOLD");
+            }
+            else {
+              RCLCPP_INFO(this->get_logger(), "Obstacle(s) detected, changing mode to HOLD");
+              change_mode("HOLD");              
+            }
+
             status_ = States::HOLD;
           }
           else
           {
             if (prev_in_hold_)
             {
+              RCLCPP_INFO(this->get_logger(), "No obstacles detected, setting mode to GUIDED and resending finish point");
               prev_in_hold_ = false;
               change_mode("GUIDED");
               status_ = States::SEND_FINISH_PNT;
             }
-            // else - continue
+            RCLCPP_INFO(this->get_logger(), "No obstacles detected, continue towards finish point");
+            wait();
           }
           break;
         }
         case States::HOLD:
         {
+
+          RCLCPP_INFO(this->get_logger(), "In hold"); // TODO check we are actually in hold
           wait();
           prev_in_hold_ = true;
           //change_mode("GUIDED");
           status_ = States::CHECK_FOR_OBSTACLES;
+          break;
         }
         case States::SEND_FINISH_PNT:
         {
           if (in_guided_)
           {
-            RCLCPP_INFO(this->get_logger(), "In GUIDED mode");
+            RCLCPP_INFO(this->get_logger(), "In GUIDED mode, sending finish point");
             sendFinishPnt();
+            wait();
             status_ = States::CHECK_FOR_OBSTACLES;
           }
           break;

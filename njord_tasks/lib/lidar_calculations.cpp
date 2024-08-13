@@ -77,7 +77,7 @@ bool arePointsValidDistanceAway(const std::vector<geometry_msgs::msg::Point>& po
   return true;
 }
 
-bool segmentInFov(const std::vector<geometry_msgs::msg::Point>& points, double min_dist, double max_dist, double fov)
+bool segmentInFOV(const std::vector<geometry_msgs::msg::Point>& points, double min_dist, double max_dist, double fov)
 {
   for (const auto& point : points) {
     double distance = std::sqrt(point.x * point.x + point.y * point.y);
