@@ -64,6 +64,16 @@ ament_target_dependencies(libtask_lib
   tf2_geometry_msgs
 )
 
+## Declare a C++ library
+add_library(liblidar_calculations
+  lib/lidar_calculations.cpp
+)
+ament_target_dependencies(liblidar_calculations
+  "geometry_msgs"
+  "rclcpp"
+  "perception_interfaces"
+)
+
 add_library(libbbox_calculations
   lib/bbox_calculations.cpp
 )
@@ -200,6 +210,7 @@ ament_target_dependencies(collision_avoidance_composition
 target_link_libraries(collision_avoidance_composition
 ${YAML_CPP_LIBRARIES}
 libtask_lib
+liblidar_calculations
 )
 install(TARGETS
   collision_avoidance_composition
