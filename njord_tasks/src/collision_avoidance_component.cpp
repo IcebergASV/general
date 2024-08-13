@@ -260,42 +260,12 @@ visualization_msgs::msg::MarkerArray CollisionAvoidance::create_segment_viz_poin
       viz_points.points.push_back(point);
     }
 
-    // Get position of the text
-    // viz_text.text = std::to_string(current_segment.id());
-    // viz_text.pose.position = current_segment.centroid();
-    // viz_text.pose.position.z = 0.10;
-
-    // Place centroid under text
-    // viz_centroids.pose.position = current_segment.centroid();
-    // viz_centroids.pose.position.z = 0.0;
-
     // Push to arrays
     viz_array.markers.push_back(viz_points);
-    // viz_array.markers.push_back(viz_centroids);
-    // viz_array.markers.push_back(viz_text);
 
     // Clear markers
     viz_points.points.clear();
   }
-
-  // std_msgs::msg::ColorRGBA CollisionAvoidance::get_palette_color(unsigned int index)
-  // {
-  //   std_msgs::msg::ColorRGBA color;
-  //   switch (index % 8) {
-  //     case 0: color.r = 255; color.g = 051; color.b = 051; break;
-  //     case 2: color.r = 255; color.g = 153; color.b = 051; break;
-  //     case 4: color.r = 255; color.g = 255; color.b = 051; break;
-  //     case 6: color.r = 153; color.g = 051; color.b = 051; break;
-  //     case 1: color.r = 051; color.g = 255; color.b = 051; break;
-  //     case 3: color.r = 051; color.g = 255; color.b = 153; break;
-  //     case 5: color.r = 051; color.g = 153; color.b = 255; break;
-  //     case 7: color.r = 255; color.g = 051; color.b = 255; break;
-  //   }
-
-  //   color.r /= 255.0; color.g /= 255.0; color.b /= 255.0; color.a = 1.0;
-  //   return color;
-  // }
-
   return viz_array;
 }
 }
