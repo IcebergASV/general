@@ -18,6 +18,8 @@ find_package(perception_interfaces REQUIRED)
 find_package(yolov8_msgs REQUIRED)
 find_package(tf2 REQUIRED)
 find_package(tf2_geometry_msgs REQUIRED)
+find_package(slg_msgs REQUIRED)
+find_package(visualization_msgs REQUIRED)
 
 include_directories(
     include
@@ -61,6 +63,16 @@ ament_target_dependencies(libtask_lib
   "sensor_msgs"
   tf2
   tf2_geometry_msgs
+)
+
+## Declare a C++ library
+add_library(liblidar_calculations
+  lib/lidar_calculations.cpp
+)
+ament_target_dependencies(liblidar_calculations
+  "geometry_msgs"
+  "rclcpp"
+  "perception_interfaces"
 )
 
 add_library(libbbox_calculations
@@ -179,3 +191,37 @@ target_link_libraries(task_composition
   ${YAML_CPP_LIBRARIES}
   libtask_lib
 )
+add_library(collision_avoidance_component SHARED src/collision_avoidance_component.cpp)
+target_compile_definitions(collision_avoidance_component PRIVATE "COMPOSITION_BUILDING_DLL")
+ament_target_dependencies(collision_avoidance_component
+  "rclcpp"
+  "rclcpp_components"
+  "std_msgs"
+  "mavros_msgs"
+  "geographic_msgs"
+  "njord_tasks_interfaces"
+  "slg_msgs"
+  "visualization_msgs")
+rclcpp_components_register_nodes(collision_avoidance_component "njord_tasks::CollisionAvoidance")
+set(node_plugins "njord_tasks::CollisionAvoidance;$<TARGET_FILE:collision_avoidance_component>\n")
+install(TARGETS
+  collision_avoidance_component
+  ARCHIVE DESTINATION lib
+  LIBRARY DESTINATION lib
+  RUNTIME DESTINATION bin)
+
+# Add executable for collision_avoidance
+add_executable(collision_avoidance_composition
+  src/collision_avoidance_composition.cpp)
+target_link_libraries(collision_avoidance_composition
+collision_avoidance_component)
+ament_target_dependencies(collision_avoidance_composition
+  rclcpp)
+target_link_libraries(collision_avoidance_composition
+${YAML_CPP_LIBRARIES}
+libtask_lib
+liblidar_calculations
+)
+install(TARGETS
+  collision_avoidance_composition
+  DESTINATION lib/${PROJECT_NAME})
