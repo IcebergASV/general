@@ -136,7 +136,6 @@ namespace njord_tasks
     global_wp_pub_->publish(finish_wp);
   }
   
-  // need to start by sending finish pnt
   void CollisionAvoidance::timerCallback()
   { 
     if (start_task_)
@@ -180,7 +179,6 @@ namespace njord_tasks
           RCLCPP_INFO(this->get_logger(), "In hold"); // TODO check we are actually in hold
           wait();
           prev_in_hold_ = true;
-          //change_mode("GUIDED");
           status_ = States::CHECK_FOR_OBSTACLES;
           break;
         }
