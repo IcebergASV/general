@@ -36,10 +36,10 @@ private:
     void wait();
     void wpReachedCallback(const mavros_msgs::msg::WaypointReached msg);
     std::vector<yolov8_msgs::msg::Detection> filterAndSortLeftToRight(const yolov8_msgs::msg::DetectionArray detection_array, const std::string& class_name);
-    void getWPFromBuoys(geometry_msgs::msg::PoseStamped& wp);
     bool hasDesiredDetections(const yolov8_msgs::msg::DetectionArray& detection_array);
-
-
+    bool getSortedRedAndGreenBuoys(std::vector<yolov8_msgs::msg::Detection>& red_buoys, std::vector<yolov8_msgs::msg::Detection>& green_buoys);
+    geometry_msgs::msg::PoseStamped getWPFromBuoys(std::vector<yolov8_msgs::msg::Detection>& red_buoys, std::vector<yolov8_msgs::msg::Detection>& green_buoys);
+    
     rclcpp::TimerBase::SharedPtr timer_;
     rclcpp::Subscription<njord_tasks_interfaces::msg::StartTask>::SharedPtr task_to_execute_sub_;
     rclcpp::Publisher<std_msgs::msg::Int32>::SharedPtr task_completion_status_pub_;
@@ -72,6 +72,7 @@ private:
     geometry_msgs::msg::PoseStamped current_local_pose_;
     geographic_msgs::msg::GeoPoint finish_pnt_;
     yolov8_msgs::msg::DetectionArray bboxes_;
+    geometry_msgs::msg::PoseStamped local_wp_;
 
     bool global_pose_updated_;
     bool local_pose_updated_;

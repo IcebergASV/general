@@ -139,17 +139,20 @@ namespace njord_tasks
       return false; // Return false if no matches are found
   }
 
-  void Maneuvering::getWPFromBuoys(geometry_msgs::msg::PoseStamped& wp)
+  bool Maneuvering::getSortedRedAndGreenBuoys(std::vector<yolov8_msgs::msg::Detection>& red_buoys, std::vector<yolov8_msgs::msg::Detection>& green_buoys)
   {
-
-    std::vector<yolov8_msgs::msg::Detection> red_buoys = filterAndSortLeftToRight(bboxes_, red_buoy_str_);
-    std::vector<yolov8_msgs::msg::Detection> green_buoys = filterAndSortLeftToRight(bboxes_, green_buoy_str_);
+    red_buoys = filterAndSortLeftToRight(bboxes_, red_buoy_str_);
+    green_buoys = filterAndSortLeftToRight(bboxes_, green_buoy_str_);
 
     if ((red_buoys.size() == 0 && green_buoys.size() == 0) && !(p_testing_angles_ == 1))
     {
-      RCLCPP_WARN(this->get_logger(), "No red or green buoys detected"); //TODO HANDLE
-      return;
+      RCLCPP_WARN(this->get_logger(), "Detected object that is not a red or green buoy"); //TODO HANDLE
+      return false;
     }
+    return true;
+  }
+  geometry_msgs::msg::PoseStamped Maneuvering::getWPFromBuoys(std::vector<yolov8_msgs::msg::Detection>& red_buoys, std::vector<yolov8_msgs::msg::Detection>& green_buoys)
+  {
 
     double angle;
     if ((red_buoys.size() == 0) & (green_buoys.size() > 0)) // move to left of left most green
@@ -186,8 +189,8 @@ namespace njord_tasks
       RCLCPP_WARN(this->get_logger(), "Sending test angle %f", angle*180/M_PI);
     }
     angle = angle - M_PI/2;
-    wp = task_lib::relativePolarToLocalCoords(p_distance_to_move_, angle, current_local_pose_);
-    return;
+    geometry_msgs::msg::PoseStamped wp = task_lib::relativePolarToLocalCoords(p_distance_to_move_, angle, current_local_pose_);
+    return wp;
   }
 
   void Maneuvering::timerCallback()
@@ -201,7 +204,16 @@ namespace njord_tasks
           RCLCPP_INFO(this->get_logger(), "Checking for buoys");
           if ((bboxes_updated_ && local_pose_updated_) || (p_testing_angles_ == 1)) 
           {
-            status_ = States::MANEUVER;
+            std::vector<yolov8_msgs::msg::Detection> red_buoys;
+            std::vector<yolov8_msgs::msg::Detection> green_buoys;
+            if(getSortedRedAndGreenBuoys(red_buoys, green_buoys))
+            {
+              status_ = States::MANEUVER;
+              local_wp_ = getWPFromBuoys(red_buoys, green_buoys);
+            }
+            else{
+              status_ = States::HEAD_TO_FINISH;
+            }
             bboxes_updated_ = false;
             local_pose_updated_ = false;
           }
@@ -225,9 +237,9 @@ namespace njord_tasks
         case States::MANEUVER:
         {
           RCLCPP_INFO(this->get_logger(), "Maneuvering through buoys");
-          geometry_msgs::msg::PoseStamped wp;
-          getWPFromBuoys(wp);
-          local_wp_pub_->publish(wp);
+          //geometry_msgs::msg::PoseStamped wp;
+          //getWPFromBuoys(wp);
+          local_wp_pub_->publish(local_wp_);
           wait();
           status_ = States::CHECK_FOR_BUOYS;
           break;
