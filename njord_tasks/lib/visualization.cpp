@@ -12,13 +12,13 @@ visualization_msgs::msg::MarkerArray create_segment_viz_points(std::vector<slg_m
 
   // Create a deletion marker to clear the previous points
   visualization_msgs::msg::Marker deletion_marker;
-  deletion_marker.header.frame_id = "base_scan";
+  deletion_marker.header.frame_id = "laser";
   deletion_marker.action = visualization_msgs::msg::Marker::DELETEALL;
   viz_array.markers.push_back(deletion_marker);
 
   // Create a marker point
   visualization_msgs::msg::Marker viz_points;
-  viz_points.header.frame_id = "base_scan";
+  viz_points.header.frame_id = "laser";
   viz_points.lifetime = rclcpp::Duration(0, 10);
   viz_points.ns = "segments";
   viz_points.type = visualization_msgs::msg::Marker::POINTS;
@@ -27,7 +27,7 @@ visualization_msgs::msg::MarkerArray create_segment_viz_points(std::vector<slg_m
 
   // Create a marker centroid
   visualization_msgs::msg::Marker viz_centroids;
-  viz_centroids.header.frame_id = "base_scan";
+  viz_centroids.header.frame_id = "laser";
   viz_centroids.lifetime = rclcpp::Duration(0, 10);
   viz_centroids.ns = "centroids";
   viz_centroids.type = visualization_msgs::msg::Marker::CUBE;
@@ -36,7 +36,7 @@ visualization_msgs::msg::MarkerArray create_segment_viz_points(std::vector<slg_m
 
   // Create a marker id text
   visualization_msgs::msg::Marker viz_text;
-  viz_text.header.frame_id = "base_scan";
+  viz_text.header.frame_id = "laser";
   viz_text.lifetime = rclcpp::Duration(0, 10);
   viz_text.ns = "id";
   viz_text.type = visualization_msgs::msg::Marker::TEXT_VIEW_FACING;

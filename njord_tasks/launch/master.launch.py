@@ -116,7 +116,7 @@ def generate_launch_description():
         [
             odom_map_tf,
             #perception,
-            yolov8_launch,
+            #yolov8_launch,
             laser_segmentation,
             #yolo,
             njord_tasks,
