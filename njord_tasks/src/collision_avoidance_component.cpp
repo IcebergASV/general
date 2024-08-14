@@ -109,6 +109,7 @@ namespace njord_tasks
           double length = lidar_calculations::getSegmentLength(segment.points);
           if ((length >= p_obstacle_length_ - p_obstacle_length_range_) && (length >= p_obstacle_length_ + p_obstacle_length_range_))
           {
+            RCLCPP_INFO(this->get_logger(), "OBSTACLE length: %f", length);
             obstacle_cnt++;
             obstacle_segments.push_back(segment);
           }
