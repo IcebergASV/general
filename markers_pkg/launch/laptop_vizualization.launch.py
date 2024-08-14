@@ -15,7 +15,7 @@ def generate_launch_description():
     markers_pkg = get_package_share_directory("markers_pkg")
     for _ in range(4):
         markers_pkg = os.path.dirname(markers_pkg)
-    config_path = os.path.join(markers_pkg, 'src', 'general', 'markers_pkg', 'rviz', 'aug_12_maneuvering.rviz')
+    config_path = os.path.join(markers_pkg, 'src', 'general', 'markers_pkg', 'rviz', 'collision-avoidance.rviz')
 
     rviz = Node(
         package="rviz2",
