@@ -5,8 +5,8 @@
 * `pixhawk`
 * `camera`
 * `ros2 launch njord_tasks master.launch.py`
-* `ros2 launch markers_pkg laptop_vizualization.launch.py`
-* `rqt`
+* `ros2 launch markers_pkg laptop_vizualization.launch.py` - on my laptop
+* `rqt` - on my laptop
 * `ros2 run njord_tasks detection_filter`
 
 If yolo doesn't launch:

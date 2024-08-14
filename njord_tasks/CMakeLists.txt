@@ -84,6 +84,16 @@ ament_target_dependencies(libbbox_calculations
   "perception_interfaces"
 )
 
+add_library(libvisualization
+  lib/visualization.cpp
+)
+ament_target_dependencies(libvisualization
+  "slg_msgs"
+  "visualization_msgs"
+  "rclcpp"
+  "tf2_geometry_msgs"
+)
+
 ament_package()
 add_library(maneuvering_component SHARED src/maneuvering_component.cpp)
 
