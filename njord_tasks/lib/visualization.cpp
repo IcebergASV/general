@@ -5,8 +5,7 @@
 namespace visualization
 {
 
-visualization_msgs::msg::MarkerArray create_segment_viz_points(
-  std::vector<slg_msgs::msg::Segment> segment_list)
+visualization_msgs::msg::MarkerArray create_segment_viz_points(std::vector<slg_msgs::msg::Segment> segment_list)
 {
   // Create the visualization message
   visualization_msgs::msg::MarkerArray viz_array;
@@ -24,7 +23,7 @@ visualization_msgs::msg::MarkerArray create_segment_viz_points(
   viz_points.ns = "segments";
   viz_points.type = visualization_msgs::msg::Marker::POINTS;
   viz_points.action = visualization_msgs::msg::Marker::ADD;
-  viz_points.scale.x = viz_points.scale.y = 0.02;
+  viz_points.scale.x = viz_points.scale.y = 0.1;
 
   // Create a marker centroid
   visualization_msgs::msg::Marker viz_centroids;
@@ -33,7 +32,7 @@ visualization_msgs::msg::MarkerArray create_segment_viz_points(
   viz_centroids.ns = "centroids";
   viz_centroids.type = visualization_msgs::msg::Marker::CUBE;
   viz_centroids.action = visualization_msgs::msg::Marker::ADD;
-  viz_centroids.scale.x = viz_centroids.scale.y = viz_centroids.scale.z = 0.05;
+  viz_centroids.scale.x = viz_centroids.scale.y = viz_centroids.scale.z = 0.1;
 
   // Create a marker id text
   visualization_msgs::msg::Marker viz_text;

@@ -231,6 +231,7 @@ target_link_libraries(collision_avoidance_composition
 ${YAML_CPP_LIBRARIES}
 libtask_lib
 liblidar_calculations
+libvisualization
 )
 install(TARGETS
   collision_avoidance_composition

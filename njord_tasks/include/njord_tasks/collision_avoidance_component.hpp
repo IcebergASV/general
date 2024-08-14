@@ -28,13 +28,10 @@ public:
 
 private:
     void taskToExecuteCallback(const njord_tasks_interfaces::msg::StartTask::SharedPtr msg);
-    // void callback(const std_msgs::msg::Int32::SharedPtr msg);
     rcl_interfaces::msg::SetParametersResult param_callback(const std::vector<rclcpp::Parameter> &params);
     void stateCallback(const mavros_msgs::msg::State::SharedPtr msg);
     void sendFinishPnt();
     void laserSegmentCallback(const slg_msgs::msg::SegmentArray::SharedPtr msg);
-    //std_msgs::msg::ColorRGBA get_palette_color(unsigned int index);
-    visualization_msgs::msg::MarkerArray create_segment_viz_points(std::vector<slg_msgs::msg::Segment> segment_list);
     rclcpp::Subscription<slg_msgs::msg::SegmentArray>::SharedPtr laser_segments_sub_;
     rclcpp::Subscription<njord_tasks_interfaces::msg::StartTask>::SharedPtr task_to_execute_sub_;
     rclcpp::Subscription<mavros_msgs::msg::State>::SharedPtr state_sub_;
