@@ -18,11 +18,12 @@ maneuvering:
     test_angle: 90.0
 collision_avoidance:
   ros__parameters:
-    finish_lat: -35.3635673
-    finish_lon: 149.1652413
-    min_dist: 1.0
-    max_dist:  19.0
+    finish_lat: -85.3635673
+    finish_lon: 3.1652413
+    min_dist: 0.01
+    max_dist:  5.0
     fov: 20.0
     obstacle_length: 2.0
-    obstacle_length_range: 0.2
+    obstacle_length_range: 0.5
+    mode_when_obstacles: 0 # 0 for hold, 1 for loiter, 2 for manual
 

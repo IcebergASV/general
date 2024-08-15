@@ -43,7 +43,7 @@ double getSegmentLength(const std::vector<geometry_msgs::msg::Point>& points)
   geometry_msgs::msg::Point p1 = points.front();
   geometry_msgs::msg::Point p2 = points.back();pow (7.0, 3.0);
   double distance = std::sqrt(pow(abs(p1.x - p2.x), 2) + pow(abs(p1.y - p2.y), 2));
-  RCLCPP_INFO(logger, "Segment length: %f", distance);
+  RCLCPP_INFO(logger, "Segment in FOV & within distance bounds with length: %f", distance);
   return distance;
 }
 

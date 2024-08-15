@@ -7,6 +7,7 @@
 #include "mavros_msgs/srv/set_mode.hpp"
 #include <mavros_msgs/msg/state.hpp>
 #include <chrono>
+#include <string>
 #include "geographic_msgs/msg/geo_pose_stamped.hpp"
 #include "njord_tasks_interfaces/msg/start_task.hpp"
 #include "slg_msgs/msg/segment_array.hpp"
@@ -48,6 +49,7 @@ private:
     double p_fov_;
     double p_obstacle_length_;
     double p_obstacle_length_range_;
+    int p_mode_when_obstacles_;
 
     bool in_guided_;
     bool start_task_;
@@ -57,8 +59,10 @@ private:
     enum States {CHECK_FOR_OBSTACLES, LOITER, SEND_FINISH_PNT}; 
     States status_;
 
+    void change_mode();
     void change_mode(const std::string &mode);
     void timerCallback();
+    std::string getModeString(int mode);
 
     template <typename T>
     void getParam(std::string param_name, T& param, T default_value, std::string desc)
