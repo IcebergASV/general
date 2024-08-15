@@ -33,7 +33,7 @@ namespace njord_tasks
     obstacle_viz_points_pub_ = this->create_publisher<visualization_msgs::msg::MarkerArray>("njord_tasks/obstacle_visualization", 10);
     start_task_ = false;
     obstacles_ = false;
-    prev_in_hold_ = false;
+    prev_in_loiter_ = false;
 
     status_ = States::SEND_FINISH_PNT;
   }
@@ -150,23 +150,23 @@ namespace njord_tasks
           RCLCPP_INFO(this->get_logger(), "Checking for obstacles");
           if (obstacles_)
           {
-            if (prev_in_hold_)
+            if (prev_in_loiter_)
             {
-              RCLCPP_INFO(this->get_logger(), "Obstacle(s) still detected, remaining in HOLD");
+              RCLCPP_INFO(this->get_logger(), "Obstacle(s) still detected, remaining in LOITER");
             }
             else {
-              RCLCPP_INFO(this->get_logger(), "Obstacle(s) detected, changing mode to HOLD");
-              change_mode("HOLD");              
+              RCLCPP_INFO(this->get_logger(), "Obstacle(s) detected, changing mode to LOITER");
+              change_mode("LOITER");              
             }
 
-            status_ = States::HOLD;
+            status_ = States::LOITER;
           }
           else
           {
-            if (prev_in_hold_)
+            if (prev_in_loiter_)
             {
               RCLCPP_INFO(this->get_logger(), "No obstacles detected, setting mode to GUIDED and resending finish point");
-              prev_in_hold_ = false;
+              prev_in_loiter_ = false;
               change_mode("GUIDED");
               status_ = States::SEND_FINISH_PNT;
             }
@@ -175,12 +175,12 @@ namespace njord_tasks
           }
           break;
         }
-        case States::HOLD:
+        case States::LOITER:
         {
 
-          RCLCPP_INFO(this->get_logger(), "In hold"); // TODO check we are actually in hold
+          RCLCPP_INFO(this->get_logger(), "In loiter"); // TODO check we are actually in loiter
           wait();
-          prev_in_hold_ = true;
+          prev_in_loiter_ = true;
           status_ = States::CHECK_FOR_OBSTACLES;
           break;
         }

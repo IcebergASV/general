@@ -52,9 +52,9 @@ private:
     bool in_guided_;
     bool start_task_;
     bool obstacles_;
-    bool prev_in_hold_;
+    bool prev_in_loiter_;
 
-    enum States {CHECK_FOR_OBSTACLES, HOLD, SEND_FINISH_PNT}; 
+    enum States {CHECK_FOR_OBSTACLES, LOITER, SEND_FINISH_PNT}; 
     States status_;
 
     void change_mode(const std::string &mode);
