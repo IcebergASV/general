@@ -20,6 +20,7 @@ namespace njord_tasks
     CollisionAvoidance::getParam<double>("fov", p_fov_, 0, " ");
     CollisionAvoidance::getParam<double>("obstacle_length", p_obstacle_length_, 0.0, " ");
     CollisionAvoidance::getParam<double>("obstacle_length_range", p_obstacle_length_range_, 0.0, " ");
+    CollisionAvoidance::getParam<int>("mode_when_obstacles", p_mode_when_obstacles_, 0, " ");
     
     on_set_parameters_callback_handle_ = this->add_on_set_parameters_callback(std::bind(&CollisionAvoidance::param_callback, this, std::placeholders::_1));
 
@@ -49,6 +50,7 @@ namespace njord_tasks
     else if (params[0].get_name() == "fov") { p_fov_ = params[0].as_double(); }
     else if (params[0].get_name() == "obstacle_length") { p_obstacle_length_ = params[0].as_double(); }
     else if (params[0].get_name() == "obstacle_length_range") { p_obstacle_length_range_ = params[0].as_double(); }
+    else if (params[0].get_name() == "mode_when_obstacles") { p_mode_when_obstacles_ = params[0].as_int(); }
 
 
     else {
@@ -68,6 +70,42 @@ namespace njord_tasks
     return;
   }
 
+  std::string CollisionAvoidance::getModeString(int mode){
+    if (mode == 0)
+    {
+      return "HOLD";
+    }
+    else if (mode == 1)
+    {
+      return "LOITER";
+    }
+    else if (mode ==2)
+    {
+      return "MANUAL";
+    }
+    RCLCPP_WARN(this->get_logger(), "Invalid mode, must be int between 0-2");
+    return "ERROR";
+  }
+
+  void CollisionAvoidance::change_mode()
+  {
+    // Create a request
+    auto request = std::make_shared<mavros_msgs::srv::SetMode::Request>();
+    request->base_mode = 0; // Keep base mode unchanged
+    
+    request->custom_mode = getModeString(p_mode_when_obstacles_);
+
+    // Asynchronously send the request and handle the response
+    auto future = set_mode_client_->async_send_request(request, 
+      [this](rclcpp::Client<mavros_msgs::srv::SetMode>::SharedFuture future) {
+          auto response = future.get();
+          if (response->mode_sent) {
+              RCLCPP_INFO(this->get_logger(), "Mode Changed: %i", response->mode_sent);
+          } else {
+              RCLCPP_ERROR(this->get_logger(), "Failed to change mode");
+          }
+      });
+  }
   void CollisionAvoidance::change_mode(const std::string &mode)
   {
     // Create a request
@@ -107,7 +145,7 @@ namespace njord_tasks
         if (lidar_calculations::segmentInFOV(segment.points, p_min_dist_, p_max_dist_, p_fov_))
         {
           double length = lidar_calculations::getSegmentLength(segment.points);
-          if ((length >= p_obstacle_length_ - p_obstacle_length_range_) && (length >= p_obstacle_length_ + p_obstacle_length_range_))
+          if ((length >= (p_obstacle_length_ - p_obstacle_length_range_)) && (length <= p_obstacle_length_ + p_obstacle_length_range_))
           {
             RCLCPP_INFO(this->get_logger(), "OBSTACLE length: %f", length);
             obstacle_cnt++;
@@ -152,11 +190,11 @@ namespace njord_tasks
           {
             if (prev_in_loiter_)
             {
-              RCLCPP_INFO(this->get_logger(), "Obstacle(s) still detected, remaining in LOITER");
+              RCLCPP_INFO(this->get_logger(), "Obstacle(s) still detected, remaining in %s", getModeString(p_mode_when_obstacles_).c_str());
             }
             else {
-              RCLCPP_INFO(this->get_logger(), "Obstacle(s) detected, changing mode to LOITER");
-              change_mode("LOITER");              
+              RCLCPP_INFO(this->get_logger(), "Obstacle(s) detected, changing mode to %s", getModeString(p_mode_when_obstacles_).c_str());
+              change_mode();              
             }
 
             status_ = States::LOITER;
@@ -178,7 +216,7 @@ namespace njord_tasks
         case States::LOITER:
         {
 
-          RCLCPP_INFO(this->get_logger(), "In loiter"); // TODO check we are actually in loiter
+          RCLCPP_INFO(this->get_logger(), "In %s", getModeString(p_mode_when_obstacles_).c_str()); // TODO check we are actually in the correct mode
           wait();
           prev_in_loiter_ = true;
           status_ = States::CHECK_FOR_OBSTACLES;

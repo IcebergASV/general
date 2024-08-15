@@ -20,10 +20,11 @@ maneuvering:
     finish_lon: 10.25413
 collision_avoidance:
   ros__parameters:
-    finish_lat: 63.26445
-    finish_lon: 10.25413
-    min_dist: 1.0
-    max_dist:  19.0
-    fov: 20.0
+    finish_lat: 63.44090
+    finish_lon: 10.42370
+    min_dist: 0.01
+    max_dist:  4.0
+    fov: 30.0 # +/- from 90 degrees on each side, i.e. if fov = 20, fov is from 70 to 110
     obstacle_length: 2.0
-    obstacle_length_range: 0.2
+    obstacle_length_range: 0.5
+    mode_when_obstacles: 1 # 0 for hold, 1 for loiter, 2 for manual
