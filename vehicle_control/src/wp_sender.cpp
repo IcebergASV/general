@@ -45,6 +45,17 @@ class WaypointSender : public rclcpp::Node
           RCLCPP_WARN(this->get_logger(), "Failed to get 'use_local_wp' parameter");
         }
 
+        this->declare_parameter<double>("dist", 0.0);
+        if (this->get_parameter("dist", p_dist_))
+        {
+          // Log retrieved values
+          RCLCPP_INFO(this->get_logger(), "Sending WP %f m ahead", p_dist_);
+        }
+        else
+        {
+          RCLCPP_WARN(this->get_logger(), "Failed to get 'dist' parameter");
+        }
+
         in_guided_ = false;
         previous_guided_state_ = false;
 
@@ -104,7 +115,7 @@ class WaypointSender : public rclcpp::Node
       geometry_msgs::msg::PoseStamped relative_position; 
       relative_position.header = local_position.header;
       double x = 0;
-      double y = 10;
+      double y = p_dist_;
       relative_position.pose.position.x = y;
       relative_position.pose.position.y = -x;
       
@@ -163,6 +174,7 @@ class WaypointSender : public rclcpp::Node
     bool in_guided_;
     bool previous_guided_state_;
     bool use_local_wp;
+    double p_dist_;
     int wp_reached_counter;
     int wp_reached_max_count;
 
