@@ -22,7 +22,7 @@ collision_avoidance:
     finish_lon: 3.1652413
     min_dist: 0.01
     max_dist:  5.0
-    fov: 20.0
+    fov: 20.0 # +/- from 90 degrees on each side, i.e. if fov = 20, fov is from 70 to 110
     obstacle_length: 2.0
     obstacle_length_range: 0.5
     mode_when_obstacles: 0 # 0 for hold, 1 for loiter, 2 for manual
