@@ -23,7 +23,7 @@ collision_avoidance:
     finish_lat: 63.44090
     finish_lon: 10.42370
     min_dist: 0.01
-    max_dist:  4.0
+    max_dist:  5.0
     fov: 30.0 # +/- from 90 degrees on each side, i.e. if fov = 20, fov is from 70 to 110
     obstacle_length: 2.0
     obstacle_length_range: 0.5
