@@ -33,7 +33,7 @@ class WaypointSender : public rclcpp::Node
         local_waypoint_publisher = this->create_publisher<geometry_msgs::msg::PoseStamped>("/mavros/setpoint_position/local", 10);
         global_waypoint_publisher = this->create_publisher<geographic_msgs::msg::GeoPoseStamped>("/mavros/setpoint_position/global", 10);
 
-        this->declare_parameter<bool>("use_local_wp", false);
+        this->declare_parameter<bool>("use_local_wp", true);
 
         if (this->get_parameter("use_local_wp", use_local_wp))
         {
@@ -49,7 +49,7 @@ class WaypointSender : public rclcpp::Node
         previous_guided_state_ = false;
 
         wp_reached_counter = 0;
-        wp_reached_max_count = 2;
+        wp_reached_max_count = 0;
     }
 
   private:
@@ -66,7 +66,7 @@ class WaypointSender : public rclcpp::Node
           }
           else
           {
-            publish_global_waypoint();
+            //publish_global_waypoint();
           }
         }
         else
@@ -87,8 +87,8 @@ class WaypointSender : public rclcpp::Node
 
       if (wp_reached_counter < wp_reached_max_count && msg.wp_seq == 0)
       {
-        //publish_local_waypoint();
-        publish_global_waypoint();
+        publish_local_waypoint();
+        //publish_global_waypoint();
         wp_reached_counter++;
       }
       else
@@ -103,8 +103,8 @@ class WaypointSender : public rclcpp::Node
       // Create a new waypoint
       geometry_msgs::msg::PoseStamped relative_position; 
       relative_position.header = local_position.header;
-      double x = 3;
-      double y = -3;
+      double x = 0;
+      double y = 10;
       relative_position.pose.position.x = y;
       relative_position.pose.position.y = -x;
       
