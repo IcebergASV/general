@@ -236,3 +236,31 @@ libvisualization
 install(TARGETS
   collision_avoidance_composition
   DESTINATION lib/${PROJECT_NAME})
+add_library(wp_sender_component SHARED src/wp_sender_component.cpp)
+target_compile_definitions(wp_sender_component PRIVATE "COMPOSITION_BUILDING_DLL")
+ament_target_dependencies(wp_sender_component
+  "rclcpp"
+  "rclcpp_components"
+  "std_msgs"
+  "mavros_msgs"
+  "geometry_msgs"
+  "geographic_msgs"
+  "tf2_geometry_msgs")
+rclcpp_components_register_nodes(wp_sender_component "njord_tasks::WPSender")
+set(node_plugins "njord_tasks::WPSender;$<TARGET_FILE:wp_sender_component>\n")
+install(TARGETS
+  wp_sender_component
+  ARCHIVE DESTINATION lib
+  LIBRARY DESTINATION lib
+  RUNTIME DESTINATION bin)
+
+# Add executable for wp_sender
+add_executable(wp_sender_composition
+  src/wp_sender_composition.cpp)
+target_link_libraries(wp_sender_composition
+wp_sender_component)
+ament_target_dependencies(wp_sender_composition
+  rclcpp)
+install(TARGETS
+  wp_sender_composition
+  DESTINATION lib/${PROJECT_NAME})

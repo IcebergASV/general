@@ -1,4 +1,6 @@
 
 waypoint_sender:
   ros__parameters:
-    use_local_wp: false #false implies global waypoint
+    use_local_wp: true #false implies global waypoint
+    dist: 7.4
+

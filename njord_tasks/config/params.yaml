@@ -28,3 +28,6 @@ collision_avoidance:
     obstacle_length: 2.0
     obstacle_length_range: 0.5
     mode_when_obstacles: 1 # 0 for hold, 1 for loiter, 2 for manual
+wp_sender:
+  ros__parameters:
+    dist: 11.0
