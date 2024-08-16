@@ -33,7 +33,7 @@ class WaypointSender : public rclcpp::Node
         local_waypoint_publisher = this->create_publisher<geometry_msgs::msg::PoseStamped>("/mavros/setpoint_position/local", 10);
         global_waypoint_publisher = this->create_publisher<geographic_msgs::msg::GeoPoseStamped>("/mavros/setpoint_position/global", 10);
 
-        this->declare_parameter<bool>("use_local_wp", false);
+        this->declare_parameter<bool>("use_local_wp", true);
 
         if (this->get_parameter("use_local_wp", use_local_wp))
         {
@@ -45,11 +45,22 @@ class WaypointSender : public rclcpp::Node
           RCLCPP_WARN(this->get_logger(), "Failed to get 'use_local_wp' parameter");
         }
 
+        this->declare_parameter<double>("dist", 0.0);
+        if (this->get_parameter("dist", p_dist_))
+        {
+          // Log retrieved values
+          RCLCPP_INFO(this->get_logger(), "Sending WP %f m ahead", p_dist_);
+        }
+        else
+        {
+          RCLCPP_WARN(this->get_logger(), "Failed to get 'dist' parameter");
+        }
+
         in_guided_ = false;
         previous_guided_state_ = false;
 
         wp_reached_counter = 0;
-        wp_reached_max_count = 2;
+        wp_reached_max_count = 0;
     }
 
   private:
@@ -66,7 +77,7 @@ class WaypointSender : public rclcpp::Node
           }
           else
           {
-            publish_global_waypoint();
+            //publish_global_waypoint();
           }
         }
         else
@@ -87,8 +98,8 @@ class WaypointSender : public rclcpp::Node
 
       if (wp_reached_counter < wp_reached_max_count && msg.wp_seq == 0)
       {
-        //publish_local_waypoint();
-        publish_global_waypoint();
+        publish_local_waypoint();
+        //publish_global_waypoint();
         wp_reached_counter++;
       }
       else
@@ -103,8 +114,8 @@ class WaypointSender : public rclcpp::Node
       // Create a new waypoint
       geometry_msgs::msg::PoseStamped relative_position; 
       relative_position.header = local_position.header;
-      double x = 3;
-      double y = -3;
+      double x = 0;
+      double y = p_dist_;
       relative_position.pose.position.x = y;
       relative_position.pose.position.y = -x;
       
@@ -163,6 +174,7 @@ class WaypointSender : public rclcpp::Node
     bool in_guided_;
     bool previous_guided_state_;
     bool use_local_wp;
+    double p_dist_;
     int wp_reached_counter;
     int wp_reached_max_count;
 
