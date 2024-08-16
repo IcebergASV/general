@@ -16,8 +16,8 @@ maneuvering:
     wait_time: 1.0 # seconds
     testing_angles: 0
     test_angle: 90.0
-    finish_lat: 63.26445
-    finish_lon: 10.25413
+    finish_lat: 63.4411718
+    finish_lon: 10.4237096
 collision_avoidance:
   ros__parameters:
     finish_lat: 63.44090
@@ -28,3 +28,4 @@ collision_avoidance:
     obstacle_length: 2.0
     obstacle_length_range: 0.5
     mode_when_obstacles: 1 # 0 for hold, 1 for loiter, 2 for manual
+
