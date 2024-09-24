@@ -58,3 +58,18 @@ ros2 param set /mavros/setpoint_attitude reverse_throttle true
 ros2 topic pub /mavros/setpoint_attitude/thrust std_msgs/msg/Float32 '{data: 0.5}'
 `
 
+## Waypoints
+
+ros2 topic pub /mavros/setpoint_position/global sensor_msgs/msg/NavSatFix '{latitude: 63.4412662, longitude: 10.4242176, altitude: 500.0}'
+
+ros2 topic pub /mavros/setpoint_position/global sensor_msgs/msg/NavSatFix '{latitude: 47.397742, longitude: 8.545593, altitude: 500.0}'
+
+ros2 topic pub /mavros/setpoint_position/global sensor_msgs/msg/NavSatFix '{latitude: 47.397742, longitude: 8.545593, altitude: 500.0}'
+
+ros2 topic pub /mavros/setpoint_position/global sensor_msgs/msg/NavSatFix '{latitude: 47.397742, longitude: 8.545593, altitude: 500.0}'
+
+## rpi
+
+ssh pi@20.20.0.2
+cd ros2_ws
+(CONTROL R) ros2 launch (TAB)
