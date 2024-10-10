@@ -32,7 +32,9 @@ namespace njord_tasks
     Maneuvering::getParam<double>("finish_lat", p_finish_lat_, 0.0, "Finish latitude");
     Maneuvering::getParam<double>("finish_lon", p_finish_lon_, 0.0, "Finish longitude");
     Maneuvering::getStringParam("red_buoy_label", p_red_buoy_str_, "red_buoy", "Red buoy label");
-    Maneuvering::getStringParam("green_buoy_label", p_green_buoy_str_, "green_buoy", "Gren buoy label");
+    Maneuvering::getStringParam("green_buoy_label", p_green_buoy_str_, "green_buoy", "Green buoy label");
+    Maneuvering::getStringParam("second_red_buoy_label", p_second_red_buoy_str_, "red_buoy", "Additional red buoy label");
+    Maneuvering::getStringParam("second_green_buoy_label", p_second_green_buoy_str_, "green_buoy", "Additional green buoy label");
 
     on_set_parameters_callback_handle_ = this->add_on_set_parameters_callback(std::bind(&Maneuvering::param_callback, this, std::placeholders::_1));
 
@@ -59,6 +61,8 @@ namespace njord_tasks
     else if (params[0].get_name() == "finish_lon") { p_finish_lon_ = params[0].as_double(); }
     else if (params[0].get_name() == "red_buoy_label") { p_red_buoy_str_ = params[0].as_string(); }
     else if (params[0].get_name() == "green_buoy_label") { p_green_buoy_str_ = params[0].as_string(); }
+    else if (params[0].get_name() == "second_red_buoy_label") { p_second_red_buoy_str_ = params[0].as_string(); }
+    else if (params[0].get_name() == "second_green_buoy_label") { p_second_green_buoy_str_ = params[0].as_string(); }
     else {
       RCLCPP_ERROR(this->get_logger(), "Invalid Param");
       result.successful = false;

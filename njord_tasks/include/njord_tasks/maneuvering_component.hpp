@@ -61,10 +61,10 @@ private:
     double p_test_angle_;
     double p_finish_lat_;
     double p_finish_lon_;
-
-
     std::string p_red_buoy_str_;
     std::string p_green_buoy_str_;
+    std::string p_second_red_buoy_str_;
+    std::string p_second_green_buoy_str_;
 
     enum States {CHECK_FOR_BUOYS, HEAD_TO_FINISH, MANEUVER}; 
     States status_;
