@@ -35,7 +35,7 @@ private:
     void sendFinishPnt();
     void wait();
     void wpReachedCallback(const mavros_msgs::msg::WaypointReached msg);
-    std::vector<yolov8_msgs::msg::Detection> filterAndSortLeftToRight(const yolov8_msgs::msg::DetectionArray detection_array, const std::string& class_name);
+    std::vector<yolov8_msgs::msg::Detection> filterAndSortLeftToRight(const yolov8_msgs::msg::DetectionArray detection_array, const std::string& class_name1, const std::string& class_name2);
     void getWPFromBuoys(geometry_msgs::msg::PoseStamped& wp);
     bool hasDesiredDetections(const yolov8_msgs::msg::DetectionArray& detection_array);
 

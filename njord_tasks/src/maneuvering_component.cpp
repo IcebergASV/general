@@ -116,12 +116,12 @@ namespace njord_tasks
     wp_reached_ = true;
   }
 
-  std::vector<yolov8_msgs::msg::Detection> Maneuvering::filterAndSortLeftToRight(const yolov8_msgs::msg::DetectionArray detection_array, const std::string& class_name)
+  std::vector<yolov8_msgs::msg::Detection> Maneuvering::filterAndSortLeftToRight(const yolov8_msgs::msg::DetectionArray detection_array, const std::string& class_name1, const std::string& class_name2)
   {
     std::vector<yolov8_msgs::msg::Detection> filtered_detections;
 
     for (const auto& detection : detection_array.detections) {
-        if (detection.class_name == class_name) {
+        if (detection.class_name == class_name1 || detection.class_name == class_name2) {
             filtered_detections.push_back(detection);
         }
     }
@@ -140,7 +140,7 @@ namespace njord_tasks
       // Iterate through the detections
       for (const auto& detection : detection_array.detections) {
           // Check if the class name is either "red_buoy" or "green_buoy"
-          if (detection.class_name == p_red_buoy_str_ || detection.class_name == p_green_buoy_str_) {
+          if (detection.class_name == p_red_buoy_str_ || detection.class_name == p_green_buoy_str_ || detection.class_name == p_second_red_buoy_str_ || detection.class_name == p_second_green_buoy_str_) {
               return true; // Return true if a match is found
           }
       }
@@ -150,8 +150,8 @@ namespace njord_tasks
   void Maneuvering::getWPFromBuoys(geometry_msgs::msg::PoseStamped& wp)
   {
 
-    std::vector<yolov8_msgs::msg::Detection> red_buoys = filterAndSortLeftToRight(bboxes_, p_red_buoy_str_);
-    std::vector<yolov8_msgs::msg::Detection> green_buoys = filterAndSortLeftToRight(bboxes_, p_green_buoy_str_);
+    std::vector<yolov8_msgs::msg::Detection> red_buoys = filterAndSortLeftToRight(bboxes_, p_red_buoy_str_, p_second_red_buoy_str_);
+    std::vector<yolov8_msgs::msg::Detection> green_buoys = filterAndSortLeftToRight(bboxes_, p_green_buoy_str_, p_second_green_buoy_str_);
 
     if ((red_buoys.size() == 0 && green_buoys.size() == 0) && !(p_testing_angles_ == 1))
     {
