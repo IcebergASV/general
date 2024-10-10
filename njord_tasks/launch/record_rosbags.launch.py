@@ -23,7 +23,7 @@ def generate_launch_description():
 
     now = datetime.now()
     month_day_folder = now.strftime('%m_%d_rosbags')
-    datetime_folder = now.strftime('%Y%m%d_%H%M%S')
+    datetime_folder = now.strftime('%Y-%m-%d_%H-%M-%S')
 
     home_directory = os.path.expanduser('~')
     base_dir = os.path.join(home_directory, month_day_folder)
@@ -31,8 +31,8 @@ def generate_launch_description():
 
     os.makedirs(date_time_dir, exist_ok=True)
 
-    sensors_bag_name = os.path.join(date_time_dir, f"rosbag_sensors_{now.strftime('%Y%m%d_%H%M%S')}.bag")
-    logic_bag_name = os.path.join(date_time_dir, f"rosbag_logic_{now.strftime('%Y%m%d_%H%M%S')}.bag")
+    sensors_bag_name = os.path.join(date_time_dir, f"rosbag_sensors_{now.strftime('%Y-%m-%d_%H-%M-%S')}.bag")
+    logic_bag_name = os.path.join(date_time_dir, f"rosbag_logic_{now.strftime('%Y-%m-%d_%H-%M-%S')}.bag")
 
     rosbag_sensors_command = ['ros2', 'bag', 'record'] + sensor_topics + ['-o', sensors_bag_name]
     rosbag_logic_command = ['ros2', 'bag', 'record'] + robot_logic_topics + ['-o', logic_bag_name]
