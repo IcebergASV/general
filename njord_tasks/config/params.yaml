@@ -18,6 +18,10 @@ maneuvering:
     test_angle: 90.0
     finish_lat: 63.4411718
     finish_lon: 10.4237096
+    red_buoy_label: "hello"
+    green_buoy_label: "hello"
+    red_buoy_label: "hello"
+    green_buoy_label: "hello"
 collision_avoidance:
   ros__parameters:
     finish_lat: 63.44090

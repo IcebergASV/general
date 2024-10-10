@@ -62,8 +62,9 @@ private:
     double p_finish_lat_;
     double p_finish_lon_;
 
-    const std::string red_buoy_str_ = "red_buoy";
-    const std::string green_buoy_str_ = "Green";
+
+    std::string p_red_buoy_str_;
+    std::string p_green_buoy_str_;
 
     enum States {CHECK_FOR_BUOYS, HEAD_TO_FINISH, MANEUVER}; 
     States status_;
@@ -91,6 +92,18 @@ private:
 
       return;
     }
+
+    void getStringParam(std::string param_name, std::string& param, std::string default_value, std::string desc)
+    {
+      auto param_desc = rcl_interfaces::msg::ParameterDescriptor{};
+      param_desc.description = desc;
+      this->declare_parameter<std::string>(param_name, default_value, param_desc);
+      this->get_parameter(param_name, param);
+      std::string param_log_output = param_name + ": " + param;
+      RCLCPP_INFO(this->get_logger(), param_log_output.c_str()); 
+      return;
+    }
+
 };
 
 } // namespace njord_tasks

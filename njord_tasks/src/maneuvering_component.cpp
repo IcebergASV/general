@@ -31,6 +31,8 @@ namespace njord_tasks
     Maneuvering::getParam<double>("test_angle", p_test_angle_, 0.0, "");
     Maneuvering::getParam<double>("finish_lat", p_finish_lat_, 0.0, "Finish latitude");
     Maneuvering::getParam<double>("finish_lon", p_finish_lon_, 0.0, "Finish longitude");
+    Maneuvering::getStringParam("red_buoy_label", p_red_buoy_str_, "red_buoy", "Red buoy label");
+    Maneuvering::getStringParam("green_buoy_label", p_green_buoy_str_, "green_buoy", "Gren buoy label");
 
     on_set_parameters_callback_handle_ = this->add_on_set_parameters_callback(std::bind(&Maneuvering::param_callback, this, std::placeholders::_1));
 
@@ -55,6 +57,8 @@ namespace njord_tasks
     else if (params[0].get_name() == "test_angle") { p_test_angle_ = params[0].as_double(); }
     else if (params[0].get_name() == "finish_lat") { p_finish_lat_ = params[0].as_double(); }
     else if (params[0].get_name() == "finish_lon") { p_finish_lon_ = params[0].as_double(); }
+    else if (params[0].get_name() == "red_buoy_label") { p_red_buoy_str_ = params[0].as_string(); }
+    else if (params[0].get_name() == "green_buoy_label") { p_green_buoy_str_ = params[0].as_string(); }
     else {
       RCLCPP_ERROR(this->get_logger(), "Invalid Param");
       result.successful = false;
@@ -132,7 +136,7 @@ namespace njord_tasks
       // Iterate through the detections
       for (const auto& detection : detection_array.detections) {
           // Check if the class name is either "red_buoy" or "green_buoy"
-          if (detection.class_name == red_buoy_str_ || detection.class_name == green_buoy_str_) {
+          if (detection.class_name == p_red_buoy_str_ || detection.class_name == p_green_buoy_str_) {
               return true; // Return true if a match is found
           }
       }
@@ -142,8 +146,8 @@ namespace njord_tasks
   void Maneuvering::getWPFromBuoys(geometry_msgs::msg::PoseStamped& wp)
   {
 
-    std::vector<yolov8_msgs::msg::Detection> red_buoys = filterAndSortLeftToRight(bboxes_, red_buoy_str_);
-    std::vector<yolov8_msgs::msg::Detection> green_buoys = filterAndSortLeftToRight(bboxes_, green_buoy_str_);
+    std::vector<yolov8_msgs::msg::Detection> red_buoys = filterAndSortLeftToRight(bboxes_, p_red_buoy_str_);
+    std::vector<yolov8_msgs::msg::Detection> green_buoys = filterAndSortLeftToRight(bboxes_, p_green_buoy_str_);
 
     if ((red_buoys.size() == 0 && green_buoys.size() == 0) && !(p_testing_angles_ == 1))
     {
