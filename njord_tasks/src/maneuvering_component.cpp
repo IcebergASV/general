@@ -213,9 +213,9 @@ namespace njord_tasks
             bboxes_updated_ = false;
             local_pose_updated_ = false;
           }
-          else{
-            status_ = States::HEAD_TO_FINISH;
-          }
+          // else{
+          //   status_ = States::HEAD_TO_FINISH;
+          // }
           break;
         }
 
