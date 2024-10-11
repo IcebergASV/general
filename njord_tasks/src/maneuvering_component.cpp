@@ -100,7 +100,7 @@ namespace njord_tasks
   {
     geographic_msgs::msg::GeoPoseStamped finish_wp = task_lib::getGlobalWPMsg(p_finish_lat_, p_finish_lon_);
     global_wp_pub_->publish(finish_wp);
-    RCLCPP_INFO(this->get_logger(), "Finish WP: lat=%f, lon=%f", finish_wp.pose.position.latitude, finish_wp.pose.position.longitude);
+    RCLCPP_DEBUG(this->get_logger(), "Finish WP: lat=%f, lon=%f", finish_wp.pose.position.latitude, finish_wp.pose.position.longitude);
   }
 
   void Maneuvering::wait()

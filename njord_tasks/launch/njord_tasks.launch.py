@@ -14,19 +14,19 @@ def generate_launch_description():
 
     log_level_launch_arg = DeclareLaunchArgument(
         'log_level',
-        default_value='info'
+        default_value='debug'
     )
 
     return LaunchDescription([
         log_level_launch_arg,
-        # Node(
-        #     package='njord_tasks',
-        #     executable='task_composition',
-        #     namespace='',
-        #     output='screen',
-        #     parameters=[config], 
-        #     arguments=['--ros-args', '--log-level', LaunchConfiguration('log_level')]
-        # ),
+        Node(
+            package='njord_tasks',
+            executable='task_composition',
+            namespace='',
+            output='screen',
+            parameters=[config], 
+            arguments=['--ros-args', '--log-level', LaunchConfiguration('log_level')]
+        ),
         Node(
             package='njord_tasks',
             executable='maneuvering_composition',
