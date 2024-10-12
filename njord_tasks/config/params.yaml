@@ -18,10 +18,10 @@ maneuvering:
     test_angle: 90.0
     finish_lat: 63.4411718
     finish_lon: 10.4237096
-    red_buoy_label: "hi"
-    green_buoy_label: "how"
-    second_red_buoy_label: "are"
-    second_green_buoy_label: "you"
+    red_buoy_label: "red_buoy"
+    green_buoy_label: "green_buoy"
+    second_red_buoy_label: "black_buoy"
+    second_green_buoy_label: "yellow_buoy"
 collision_avoidance:
   ros__parameters:
     finish_lat: 63.44090
