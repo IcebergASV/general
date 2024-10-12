@@ -147,7 +147,7 @@ namespace njord_tasks
       return false; // Return false if no matches are found
   }
 
-  void Maneuvering::getWPFromBuoys(geometry_msgs::msg::PoseStamped& wp)
+  bool Maneuvering::getWPFromBuoys(geometry_msgs::msg::PoseStamped& wp)
   {
 
     std::vector<yolov8_msgs::msg::Detection> red_buoys = filterAndSortLeftToRight(bboxes_, p_red_buoy_str_, p_second_red_buoy_str_);
@@ -156,7 +156,7 @@ namespace njord_tasks
     if ((red_buoys.size() == 0 && green_buoys.size() == 0) && !(p_testing_angles_ == 1))
     {
       RCLCPP_WARN(this->get_logger(), "No red or green buoys detected"); //TODO HANDLE
-      return;
+      return false;
     }
 
     double angle;
@@ -195,7 +195,7 @@ namespace njord_tasks
     }
     angle = angle - M_PI/2;
     wp = task_lib::relativePolarToLocalCoords(p_distance_to_move_, angle, current_local_pose_);
-    return;
+    return true;
   }
 
   void Maneuvering::timerCallback()
@@ -234,9 +234,10 @@ namespace njord_tasks
         {
           RCLCPP_INFO(this->get_logger(), "Maneuvering through buoys");
           geometry_msgs::msg::PoseStamped wp;
-          getWPFromBuoys(wp);
-          local_wp_pub_->publish(wp);
-          wait();
+          if (getWPFromBuoys(wp)){
+            local_wp_pub_->publish(wp);
+            wait();
+          }
           status_ = States::CHECK_FOR_BUOYS;
           break;
         }
