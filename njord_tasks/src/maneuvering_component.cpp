@@ -207,7 +207,7 @@ namespace njord_tasks
         case States::CHECK_FOR_BUOYS:
         {
           RCLCPP_INFO(this->get_logger(), "Checking for buoys");
-          if ((bboxes_updated_ && local_pose_updated_) || (p_testing_angles_ == 1)) 
+          if ((bboxes_updated_ && local_pose_updated_) || (p_testing_angles_ == 1)) // todo add new state - don't go to maneuver until you have the specific detections you want. 
           {
             status_ = States::MANEUVER;
             bboxes_updated_ = false;
