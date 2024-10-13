@@ -19,7 +19,7 @@ namespace njord_tasks
     task_completion_status_pub_ = this->create_publisher<std_msgs::msg::Int32>("njord_tasks/task_completion_status", 10);
     global_wp_pub_ = this->create_publisher<geographic_msgs::msg::GeoPoseStamped>("mavros/setpoint_position/global", 10);
     local_wp_pub_ = this->create_publisher<geometry_msgs::msg::PoseStamped>("mavros/setpoint_position/local", 10);
-    timer_ = this->create_wall_timer(500ms, std::bind(&Maneuvering::timerCallback, this));
+    timer_ = this->create_wall_timer(50ms, std::bind(&Maneuvering::timerCallback, this));
 
     Maneuvering::getParam<double>("distance_to_move", p_distance_to_move_, 0.0, "Sets a wp this far away");
     Maneuvering::getParam<double>("angle_from_buoys", p_angle_from_buoys_, 0.0, "Angles the wp this far from a single buoy");
@@ -41,7 +41,7 @@ namespace njord_tasks
     global_pose_updated_ = false;
     local_pose_updated_ = false;
     bboxes_updated_ = false;
-    start_task_ = false;
+    start_task_ = true;
     wp_reached_ = false;
   }
 
@@ -93,6 +93,123 @@ namespace njord_tasks
     if (hasDesiredDetections(bboxes_)) //TODO
     {
       bboxes_updated_ = true;
+    }
+    if (start_task_)
+    {
+      switch (status_)
+      {
+        case States::STOPPED_WHILE_SEARCHING: // parameterize - don't go to this state at all in 0 secs
+        {
+          publishSearchStatus("Searching");
+          publishBehaviourStatus("Stopped");
+          if (hasDesiredDetections(bboxes_))
+          {
+            //publish wp
+            publishSearchStatus("Found");
+            geometry_msgs::msg::PoseStamped wp = getWPFromBuoys(bboxes_);
+            if (wp.pose.position.x != 0 && wp.pose.position.y != 0)
+            {
+              local_wp_pub_->publish(wp);
+            }
+            else{
+              RCLCPP_WARN(this->get_logger(), "Waypoint Empty - not publishing"); 
+            }
+
+            if (p_pause_before_searching_for_next_)
+            {
+              status_ = States::HEADING_TO_WP_WHILE_PAUSING_SEARCH;
+            }
+            else
+            {
+              resetPauseSearchTimer();
+              status_ = States::HEADING_TO_WP_WHILE_PAUSING_SEARCH;
+            }
+          else if(stop_timer_up)
+          {
+            status_ = States::RECOVERING_WHILE_SEARCHING;
+          }
+        }
+
+        case States::RECOVERING_WHILE_SEARCHING: // parameterize recovery behaviour & whether it does a recovery
+        {
+          publishSearchStatus("Searching");
+          publishBehaviourStatus("Recovering with  TODO");
+          if (hasDesiredDetections(bboxes_))
+          {
+            publishSearchStatus("Found");
+            //publish wp
+            publishSearchStatus("Found");
+            geometry_msgs::msg::PoseStamped wp = getWPFromBuoys(bboxes_);
+            if (wp.pose.position.x != 0 && wp.pose.position.y != 0)
+            {
+              local_wp_pub_->publish(wp);
+            }
+            else{
+              RCLCPP_WARN(this->get_logger(), "Waypoint Empty - not publishing"); 
+            }
+            if (p_pause_before_searching_for_next_)
+            {
+              status_ = States::HEADING_TO_WP_WHILE_PAUSING_SEARCH;
+            }
+            else
+            {
+              resetPauseSearchTimer();
+              status_ = States::HEADING_TO_WP_WHILE_PAUSING_SEARCH;
+            }
+          }
+          if(recovery_timer_up_)
+          {
+            executeRecoveryBehaviour();
+            resetRecoveryTimer();
+          }
+        }
+
+
+        case States::HEADING_TO_WP_WHILE_PAUSING_SEARCH // parameterize wait time
+        {
+          publishSearchStatus("Search Paused");
+          publishBehaviourStatus("Heading to WP #");
+          // Paused search
+          if(pause_search_timer_up_)
+          {
+            status_ = States::HEADING_TO_WP_WHILE_SEARCHING_FOR_NEW;
+          }
+          
+        }
+
+        case States::HEADING_TO_WP_WHILE_SEARCHING // parameterize wait time
+        {
+          publishSearchStatus("Searching");
+          publishBehaviourStatus("Heading to WP #");
+          if (hasDesiredDetections(bboxes_))
+          {
+            //publish wp
+            publishSearchStatus("Found");
+            geometry_msgs::msg::PoseStamped wp = getWPFromBuoys(bboxes_);
+            if (wp.pose.position.x != 0 && wp.pose.position.y != 0)
+            {
+              local_wp_pub_->publish(wp);
+            }
+            else{
+              RCLCPP_WARN(this->get_logger(), "Waypoint Empty - not publishing"); 
+            }
+
+            if (p_pause_before_searching_for_next_)
+            {
+              resetPauseSearchTimer();
+              status_ = States::HEADING_TO_WP_WHILE_PAUSING_SEARCH;
+            }
+          }
+          else if (wp_reached)
+          {
+            publishBehaviourStatus("WP # Reached");
+            if (stop_period == 0)
+              status_ = States::RECOVERING_WHILE_SEARCHING_FOR_BUOYS;
+            else
+              status_ = States::STOPPED_WHILE_SEARCHING_FOR_BUOYS;
+          }
+        }
+      }
     }
   }
 
@@ -147,7 +264,7 @@ namespace njord_tasks
       return false; // Return false if no matches are found
   }
 
-  bool Maneuvering::getWPFromBuoys(geometry_msgs::msg::PoseStamped& wp)
+  geometry_msgs::msg::PoseStamped Maneuvering::getWPFromBuoys(const yolov8_msgs::msg::DetectionArray bboxes_)
   {
 
     std::vector<yolov8_msgs::msg::Detection> red_buoys = filterAndSortLeftToRight(bboxes_, p_red_buoy_str_, p_second_red_buoy_str_);
@@ -155,8 +272,7 @@ namespace njord_tasks
 
     if ((red_buoys.size() == 0 && green_buoys.size() == 0) && !(p_testing_angles_ == 1))
     {
-      RCLCPP_WARN(this->get_logger(), "No red or green buoys detected"); //TODO HANDLE
-      return false;
+      RCLCPP_ERROR(this->get_logger(), "No target buoys detected - wp will be empty"); //TODO THROW AN ERROR - should never get here
     }
 
     double angle;
@@ -194,8 +310,8 @@ namespace njord_tasks
       RCLCPP_WARN(this->get_logger(), "Sending test angle %f", angle*180/M_PI);
     }
     angle = angle - M_PI/2;
-    wp = task_lib::relativePolarToLocalCoords(p_distance_to_move_, angle, current_local_pose_);
-    return true;
+    geometry_msgs::msg::PoseStamped wp = task_lib::relativePolarToLocalCoords(p_distance_to_move_, angle, current_local_pose_);
+    return wp;
   }
 
   void Maneuvering::timerCallback()
