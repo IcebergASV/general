@@ -3,6 +3,7 @@
 
 #include <rclcpp/rclcpp.hpp>
 #include <std_msgs/msg/int32.hpp>
+#include <std_msgs/msg/string.hpp>
 #include "njord_tasks_interfaces/msg/start_task.hpp"
 #include "geographic_msgs/msg/geo_pose_stamped.hpp"
 #include "geometry_msgs/msg/pose_stamped.hpp"
@@ -36,11 +37,15 @@ private:
     void wait();
     void wpReachedCallback(const mavros_msgs::msg::WaypointReached msg);
     std::vector<yolov8_msgs::msg::Detection> filterAndSortLeftToRight(const yolov8_msgs::msg::DetectionArray detection_array, const std::string& class_name1, const std::string& class_name2);
-    bool getWPFromBuoys(geometry_msgs::msg::PoseStamped& wp);
+    geometry_msgs::msg::PoseStamped getWPFromBuoys(const yolov8_msgs::msg::DetectionArray bboxes_);
     bool hasDesiredDetections(const yolov8_msgs::msg::DetectionArray& detection_array);
+    void setTimerDuration(double duration);
+    void onTimerExpired();
+    void publishBehaviourStatus(std::string str_msg);
+    void publishSearchStatus(std::string str_msg);
+    void executeRecoveryBehaviour();
+    void publishWPTowardsDetections();
 
-
-    rclcpp::TimerBase::SharedPtr timer_;
     rclcpp::Subscription<njord_tasks_interfaces::msg::StartTask>::SharedPtr task_to_execute_sub_;
     rclcpp::Publisher<std_msgs::msg::Int32>::SharedPtr task_completion_status_pub_;
     rclcpp::node_interfaces::OnSetParametersCallbackHandle::SharedPtr on_set_parameters_callback_handle_;
@@ -50,6 +55,10 @@ private:
     rclcpp::Publisher<geographic_msgs::msg::GeoPoseStamped>::SharedPtr global_wp_pub_;
     rclcpp::Publisher<geometry_msgs::msg::PoseStamped>::SharedPtr local_wp_pub_;
     rclcpp::Subscription<mavros_msgs::msg::WaypointReached>::SharedPtr wp_reached_sub_;
+    rclcpp::Publisher<std_msgs::msg::String>::SharedPtr status_logger_pub_;
+
+    rclcpp::TimerBase::SharedPtr timer_;
+
 
     double p_distance_to_move_;
     double p_angle_from_buoys_;
@@ -65,8 +74,11 @@ private:
     std::string p_green_buoy_str_;
     std::string p_second_red_buoy_str_;
     std::string p_second_green_buoy_str_;
+    double p_ms_to_stop_before_recovery_;
+    double p_ms_to_pause_search_;
+    double p_ms_between_recovery_actions_;
 
-    enum States {CHECK_FOR_BUOYS, HEAD_TO_FINISH, MANEUVER}; 
+    enum States {STOPPED, RECOVERING, HEADING_TO_TARGET }; 
     States status_;
 
     sensor_msgs::msg::NavSatFix current_global_pose_;
@@ -79,6 +91,8 @@ private:
     bool bboxes_updated_;
     bool start_task_;
     bool wp_reached_;
+    bool timer_expired_;
+    int wp_cnt_;
 
     template <typename T>
     void getParam(std::string param_name, T& param, T default_value, std::string desc)

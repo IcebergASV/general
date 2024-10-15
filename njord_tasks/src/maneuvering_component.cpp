@@ -19,6 +19,8 @@ namespace njord_tasks
     task_completion_status_pub_ = this->create_publisher<std_msgs::msg::Int32>("njord_tasks/task_completion_status", 10);
     global_wp_pub_ = this->create_publisher<geographic_msgs::msg::GeoPoseStamped>("mavros/setpoint_position/global", 10);
     local_wp_pub_ = this->create_publisher<geometry_msgs::msg::PoseStamped>("mavros/setpoint_position/local", 10);
+    local_wp_pub_ = this->create_publisher<geometry_msgs::msg::PoseStamped>("mavros/setpoint_position/local", 10);
+    status_logger_pub_ = this->create_publisher<std_msgs::msg::String>("/njord_tasks/maneuvering/status", 10);
     timer_ = this->create_wall_timer(50ms, std::bind(&Maneuvering::timerCallback, this));
 
     Maneuvering::getParam<double>("distance_to_move", p_distance_to_move_, 0.0, "Sets a wp this far away");
@@ -43,6 +45,7 @@ namespace njord_tasks
     bboxes_updated_ = false;
     start_task_ = true;
     wp_reached_ = false;
+    wp_cnt_ = 0;
   }
 
   rcl_interfaces::msg::SetParametersResult Maneuvering::param_callback(const std::vector<rclcpp::Parameter> &params)
@@ -87,127 +90,136 @@ namespace njord_tasks
     RCLCPP_DEBUG(this->get_logger(), "Local Pose: x: %f, y: %f", msg->pose.position.x, msg->pose.position.y);
   }
 
+  void Maneuvering::publishSearchStatus(std::string str_msg)
+  {
+    std_msgs::msg::String msg;
+    msg.data = "SEARCH STATUS: " + str_msg;
+    status_logger_pub_->publish(msg);
+  }
+  void Maneuvering::publishBehaviourStatus(std::string str_msg)
+  {
+    std_msgs::msg::String msg;
+    msg.data = "BEHAVIOUR STATUS: " + str_msg;
+    status_logger_pub_->publish(msg);
+  }
+
+  void Maneuvering::setTimerDuration(double duration)
+  {
+      timer_expired_ = false;
+
+      std::chrono::milliseconds ms = std::chrono::duration_cast<std::chrono::milliseconds>(std::chrono::duration<double, std::milli>(duration));
+      timer_ = this->create_wall_timer(
+          ms, std::bind(&Maneuvering::onTimerExpired, this));
+  }
+  void Maneuvering::onTimerExpired()
+  {
+      timer_expired_ = true;
+  }
+
+  void Maneuvering::executeRecoveryBehaviour()
+  {
+    return; // TODO
+  }
+
+  void Maneuvering::publishWPTowardsDetections()
+  {
+    wp_reached_ = false;
+    publishSearchStatus("Found");
+    geometry_msgs::msg::PoseStamped wp = getWPFromBuoys(bboxes_);
+    if (wp.pose.position.x != 0 && wp.pose.position.y != 0)
+    {
+      local_wp_pub_->publish(wp);
+      wp_cnt_++;
+    }
+    else{
+      RCLCPP_WARN(this->get_logger(), "Waypoint Empty - not publishing"); 
+    }
+
+    if (p_ms_to_pause_search_ != 0) setTimerDuration(p_ms_to_pause_search_);
+  }
+
+
   void Maneuvering::bboxCallback(const yolov8_msgs::msg::DetectionArray::SharedPtr msg)
   {
     bboxes_ = *msg;
-    if (hasDesiredDetections(bboxes_)) //TODO
-    {
-      bboxes_updated_ = true;
-    }
     if (start_task_)
     {
       switch (status_)
       {
-        case States::STOPPED_WHILE_SEARCHING: // parameterize - don't go to this state at all in 0 secs
+        case States::STOPPED: // parameterize - don't go to this state at all in 0 secs
         {
           publishSearchStatus("Searching");
           publishBehaviourStatus("Stopped");
+
           if (hasDesiredDetections(bboxes_))
           {
-            //publish wp
-            publishSearchStatus("Found");
-            geometry_msgs::msg::PoseStamped wp = getWPFromBuoys(bboxes_);
-            if (wp.pose.position.x != 0 && wp.pose.position.y != 0)
-            {
-              local_wp_pub_->publish(wp);
-            }
-            else{
-              RCLCPP_WARN(this->get_logger(), "Waypoint Empty - not publishing"); 
-            }
+            publishWPTowardsDetections();
 
-            if (p_pause_before_searching_for_next_)
-            {
-              status_ = States::HEADING_TO_WP_WHILE_PAUSING_SEARCH;
-            }
-            else
-            {
-              resetPauseSearchTimer();
-              status_ = States::HEADING_TO_WP_WHILE_PAUSING_SEARCH;
-            }
-          else if(stop_timer_up)
-          {
-            status_ = States::RECOVERING_WHILE_SEARCHING;
+            status_ = States::HEADING_TO_TARGET;
           }
-        }
-
-        case States::RECOVERING_WHILE_SEARCHING: // parameterize recovery behaviour & whether it does a recovery
-        {
-          publishSearchStatus("Searching");
-          publishBehaviourStatus("Recovering with  TODO");
-          if (hasDesiredDetections(bboxes_))
-          {
-            publishSearchStatus("Found");
-            //publish wp
-            publishSearchStatus("Found");
-            geometry_msgs::msg::PoseStamped wp = getWPFromBuoys(bboxes_);
-            if (wp.pose.position.x != 0 && wp.pose.position.y != 0)
-            {
-              local_wp_pub_->publish(wp);
-            }
-            else{
-              RCLCPP_WARN(this->get_logger(), "Waypoint Empty - not publishing"); 
-            }
-            if (p_pause_before_searching_for_next_)
-            {
-              status_ = States::HEADING_TO_WP_WHILE_PAUSING_SEARCH;
-            }
-            else
-            {
-              resetPauseSearchTimer();
-              status_ = States::HEADING_TO_WP_WHILE_PAUSING_SEARCH;
-            }
-          }
-          if(recovery_timer_up_)
+          else if(timer_expired_)
           {
             executeRecoveryBehaviour();
-            resetRecoveryTimer();
+            setTimerDuration(p_ms_between_recovery_actions_);
+            status_ = States::RECOVERING;
           }
+          break;
         }
 
-
-        case States::HEADING_TO_WP_WHILE_PAUSING_SEARCH // parameterize wait time
-        {
-          publishSearchStatus("Search Paused");
-          publishBehaviourStatus("Heading to WP #");
-          // Paused search
-          if(pause_search_timer_up_)
-          {
-            status_ = States::HEADING_TO_WP_WHILE_SEARCHING_FOR_NEW;
-          }
-          
-        }
-
-        case States::HEADING_TO_WP_WHILE_SEARCHING // parameterize wait time
+        case States::RECOVERING: // parameterize recovery behaviour & whether it does a recovery
         {
           publishSearchStatus("Searching");
-          publishBehaviourStatus("Heading to WP #");
+          publishBehaviourStatus("Recovering with TODO INSERT RECOVERY BEHAVIOUR");
           if (hasDesiredDetections(bboxes_))
           {
-            //publish wp
-            publishSearchStatus("Found");
-            geometry_msgs::msg::PoseStamped wp = getWPFromBuoys(bboxes_);
-            if (wp.pose.position.x != 0 && wp.pose.position.y != 0)
-            {
-              local_wp_pub_->publish(wp);
-            }
-            else{
-              RCLCPP_WARN(this->get_logger(), "Waypoint Empty - not publishing"); 
-            }
+            publishWPTowardsDetections();
 
-            if (p_pause_before_searching_for_next_)
+            status_ = States::HEADING_TO_TARGET;
+          }
+          if(timer_expired_)
+          {
+            executeRecoveryBehaviour();
+            setTimerDuration(p_ms_between_recovery_actions_);
+          }
+          break;
+        }
+
+        case States::HEADING_TO_TARGET: // parameterize wait time
+        {
+          if (timer_expired_)
+          {
+            publishSearchStatus("Searching");
+          }
+          else
+          {
+            publishSearchStatus("Search Paused");
+          }
+          
+          std::string str_cnt = std::to_string(wp_cnt_);
+          publishBehaviourStatus("Heading to WP " + str_cnt);
+
+          if (hasDesiredDetections(bboxes_) && timer_expired_)
+          {
+            publishWPTowardsDetections();
+          }
+          else if (wp_reached_)
+          {
+            std::string str_cnt = std::to_string(wp_cnt_);
+            publishBehaviourStatus("WP " + str_cnt + " Reached");
+
+            if (p_ms_to_stop_before_recovery_ == 0)
             {
-              resetPauseSearchTimer();
-              status_ = States::HEADING_TO_WP_WHILE_PAUSING_SEARCH;
+              executeRecoveryBehaviour();
+              setTimerDuration(p_ms_between_recovery_actions_);
+              status_ = States::RECOVERING;
+            }
+            else
+            {
+              setTimerDuration(p_ms_to_stop_before_recovery_);
+              status_ = States::STOPPED;
             }
           }
-          else if (wp_reached)
-          {
-            publishBehaviourStatus("WP # Reached");
-            if (stop_period == 0)
-              status_ = States::RECOVERING_WHILE_SEARCHING_FOR_BUOYS;
-            else
-              status_ = States::STOPPED_WHILE_SEARCHING_FOR_BUOYS;
-          }
+          break;
         }
       }
     }
@@ -316,55 +328,53 @@ namespace njord_tasks
 
   void Maneuvering::timerCallback()
   {
-    if (start_task_)
-    {
-      switch (status_)
-      {
-        case States::CHECK_FOR_BUOYS:
-        {
-          RCLCPP_INFO(this->get_logger(), "Checking for buoys");
-          if ((bboxes_updated_ && local_pose_updated_) || (p_testing_angles_ == 1)) // todo add new state - don't go to maneuver until you have the specific detections you want. 
-          {
-            status_ = States::MANEUVER;
-            bboxes_updated_ = false;
-            local_pose_updated_ = false;
-          }
-          // else{
-          //   status_ = States::HEAD_TO_FINISH;
-          // }
-          break;
-        }
+    // if (start_task_)
+    // {
+    //   switch (status_)
+    //   {
+    //     case States::CHECK_FOR_BUOYS:
+    //     {
+    //       RCLCPP_INFO(this->get_logger(), "Checking for buoys");
+    //       if ((bboxes_updated_ && local_pose_updated_) || (p_testing_angles_ == 1)) // todo add new state - don't go to maneuver until you have the specific detections you want. 
+    //       {
+    //         status_ = States::MANEUVER;
+    //         bboxes_updated_ = false;
+    //         local_pose_updated_ = false;
+    //       }
+    //       // else{
+    //       //   status_ = States::HEAD_TO_FINISH;
+    //       // }
+    //       break;
+    //     }
 
-        case States::HEAD_TO_FINISH:
-        {
-          wp_reached_ = false;
-          RCLCPP_INFO(this->get_logger(), "No buoys detected, Heading towards finish point");
+    //     case States::HEAD_TO_FINISH:
+    //     {
+    //       wp_reached_ = false;
+    //       RCLCPP_INFO(this->get_logger(), "No buoys detected, Heading towards finish point");
 
-          sendFinishPnt();
-          wait();
-          status_ = States::CHECK_FOR_BUOYS;
-          break;
-        }
+    //       sendFinishPnt();
+    //       wait();
+    //       status_ = States::CHECK_FOR_BUOYS;
+    //       break;
+    //     }
 
-        case States::MANEUVER:
-        {
-          RCLCPP_INFO(this->get_logger(), "Maneuvering through buoys");
-          geometry_msgs::msg::PoseStamped wp;
-          if (getWPFromBuoys(wp)){
-            local_wp_pub_->publish(wp);
-            wait();
-          }
-          status_ = States::CHECK_FOR_BUOYS;
-          break;
-        }
+    //     case States::MANEUVER:
+    //     {
+    //       RCLCPP_INFO(this->get_logger(), "Maneuvering through buoys");
+    //       geometry_msgs::msg::PoseStamped wp;
+    //       if (getWPFromBuoys(wp)){
+    //         local_wp_pub_->publish(wp);
+    //         wait();
+    //       }
+    //       status_ = States::CHECK_FOR_BUOYS;
+    //       break;
+    //     }
 
-        // case States::TASK_COMPLETE:
-        // {
-        //   RCLCPP_INFO_ONCE(this->get_logger(), "Maneuvering Complete!");
+    //     // case States::TASK_COMPLETE:
+    //     // {
+    //     //   RCLCPP_INFO_ONCE(this->get_logger(), "Maneuvering Complete!");
 
-        // }
-      }
-    }
+    //     // }
   }
   void Maneuvering::taskToExecuteCallback(const njord_tasks_interfaces::msg::StartTask::SharedPtr msg)
   {
