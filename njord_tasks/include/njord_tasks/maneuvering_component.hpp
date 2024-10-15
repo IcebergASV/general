@@ -34,10 +34,8 @@ private:
     void timerCallback();
     void bboxCallback(const yolov8_msgs::msg::DetectionArray::SharedPtr msg);
     void sendFinishPnt();
-    void wait();
     void wpReachedCallback(const mavros_msgs::msg::WaypointReached msg);
     std::vector<yolov8_msgs::msg::Detection> filterAndSortLeftToRight(const yolov8_msgs::msg::DetectionArray detection_array, const std::string& class_name1, const std::string& class_name2);
-    geometry_msgs::msg::PoseStamped getWPFromBuoys(const yolov8_msgs::msg::DetectionArray bboxes_);
     bool hasDesiredDetections(const yolov8_msgs::msg::DetectionArray& detection_array);
     void setTimerDuration(double duration);
     void onTimerExpired();
@@ -77,6 +75,8 @@ private:
     double p_ms_to_stop_before_recovery_;
     double p_ms_to_pause_search_;
     double p_ms_between_recovery_actions_;
+
+    std::vector<std::reference_wrapper<std::string>> target_class_names_;
 
     enum States {STOPPED, RECOVERING, HEADING_TO_TARGET }; 
     States status_;

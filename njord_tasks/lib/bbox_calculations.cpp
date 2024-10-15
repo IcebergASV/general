@@ -97,4 +97,88 @@ namespace bbox_calculations
 
     //     return includes_red && includes_green;
     // }
+  geometry_msgs::msg::PoseStamped getWPBetween2DiffTargets(const yolov8_msgs::msg::DetectionArray bboxes_, std::string left_target_class_name1, std::string left_target_class_name2, std::string right_target_class_name1, std::string right_target_class_name2)
+  {
+
+    std::vector<yolov8_msgs::msg::Detection> left_targets = filterAndSortLeftToRight(bboxes, left_target_class_name1, left_target_class_name2);
+    std::vector<yolov8_msgs::msg::Detection> right_targets = filterAndSortLeftToRight(bboxes, right_target_class_name1, right_target_class_name2);
+
+    if ((left_targets.size() == 0 && right_targets.size() == 0) && !(p_testing_angles_ == 1))
+    {
+      RCLCPP_ERROR(this->get_logger(), "No targes detected - wp will be empty"); //TODO THROW AN ERROR - should never get here
+    }
+
+    double angle;
+    if ((left_targets.size() == 0) & (right_targets.size() > 0)) // move to left of left most green
+    {
+      RCLCPP_INFO(this->get_logger(), "Detected only " + right_target_class_name1 + "(s)");
+      angle = bbox_calculations::pixelToAngle(p_camera_fov_, p_camera_res_x_, right_targets[0].bbox.center.position.x);
+      RCLCPP_INFO(this->get_logger(), "Left most " + right_target_class_name1 + " detected at %f degrees", angle*180/M_PI);
+      angle = angle + p_angle_from_target_*M_PI/180;
+      RCLCPP_INFO(this->get_logger(), "Heading towards %f degrees", angle*180/M_PI);
+    }
+    else if ((right_targets.size() == 0) && (left_targets.size() > 0)) // move to the right of rightmost red
+    {
+      RCLCPP_INFO(this->get_logger(), "Detected only " + left_target_class_name1 + "(s)");
+      angle = bbox_calculations::pixelToAngle(p_camera_fov_, p_camera_res_x_, left_targets[left_targets.size()-1].bbox.center.position.x);
+      RCLCPP_INFO(this->get_logger(), "Right most " + left_target_class_name1 + " detected at %f degrees", angle*180/M_PI);
+      angle = angle - p_angle_from_target_*M_PI/180;
+      RCLCPP_INFO(this->get_logger(), "Heading towards %f degrees", angle*180/M_PI);
+    }
+    else if ((right_targets.size() > 0) && (left_targets.size() > 0))// move in between innermost red and green
+    {
+      
+      double left_angle = bbox_calculations::pixelToAngle(p_camera_fov_, p_camera_res_x_, left_targets[left_targets.size()-1].bbox.center.position.x);
+      double right_angle = bbox_calculations::pixelToAngle(p_camera_fov_, p_camera_res_x_, right_targets[0].bbox.center.position.x);
+      angle = (left_angle + right_angle)/2;
+      RCLCPP_INFO(this->get_logger(), "Detected " + left_target_class_name1 + " at %f degrees and " + right_target_class_name1 + " at %f degrees, heading towards %f degrees", left_angle*180/M_PI, right_angle*180/M_PI, angle*180/M_PI);
+    }
+    else 
+    {
+      RCLCPP_WARN(this->get_logger(), "ERROR COUNTING BUOYS");
+    }
+    if(p_testing_angles_)
+    {
+      angle = p_test_angle_*M_PI/180;
+      RCLCPP_WARN(this->get_logger(), "Sending test angle %f", angle*180/M_PI);
+    }
+    angle = angle - M_PI/2;
+    geometry_msgs::msg::PoseStamped wp = task_lib::relativePolarToLocalCoords(p_distance_to_move_, angle, current_local_pose_);
+    return wp;
+  }
+
+  std::vector<yolov8_msgs::msg::Detection> filterAndSortLeftToRight(const yolov8_msgs::msg::DetectionArray detection_array, const std::string& class_name1, const std::string& class_name2)
+  {
+    std::vector<yolov8_msgs::msg::Detection> filtered_detections;
+
+    for (const auto& detection : detection_array.detections) {
+        if (detection.class_name == class_name1 || detection.class_name == class_name2) {
+            filtered_detections.push_back(detection);
+        }
+    }
+
+    std::sort(filtered_detections.begin(), filtered_detections.end(),
+        [](const yolov8_msgs::msg::Detection& a, const yolov8_msgs::msg::Detection& b) {
+            double center_a_x = a.bbox.center.position.x;
+            double center_b_x = b.bbox.center.position.x;
+            return center_a_x < center_b_x;
+        });
+
+    return filtered_detections;
+  }
+
+bool hasDesiredDetections(const yolov8_msgs::msg::DetectionArray& detection_array, const std::vector<std::reference_wrapper<std::string>>& desired_class_names)
+{
+    for (const auto& detection : detection_array.detections) {
+        if (std::find_if(
+                desired_class_names.begin(), desired_class_names.end(),
+                [&detection](const std::reference_wrapper<std::string>& class_name_ref) {
+                    return detection.class_name == class_name_ref.get();
+                }
+            ) != desired_class_names.end()) {
+            return true;
+        }
+    }
+    return false;
+  }
 }

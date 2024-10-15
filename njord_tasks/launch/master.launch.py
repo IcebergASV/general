@@ -124,6 +124,6 @@ def generate_launch_description():
     )
 
 
-#ros2 launch yolov8_bringup yolov8.launch.py model:=src/general/yolov8_ros/weights/mark_tII.pt input_image_topic:=/camera/camera/color_image_raw
+#ros2 launch yolov8_bringup yolov8.launch.py model:=src/general/yolov8_ros/weights/marine_markers_v1.pt input_image_topic:=/camera/camera/color_image_raw
 
 

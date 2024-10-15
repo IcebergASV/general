@@ -19,5 +19,7 @@ namespace bbox_calculations
     //void getCamBBoxAngle(perception_interfaces::msg::BoundingBox bbox, double& smaller_angle, double& larger_angle, double camera_fov, double camera_x_res);
     //bool includesARedAndGreen(const std::vector<perception_interfaces::msg::BoundingBox>& bboxes);
     double pixelToAngle(double fov_in_degrees, int res, int pixel);
+    geometry_msgs::msg::PoseStamped getWPBetween2DiffTargets(const yolov8_msgs::msg::DetectionArray bboxes, std::string left_target_class_name1, std::string left_target_class_name2, std::string right_target_class_name1, std::string right_target_class_name2 );
+    std::vector<yolov8_msgs::msg::Detection> filterAndSortLeftToRight(const yolov8_msgs::msg::DetectionArray detection_array, const std::string& class_name1, const std::string& class_name2)
 }
 #endif // BBOXCALCULATIONS_H
