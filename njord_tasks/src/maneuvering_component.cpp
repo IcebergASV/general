@@ -21,6 +21,7 @@ namespace njord_tasks
     local_wp_pub_ = this->create_publisher<geometry_msgs::msg::PoseStamped>("mavros/setpoint_position/local", 10);
     local_wp_pub_ = this->create_publisher<geometry_msgs::msg::PoseStamped>("mavros/setpoint_position/local", 10);
     status_logger_pub_ = this->create_publisher<std_msgs::msg::String>("/njord_tasks/maneuvering/status", 10);
+
     //timer_ = this->create_wall_timer(50ms, std::bind(&Maneuvering::timerCallback, this));
 
     Maneuvering::getParam<double>("distance_to_move", p_distance_to_move_, 0.0, "Sets a wp this far away");
@@ -32,6 +33,9 @@ namespace njord_tasks
     Maneuvering::getParam<double>("test_angle", p_test_angle_, 0.0, "");
     Maneuvering::getParam<double>("finish_lat", p_finish_lat_, 0.0, "Finish latitude");
     Maneuvering::getParam<double>("finish_lon", p_finish_lon_, 0.0, "Finish longitude");
+    Maneuvering::getParam<double>("ms_to_pause_search", p_ms_to_pause_search_, 0.0, "Miliseconds to wait after finding a target before starting to search for new ones");
+    Maneuvering::getParam<double>("ms_between_recovery_actions", p_ms_between_recovery_actions_, 0.0, "Miliseconds between executing a recovery action (like sending a waypoint)");
+    Maneuvering::getParam<double>("ms_to_stop_before_recovery", p_ms_to_stop_before_recovery_, 0.0, "Miliseconds to stop robot before switching to recovery state if no targets found");
     Maneuvering::getStringParam("red_buoy_label", p_red_buoy_str_, "red_buoy", "Red buoy label");
     Maneuvering::getStringParam("green_buoy_label", p_green_buoy_str_, "green_buoy", "Green buoy label");
     Maneuvering::getStringParam("second_red_buoy_label", p_second_red_buoy_str_, "red_buoy", "Additional red buoy label");
@@ -63,6 +67,10 @@ namespace njord_tasks
     else if (params[0].get_name() == "finish_lat") { p_finish_lat_ = params[0].as_double(); }
     else if (params[0].get_name() == "finish_lon") { p_finish_lon_ = params[0].as_double(); }
     else if (params[0].get_name() == "red_buoy_label") { p_red_buoy_str_ = params[0].as_string(); }
+    else if (params[0].get_name() == "finish_lon") { p_finish_lon_ = params[0].as_double(); }
+    else if (params[0].get_name() == "ms_to_pause_search") { p_ms_to_pause_search_ = params[0].as_double(); }
+    else if (params[0].get_name() == "ms_between_recovery_actions") { p_ms_between_recovery_actions_ = params[0].as_double(); }
+    else if (params[0].get_name() == "ms_to_stop_before_recovery") { p_ms_to_stop_before_recovery_ = params[0].as_double(); }
     else if (params[0].get_name() == "green_buoy_label") { p_green_buoy_str_ = params[0].as_string(); }
     else if (params[0].get_name() == "second_red_buoy_label") { p_second_red_buoy_str_ = params[0].as_string(); }
     else if (params[0].get_name() == "second_green_buoy_label") { p_second_green_buoy_str_ = params[0].as_string(); }
@@ -143,7 +151,7 @@ namespace njord_tasks
   void Maneuvering::bboxCallback(const yolov8_msgs::msg::DetectionArray::SharedPtr msg)
   {
     bboxes_ = *msg;
-    if (start_task_)
+    if (true) //TODO change to start task.
     {
       switch (status_)
       {
