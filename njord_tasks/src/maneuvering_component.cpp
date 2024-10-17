@@ -21,10 +21,10 @@ namespace njord_tasks
     local_wp_pub_ = this->create_publisher<geometry_msgs::msg::PoseStamped>("mavros/setpoint_position/local", 10);
     local_wp_pub_ = this->create_publisher<geometry_msgs::msg::PoseStamped>("mavros/setpoint_position/local", 10);
     status_logger_pub_ = this->create_publisher<std_msgs::msg::String>("/njord_tasks/maneuvering/status", 10);
-    timer_ = this->create_wall_timer(50ms, std::bind(&Maneuvering::timerCallback, this));
+    //timer_ = this->create_wall_timer(50ms, std::bind(&Maneuvering::timerCallback, this));
 
     Maneuvering::getParam<double>("distance_to_move", p_distance_to_move_, 0.0, "Sets a wp this far away");
-    Maneuvering::getParam<double>("angle_from_buoys", p_angle_from_target_, 0.0, "Angles the wp this far from a target buoy");
+    Maneuvering::getParam<double>("angle_from_target", p_angle_from_target_, 0.0, "Angles the wp this far from a target buoy");
     Maneuvering::getParam<double>("wp_reached_radius", p_wp_reached_radius_, 0.0, "Within this many meters to reach point");
     Maneuvering::getParam<int>("camera_res_x", p_camera_res_x_, 0, "Resolution width of camera");
     Maneuvering::getParam<int>("camera_fov", p_camera_fov_, 0, "Camera field of view");
@@ -125,7 +125,8 @@ namespace njord_tasks
   {
     wp_reached_ = false;
     publishSearchStatus("Found");
-    geometry_msgs::msg::PoseStamped wp = bbox_calculations::getWPBetween2DiffTargets(bboxes_,p_red_buoy_str_, p_second_red_buoy_str_,p_green_buoy_str_, p_second_green_buoy_str_ );
+    double angle = bbox_calculations::getAngleBetween2DiffTargets(bboxes_,p_red_buoy_str_, p_second_red_buoy_str_,p_green_buoy_str_, p_second_green_buoy_str_, p_camera_fov_, p_camera_res_x_, p_angle_from_target_);
+    geometry_msgs::msg::PoseStamped wp = task_lib::relativePolarToLocalCoords(p_distance_to_move_, angle, current_local_pose_);
     if (wp.pose.position.x != 0 && wp.pose.position.y != 0)
     {
       local_wp_pub_->publish(wp);
@@ -151,7 +152,7 @@ namespace njord_tasks
           publishSearchStatus("Searching");
           publishBehaviourStatus("Stopped");
 
-          if (hasDesiredDetections(bboxes_, target_class_names_))
+          if (bbox_calculations::hasDesiredDetections(bboxes_, target_class_names_))
           {
             publishWPTowardsDetections();
 
@@ -170,7 +171,7 @@ namespace njord_tasks
         {
           publishSearchStatus("Searching");
           publishBehaviourStatus("Recovering with TODO INSERT RECOVERY BEHAVIOUR");
-          if (hasDesiredDetections(bboxes_, target_class_names_))
+          if (bbox_calculations::hasDesiredDetections(bboxes_, target_class_names_))
           {
             publishWPTowardsDetections();
 
@@ -198,7 +199,7 @@ namespace njord_tasks
           std::string str_cnt = std::to_string(wp_cnt_);
           publishBehaviourStatus("Heading to WP " + str_cnt);
 
-          if (hasDesiredDetections(bboxes_, target_class_names_) && timer_expired_)
+          if (bbox_calculations::hasDesiredDetections(bboxes_, target_class_names_) && timer_expired_)
           {
             publishWPTowardsDetections();
           }

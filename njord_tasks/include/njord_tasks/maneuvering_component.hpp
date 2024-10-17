@@ -59,7 +59,7 @@ private:
 
 
     double p_distance_to_move_;
-    double p_angle_from_buoys_;
+    double p_angle_from_target_;
     double p_wp_reached_radius_;
     int p_camera_res_x_;
     int p_camera_fov_;

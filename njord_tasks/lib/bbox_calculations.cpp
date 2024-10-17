@@ -97,54 +97,48 @@ namespace bbox_calculations
 
     //     return includes_red && includes_green;
     // }
-  geometry_msgs::msg::PoseStamped getWPBetween2DiffTargets(const yolov8_msgs::msg::DetectionArray bboxes_, std::string left_target_class_name1, std::string left_target_class_name2, std::string right_target_class_name1, std::string right_target_class_name2)
+  double getAngleBetween2DiffTargets(const yolov8_msgs::msg::DetectionArray bboxes, std::string left_target_class_name1, std::string left_target_class_name2, std::string right_target_class_name1, std::string right_target_class_name2, double cam_fov, double cam_res_x, double angle_from_target)
   {
 
     std::vector<yolov8_msgs::msg::Detection> left_targets = filterAndSortLeftToRight(bboxes, left_target_class_name1, left_target_class_name2);
     std::vector<yolov8_msgs::msg::Detection> right_targets = filterAndSortLeftToRight(bboxes, right_target_class_name1, right_target_class_name2);
 
-    if ((left_targets.size() == 0 && right_targets.size() == 0) && !(p_testing_angles_ == 1))
+    if (left_targets.size() == 0 && right_targets.size() == 0)
     {
-      RCLCPP_ERROR(this->get_logger(), "No targes detected - wp will be empty"); //TODO THROW AN ERROR - should never get here
+      RCLCPP_ERROR(logger, "No targets detected - wp will be empty"); //TODO THROW AN ERROR - should never get here
     }
 
     double angle;
     if ((left_targets.size() == 0) & (right_targets.size() > 0)) // move to left of left most green
     {
-      RCLCPP_INFO(this->get_logger(), "Detected only " + right_target_class_name1 + "(s)");
-      angle = bbox_calculations::pixelToAngle(p_camera_fov_, p_camera_res_x_, right_targets[0].bbox.center.position.x);
-      RCLCPP_INFO(this->get_logger(), "Left most " + right_target_class_name1 + " detected at %f degrees", angle*180/M_PI);
-      angle = angle + p_angle_from_target_*M_PI/180;
-      RCLCPP_INFO(this->get_logger(), "Heading towards %f degrees", angle*180/M_PI);
+      RCLCPP_INFO(logger, "Detected only %s(s)", right_target_class_name1.c_str());
+      angle = bbox_calculations::pixelToAngle(cam_fov, cam_res_x, right_targets[0].bbox.center.position.x);
+      RCLCPP_INFO(logger, "Left most %s detected at %f degrees", right_target_class_name1.c_str(), angle*180/M_PI);
+      angle = angle - angle_from_target*M_PI/180;
+      RCLCPP_INFO(logger, "Heading towards %f degrees", angle*180/M_PI);
     }
     else if ((right_targets.size() == 0) && (left_targets.size() > 0)) // move to the right of rightmost red
     {
-      RCLCPP_INFO(this->get_logger(), "Detected only " + left_target_class_name1 + "(s)");
-      angle = bbox_calculations::pixelToAngle(p_camera_fov_, p_camera_res_x_, left_targets[left_targets.size()-1].bbox.center.position.x);
-      RCLCPP_INFO(this->get_logger(), "Right most " + left_target_class_name1 + " detected at %f degrees", angle*180/M_PI);
-      angle = angle - p_angle_from_target_*M_PI/180;
-      RCLCPP_INFO(this->get_logger(), "Heading towards %f degrees", angle*180/M_PI);
+      RCLCPP_INFO(logger, "Detected only %s(s)", left_target_class_name1.c_str());
+      angle = bbox_calculations::pixelToAngle(cam_fov, cam_res_x, left_targets[left_targets.size()-1].bbox.center.position.x);
+      RCLCPP_INFO(logger, "Right most %s detected at %f degrees", left_target_class_name1.c_str(), angle*180/M_PI);
+      angle = angle - angle_from_target*M_PI/180;
+      RCLCPP_INFO(logger, "Heading towards %f degrees", angle*180/M_PI);
     }
     else if ((right_targets.size() > 0) && (left_targets.size() > 0))// move in between innermost red and green
     {
       
-      double left_angle = bbox_calculations::pixelToAngle(p_camera_fov_, p_camera_res_x_, left_targets[left_targets.size()-1].bbox.center.position.x);
-      double right_angle = bbox_calculations::pixelToAngle(p_camera_fov_, p_camera_res_x_, right_targets[0].bbox.center.position.x);
+      double left_angle = bbox_calculations::pixelToAngle(cam_fov, cam_res_x, left_targets[left_targets.size()-1].bbox.center.position.x);
+      double right_angle = bbox_calculations::pixelToAngle(cam_fov, cam_res_x, right_targets[0].bbox.center.position.x);
       angle = (left_angle + right_angle)/2;
-      RCLCPP_INFO(this->get_logger(), "Detected " + left_target_class_name1 + " at %f degrees and " + right_target_class_name1 + " at %f degrees, heading towards %f degrees", left_angle*180/M_PI, right_angle*180/M_PI, angle*180/M_PI);
+      RCLCPP_INFO(logger, "Detected %s at %f degrees and %s at %f degrees, heading towards %f degrees", left_target_class_name1.c_str(), left_angle*180/M_PI, right_target_class_name1.c_str(), right_angle*180/M_PI, angle*180/M_PI);
     }
     else 
     {
-      RCLCPP_WARN(this->get_logger(), "ERROR COUNTING BUOYS");
-    }
-    if(p_testing_angles_)
-    {
-      angle = p_test_angle_*M_PI/180;
-      RCLCPP_WARN(this->get_logger(), "Sending test angle %f", angle*180/M_PI);
+      RCLCPP_WARN(logger, "ERROR COUNTING BUOYS");
     }
     angle = angle - M_PI/2;
-    geometry_msgs::msg::PoseStamped wp = task_lib::relativePolarToLocalCoords(p_distance_to_move_, angle, current_local_pose_);
-    return wp;
+    return angle;
   }
 
   std::vector<yolov8_msgs::msg::Detection> filterAndSortLeftToRight(const yolov8_msgs::msg::DetectionArray detection_array, const std::string& class_name1, const std::string& class_name2)
