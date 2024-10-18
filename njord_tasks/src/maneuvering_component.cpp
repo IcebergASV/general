@@ -144,7 +144,10 @@ namespace njord_tasks
       RCLCPP_WARN(this->get_logger(), "Waypoint Empty - not publishing"); 
     }
 
-    if (p_ms_to_pause_search_ != 0) setTimerDuration(p_ms_to_pause_search_);
+    if (p_ms_to_pause_search_ != 0.0) 
+    {
+      setTimerDuration(p_ms_to_pause_search_);
+    }
   }
 
 
