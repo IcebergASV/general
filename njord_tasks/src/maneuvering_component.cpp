@@ -51,7 +51,15 @@ namespace njord_tasks
     wp_cnt_ = 0;
 
     status_ = States::STOPPED;
-    setTimerDuration(ms_to_stop_before_recovery);
+
+    if (p_ms_to_stop_before_recovery_ == 0.0)
+    {
+      timer_expired_ = true;
+    }
+    else 
+    {
+      setTimerDuration(p_ms_to_stop_before_recovery_);
+    }
 
     target_class_names_ = {p_red_buoy_str_, p_green_buoy_str_, p_second_red_buoy_str_, p_second_green_buoy_str_};
   }
@@ -116,11 +124,11 @@ namespace njord_tasks
 
   void Maneuvering::setTimerDuration(double duration)
   {
-      timer_expired_ = false;
+    timer_expired_ = false;
 
-      std::chrono::milliseconds ms = std::chrono::duration_cast<std::chrono::milliseconds>(std::chrono::duration<double, std::milli>(duration));
-      timer_ = this->create_wall_timer(
-          ms, std::bind(&Maneuvering::onTimerExpired, this));
+    std::chrono::milliseconds ms = std::chrono::duration_cast<std::chrono::milliseconds>(std::chrono::duration<double, std::milli>(duration));
+    timer_ = this->create_wall_timer(
+        ms, std::bind(&Maneuvering::onTimerExpired, this));
   }
   void Maneuvering::onTimerExpired()
   {
@@ -215,6 +223,7 @@ namespace njord_tasks
 
           if (bbox_calculations::hasDesiredDetections(bboxes_, target_class_names_) && timer_expired_)
           {
+
             publishWPTowardsDetections();
           }
           else if (wp_reached_)
