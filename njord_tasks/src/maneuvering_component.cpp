@@ -50,6 +50,9 @@ namespace njord_tasks
     wp_reached_ = false;
     wp_cnt_ = 0;
 
+    status_ = States::STOPPED;
+    setTimerDuration(ms_to_stop_before_recovery);
+
     target_class_names_ = {p_red_buoy_str_, p_green_buoy_str_, p_second_red_buoy_str_, p_second_green_buoy_str_};
   }
 
