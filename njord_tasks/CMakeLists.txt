@@ -61,8 +61,8 @@ ament_target_dependencies(libtask_lib
   "rclcpp"
   "mavros_msgs"
   "sensor_msgs"
-  tf2
-  tf2_geometry_msgs
+  "tf2"
+  "tf2_geometry_msgs"
 )
 
 ## Declare a C++ library
@@ -82,6 +82,7 @@ ament_target_dependencies(libbbox_calculations
   "geometry_msgs"
   "rclcpp"
   "perception_interfaces"
+  "yolov8_msgs"
 )
 
 add_library(libvisualization
