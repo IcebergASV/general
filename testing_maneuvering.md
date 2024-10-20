@@ -1,57 +1,69 @@
-* Test recovery frequency
+* Test recovery frequency - PASS
 * Always starts @ stopped
+* do multiple runs & change timers while running
 
 
 On Startup
 
-1. Empty Detections & time
+1. Empty Detections & time - PASS
     STOPPED to RECOVERY after time up
 
-2. Non target detections & time
+2. Non target detections & time - PASS
     STOPPED to RECOVERY after time up
  
-3. No Detections & time
-    STOPPED to RECOVERY after time up
+3. No Detections & time - PASS
+    Bbox callback doesn't run, no status, nothing happens
 
-1. Empty Detections & no time
+4. Empty Detections & no time - PASS
     STOPPED 1 cycle then RECOVERY
 
-2. Non target detections & time
+5. Non target detections & time - PASS
     STOPPED 1 cycle then RECOVERY
  
-3. No Detections & time
-    STOPPED 1 cycle then RECOVERY
+6. No Detections & time - PASS
+    Bbox callback doesn't run, no status, nothing happens
 
 From STOPPED
 
-1. Rapid Fire Detections & time
+7. Rapid Fire Detections & time - PASS
     1 WP, Heading to target while paused search, after time searching 1 cycle then Found & WP repeating
 
-2. 1 detection & time
+8. 1 detection & time - PASS
     1 WP, Heading to target while paused search, after time searching on repeat while in heading to target
 
-3. Rapid Fire Detections no time
+9. Rapid Fire Detections no time - PASS
     1 WP, Heading to target, searching, then rapid repeat
 
-4. 1 detection no time 
+10. 1 detection no time - PASS
     1 WP, Heading to target, searching 
 
 From RECOVERY
 
-1. Rapid Fire Detections & time
+11. Rapid Fire Detections & time - PASS
     1 WP, Heading to target while paused search, after time searching 1 cycle then Found & WP repeating
 
-2. 1 detection & time
+12. 1 detection & time - PASS
     1 WP, Heading to target while paused search, after time searching on repeat while in heading to target
 
-3. Rapid Fire Detections no time
+13. Rapid Fire Detections no time - PASS
     1 WP, Heading to target, searching, then rapid repeat
 
-4. 1 detection no time 
+14. 1 detection no time - PASS
     1 WP, Heading to target, searching 
 
 From HEADING to target
-1. 
+15. if wp_reached_ & empty detections & stop time - PASS 
+    STOPPED
+16. if wp_reached_ & empty detections & no stop time - PASS
+    RECOVERY & see recovery action
+17. if wp_reached & detections at same time
+    Stay in HEADING to TARGET & send a wp 
+18. no detections, no wp_reached - PASS
+    Stay there & stay searching
+19. Rapid fire detections - PASS I THINK
+
+
+
 
 
 
