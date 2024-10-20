@@ -1,7 +1,13 @@
 # ROS2 Topic Pubs
+
+## wp reached
+`ros2 topic pub /mavros/mission/reached mavros_msgs/msg/WaypointReached "{wp_seq: 1}" -r 10`
+
 ## /yolo/detections
 
-ros2 topic pub /yolo/detections yolov8_msgs/DetectionArray "{header: {stamp: {sec: 1728147972, nanosec: 302901855}, frame_id: 'camera_color_optical_frame'}, detections: [{class_id: 7, class_name: 'black_buoy', score: 0.6200227737426758, id: '', bbox: {center: {position: {x: 242.1787109375, y: 237.41123962402344}, theta: 0.0}, size: {x: 16.108551025390625, y: 18.4189453125}}, bbox3d: {center: {position: {x: 0.0, y: 0.0, z: 0.0}, orientation: {x: 0.0, y: 0.0, z: 0.0, w: 1.0}}, size: {x: 0.0, y: 0.0, z: 0.0}, frame_id: ''}, mask: {height: 0, width: 0, data: []}, keypoints: {data: []}, keypoints3d: {data: [], frame_id: ''}}]}"
+ros2 topic pub /yolo/detections yolov8_msgs/DetectionArray "{header: {stamp: {sec: 1728147972, nanosec: 302901855}, frame_id: 'camera_color_optical_frame'}, detections: [{class_id: 7, class_name: 'red_buoy', score: 0.6200227737426758, id: '', bbox: {center: {position: {x: 24.1787109375, y: 237.41123962402344}, theta: 0.0}, size: {x: 16.108551025390625, y: 18.4189453125}}, bbox3d: {center: {position: {x: 0.0, y: 0.0, z: 0.0}, orientation: {x: 0.0, y: 0.0, z: 0.0, w: 1.0}}, size: {x: 0.0, y: 0.0, z: 0.0}, frame_id: ''}, mask: {height: 0, width: 0, data: []}, keypoints: {data: []}, keypoints3d: {data: [], frame_id: ''}}]}"
+
+ros2 topic pub /yolo/detections yolov8_msgs/DetectionArray "{header: {stamp: {sec: 1728147972, nanosec: 302901855}, frame_id: 'camera_color_optical_frame'}, detections: []}"
 
 ## Velocity SP
 `ros2 topic pub /mavros/setpoint_velocity/cmd_vel_unstamped geometry_msgs/msg/Twist "{linear: {x: 1.0, y: 0.0, z: 0.0}, angular: {x: 0.0, y: 0.0, z: 0.0}}" -r 10`
