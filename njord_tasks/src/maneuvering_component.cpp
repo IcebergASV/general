@@ -33,9 +33,9 @@ namespace njord_tasks
     Maneuvering::getParam<double>("test_angle", p_test_angle_, 0.0, "");
     Maneuvering::getParam<double>("finish_lat", p_finish_lat_, 0.0, "Finish latitude");
     Maneuvering::getParam<double>("finish_lon", p_finish_lon_, 0.0, "Finish longitude");
-    Maneuvering::getParam<double>("ms_to_pause_search", p_ms_to_pause_search_, 0.0, "Miliseconds to wait after finding a target before starting to search for new ones");
-    Maneuvering::getParam<double>("ms_between_recovery_actions", p_ms_between_recovery_actions_, 0.0, "Miliseconds between executing a recovery action (like sending a waypoint)");
-    Maneuvering::getParam<double>("ms_to_stop_before_recovery", p_ms_to_stop_before_recovery_, 0.0, "Miliseconds to stop robot before switching to recovery state if no targets found");
+    Maneuvering::getParam<double>("ms_to_pause_search", p_time_to_pause_search_, 0.0, "Miliseconds to wait after finding a target before starting to search for new ones");
+    Maneuvering::getParam<double>("ms_between_recovery_actions", p_time_between_recovery_actions_, 0.0, "Miliseconds between executing a recovery action (like sending a waypoint)");
+    Maneuvering::getParam<double>("ms_to_stop_before_recovery", p_time_to_stop_before_recovery_, 0.0, "Miliseconds to stop robot before switching to recovery state if no targets found");
     Maneuvering::getStringParam("red_buoy_label", p_red_buoy_str_, "red_buoy", "Red buoy label");
     Maneuvering::getStringParam("green_buoy_label", p_green_buoy_str_, "green_buoy", "Green buoy label");
     Maneuvering::getStringParam("second_red_buoy_label", p_second_red_buoy_str_, "red_buoy", "Additional red buoy label");
@@ -52,13 +52,13 @@ namespace njord_tasks
 
     status_ = States::STOPPED;
 
-    if (p_ms_to_stop_before_recovery_ == 0.0)
+    if (p_time_to_stop_before_recovery_ == 0.0)
     {
       timer_expired_ = true;
     }
     else 
     {
-      setTimerDuration(p_ms_to_stop_before_recovery_);
+      setTimerDuration(p_time_to_stop_before_recovery_);
     }
 
     target_class_names_ = {p_red_buoy_str_, p_green_buoy_str_, p_second_red_buoy_str_, p_second_green_buoy_str_};
@@ -79,9 +79,9 @@ namespace njord_tasks
     else if (params[0].get_name() == "finish_lon") { p_finish_lon_ = params[0].as_double(); }
     else if (params[0].get_name() == "red_buoy_label") { p_red_buoy_str_ = params[0].as_string(); }
     else if (params[0].get_name() == "finish_lon") { p_finish_lon_ = params[0].as_double(); }
-    else if (params[0].get_name() == "ms_to_pause_search") { p_ms_to_pause_search_ = params[0].as_double(); }
-    else if (params[0].get_name() == "ms_between_recovery_actions") { p_ms_between_recovery_actions_ = params[0].as_double(); }
-    else if (params[0].get_name() == "ms_to_stop_before_recovery") { p_ms_to_stop_before_recovery_ = params[0].as_double(); }
+    else if (params[0].get_name() == "ms_to_pause_search") { p_time_to_pause_search_ = params[0].as_double(); }
+    else if (params[0].get_name() == "ms_between_recovery_actions") { p_time_between_recovery_actions_ = params[0].as_double(); }
+    else if (params[0].get_name() == "ms_to_stop_before_recovery") { p_time_to_stop_before_recovery_ = params[0].as_double(); }
     else if (params[0].get_name() == "green_buoy_label") { p_green_buoy_str_ = params[0].as_string(); }
     else if (params[0].get_name() == "second_red_buoy_label") { p_second_red_buoy_str_ = params[0].as_string(); }
     else if (params[0].get_name() == "second_green_buoy_label") { p_second_green_buoy_str_ = params[0].as_string(); }
@@ -126,12 +126,14 @@ namespace njord_tasks
   {
     timer_expired_ = false;
 
-    std::chrono::milliseconds ms = std::chrono::duration_cast<std::chrono::milliseconds>(std::chrono::duration<double, std::milli>(duration));
+    std::chrono::milliseconds ms = std::chrono::duration_cast<std::chrono::milliseconds>(std::chrono::duration<double, std::milli>(duration * 1000));
     timer_ = this->create_wall_timer(
         ms, std::bind(&Maneuvering::onTimerExpired, this));
+    RCLCPP_DEBUG(this->get_logger(), "Timer set to %f ms", duration); 
   }
   void Maneuvering::onTimerExpired()
   {
+      RCLCPP_DEBUG(this->get_logger(), "Times up"); 
       timer_expired_ = true;
   }
 
@@ -155,9 +157,9 @@ namespace njord_tasks
       RCLCPP_WARN(this->get_logger(), "Waypoint Empty - not publishing"); 
     }
 
-    if (p_ms_to_pause_search_ != 0.0) 
+    if (p_time_to_pause_search_ != 0.0) 
     {
-      setTimerDuration(p_ms_to_pause_search_);
+      setTimerDuration(p_time_to_pause_search_);
     }
   }
 
@@ -183,7 +185,7 @@ namespace njord_tasks
           else if(timer_expired_)
           {
             executeRecoveryBehaviour();
-            setTimerDuration(p_ms_between_recovery_actions_);
+            setTimerDuration(p_time_between_recovery_actions_);
             status_ = States::RECOVERING;
           }
           break;
@@ -202,7 +204,7 @@ namespace njord_tasks
           if(timer_expired_)
           {
             executeRecoveryBehaviour();
-            setTimerDuration(p_ms_between_recovery_actions_);
+            setTimerDuration(p_time_between_recovery_actions_);
           }
           break;
         }
@@ -231,15 +233,15 @@ namespace njord_tasks
             std::string str_cnt = std::to_string(wp_cnt_);
             publishBehaviourStatus("WP " + str_cnt + " Reached");
 
-            if (p_ms_to_stop_before_recovery_ == 0)
+            if (p_time_to_stop_before_recovery_ == 0)
             {
               executeRecoveryBehaviour();
-              setTimerDuration(p_ms_between_recovery_actions_);
+              setTimerDuration(p_time_between_recovery_actions_);
               status_ = States::RECOVERING;
             }
             else
             {
-              setTimerDuration(p_ms_to_stop_before_recovery_);
+              setTimerDuration(p_time_to_stop_before_recovery_);
               status_ = States::STOPPED;
             }
           }
