@@ -97,4 +97,82 @@ namespace bbox_calculations
 
     //     return includes_red && includes_green;
     // }
+  double getAngleBetween2DiffTargets(const yolov8_msgs::msg::DetectionArray bboxes, std::string left_target_class_name1, std::string left_target_class_name2, std::string right_target_class_name1, std::string right_target_class_name2, double cam_fov, double cam_res_x, double angle_from_target)
+  {
+
+    std::vector<yolov8_msgs::msg::Detection> left_targets = filterAndSortLeftToRight(bboxes, left_target_class_name1, left_target_class_name2);
+    std::vector<yolov8_msgs::msg::Detection> right_targets = filterAndSortLeftToRight(bboxes, right_target_class_name1, right_target_class_name2);
+
+    if (left_targets.size() == 0 && right_targets.size() == 0)
+    {
+      RCLCPP_ERROR(logger, "No targets detected - wp will be empty"); //TODO THROW AN ERROR - should never get here
+    }
+
+    double angle;
+    if ((left_targets.size() == 0) & (right_targets.size() > 0)) // move to left of left most green
+    {
+      RCLCPP_INFO(logger, "Detected only %s(s)", right_target_class_name1.c_str());
+      angle = bbox_calculations::pixelToAngle(cam_fov, cam_res_x, right_targets[0].bbox.center.position.x);
+      RCLCPP_INFO(logger, "Left most %s detected at %f degrees", right_target_class_name1.c_str(), angle*180/M_PI);
+      angle = angle - angle_from_target*M_PI/180;
+      RCLCPP_INFO(logger, "Heading towards %f degrees", angle*180/M_PI);
+    }
+    else if ((right_targets.size() == 0) && (left_targets.size() > 0)) // move to the right of rightmost red
+    {
+      RCLCPP_INFO(logger, "Detected only %s(s)", left_target_class_name1.c_str());
+      angle = bbox_calculations::pixelToAngle(cam_fov, cam_res_x, left_targets[left_targets.size()-1].bbox.center.position.x);
+      RCLCPP_INFO(logger, "Right most %s detected at %f degrees", left_target_class_name1.c_str(), angle*180/M_PI);
+      angle = angle - angle_from_target*M_PI/180;
+      RCLCPP_INFO(logger, "Heading towards %f degrees", angle*180/M_PI);
+    }
+    else if ((right_targets.size() > 0) && (left_targets.size() > 0))// move in between innermost red and green
+    {
+      
+      double left_angle = bbox_calculations::pixelToAngle(cam_fov, cam_res_x, left_targets[left_targets.size()-1].bbox.center.position.x);
+      double right_angle = bbox_calculations::pixelToAngle(cam_fov, cam_res_x, right_targets[0].bbox.center.position.x);
+      angle = (left_angle + right_angle)/2;
+      RCLCPP_INFO(logger, "Detected %s at %f degrees and %s at %f degrees, heading towards %f degrees", left_target_class_name1.c_str(), left_angle*180/M_PI, right_target_class_name1.c_str(), right_angle*180/M_PI, angle*180/M_PI);
+    }
+    else 
+    {
+      RCLCPP_WARN(logger, "ERROR COUNTING BUOYS");
+    }
+    angle = angle - M_PI/2;
+    return angle;
+  }
+
+  std::vector<yolov8_msgs::msg::Detection> filterAndSortLeftToRight(const yolov8_msgs::msg::DetectionArray detection_array, const std::string& class_name1, const std::string& class_name2)
+  {
+    std::vector<yolov8_msgs::msg::Detection> filtered_detections;
+
+    for (const auto& detection : detection_array.detections) {
+        if (detection.class_name == class_name1 || detection.class_name == class_name2) {
+            filtered_detections.push_back(detection);
+        }
+    }
+
+    std::sort(filtered_detections.begin(), filtered_detections.end(),
+        [](const yolov8_msgs::msg::Detection& a, const yolov8_msgs::msg::Detection& b) {
+            double center_a_x = a.bbox.center.position.x;
+            double center_b_x = b.bbox.center.position.x;
+            return center_a_x < center_b_x;
+        });
+
+    return filtered_detections;
+  }
+
+bool hasDesiredDetections(const yolov8_msgs::msg::DetectionArray& detection_array, const std::vector<std::reference_wrapper<std::string>>& desired_class_names)
+{
+    for (const auto& detection : detection_array.detections) {
+        if (std::find_if(
+                desired_class_names.begin(), desired_class_names.end(),
+                [&detection](const std::reference_wrapper<std::string>& class_name_ref) {
+                    return detection.class_name == class_name_ref.get();
+                }
+            ) != desired_class_names.end()) {
+            return true;
+        }
+    }
+    return false;
+  }
 }
