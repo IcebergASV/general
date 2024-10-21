@@ -26,11 +26,8 @@ namespace njord_tasks
 
     Maneuvering::getParam<double>("distance_to_move", p_distance_to_move_, 0.0, "Sets a wp this far away");
     Maneuvering::getParam<double>("angle_from_target", p_angle_from_target_, 0.0, "Angles the wp this far from a target buoy");
-    Maneuvering::getParam<double>("wp_reached_radius", p_wp_reached_radius_, 0.0, "Within this many meters to reach point");
     Maneuvering::getParam<int>("camera_res_x", p_camera_res_x_, 0, "Resolution width of camera");
     Maneuvering::getParam<int>("camera_fov", p_camera_fov_, 0, "Camera field of view");
-    Maneuvering::getParam<int>("testing_angles", p_testing_angles_, 0, "");
-    Maneuvering::getParam<double>("test_angle", p_test_angle_, 0.0, "");
     Maneuvering::getParam<double>("finish_lat", p_finish_lat_, 0.0, "Finish latitude");
     Maneuvering::getParam<double>("finish_lon", p_finish_lon_, 0.0, "Finish longitude");
     Maneuvering::getParam<double>("time_to_pause_search", p_time_to_pause_search_, 0.0, "Miliseconds to wait after finding a target before starting to search for new ones");
@@ -70,11 +67,8 @@ namespace njord_tasks
 
     if (params[0].get_name() == "distance_to_move") { p_distance_to_move_ = params[0].as_double(); }
     else if (params[0].get_name() == "angle_from_target") { p_angle_from_target_ = params[0].as_double(); }
-    else if (params[0].get_name() == "wp_reached_radius") { p_wp_reached_radius_ = params[0].as_double(); }
     else if (params[0].get_name() == "camera_res_x") { p_camera_res_x_ = params[0].as_int(); }
     else if (params[0].get_name() == "camera_fov") { p_camera_fov_ = params[0].as_int(); }
-    else if (params[0].get_name() == "testing_angles") { p_testing_angles_ = params[0].as_int(); }
-    else if (params[0].get_name() == "test_angle") { p_test_angle_ = params[0].as_double(); }
     else if (params[0].get_name() == "finish_lat") { p_finish_lat_ = params[0].as_double(); }
     else if (params[0].get_name() == "finish_lon") { p_finish_lon_ = params[0].as_double(); }
     else if (params[0].get_name() == "red_buoy_label") { p_red_buoy_str_ = params[0].as_string(); }

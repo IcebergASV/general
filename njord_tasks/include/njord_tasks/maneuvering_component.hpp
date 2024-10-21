@@ -60,12 +60,8 @@ private:
 
     double p_distance_to_move_;
     double p_angle_from_target_;
-    double p_wp_reached_radius_;
     int p_camera_res_x_;
     int p_camera_fov_;
-    double p_wait_time_;
-    int p_testing_angles_;
-    double p_test_angle_;
     double p_finish_lat_;
     double p_finish_lon_;
     std::string p_red_buoy_str_;
