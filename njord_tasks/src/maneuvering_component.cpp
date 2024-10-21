@@ -69,7 +69,7 @@ namespace njord_tasks
     rcl_interfaces::msg::SetParametersResult result;
 
     if (params[0].get_name() == "distance_to_move") { p_distance_to_move_ = params[0].as_double(); }
-    else if (params[0].get_name() == "angle_from_buoys") { p_angle_from_target_ = params[0].as_double(); }
+    else if (params[0].get_name() == "angle_from_target") { p_angle_from_target_ = params[0].as_double(); }
     else if (params[0].get_name() == "wp_reached_radius") { p_wp_reached_radius_ = params[0].as_double(); }
     else if (params[0].get_name() == "camera_res_x") { p_camera_res_x_ = params[0].as_int(); }
     else if (params[0].get_name() == "camera_fov") { p_camera_fov_ = params[0].as_int(); }
