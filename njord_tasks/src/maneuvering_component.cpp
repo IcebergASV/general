@@ -44,7 +44,7 @@ namespace njord_tasks
     global_pose_updated_ = false;
     local_pose_updated_ = false;
     bboxes_updated_ = false;
-    start_task_ = true;
+    start_task_ = false;
     wp_reached_ = false;
     wp_cnt_ = 0;
 
@@ -179,7 +179,7 @@ namespace njord_tasks
   void Maneuvering::bboxCallback(const yolov8_msgs::msg::DetectionArray::SharedPtr msg)
   {
     bboxes_ = *msg;
-    if (true) //TODO change to start task.
+    if (start_task_)
     {
       switch (status_)
       {
