@@ -30,6 +30,7 @@ namespace njord_tasks
     Maneuvering::getParam<int>("camera_fov", p_camera_fov_, 0, "Camera field of view");
     Maneuvering::getParam<double>("finish_lat", p_finish_lat_, 0.0, "Finish latitude");
     Maneuvering::getParam<double>("finish_lon", p_finish_lon_, 0.0, "Finish longitude");
+    Maneuvering::getStringParam("recovery_behaviour", p_recovery_behaviour_, "STOP", "Recovery behaviour");
     Maneuvering::getParam<double>("time_to_pause_search", p_time_to_pause_search_, 0.0, "Miliseconds to wait after finding a target before starting to search for new ones");
     Maneuvering::getParam<double>("time_between_recovery_actions", p_time_between_recovery_actions_, 0.0, "Miliseconds between executing a recovery action (like sending a waypoint)");
     Maneuvering::getParam<double>("time_to_stop_before_recovery", p_time_to_stop_before_recovery_, 0.0, "Miliseconds to stop robot before switching to recovery state if no targets found");
@@ -73,6 +74,7 @@ namespace njord_tasks
     else if (params[0].get_name() == "finish_lon") { p_finish_lon_ = params[0].as_double(); }
     else if (params[0].get_name() == "red_buoy_label") { p_red_buoy_str_ = params[0].as_string(); }
     else if (params[0].get_name() == "finish_lon") { p_finish_lon_ = params[0].as_double(); }
+    else if (params[0].get_name() == "recovery_behaviour") { p_recovery_behaviour_ = params[0].as_string(); }
     else if (params[0].get_name() == "time_to_pause_search") { p_time_to_pause_search_ = params[0].as_double(); }
     else if (params[0].get_name() == "time_between_recovery_actions") { p_time_between_recovery_actions_ = params[0].as_double(); }
     else if (params[0].get_name() == "time_to_stop_before_recovery") { p_time_to_stop_before_recovery_ = params[0].as_double(); }
@@ -133,7 +135,19 @@ namespace njord_tasks
 
   void Maneuvering::executeRecoveryBehaviour()
   {
-    return; // TODO
+    if (p_recovery_behaviour_ == "STOP")
+    {
+
+    }
+    else if (p_recovery_behaviour_ == "STRAIGHT")
+    {
+
+    }
+    else if (p_recovery_behaviour_ == "FINISH_PNT")
+    {
+
+    }
+    return;
   }
 
   void Maneuvering::publishWPTowardsDetections()
@@ -232,7 +246,7 @@ namespace njord_tasks
           else if (wp_reached_)
           {
             std::string str_cnt = std::to_string(wp_cnt_);
-            publishBehaviourStatus("WP " + str_cnt + " Reached");
+            publishBehaviourStatus("WP " + str_cnt + " Reached"); // TODO this gets overwritten too fast to see i think
 
             if (p_time_to_stop_before_recovery_ == 0)
             {

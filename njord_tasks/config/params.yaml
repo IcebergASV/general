@@ -14,6 +14,7 @@ maneuvering:
     camera_fov: 70
     finish_lat: 63.4411718
     finish_lon: 10.4237096
+    recovery_behaviour: "STOP" # STOP, STRAIGHT, or FINISH_PNT
     time_to_pause_search: 20.0 #seconds
     time_between_recovery_actions: 20.0 #seconds
     time_to_stop_before_recovery: 20.0 #seconds
