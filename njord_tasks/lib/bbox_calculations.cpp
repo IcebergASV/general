@@ -146,6 +146,7 @@ namespace bbox_calculations
     std::vector<yolov8_msgs::msg::Detection> filtered_detections;
 
     for (const auto& detection : detection_array.detections) {
+        RCLCPP_DEBUG(logger, "%s", detection.class_name.c_str());
         if (detection.class_name == class_name1 || detection.class_name == class_name2) {
             filtered_detections.push_back(detection);
         }

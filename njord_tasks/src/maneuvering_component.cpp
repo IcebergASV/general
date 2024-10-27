@@ -38,6 +38,7 @@ namespace njord_tasks
     Maneuvering::getStringParam("green_buoy_label", p_green_buoy_str_, "green_buoy", "Green buoy label");
     Maneuvering::getStringParam("second_red_buoy_label", p_second_red_buoy_str_, "red_buoy", "Additional red buoy label");
     Maneuvering::getStringParam("second_green_buoy_label", p_second_green_buoy_str_, "green_buoy", "Additional green buoy label");
+    Maneuvering::getParam<int>("frame_stack_size", p_frame_stack_size_, 0, "Number of frames to stack before calculating angle");
 
     on_set_parameters_callback_handle_ = this->add_on_set_parameters_callback(std::bind(&Maneuvering::param_callback, this, std::placeholders::_1));
 
@@ -47,6 +48,7 @@ namespace njord_tasks
     start_task_ = false;
     wp_reached_ = false;
     wp_cnt_ = 0;
+    detection_frame_cnt_ = 0;
 
     status_ = States::STOPPED;
 
@@ -81,6 +83,7 @@ namespace njord_tasks
     else if (params[0].get_name() == "green_buoy_label") { p_green_buoy_str_ = params[0].as_string(); }
     else if (params[0].get_name() == "second_red_buoy_label") { p_second_red_buoy_str_ = params[0].as_string(); }
     else if (params[0].get_name() == "second_green_buoy_label") { p_second_green_buoy_str_ = params[0].as_string(); }
+    else if (params[0].get_name() == "frame_stack_size") { p_frame_stack_size_ = params[0].as_int(); }
     else {
       RCLCPP_ERROR(this->get_logger(), "Invalid Param");
       result.successful = false;
@@ -150,11 +153,11 @@ namespace njord_tasks
     return;
   }
 
-  void Maneuvering::publishWPTowardsDetections()
+  void Maneuvering::publishWPTowardsDetections(const yolov8_msgs::msg::DetectionArray& detections)
   {
     wp_reached_ = false;
     publishSearchStatus("Found");
-    double angle = bbox_calculations::getAngleBetween2DiffTargets(bboxes_,p_red_buoy_str_, p_second_red_buoy_str_,p_green_buoy_str_, p_second_green_buoy_str_, p_camera_fov_, p_camera_res_x_, p_angle_from_target_);
+    double angle = bbox_calculations::getAngleBetween2DiffTargets(detections,p_red_buoy_str_, p_second_red_buoy_str_,p_green_buoy_str_, p_second_green_buoy_str_, p_camera_fov_, p_camera_res_x_, p_angle_from_target_);
     geometry_msgs::msg::PoseStamped wp = task_lib::relativePolarToLocalCoords(p_distance_to_move_, angle, current_local_pose_);
     if (wp.pose.position.x != 0 && wp.pose.position.y != 0)
     {
@@ -175,10 +178,23 @@ namespace njord_tasks
     }
   }
 
-
   void Maneuvering::bboxCallback(const yolov8_msgs::msg::DetectionArray::SharedPtr msg)
   {
-    bboxes_ = *msg;
+    RCLCPP_INFO(this->get_logger(), "bbox"); 
+    yolov8_msgs::msg::DetectionArray new_detections = *msg;
+    stacked_detections_.detections.insert(stacked_detections_.detections.end(), new_detections.detections.begin(), new_detections.detections.end());
+    detection_frame_cnt_++;
+    if (detection_frame_cnt_ >= p_frame_stack_size_)
+    {
+      this->taskLogic(stacked_detections_);
+      detection_frame_cnt_ = 0;
+      stacked_detections_.detections.clear();
+    }
+  }
+
+  void Maneuvering::taskLogic(const yolov8_msgs::msg::DetectionArray& detections)
+  {
+    RCLCPP_INFO(this->get_logger(), "TaskLogic"); 
     if (start_task_)
     {
       switch (status_)
@@ -189,9 +205,9 @@ namespace njord_tasks
           publishSearchStatus("Searching");
           publishBehaviourStatus("Stopped");
 
-          if (bbox_calculations::hasDesiredDetections(bboxes_, target_class_names_))
+          if (bbox_calculations::hasDesiredDetections(detections, target_class_names_))
           {
-            publishWPTowardsDetections();
+            publishWPTowardsDetections(detections);
 
             status_ = States::HEADING_TO_TARGET;
           }
@@ -209,9 +225,9 @@ namespace njord_tasks
           RCLCPP_DEBUG(this->get_logger(), "Recovering"); 
           publishSearchStatus("Searching");
           publishBehaviourStatus("Recovering with TODO INSERT RECOVERY BEHAVIOUR");
-          if (bbox_calculations::hasDesiredDetections(bboxes_, target_class_names_))
+          if (bbox_calculations::hasDesiredDetections(detections, target_class_names_))
           {
-            publishWPTowardsDetections();
+            publishWPTowardsDetections(detections);
 
             status_ = States::HEADING_TO_TARGET;
           }
@@ -238,10 +254,10 @@ namespace njord_tasks
           std::string str_cnt = std::to_string(wp_cnt_);
           publishBehaviourStatus("Heading to WP " + str_cnt);
 
-          if (bbox_calculations::hasDesiredDetections(bboxes_, target_class_names_) && timer_expired_)
+          if (bbox_calculations::hasDesiredDetections(detections, target_class_names_) && timer_expired_)
           {
 
-            publishWPTowardsDetections();
+            publishWPTowardsDetections(detections);
           }
           else if (wp_reached_)
           {
