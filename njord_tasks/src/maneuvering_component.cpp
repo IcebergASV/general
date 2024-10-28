@@ -39,6 +39,7 @@ namespace njord_tasks
     Maneuvering::getStringParam("second_red_buoy_label", p_second_red_buoy_str_, "red_buoy", "Additional red buoy label");
     Maneuvering::getStringParam("second_green_buoy_label", p_second_green_buoy_str_, "green_buoy", "Additional green buoy label");
     Maneuvering::getParam<int>("frame_stack_size", p_frame_stack_size_, 0, "Number of frames to stack before calculating angle");
+    Maneuvering::getStringParam("bbox_selection", p_bbox_selection_, "LARGEST", "Selectes either largest or innermost bounding boxes");
 
     on_set_parameters_callback_handle_ = this->add_on_set_parameters_callback(std::bind(&Maneuvering::param_callback, this, std::placeholders::_1));
 
@@ -84,6 +85,7 @@ namespace njord_tasks
     else if (params[0].get_name() == "second_red_buoy_label") { p_second_red_buoy_str_ = params[0].as_string(); }
     else if (params[0].get_name() == "second_green_buoy_label") { p_second_green_buoy_str_ = params[0].as_string(); }
     else if (params[0].get_name() == "frame_stack_size") { p_frame_stack_size_ = params[0].as_int(); }
+    else if (params[0].get_name() == "bbox_selection") { p_bbox_selection_ = params[0].as_string(); }
     else {
       RCLCPP_ERROR(this->get_logger(), "Invalid Param");
       result.successful = false;

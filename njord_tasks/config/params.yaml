@@ -23,6 +23,7 @@ maneuvering:
     second_red_buoy_label: "black_buoy"
     second_green_buoy_label: "yellow_buoy"
     frame_stack_size: 4
+    bbox_selection: "INNERMOST" # LARGEST, INNERMOST
 collision_avoidance:
   ros__parameters:
     finish_lat: 63.44090
