@@ -159,7 +159,7 @@ namespace njord_tasks
   {
     wp_reached_ = false;
     publishSearchStatus("Found");
-    double angle = bbox_calculations::getAngleBetween2DiffTargets(detections,p_red_buoy_str_, p_second_red_buoy_str_,p_green_buoy_str_, p_second_green_buoy_str_, p_camera_fov_, p_camera_res_x_, p_angle_from_target_);
+    double angle = bbox_calculations::getAngleBetween2DiffTargets(detections, p_bbox_selection_, p_red_buoy_str_, p_second_red_buoy_str_,p_green_buoy_str_, p_second_green_buoy_str_, p_camera_fov_, p_camera_res_x_, p_angle_from_target_);
     geometry_msgs::msg::PoseStamped wp = task_lib::relativePolarToLocalCoords(p_distance_to_move_, angle, current_local_pose_);
     if (wp.pose.position.x != 0 && wp.pose.position.y != 0)
     {
