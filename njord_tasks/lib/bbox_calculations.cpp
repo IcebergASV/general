@@ -130,6 +130,10 @@ namespace bbox_calculations
       
       double left_angle = bbox_calculations::pixelToAngle(cam_fov, cam_res_x, left_targets[left_targets.size()-1].bbox.center.position.x);
       double right_angle = bbox_calculations::pixelToAngle(cam_fov, cam_res_x, right_targets[0].bbox.center.position.x);
+      if ((left_angle - right_angle) < 0)
+      {
+        RCLCPP_WARNING(logger, "Expected %s on the left and %s on the right but detected the opposite, heading between them anyways",left_target_class_name1.c_str(), right_target_class_name1.c_str() ); // TODO get it to go to recovery if this happens or turn around
+      }
       angle = (left_angle + right_angle)/2;
       RCLCPP_INFO(logger, "Detected %s at %f degrees and %s at %f degrees, heading towards %f degrees", left_target_class_name1.c_str(), left_angle*180/M_PI, right_target_class_name1.c_str(), right_angle*180/M_PI, angle*180/M_PI);
     }
