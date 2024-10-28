@@ -24,6 +24,8 @@ namespace bbox_calculations
     double getAngleBetween2DiffTargets(const yolov8_msgs::msg::DetectionArray bboxes, std::string left_target_class_name1, std::string left_target_class_name2, std::string right_target_class_name1, std::string right_target_class_name2, double cam_fov, double cam_res_x, double angle_from_target);
     std::vector<yolov8_msgs::msg::Detection> filterAndSortLeftToRight(const yolov8_msgs::msg::DetectionArray detection_array, const std::string& class_name1, const std::string& class_name2);
     bool hasDesiredDetections(const yolov8_msgs::msg::DetectionArray& detection_array, const std::vector<std::reference_wrapper<std::string>>& desired_class_names);
+    std::vector<yolov8_msgs::msg::Detection> filterAndGetLargest(const yolov8_msgs::msg::DetectionArray detection_array, const std::string& class_name1, const std::string& class_name2);
+    std::vector<yolov8_msgs::msg::Detection> extractTargetDetections(const yolov8_msgs::msg::DetectionArray& detection_array, const std::string& class_name1, const std::string& class_name2);
 
 }
 #endif // BBOXCALCULATIONS_H

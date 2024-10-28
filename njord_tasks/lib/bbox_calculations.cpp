@@ -141,7 +141,7 @@ namespace bbox_calculations
     return angle;
   }
 
-  std::vector<yolov8_msgs::msg::Detection> filterAndSortLeftToRight(const yolov8_msgs::msg::DetectionArray detection_array, const std::string& class_name1, const std::string& class_name2)
+  std::vector<yolov8_msgs::msg::Detection> extractTargetDetections(const yolov8_msgs::msg::DetectionArray& detection_array, const std::string& class_name1, const std::string& class_name2)
   {
     std::vector<yolov8_msgs::msg::Detection> filtered_detections;
 
@@ -152,6 +152,13 @@ namespace bbox_calculations
         }
     }
 
+    return filtered_detections;
+  }
+
+  std::vector<yolov8_msgs::msg::Detection> filterAndSortLeftToRight(const yolov8_msgs::msg::DetectionArray detection_array, const std::string& class_name1, const std::string& class_name2)
+  {
+    std::vector<yolov8_msgs::msg::Detection> filtered_detections = extractTargetDetections(detection_array, class_name1, class_name2);
+
     std::sort(filtered_detections.begin(), filtered_detections.end(),
         [](const yolov8_msgs::msg::Detection& a, const yolov8_msgs::msg::Detection& b) {
             double center_a_x = a.bbox.center.position.x;
@@ -160,6 +167,26 @@ namespace bbox_calculations
         });
 
     return filtered_detections;
+  }
+
+  std::vector<yolov8_msgs::msg::Detection> filterAndGetLargest(const yolov8_msgs::msg::DetectionArray detection_array, const std::string& class_name1, const std::string& class_name2)
+  {
+    std::vector<yolov8_msgs::msg::Detection> filtered_detections = extractTargetDetections(detection_array, class_name1, class_name2);
+
+    double largest_bbox_area = 0.0;
+    std::vector<yolov8_msgs::msg::Detection> largest_bbox; // This should never contain more than one bounding box!
+
+    for (auto detection : filtered_detections)
+    {
+      double area = detection.bbox.size.x * detection.bbox.size.y;
+      if (area > largest_bbox_area)
+      {
+        largest_bbox_area = area;
+        largest_bbox.clear();
+        largest_bbox.push_back(detection);
+      }
+    }
+    return largest_bbox;
   }
 
 bool hasDesiredDetections(const yolov8_msgs::msg::DetectionArray& detection_array, const std::vector<std::reference_wrapper<std::string>>& desired_class_names)
