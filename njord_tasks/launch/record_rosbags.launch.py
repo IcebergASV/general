@@ -13,12 +13,26 @@ def generate_launch_description():
         '/mavros/mission/reached',
         '/mavros/setpoint_position/global',
         '/mavros/setpoint_position/local',
-        '/mavros/state'
+        '/mavros/state',
+        '/yolo/detections'
     ]
 
     robot_logic_topics = [
+        '/camera/camera/color/image_raw',
+        '/mavros/global_position/compass_hdg',
+        '/mavros/global_position/global',
+        '/mavros/global_position/local',
+        '/mavros/local_position/pose',
+        '/mavros/mission/reached',
+        '/mavros/setpoint_position/global',
+        '/mavros/setpoint_position/local',
+        '/mavros/state',
         '/yolo/detections',
-        '/yolo/detections/filtered'
+        '/yolov8_ros/dbg_image',
+        '/njord_tasks/maneuvering/status',
+        '/njord_tasks/task_completion_status',
+        '/njord_tasks/task_to_execute',
+        '/rosout'
     ]
 
     now = datetime.now()
