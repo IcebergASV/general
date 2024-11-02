@@ -182,7 +182,6 @@ namespace njord_tasks
 
   void Maneuvering::bboxCallback(const yolov8_msgs::msg::DetectionArray::SharedPtr msg)
   {
-    RCLCPP_INFO(this->get_logger(), "bbox"); 
     yolov8_msgs::msg::DetectionArray new_detections = *msg;
     stacked_detections_.detections.insert(stacked_detections_.detections.end(), new_detections.detections.begin(), new_detections.detections.end());
     detection_frame_cnt_++;
@@ -196,7 +195,6 @@ namespace njord_tasks
 
   void Maneuvering::taskLogic(const yolov8_msgs::msg::DetectionArray& detections)
   {
-    RCLCPP_INFO(this->get_logger(), "TaskLogic"); 
     if (start_task_)
     {
       switch (status_)
