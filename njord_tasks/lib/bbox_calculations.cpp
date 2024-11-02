@@ -114,7 +114,7 @@ namespace bbox_calculations
       RCLCPP_INFO(logger, "Detected only %s(s)", right_target_class_name1.c_str());
       angle = bbox_calculations::pixelToAngle(cam_fov, cam_res_x, right_targets[0].bbox.center.position.x);
       RCLCPP_INFO(logger, "Left most %s detected at %f degrees", right_target_class_name1.c_str(), angle*180/M_PI);
-      angle = angle - angle_from_target*M_PI/180;
+      angle = angle + angle_from_target*M_PI/180;
       RCLCPP_INFO(logger, "Heading towards %f degrees", angle*180/M_PI);
     }
     else if ((right_targets.size() == 0) && (left_targets.size() > 0)) // move to the right of rightmost red
