@@ -11,8 +11,6 @@ def generate_launch_description():
         '/mavros/global_position/local',
         '/mavros/local_position/pose',
         '/mavros/mission/reached',
-        '/mavros/setpoint_position/global',
-        '/mavros/setpoint_position/local',
         '/mavros/state',
         '/yolo/detections'
     ]

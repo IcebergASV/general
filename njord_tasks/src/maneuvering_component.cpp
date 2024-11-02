@@ -239,7 +239,7 @@ namespace njord_tasks
           break;
         }
 
-        case States::HEADING_TO_TARGET: // parameterize wait time
+        case States::HEADING_TO_TARGET: // parameterize wait time & reorganize
         {
           RCLCPP_DEBUG(this->get_logger(), "Heading to Target"); 
           if (timer_expired_)
