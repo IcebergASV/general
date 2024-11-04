@@ -15,6 +15,7 @@ namespace njord_tasks
     wp_reached_sub_ = this->create_subscription<mavros_msgs::msg::WaypointReached>("/mavros/mission/reached", 10, std::bind(&Maneuvering::wpReachedCallback, this, _1));
     global_pose_sub_ = this->create_subscription<sensor_msgs::msg::NavSatFix>("/mavros/global_position/global", qos, std::bind(&Maneuvering::globalPoseCallback, this, _1));
     local_pose_sub_ = this->create_subscription<geometry_msgs::msg::PoseStamped>("/mavros/local_position/pose", qos, std::bind(&Maneuvering::localPoseCallback, this, _1));
+    state_sub_ = this->create_subscription<mavros_msgs::msg::State>("/mavros/state", 10, std::bind(&Maneuvering::stateCallback, this, _1));
 
     task_completion_status_pub_ = this->create_publisher<std_msgs::msg::Int32>("njord_tasks/task_completion_status", 10);
     global_wp_pub_ = this->create_publisher<geographic_msgs::msg::GeoPoseStamped>("mavros/setpoint_position/global", 10);
@@ -110,6 +111,13 @@ namespace njord_tasks
     RCLCPP_DEBUG(this->get_logger(), "Local Pose: x: %f, y: %f", msg->pose.position.x, msg->pose.position.y);
   }
 
+  void Maneuvering::stateCallback(const mavros_msgs::msg::State::SharedPtr msg)
+  {
+    mavros_msgs::msg::State current_state = *msg;
+    in_guided_ = task_lib::inGuided(current_state);
+    return;
+  }
+
   void Maneuvering::publishSearchStatus(std::string str_msg)
   {
     std_msgs::msg::String msg;
@@ -195,7 +203,7 @@ namespace njord_tasks
 
   void Maneuvering::taskLogic(const yolov8_msgs::msg::DetectionArray& detections)
   {
-    if (start_task_)
+    if (start_task_ && in_guided_)
     {
       switch (status_)
       {

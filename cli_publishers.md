@@ -47,3 +47,18 @@ ros2 topic pub /mavros/setpoint_position/global sensor_msgs/msg/NavSatFix '{lati
 ## Local WPs
 
 ros2 topic pub /mavros/setpoint_position/local geometry_msgs/msg/PoseStamped '{header: {stamp: {sec: 0, nanosec: 0}, frame_id: "map"}, pose: {position: {x: 47.397742, y: 8.545593, z: 0.0}, orientation: {x: 0.0, y: 0.0, z: 0.0, w: 1.0}}}'
+
+
+## mavros state
+ros2 topic pub /mavros/state mavros_msgs/msg/State "header:
+  stamp:
+    sec: 3253
+    nanosec: 1794336
+  frame_id: ''
+connected: true
+armed: true
+guided: false
+manual_input: true
+mode: 'MANUAL'
+system_status: 4"
+

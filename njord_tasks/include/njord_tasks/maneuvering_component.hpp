@@ -15,6 +15,7 @@
 #include <tf2/LinearMath/Quaternion.h>
 #include <tf2/LinearMath/Matrix3x3.h>
 #include <Eigen/Dense>
+#include "mavros_msgs/msg/state.hpp"
 
 using std::placeholders::_1;
 using namespace std::chrono_literals;
@@ -28,6 +29,7 @@ public:
 
 private:
     void taskToExecuteCallback(const njord_tasks_interfaces::msg::StartTask::SharedPtr msg);
+    void stateCallback(const mavros_msgs::msg::State::SharedPtr msg);
     rcl_interfaces::msg::SetParametersResult param_callback(const std::vector<rclcpp::Parameter> &params);
     void globalPoseCallback(const sensor_msgs::msg::NavSatFix::SharedPtr msg);
     void localPoseCallback(const geometry_msgs::msg::PoseStamped::SharedPtr msg);
@@ -55,6 +57,7 @@ private:
     rclcpp::Publisher<geometry_msgs::msg::PoseStamped>::SharedPtr local_wp_pub_;
     rclcpp::Subscription<mavros_msgs::msg::WaypointReached>::SharedPtr wp_reached_sub_;
     rclcpp::Publisher<std_msgs::msg::String>::SharedPtr status_logger_pub_;
+    rclcpp::Subscription<mavros_msgs::msg::State>::SharedPtr state_sub_;
 
     rclcpp::TimerBase::SharedPtr timer_;
 
@@ -94,6 +97,7 @@ private:
     bool timer_expired_;
     int wp_cnt_;
     int detection_frame_cnt_;
+    bool in_guided_;
 
     template <typename T>
     void getParam(std::string param_name, T& param, T default_value, std::string desc)
