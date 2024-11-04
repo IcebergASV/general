@@ -42,7 +42,8 @@ private:
     void publishBehaviourStatus(std::string str_msg);
     void publishSearchStatus(std::string str_msg);
     void executeRecoveryBehaviour();
-    void publishWPTowardsDetections();
+    void publishWPTowardsDetections(const yolov8_msgs::msg::DetectionArray& detections);
+    void taskLogic(const yolov8_msgs::msg::DetectionArray& detections);
 
     rclcpp::Subscription<njord_tasks_interfaces::msg::StartTask>::SharedPtr task_to_execute_sub_;
     rclcpp::Publisher<std_msgs::msg::Int32>::SharedPtr task_completion_status_pub_;
@@ -65,6 +66,7 @@ private:
     double p_finish_lat_;
     double p_finish_lon_;
     std::string p_recovery_behaviour_;
+    std::string p_bbox_selection_;
     std::string p_red_buoy_str_;
     std::string p_green_buoy_str_;
     std::string p_second_red_buoy_str_;
@@ -72,6 +74,7 @@ private:
     double p_time_to_stop_before_recovery_;
     double p_time_to_pause_search_;
     double p_time_between_recovery_actions_;
+    int p_frame_stack_size_;
 
     std::vector<std::reference_wrapper<std::string>> target_class_names_;
 
@@ -81,7 +84,7 @@ private:
     sensor_msgs::msg::NavSatFix current_global_pose_;
     geometry_msgs::msg::PoseStamped current_local_pose_;
     geographic_msgs::msg::GeoPoint finish_pnt_;
-    yolov8_msgs::msg::DetectionArray bboxes_;
+    yolov8_msgs::msg::DetectionArray stacked_detections_;
 
     bool global_pose_updated_;
     bool local_pose_updated_;
@@ -90,6 +93,7 @@ private:
     bool wp_reached_;
     bool timer_expired_;
     int wp_cnt_;
+    int detection_frame_cnt_;
 
     template <typename T>
     void getParam(std::string param_name, T& param, T default_value, std::string desc)

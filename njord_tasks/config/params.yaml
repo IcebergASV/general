@@ -15,13 +15,15 @@ maneuvering:
     finish_lat: 63.4411718
     finish_lon: 10.4237096
     recovery_behaviour: "STOP" # STOP, STRAIGHT, or FINISH_PNT
-    time_to_pause_search: 20.0 #seconds
+    time_to_pause_search: 3.0 #seconds
     time_between_recovery_actions: 20.0 #seconds
     time_to_stop_before_recovery: 20.0 #seconds
     red_buoy_label: "red_buoy"
     green_buoy_label: "green_buoy"
     second_red_buoy_label: "black_buoy"
     second_green_buoy_label: "yellow_buoy"
+    frame_stack_size: 4
+    bbox_selection: "INNERMOST" # LARGEST, INNERMOST
 collision_avoidance:
   ros__parameters:
     finish_lat: 63.44090
