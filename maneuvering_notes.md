@@ -5,7 +5,7 @@
 * `pixhawk`
 * `camera`
 * `lidar`
-* `ros2 launch njord_tasks master.launch.py`
+* `ros2 launch comp_tasks master.launch.py`
 * `ros2 bag record -a`
 
 * `ros2 launch markers_pkg laptop_vizualization.launch.py` - on my laptop
@@ -34,7 +34,7 @@ Michael needs mission planner, and LED code.
 `ros2 topic pub /mavros/setpoint_velocity/cmd_vel_unstamped geometry_msgs/msg/Twist "{linear: {x: -1.0, y: 0.0, z: 0.0}, angular: {x: 0.0, y: 0.0, z: 0.0}}" -r 10`
 
 
-* `ros2 run njord_tasks detection_filter`
+* `ros2 run comp_tasks detection_filter`
 
 
 `ros2 topic pub /mavros/setpoint_raw/local geometry_msgs/msg/TwistStamped \
