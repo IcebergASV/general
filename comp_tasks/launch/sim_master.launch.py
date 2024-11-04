@@ -32,37 +32,6 @@ def generate_launch_description():
             ]
         )
     )
-    # yolov8_launch = IncludeLaunchDescription(
-    #     PythonLaunchDescriptionSource(
-    #         [
-    #             PathJoinSubstitution(
-    #                 [
-    #                     FindPackageShare("yolov8_bringup"),
-    #                     "launch",
-    #                     "yolov8.launch.py",
-    #                 ]
-    #             )
-    #         ],
-    #         ),
-    #         launch_arguments={
-    #             'input_image_topic': '/camera/camera/color/image_raw',
-    #             'model': '/path/to/weights'
-    #         }.items()
-    # )
-
-    # perception = IncludeLaunchDescription(
-    #     PythonLaunchDescriptionSource(
-    #         [
-    #             PathJoinSubstitution(
-    #                 [
-    #                     FindPackageShare("perception"),
-    #                     "launch",
-    #                     "perception_composition.launch.py",
-    #                 ]
-    #             ),
-    #         ]
-    #     )
-    # )
     comp_tasks = IncludeLaunchDescription(
         PythonLaunchDescriptionSource(
             [
@@ -88,8 +57,6 @@ def generate_launch_description():
     return LaunchDescription(
         [
             odom_map_tf,
-            #perception,
-            # yolov8_launch,
             laser_segmentation,
             comp_tasks,
         ]
