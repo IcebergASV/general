@@ -1,7 +1,5 @@
 #include "comp_tasks/lib/task_lib.hpp"
 #include "tf2_geometry_msgs/tf2_geometry_msgs.hpp"
-#include <tf2/LinearMath/Quaternion.h>
-#include <tf2/LinearMath/Matrix3x3.h>
 namespace task_lib
 {
 

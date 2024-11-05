@@ -1,17 +1,15 @@
 #ifndef TASKLIB_HPP
 #define TASKLIB_HPP
 
-#include <vector>
-#include <string>
 #include <cmath>
 #include <rclcpp/logging.hpp>
 #include "geometry_msgs/msg/point.hpp"
 #include "mavros_msgs/msg/state.hpp"
 #include "sensor_msgs/msg/nav_sat_fix.hpp"
 #include "geographic_msgs/msg/geo_pose_stamped.hpp"
-#include "geometry_msgs/msg/point.hpp"
 #include "geometry_msgs/msg/pose_stamped.hpp"
-
+#include <tf2/LinearMath/Quaternion.h>
+#include <tf2/LinearMath/Matrix3x3.h>
 
 namespace task_lib
 {
@@ -26,7 +24,6 @@ namespace task_lib
 
     geographic_msgs::msg::GeoPoseStamped getGlobalWPMsg(double lat, double lon);
     geometry_msgs::msg::PoseStamped getLocalWPMsg(double x, double y);
-    //void sendLocalWP(double x, double y);
     geometry_msgs::msg::Point polarToCartesian(double radius, double angle);
 }
 #endif // TASKLIB_HPP
