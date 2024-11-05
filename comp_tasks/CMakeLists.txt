@@ -193,3 +193,41 @@ ament_target_dependencies(wp_sender_composition
 install(TARGETS
   wp_sender_composition
   DESTINATION lib/${PROJECT_NAME})
+
+add_library(nav_channel_component SHARED src/nav_channel_component.cpp)
+target_compile_definitions(nav_channel_component PRIVATE "COMPOSITION_BUILDING_DLL")
+ament_target_dependencies(nav_channel_component
+  "rclcpp"
+  "rclcpp_components"
+  "std_msgs"
+  "mavros_msgs"
+  "geographic_msgs"
+  "comp_tasks_interfaces"
+  "yolov8_msgs"
+  "tf2"
+  "tf2_geometry_msgs")
+rclcpp_components_register_nodes(nav_channel_component "comp_tasks::NavChannel")
+set(node_plugins "comp_tasks::NavChannel;$<TARGET_FILE:nav_channel_component>\n")
+install(TARGETS
+  nav_channel_component
+  ARCHIVE DESTINATION lib
+  LIBRARY DESTINATION lib
+  RUNTIME DESTINATION bin)
+
+# Add executable for nav_channel
+add_executable(nav_channel_composition
+  src/nav_channel_composition.cpp)
+target_link_libraries(nav_channel_composition
+nav_channel_component)
+ament_target_dependencies(nav_channel_composition
+  rclcpp)
+install(TARGETS
+  nav_channel_composition
+  DESTINATION lib/${PROJECT_NAME})
+
+target_link_libraries(nav_channel_composition
+  ${YAML_CPP_LIBRARIES}
+  maneuvering_component
+  libtask_lib
+  libbbox_calculations
+)
