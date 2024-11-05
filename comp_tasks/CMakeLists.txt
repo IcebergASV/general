@@ -14,11 +14,9 @@ find_package(sensor_msgs REQUIRED)
 find_package(mavros_msgs REQUIRED)
 find_package(geographic_msgs REQUIRED)
 find_package(comp_tasks_interfaces REQUIRED)
-find_package(perception_interfaces REQUIRED)
 find_package(yolov8_msgs REQUIRED)
 find_package(tf2 REQUIRED)
 find_package(tf2_geometry_msgs REQUIRED)
-find_package(slg_msgs REQUIRED)
 find_package(visualization_msgs REQUIRED)
 
 include_directories(
@@ -72,7 +70,6 @@ add_library(liblidar_calculations
 ament_target_dependencies(liblidar_calculations
   "geometry_msgs"
   "rclcpp"
-  "perception_interfaces"
 )
 
 add_library(libbbox_calculations
@@ -81,18 +78,7 @@ add_library(libbbox_calculations
 ament_target_dependencies(libbbox_calculations
   "geometry_msgs"
   "rclcpp"
-  "perception_interfaces"
   "yolov8_msgs"
-)
-
-add_library(libvisualization
-  lib/visualization.cpp
-)
-ament_target_dependencies(libvisualization
-  "slg_msgs"
-  "visualization_msgs"
-  "rclcpp"
-  "tf2_geometry_msgs"
 )
 
 ament_package()
@@ -135,30 +121,6 @@ target_link_libraries(maneuvering_composition
   libbbox_calculations
 )
 
-add_library(navigation_component SHARED src/navigation_component.cpp)
-target_compile_definitions(navigation_component PRIVATE "COMPOSITION_BUILDING_DLL")
-ament_target_dependencies(navigation_component
-  "rclcpp"
-  "rclcpp_components"
-  "std_msgs")
-rclcpp_components_register_nodes(navigation_component "comp_tasks::navigation")
-set(node_plugins "comp_tasks::navigation;$<TARGET_FILE:navigation_component>\n")
-install(TARGETS
-  navigation_component
-  ARCHIVE DESTINATION lib
-  LIBRARY DESTINATION lib
-  RUNTIME DESTINATION bin)
-
-# Add executable for navigation
-add_executable(navigation_composition
-  src/navigation_composition.cpp)
-target_link_libraries(navigation_composition
-navigation_component)
-ament_target_dependencies(navigation_composition
-  rclcpp)
-install(TARGETS
-  navigation_composition
-  DESTINATION lib/${PROJECT_NAME})
 
 add_library(task_component SHARED src/task_component.cpp)
 target_compile_definitions(task_component PRIVATE "COMPOSITION_BUILDING_DLL")
@@ -177,7 +139,7 @@ install(TARGETS
   LIBRARY DESTINATION lib
   RUNTIME DESTINATION bin)
 
-  # Add executable for navigation
+
   add_executable(detection_filter
   src/detection_filter.cpp)
   ament_target_dependencies(detection_filter
@@ -202,41 +164,7 @@ target_link_libraries(task_composition
   ${YAML_CPP_LIBRARIES}
   libtask_lib
 )
-add_library(collision_avoidance_component SHARED src/collision_avoidance_component.cpp)
-target_compile_definitions(collision_avoidance_component PRIVATE "COMPOSITION_BUILDING_DLL")
-ament_target_dependencies(collision_avoidance_component
-  "rclcpp"
-  "rclcpp_components"
-  "std_msgs"
-  "mavros_msgs"
-  "geographic_msgs"
-  "comp_tasks_interfaces"
-  "slg_msgs"
-  "visualization_msgs")
-rclcpp_components_register_nodes(collision_avoidance_component "comp_tasks::CollisionAvoidance")
-set(node_plugins "comp_tasks::CollisionAvoidance;$<TARGET_FILE:collision_avoidance_component>\n")
-install(TARGETS
-  collision_avoidance_component
-  ARCHIVE DESTINATION lib
-  LIBRARY DESTINATION lib
-  RUNTIME DESTINATION bin)
 
-# Add executable for collision_avoidance
-add_executable(collision_avoidance_composition
-  src/collision_avoidance_composition.cpp)
-target_link_libraries(collision_avoidance_composition
-collision_avoidance_component)
-ament_target_dependencies(collision_avoidance_composition
-  rclcpp)
-target_link_libraries(collision_avoidance_composition
-${YAML_CPP_LIBRARIES}
-libtask_lib
-liblidar_calculations
-libvisualization
-)
-install(TARGETS
-  collision_avoidance_composition
-  DESTINATION lib/${PROJECT_NAME})
 add_library(wp_sender_component SHARED src/wp_sender_component.cpp)
 target_compile_definitions(wp_sender_component PRIVATE "COMPOSITION_BUILDING_DLL")
 ament_target_dependencies(wp_sender_component
