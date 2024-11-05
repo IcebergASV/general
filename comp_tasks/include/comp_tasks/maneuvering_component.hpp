@@ -12,9 +12,6 @@
 #include <chrono>
 #include "mavros_msgs/msg/waypoint_reached.hpp"
 #include "sensor_msgs/msg/nav_sat_fix.hpp"
-#include <tf2/LinearMath/Quaternion.h>
-#include <tf2/LinearMath/Matrix3x3.h>
-#include <Eigen/Dense>
 #include "mavros_msgs/msg/state.hpp"
 
 using std::placeholders::_1;
