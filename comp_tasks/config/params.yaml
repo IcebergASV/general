@@ -24,6 +24,9 @@ maneuvering:
     second_green_buoy_label: "yellow_buoy"
     frame_stack_size: 4
     bbox_selection: "INNERMOST" # LARGEST, INNERMOST
+nav_channel:
+  ros__parameters:
+    multiplier: 5
 collision_avoidance:
   ros__parameters:
     finish_lat: 63.44090
