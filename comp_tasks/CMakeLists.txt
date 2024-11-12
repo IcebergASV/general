@@ -231,3 +231,41 @@ target_link_libraries(nav_channel_composition
   libtask_lib
   libbbox_calculations
 )
+
+add_library(maneuvering_component SHARED src/maneuvering_component.cpp)
+target_compile_definitions(maneuvering_component PRIVATE "COMPOSITION_BUILDING_DLL")
+ament_target_dependencies(maneuvering_component
+  "rclcpp"
+  "rclcpp_components"
+  "std_msgs"
+  "mavros_msgs"
+  "geographic_msgs"
+  "comp_tasks_interfaces"
+  "yolov8_msgs"
+  "tf2"
+  "tf2_geometry_msgs")
+rclcpp_components_register_nodes(maneuvering_component "comp_tasks::Maneuvering")
+set(node_plugins "comp_tasks::Maneuvering;$<TARGET_FILE:maneuvering_component>\n")
+install(TARGETS
+  maneuvering_component
+  ARCHIVE DESTINATION lib
+  LIBRARY DESTINATION lib
+  RUNTIME DESTINATION bin)
+
+# Add executable for maneuvering
+add_executable(maneuvering_composition
+  src/maneuvering_composition.cpp)
+target_link_libraries(maneuvering_composition
+maneuvering_component)
+ament_target_dependencies(maneuvering_composition
+  rclcpp)
+install(TARGETS
+  maneuvering_composition
+  DESTINATION lib/${PROJECT_NAME})
+
+target_link_libraries(maneuvering_composition
+  ${YAML_CPP_LIBRARIES}
+  task_component
+  libtask_lib
+  libbbox_calculations
+)

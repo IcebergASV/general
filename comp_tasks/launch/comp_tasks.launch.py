@@ -29,7 +29,7 @@ def generate_launch_description():
         # ),
         Node(
             package='comp_tasks',
-            executable='task_composition',
+            executable='maneuvering_composition',
             namespace='',
             output='screen',
             parameters=[config], 
