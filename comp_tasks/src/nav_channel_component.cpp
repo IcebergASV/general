@@ -3,7 +3,7 @@
 namespace comp_tasks
 {
   NavChannel::NavChannel(const rclcpp::NodeOptions & options)
-  : Maneuvering(options)
+  : Maneuvering(options, "nav_channel")
   {
     example_sub_ = this->create_subscription<std_msgs::msg::Int32>("/comp_tasks/subscribing_topic", 10, std::bind(&NavChannel::callback, this, _1));
     example_pub_ = this->create_publisher<std_msgs::msg::Float64>("comp_tasks/publishing_topic", 10);
