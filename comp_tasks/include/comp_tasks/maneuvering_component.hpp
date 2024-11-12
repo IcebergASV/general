@@ -22,12 +22,12 @@ namespace comp_tasks
 class Maneuvering : public rclcpp::Node
 {
 public:
-    explicit Maneuvering(const rclcpp::NodeOptions & options);
+    explicit Maneuvering(const rclcpp::NodeOptions & options, std::string node_name = "maneuvering");
 
-private:
+protected:
     void taskToExecuteCallback(const comp_tasks_interfaces::msg::StartTask::SharedPtr msg);
     void stateCallback(const mavros_msgs::msg::State::SharedPtr msg);
-    rcl_interfaces::msg::SetParametersResult param_callback(const std::vector<rclcpp::Parameter> &params);
+    virtual rcl_interfaces::msg::SetParametersResult param_callback(const std::vector<rclcpp::Parameter> &params);
     void globalPoseCallback(const sensor_msgs::msg::NavSatFix::SharedPtr msg);
     void localPoseCallback(const geometry_msgs::msg::PoseStamped::SharedPtr msg);
     void timerCallback();

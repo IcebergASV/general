@@ -4,8 +4,8 @@
 
 namespace comp_tasks
 {
-  Maneuvering::Maneuvering(const rclcpp::NodeOptions & options)
-  : Node("maneuvering", options)
+  Maneuvering::Maneuvering(const rclcpp::NodeOptions & options, std::string node_name)
+  : Node(node_name, options)
   {
     rmw_qos_profile_t qos_profile = rmw_qos_profile_sensor_data;
     auto qos = rclcpp::QoS(rclcpp::QoSInitialization(qos_profile.history, 5), qos_profile);
