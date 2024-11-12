@@ -104,22 +104,6 @@ install(TARGETS
   LIBRARY DESTINATION lib
   RUNTIME DESTINATION bin)
 
-# Add executable for task
-add_executable(task_composition
-  src/task_composition.cpp)
-target_link_libraries(task_composition
-task_component)
-ament_target_dependencies(task_composition
-  rclcpp comp_tasks_interfaces)
-install(TARGETS
-  task_composition
-  DESTINATION lib/${PROJECT_NAME})
-
-target_link_libraries(task_composition
-  ${YAML_CPP_LIBRARIES}
-  libtask_lib
-  libbbox_calculations
-)
 
 
 # add_library(task_component SHARED src/task_component.cpp)
