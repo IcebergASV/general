@@ -82,10 +82,10 @@ ament_target_dependencies(libbbox_calculations
 )
 
 ament_package()
-add_library(maneuvering_component SHARED src/maneuvering_component.cpp)
+add_library(task_component SHARED src/task_component.cpp)
 
-target_compile_definitions(maneuvering_component PRIVATE "COMPOSITION_BUILDING_DLL")
-ament_target_dependencies(maneuvering_component
+target_compile_definitions(task_component PRIVATE "COMPOSITION_BUILDING_DLL")
+ament_target_dependencies(task_component
   "rclcpp"
   "rclcpp_components"
   "std_msgs"
@@ -96,41 +96,6 @@ ament_target_dependencies(maneuvering_component
   "yolov8_msgs"
   "tf2"
   "tf2_geometry_msgs")
-rclcpp_components_register_nodes(maneuvering_component "comp_tasks::Maneuvering")
-set(node_plugins "comp_tasks::Maneuvering;$<TARGET_FILE:maneuvering_component>\n")
-install(TARGETS
-  maneuvering_component
-  ARCHIVE DESTINATION lib
-  LIBRARY DESTINATION lib
-  RUNTIME DESTINATION bin)
-
-# Add executable for maneuvering
-add_executable(maneuvering_composition
-  src/maneuvering_composition.cpp)
-target_link_libraries(maneuvering_composition
-maneuvering_component)
-ament_target_dependencies(maneuvering_composition
-  rclcpp comp_tasks_interfaces)
-install(TARGETS
-  maneuvering_composition
-  DESTINATION lib/${PROJECT_NAME})
-
-target_link_libraries(maneuvering_composition
-  ${YAML_CPP_LIBRARIES}
-  libtask_lib
-  libbbox_calculations
-)
-
-
-add_library(task_component SHARED src/task_component.cpp)
-target_compile_definitions(task_component PRIVATE "COMPOSITION_BUILDING_DLL")
-ament_target_dependencies(task_component
-  "rclcpp"
-  "rclcpp_components"
-  "std_msgs"
-  "mavros_msgs"
-  "geographic_msgs"
-  "comp_tasks_interfaces")
 rclcpp_components_register_nodes(task_component "comp_tasks::Task")
 set(node_plugins "comp_tasks::Task;$<TARGET_FILE:task_component>\n")
 install(TARGETS
@@ -138,16 +103,6 @@ install(TARGETS
   ARCHIVE DESTINATION lib
   LIBRARY DESTINATION lib
   RUNTIME DESTINATION bin)
-
-
-  add_executable(detection_filter
-  src/detection_filter.cpp)
-  ament_target_dependencies(detection_filter
-  rclcpp yolov8_msgs comp_tasks_interfaces)
-  install(TARGETS
-  detection_filter
-  DESTINATION lib/${PROJECT_NAME})
-
 
 # Add executable for task
 add_executable(task_composition
@@ -163,7 +118,52 @@ install(TARGETS
 target_link_libraries(task_composition
   ${YAML_CPP_LIBRARIES}
   libtask_lib
+  libbbox_calculations
 )
+
+
+# add_library(task_component SHARED src/task_component.cpp)
+# target_compile_definitions(task_component PRIVATE "COMPOSITION_BUILDING_DLL")
+# ament_target_dependencies(task_component
+#   "rclcpp"
+#   "rclcpp_components"
+#   "std_msgs"
+#   "mavros_msgs"
+#   "geographic_msgs"
+#   "comp_tasks_interfaces")
+# rclcpp_components_register_nodes(task_component "comp_tasks::Task")
+# set(node_plugins "comp_tasks::Task;$<TARGET_FILE:task_component>\n")
+# install(TARGETS
+#   task_component
+#   ARCHIVE DESTINATION lib
+#   LIBRARY DESTINATION lib
+#   RUNTIME DESTINATION bin)
+
+
+  add_executable(detection_filter
+  src/detection_filter.cpp)
+  ament_target_dependencies(detection_filter
+  rclcpp yolov8_msgs comp_tasks_interfaces)
+  install(TARGETS
+  detection_filter
+  DESTINATION lib/${PROJECT_NAME})
+
+
+# # Add executable for task
+# add_executable(task_composition
+#   src/task_composition.cpp)
+# target_link_libraries(task_composition
+# task_component)
+# ament_target_dependencies(task_composition
+#   rclcpp comp_tasks_interfaces)
+# install(TARGETS
+#   task_composition
+#   DESTINATION lib/${PROJECT_NAME})
+
+# target_link_libraries(task_composition
+#   ${YAML_CPP_LIBRARIES}
+#   libtask_lib
+# )
 
 add_library(wp_sender_component SHARED src/wp_sender_component.cpp)
 target_compile_definitions(wp_sender_component PRIVATE "COMPOSITION_BUILDING_DLL")
@@ -227,7 +227,7 @@ install(TARGETS
 
 target_link_libraries(nav_channel_composition
   ${YAML_CPP_LIBRARIES}
-  maneuvering_component
+  task_component
   libtask_lib
   libbbox_calculations
 )

@@ -1,6 +1,6 @@
 #include <memory>
 
-#include "comp_tasks/maneuvering_component.hpp"
+#include "comp_tasks/task_component.hpp"
 #include "rclcpp/rclcpp.hpp"
 
 int main(int argc, char *argv[]) 
@@ -12,9 +12,9 @@ int main(int argc, char *argv[])
   rclcpp::executors::SingleThreadedExecutor exec;
   rclcpp::NodeOptions options;
 
-  auto maneuvering = std::make_shared<comp_tasks::Maneuvering>(options);
+  auto task = std::make_shared<comp_tasks::Task>(options);
   
-  exec.add_node(maneuvering);
+  exec.add_node(task);
   exec.spin();
 
   rclcpp::shutdown();

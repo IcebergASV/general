@@ -1,48 +1,92 @@
 #include "comp_tasks/task_component.hpp"
+#include "comp_tasks/lib/bbox_calculations.hpp"
 #include "comp_tasks/lib/task_lib.hpp"
+
 namespace comp_tasks
 {
-  Task::Task(const rclcpp::NodeOptions & options)
-  : Node("task", options)
+  Task::Task(const rclcpp::NodeOptions & options, std::string node_name)
+  : Node(node_name, options)
   {
     rmw_qos_profile_t qos_profile = rmw_qos_profile_sensor_data;
     auto qos = rclcpp::QoS(rclcpp::QoSInitialization(qos_profile.history, 5), qos_profile);
-    state_sub_ = this->create_subscription<mavros_msgs::msg::State>("/mavros/state", 10, std::bind(&Task::stateCallback, this, _1));
-    pose_sub_ = this->create_subscription<geographic_msgs::msg::GeoPoseStamped>("/mavros/global_position/pose", qos, std::bind(&Task::poseCallback, this, _1));
+
+    task_to_execute_sub_ = this->create_subscription<comp_tasks_interfaces::msg::StartTask>("/comp_tasks/task_to_execute", 10, std::bind(&Task::taskToExecuteCallback, this, _1));
+    bbox_sub_ = this->create_subscription<yolov8_msgs::msg::DetectionArray>("/yolo/detections", 10, std::bind(&Task::bboxCallback, this, _1));
     wp_reached_sub_ = this->create_subscription<mavros_msgs::msg::WaypointReached>("/mavros/mission/reached", 10, std::bind(&Task::wpReachedCallback, this, _1));
-    timer_ = this->create_wall_timer(500ms, std::bind(&Task::timerCallback, this));
-    wp_pub_ = this->create_publisher<geographic_msgs::msg::GeoPoseStamped>("/mavros/setpoint_position/global", 10);
-    start_task_pub_ = this->create_publisher<comp_tasks_interfaces::msg::StartTask>("/comp_tasks/task_to_execute", 10);
-    task_complete_sub_ = this->create_subscription<std_msgs::msg::Int32>("/comp_tasks/task_completion_status", 10, std::bind(&Task::taskStatusCallback, this, _1));
-    Task::getParam<int>("wait_time", p_wait_time_, 0, "Time to wait in miliseconds");
-    Task::getParam<double>("global_wp_reached_rad", p_global_wp_reached_rad_, 0.0, "Global waypoint reached radius in meters");
-    Task::getParam<double>("start_lat", p_start_lat_, 0.0, "Starting latitude");
-    Task::getParam<double>("start_lon", p_start_lon_, 0.0, "Starting longitude");
+    global_pose_sub_ = this->create_subscription<sensor_msgs::msg::NavSatFix>("/mavros/global_position/global", qos, std::bind(&Task::globalPoseCallback, this, _1));
+    local_pose_sub_ = this->create_subscription<geometry_msgs::msg::PoseStamped>("/mavros/local_position/pose", qos, std::bind(&Task::localPoseCallback, this, _1));
+    state_sub_ = this->create_subscription<mavros_msgs::msg::State>("/mavros/state", 10, std::bind(&Task::stateCallback, this, _1));
+
+    task_completion_status_pub_ = this->create_publisher<std_msgs::msg::Int32>("comp_tasks/task_completion_status", 10);
+    global_wp_pub_ = this->create_publisher<geographic_msgs::msg::GeoPoseStamped>("mavros/setpoint_position/global", 10);
+    local_wp_pub_ = this->create_publisher<geometry_msgs::msg::PoseStamped>("mavros/setpoint_position/local", 10);
+    local_wp_pub_ = this->create_publisher<geometry_msgs::msg::PoseStamped>("mavros/setpoint_position/local", 10);
+    status_logger_pub_ = this->create_publisher<std_msgs::msg::String>("/comp_tasks/task/status", 10);
+
+    //timer_ = this->create_wall_timer(50ms, std::bind(&Task::timerCallback, this));
+
+    Task::getParam<double>("distance_to_move", p_distance_to_move_, 0.0, "Sets a wp this far away");
+    Task::getParam<double>("angle_from_target", p_angle_from_target_, 0.0, "Angles the wp this far from a target buoy");
+    Task::getParam<int>("camera_res_x", p_camera_res_x_, 0, "Resolution width of camera");
+    Task::getParam<int>("camera_fov", p_camera_fov_, 0, "Camera field of view");
     Task::getParam<double>("finish_lat", p_finish_lat_, 0.0, "Finish latitude");
     Task::getParam<double>("finish_lon", p_finish_lon_, 0.0, "Finish longitude");
+    Task::getStringParam("recovery_behaviour", p_recovery_behaviour_, "STOP", "Recovery behaviour");
+    Task::getParam<double>("time_to_pause_search", p_time_to_pause_search_, 0.0, "Miliseconds to wait after finding a target before starting to search for new ones");
+    Task::getParam<double>("time_between_recovery_actions", p_time_between_recovery_actions_, 0.0, "Miliseconds between executing a recovery action (like sending a waypoint)");
+    Task::getParam<double>("time_to_stop_before_recovery", p_time_to_stop_before_recovery_, 0.0, "Miliseconds to stop robot before switching to recovery state if no targets found");
+    Task::getStringParam("red_buoy_label", p_red_buoy_str_, "red_buoy", "Red buoy label");
+    Task::getStringParam("green_buoy_label", p_green_buoy_str_, "green_buoy", "Green buoy label");
+    Task::getStringParam("second_red_buoy_label", p_second_red_buoy_str_, "red_buoy", "Additional red buoy label");
+    Task::getStringParam("second_green_buoy_label", p_second_green_buoy_str_, "green_buoy", "Additional green buoy label");
+    Task::getParam<int>("frame_stack_size", p_frame_stack_size_, 0, "Number of frames to stack before calculating angle");
+    Task::getStringParam("bbox_selection", p_bbox_selection_, "LARGEST", "Selectes either largest or innermost bounding boxes");
+
     on_set_parameters_callback_handle_ = this->add_on_set_parameters_callback(std::bind(&Task::param_callback, this, std::placeholders::_1));
 
-    in_guided_ = false;
+    global_pose_updated_ = false;
+    local_pose_updated_ = false;
+    bboxes_updated_ = false;
+    start_task_ = false;
     wp_reached_ = false;
-    task_complete_ = false;
-  }
+    wp_cnt_ = 0;
+    detection_frame_cnt_ = 0;
 
-  void Task::wait()
-  {
-    rclcpp::Rate rate(1);
-    rate.sleep();
+    status_ = States::STOPPED;
+
+    if (p_time_to_stop_before_recovery_ == 0.0)
+    {
+      timer_expired_ = true;
+    }
+    else 
+    {
+      setTimerDuration(p_time_to_stop_before_recovery_);
+    }
+
+    target_class_names_ = {p_red_buoy_str_, p_green_buoy_str_, p_second_red_buoy_str_, p_second_green_buoy_str_};
   }
 
   rcl_interfaces::msg::SetParametersResult Task::param_callback(const std::vector<rclcpp::Parameter> &params)
   {
     rcl_interfaces::msg::SetParametersResult result;
 
-    if (params[0].get_name() == "wait_time") { p_wait_time_ = params[0].as_int(); }
-    else if (params[0].get_name() == "global_wp_reached_rad") { p_global_wp_reached_rad_ = params[0].as_double(); }
-    else if (params[0].get_name() == "start_lat") { p_start_lat_ = params[0].as_double(); }
-    else if (params[0].get_name() == "start_lon") { p_start_lon_ = params[0].as_double(); }
+    if (params[0].get_name() == "distance_to_move") { p_distance_to_move_ = params[0].as_double(); }
+    else if (params[0].get_name() == "angle_from_target") { p_angle_from_target_ = params[0].as_double(); }
+    else if (params[0].get_name() == "camera_res_x") { p_camera_res_x_ = params[0].as_int(); }
+    else if (params[0].get_name() == "camera_fov") { p_camera_fov_ = params[0].as_int(); }
     else if (params[0].get_name() == "finish_lat") { p_finish_lat_ = params[0].as_double(); }
     else if (params[0].get_name() == "finish_lon") { p_finish_lon_ = params[0].as_double(); }
+    else if (params[0].get_name() == "red_buoy_label") { p_red_buoy_str_ = params[0].as_string(); }
+    else if (params[0].get_name() == "finish_lon") { p_finish_lon_ = params[0].as_double(); }
+    else if (params[0].get_name() == "recovery_behaviour") { p_recovery_behaviour_ = params[0].as_string(); }
+    else if (params[0].get_name() == "time_to_pause_search") { p_time_to_pause_search_ = params[0].as_double(); }
+    else if (params[0].get_name() == "time_between_recovery_actions") { p_time_between_recovery_actions_ = params[0].as_double(); }
+    else if (params[0].get_name() == "time_to_stop_before_recovery") { p_time_to_stop_before_recovery_ = params[0].as_double(); }
+    else if (params[0].get_name() == "green_buoy_label") { p_green_buoy_str_ = params[0].as_string(); }
+    else if (params[0].get_name() == "second_red_buoy_label") { p_second_red_buoy_str_ = params[0].as_string(); }
+    else if (params[0].get_name() == "second_green_buoy_label") { p_second_green_buoy_str_ = params[0].as_string(); }
+    else if (params[0].get_name() == "frame_stack_size") { p_frame_stack_size_ = params[0].as_int(); }
+    else if (params[0].get_name() == "bbox_selection") { p_bbox_selection_ = params[0].as_string(); }
     else {
       RCLCPP_ERROR(this->get_logger(), "Invalid Param");
       result.successful = false;
@@ -53,44 +97,206 @@ namespace comp_tasks
     return result;
   }
 
+  void Task::globalPoseCallback(const sensor_msgs::msg::NavSatFix::SharedPtr msg)
+  {
+    current_global_pose_ = *msg;
+    global_pose_updated_ = true;
+    RCLCPP_DEBUG(this->get_logger(), "Latitude: %f, Longitude: %f", current_global_pose_.latitude, current_global_pose_.longitude);
+  }
+
+  void Task::localPoseCallback(const geometry_msgs::msg::PoseStamped::SharedPtr msg)
+  {
+    current_local_pose_ = *msg;
+    local_pose_updated_ = true;
+    RCLCPP_DEBUG(this->get_logger(), "Local Pose: x: %f, y: %f", msg->pose.position.x, msg->pose.position.y);
+  }
+
   void Task::stateCallback(const mavros_msgs::msg::State::SharedPtr msg)
   {
     mavros_msgs::msg::State current_state = *msg;
     in_guided_ = task_lib::inGuided(current_state);
-    if (in_guided_)
+    return;
+  }
+
+  void Task::publishSearchStatus(std::string str_msg)
+  {
+    std_msgs::msg::String msg;
+    msg.data = "SEARCH STATUS: " + str_msg;
+    status_logger_pub_->publish(msg);
+  }
+  void Task::publishBehaviourStatus(std::string str_msg)
+  {
+    std_msgs::msg::String msg;
+    msg.data = "BEHAVIOUR STATUS: " + str_msg;
+    status_logger_pub_->publish(msg);
+  }
+
+  void Task::setTimerDuration(double duration)
+  {
+    timer_expired_ = false;
+
+    std::chrono::milliseconds ms = std::chrono::duration_cast<std::chrono::milliseconds>(std::chrono::duration<double, std::milli>(duration * 1000));
+    timer_ = this->create_wall_timer(
+        ms, std::bind(&Task::onTimerExpired, this));
+    RCLCPP_DEBUG(this->get_logger(), "Timer set to %f ms", duration); 
+  }
+  void Task::onTimerExpired()
+  {
+      RCLCPP_DEBUG(this->get_logger(), "Times up"); 
+      timer_expired_ = true;
+  }
+
+  void Task::executeRecoveryBehaviour()
+  {
+    if (p_recovery_behaviour_ == "STOP")
     {
-      RCLCPP_INFO_ONCE(this->get_logger(), "In Guided Mode");
-      state_sub_.reset();
+
     }
-    else 
+    else if (p_recovery_behaviour_ == "STRAIGHT")
     {
-      RCLCPP_INFO_ONCE(this->get_logger(), "Waiting for GUIDED, currently in %s mode.", current_state.mode.c_str());
+
+    }
+    else if (p_recovery_behaviour_ == "FINISH_PNT")
+    {
+
     }
     return;
   }
 
-  void Task::poseCallback(const geographic_msgs::msg::GeoPoseStamped::SharedPtr msg)
+  void Task::publishWPTowardsDetections(const yolov8_msgs::msg::DetectionArray& detections)
   {
-    current_global_pose_ = *msg;
-    // Extract latitude and longitude from the message
-    double latitude = msg->pose.position.latitude;
-    double longitude = msg->pose.position.longitude;
+    wp_reached_ = false;
+    publishSearchStatus("Found");
+    double angle = bbox_calculations::getAngleBetween2DiffTargets(detections, p_bbox_selection_, p_red_buoy_str_, p_second_red_buoy_str_,p_green_buoy_str_, p_second_green_buoy_str_, p_camera_fov_, p_camera_res_x_, p_angle_from_target_);
+    geometry_msgs::msg::PoseStamped wp = task_lib::relativePolarToLocalCoords(p_distance_to_move_, angle, current_local_pose_);
+    if (wp.pose.position.x != 0 && wp.pose.position.y != 0)
+    {
+      local_wp_pub_->publish(wp);
+      wp_cnt_++;
+    }
+    else{
+      RCLCPP_WARN(this->get_logger(), "Waypoint Empty - not publishing"); 
+    }
 
-    // Log the values
-    RCLCPP_INFO(this->get_logger(), "Latitude: %f, Longitude: %f", latitude, longitude);
+    if (p_time_to_pause_search_ != 0.0) 
+    {
+      setTimerDuration(p_time_to_pause_search_);
+    }
+    else
+    {
+      timer_expired_ = true;
+    }
   }
 
-  void Task::publishGlobalWP(double lat, double lon)
+  void Task::bboxCallback(const yolov8_msgs::msg::DetectionArray::SharedPtr msg)
   {
-    geographic_msgs::msg::GeoPoseStamped msg;
-    msg.header.stamp = this->get_clock()->now();
-    msg.header.frame_id = "map";  // or use an appropriate frame_id
-
-    msg.pose.position.latitude = lat;
-    msg.pose.position.longitude = lon;
-    wp_pub_->publish(msg);
-    RCLCPP_INFO(this->get_logger(), "Published GeoPose: lat=%.6f, lon=%.6f", msg.pose.position.latitude, msg.pose.position.longitude);
+    yolov8_msgs::msg::DetectionArray new_detections = *msg;
+    stacked_detections_.detections.insert(stacked_detections_.detections.end(), new_detections.detections.begin(), new_detections.detections.end());
+    detection_frame_cnt_++;
+    if (detection_frame_cnt_ >= p_frame_stack_size_)
+    {
+      this->taskLogic(stacked_detections_);
+      detection_frame_cnt_ = 0;
+      stacked_detections_.detections.clear();
+    }
   }
+
+  void Task::taskLogic(const yolov8_msgs::msg::DetectionArray& detections)
+  {
+    if (start_task_ && in_guided_)
+    {
+      switch (status_)
+      {
+        case States::STOPPED: // parameterize - don't go to this state at all in 0 secs
+        {
+          RCLCPP_DEBUG(this->get_logger(), "Stopped"); 
+          publishSearchStatus("Searching");
+          publishBehaviourStatus("Stopped");
+
+          if (bbox_calculations::hasDesiredDetections(detections, target_class_names_))
+          {
+            publishWPTowardsDetections(detections);
+
+            status_ = States::HEADING_TO_TARGET;
+          }
+          else if(timer_expired_)
+          {
+            executeRecoveryBehaviour();
+            setTimerDuration(p_time_between_recovery_actions_);
+            status_ = States::RECOVERING;
+          }
+          break;
+        }
+
+        case States::RECOVERING: // parameterize recovery behaviour & whether it does a recovery
+        {
+          RCLCPP_DEBUG(this->get_logger(), "Recovering"); 
+          publishSearchStatus("Searching");
+          publishBehaviourStatus("Recovering with TODO INSERT RECOVERY BEHAVIOUR");
+          if (bbox_calculations::hasDesiredDetections(detections, target_class_names_))
+          {
+            publishWPTowardsDetections(detections);
+
+            status_ = States::HEADING_TO_TARGET;
+          }
+          else if(timer_expired_)
+          {
+            executeRecoveryBehaviour();
+            setTimerDuration(p_time_between_recovery_actions_);
+          }
+          break;
+        }
+
+        case States::HEADING_TO_TARGET: // parameterize wait time & reorganize
+        {
+          RCLCPP_DEBUG(this->get_logger(), "Heading to Target"); 
+          if (timer_expired_)
+          {
+            publishSearchStatus("Searching");
+          }
+          else
+          {
+            publishSearchStatus("Search Paused");
+          }
+          
+          std::string str_cnt = std::to_string(wp_cnt_);
+          publishBehaviourStatus("Heading to WP " + str_cnt);
+
+          if (bbox_calculations::hasDesiredDetections(detections, target_class_names_) && timer_expired_)
+          {
+
+            publishWPTowardsDetections(detections);
+          }
+          else if (wp_reached_)
+          {
+            std::string str_cnt = std::to_string(wp_cnt_);
+            publishBehaviourStatus("WP " + str_cnt + " Reached"); // TODO this gets overwritten too fast to see i think
+
+            if (p_time_to_stop_before_recovery_ == 0)
+            {
+              executeRecoveryBehaviour();
+              setTimerDuration(p_time_between_recovery_actions_);
+              status_ = States::RECOVERING;
+            }
+            else
+            {
+              setTimerDuration(p_time_to_stop_before_recovery_);
+              status_ = States::STOPPED;
+            }
+          }
+          break;
+        }
+      }
+    }
+  }
+
+  void Task::sendFinishPnt()
+  {
+    geographic_msgs::msg::GeoPoseStamped finish_wp = task_lib::getGlobalWPMsg(p_finish_lat_, p_finish_lon_);
+    global_wp_pub_->publish(finish_wp);
+    RCLCPP_DEBUG(this->get_logger(), "Finish WP: lat=%f, lon=%f", finish_wp.pose.position.latitude, finish_wp.pose.position.longitude);
+  }
+
   void Task::wpReachedCallback(const mavros_msgs::msg::WaypointReached msg)
   {
     RCLCPP_INFO(this->get_logger(), "Waypoint Reached");
@@ -98,106 +304,13 @@ namespace comp_tasks
     wp_reached_ = true;
   }
 
-  void Task::taskStatusCallback(const std_msgs::msg::Int32::SharedPtr msg)
+  void Task::taskToExecuteCallback(const comp_tasks_interfaces::msg::StartTask::SharedPtr msg)
   {
-    if (msg->data == 1)
-    {
-      task_complete_ = true;
-      RCLCPP_INFO(this->get_logger(), "Task complete with success");
-    }
-    else{
-      RCLCPP_INFO(this->get_logger(), "Task failed");
-    }      
+    finish_pnt_ = msg->finish_pnt;
+    start_task_ = true;
+    RCLCPP_INFO(this->get_logger(), "Starting task task");
+ 
   }
-
-  void Task::publishStartTaskSignal()
-  {
-    comp_tasks_interfaces::msg::StartTask start_task;
-    start_task.task.current_task = comp_tasks_interfaces::msg::Task::MANEUVERING;
-    start_task.start_pnt.latitude = p_start_lat_;
-    start_task.start_pnt.longitude = p_start_lon_;
-    start_task.finish_pnt.latitude = p_finish_lat_;
-    start_task.finish_pnt.longitude = p_finish_lon_;
-    start_task_pub_->publish(start_task);
-  }
-  
-  void Task::timerCallback()
-  {
-    RCLCPP_DEBUG(this->get_logger(), "timerCallback");
-    switch (status_)
-    {
-    case States::WAIT_FOR_GUIDED:
-    {
-      if (in_guided_)
-      {
-        RCLCPP_INFO(this->get_logger(), "In GUIDED mode, Starting task");
-        //publishGlobalWP(p_start_lat_, p_start_lon_);
-        publishStartTaskSignal();
-        status_ = States::TASK;
-      }
-      else 
-      {
-        wait();
-      }
-      break;
-    }
-
-    case States::WAIT_TO_REACH_START:
-    {
-      if (wp_reached_)
-      {
-        wp_reached_ = false;
-        RCLCPP_INFO(this->get_logger(), "Reached start point, starting task");
-        publishStartTaskSignal();
-        status_ = States::TASK;
-      }
-      else 
-      {
-        RCLCPP_INFO_ONCE(this->get_logger(), "Waiting to reach start point"); // TODO Add in distance to start point
-        wait();
-      }
-      break;
-    }
-
-    case States::TASK:
-    {
-      if(task_complete_)
-      {
-        RCLCPP_INFO(this->get_logger(), "Heading to finish point");
-        publishGlobalWP(p_finish_lat_, p_finish_lon_);
-        status_ = States::WAIT_TO_REACH_FINISH;
-      }
-      else 
-      {
-        RCLCPP_INFO_ONCE(this->get_logger(), "Waiting for task to complete");
-        wait();
-      }
-      break;
-    }
-
-    case States::WAIT_TO_REACH_FINISH:
-    {
-      if (wp_reached_)
-      {
-        wp_reached_ = false;
-        RCLCPP_INFO(this->get_logger(), "Reached finish point, task complete!");
-        status_ = States::COMPLETE;
-      }
-      else 
-      {
-        RCLCPP_INFO_ONCE(this->get_logger(), "Waiting to reach finish point"); // TODO Add in distance to start point
-        wait();
-      }
-      break;
-    }
-
-    case States::COMPLETE:
-    {
-      RCLCPP_INFO_ONCE(this->get_logger(), "Complete!");
-    }
-  }
-  }
-
 }
 #include "rclcpp_components/register_node_macro.hpp"
 

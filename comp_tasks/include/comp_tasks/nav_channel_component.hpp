@@ -2,7 +2,7 @@
 #define nav_channel_HPP
 
 #include <rclcpp/rclcpp.hpp>
-#include <comp_tasks/maneuvering_component.hpp>
+#include <comp_tasks/task_component.hpp>
 #include <std_msgs/msg/int32.hpp>
 #include <std_msgs/msg/float64.hpp>
 
@@ -11,7 +11,7 @@ using std::placeholders::_1;
 namespace comp_tasks
 {
 
-class NavChannel : public comp_tasks::Maneuvering
+class NavChannel : public comp_tasks::Task
 {
 public:
     explicit NavChannel(const rclcpp::NodeOptions & options);

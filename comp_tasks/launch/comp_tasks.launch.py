@@ -19,17 +19,17 @@ def generate_launch_description():
 
     return LaunchDescription([
         log_level_launch_arg,
+        # Node(
+        #     package='comp_tasks',
+        #     executable='task_composition',
+        #     namespace='',
+        #     output='screen',
+        #     parameters=[config], 
+        #     arguments=['--ros-args', '--log-level', LaunchConfiguration('log_level')]
+        # ),
         Node(
             package='comp_tasks',
             executable='task_composition',
-            namespace='',
-            output='screen',
-            parameters=[config], 
-            arguments=['--ros-args', '--log-level', LaunchConfiguration('log_level')]
-        ),
-        Node(
-            package='comp_tasks',
-            executable='maneuvering_composition',
             namespace='',
             output='screen',
             parameters=[config], 
