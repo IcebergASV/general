@@ -10,14 +10,12 @@ namespace comp_tasks
     rmw_qos_profile_t qos_profile = rmw_qos_profile_sensor_data;
     auto qos = rclcpp::QoS(rclcpp::QoSInitialization(qos_profile.history, 5), qos_profile);
 
-    task_to_execute_sub_ = this->create_subscription<comp_tasks_interfaces::msg::StartTask>("/comp_tasks/task_to_execute", 10, std::bind(&Task::taskToExecuteCallback, this, _1));
     bbox_sub_ = this->create_subscription<yolov8_msgs::msg::DetectionArray>("/yolo/detections", 10, std::bind(&Task::bboxCallback, this, _1));
     wp_reached_sub_ = this->create_subscription<mavros_msgs::msg::WaypointReached>("/mavros/mission/reached", 10, std::bind(&Task::wpReachedCallback, this, _1));
     global_pose_sub_ = this->create_subscription<sensor_msgs::msg::NavSatFix>("/mavros/global_position/global", qos, std::bind(&Task::globalPoseCallback, this, _1));
     local_pose_sub_ = this->create_subscription<geometry_msgs::msg::PoseStamped>("/mavros/local_position/pose", qos, std::bind(&Task::localPoseCallback, this, _1));
     state_sub_ = this->create_subscription<mavros_msgs::msg::State>("/mavros/state", 10, std::bind(&Task::stateCallback, this, _1));
 
-    task_completion_status_pub_ = this->create_publisher<std_msgs::msg::Int32>("comp_tasks/task_completion_status", 10);
     global_wp_pub_ = this->create_publisher<geographic_msgs::msg::GeoPoseStamped>("mavros/setpoint_position/global", 10);
     local_wp_pub_ = this->create_publisher<geometry_msgs::msg::PoseStamped>("mavros/setpoint_position/local", 10);
     local_wp_pub_ = this->create_publisher<geometry_msgs::msg::PoseStamped>("mavros/setpoint_position/local", 10);
@@ -47,7 +45,6 @@ namespace comp_tasks
     global_pose_updated_ = false;
     local_pose_updated_ = false;
     bboxes_updated_ = false;
-    start_task_ = false;
     wp_reached_ = false;
     wp_cnt_ = 0;
     detection_frame_cnt_ = 0;
@@ -203,7 +200,7 @@ namespace comp_tasks
 
   void Task::taskLogic(const yolov8_msgs::msg::DetectionArray& detections)
   {
-    if (start_task_ && in_guided_)
+    if (in_guided_)
     {
       switch (status_)
       {
@@ -302,14 +299,6 @@ namespace comp_tasks
     RCLCPP_INFO(this->get_logger(), "Waypoint Reached");
     mavros_msgs::msg::WaypointReached wpr = msg;
     wp_reached_ = true;
-  }
-
-  void Task::taskToExecuteCallback(const comp_tasks_interfaces::msg::StartTask::SharedPtr msg)
-  {
-    finish_pnt_ = msg->finish_pnt;
-    start_task_ = true;
-    RCLCPP_INFO(this->get_logger(), "Starting task task");
- 
   }
 }
 #include "rclcpp_components/register_node_macro.hpp"

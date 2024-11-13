@@ -25,7 +25,6 @@ public:
     explicit Task(const rclcpp::NodeOptions & options, std::string node_name = "task");
 
 protected:
-    void taskToExecuteCallback(const comp_tasks_interfaces::msg::StartTask::SharedPtr msg);
     void stateCallback(const mavros_msgs::msg::State::SharedPtr msg);
     virtual rcl_interfaces::msg::SetParametersResult param_callback(const std::vector<rclcpp::Parameter> &params);
     void globalPoseCallback(const sensor_msgs::msg::NavSatFix::SharedPtr msg);
@@ -44,8 +43,6 @@ protected:
     void publishWPTowardsDetections(const yolov8_msgs::msg::DetectionArray& detections);
     void taskLogic(const yolov8_msgs::msg::DetectionArray& detections);
 
-    rclcpp::Subscription<comp_tasks_interfaces::msg::StartTask>::SharedPtr task_to_execute_sub_;
-    rclcpp::Publisher<std_msgs::msg::Int32>::SharedPtr task_completion_status_pub_;
     rclcpp::node_interfaces::OnSetParametersCallbackHandle::SharedPtr on_set_parameters_callback_handle_;
     rclcpp::Subscription<sensor_msgs::msg::NavSatFix>::SharedPtr global_pose_sub_;
     rclcpp::Subscription<geometry_msgs::msg::PoseStamped>::SharedPtr local_pose_sub_;
@@ -83,13 +80,11 @@ protected:
 
     sensor_msgs::msg::NavSatFix current_global_pose_;
     geometry_msgs::msg::PoseStamped current_local_pose_;
-    geographic_msgs::msg::GeoPoint finish_pnt_;
     yolov8_msgs::msg::DetectionArray stacked_detections_;
 
     bool global_pose_updated_;
     bool local_pose_updated_;
     bool bboxes_updated_;
-    bool start_task_;
     bool wp_reached_;
     bool timer_expired_;
     int wp_cnt_;
