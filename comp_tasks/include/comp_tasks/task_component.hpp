@@ -41,7 +41,7 @@ protected:
     void publishSearchStatus(std::string str_msg);
     void executeRecoveryBehaviour();
     void publishWPTowardsDetections(const yolov8_msgs::msg::DetectionArray& detections);
-    void taskLogic(const yolov8_msgs::msg::DetectionArray& detections);
+    virtual void taskLogic(const yolov8_msgs::msg::DetectionArray& detections) = 0;
 
     rclcpp::node_interfaces::OnSetParametersCallbackHandle::SharedPtr on_set_parameters_callback_handle_;
     rclcpp::Subscription<sensor_msgs::msg::NavSatFix>::SharedPtr global_pose_sub_;

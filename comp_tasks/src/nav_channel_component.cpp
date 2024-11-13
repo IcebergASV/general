@@ -5,7 +5,6 @@ namespace comp_tasks
   NavChannel::NavChannel(const rclcpp::NodeOptions & options)
   : Task(options, "nav_channel")
   {
-    example_sub_ = this->create_subscription<std_msgs::msg::Int32>("/comp_tasks/subscribing_topic", 10, std::bind(&NavChannel::callback, this, _1));
     example_pub_ = this->create_publisher<std_msgs::msg::Float64>("comp_tasks/publishing_topic", 10);
 
     NavChannel::getParam<int>("multiplier", p_multiplier_, 0, "Multiplies number by this integer");
@@ -29,12 +28,12 @@ namespace comp_tasks
     return result;
   }
 
-  void NavChannel::callback(const std_msgs::msg::Int32::SharedPtr msg)
+  void NavChannel::taskLogic(const yolov8_msgs::msg::DetectionArray& detections)
   {
-    std_msgs::msg::Float64 new_value;
-    new_value.data = msg->data *p_multiplier_ + p_adder_;
-
-    example_pub_->publish(new_value);
+    if (in_guided_)
+    {
+      // TODO
+    }
   }
 }
 #include "rclcpp_components/register_node_macro.hpp"

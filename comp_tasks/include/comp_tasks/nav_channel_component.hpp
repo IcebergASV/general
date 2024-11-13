@@ -5,6 +5,7 @@
 #include <comp_tasks/task_component.hpp>
 #include <std_msgs/msg/int32.hpp>
 #include <std_msgs/msg/float64.hpp>
+#include "yolov8_msgs/msg/detection_array.hpp"
 
 using std::placeholders::_1;
 
@@ -17,8 +18,8 @@ public:
     explicit NavChannel(const rclcpp::NodeOptions & options);
 
 private:
-    void callback(const std_msgs::msg::Int32::SharedPtr msg);
     rcl_interfaces::msg::SetParametersResult param_callback(const std::vector<rclcpp::Parameter> &params) override;
+    void taskLogic(const yolov8_msgs::msg::DetectionArray& detections) override;
 
     rclcpp::Subscription<std_msgs::msg::Int32>::SharedPtr example_sub_;
     rclcpp::Publisher<std_msgs::msg::Float64>::SharedPtr example_pub_;

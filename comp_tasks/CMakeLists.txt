@@ -96,8 +96,8 @@ ament_target_dependencies(task_component
   "yolov8_msgs"
   "tf2"
   "tf2_geometry_msgs")
-rclcpp_components_register_nodes(task_component "comp_tasks::Task")
-set(node_plugins "comp_tasks::Task;$<TARGET_FILE:task_component>\n")
+#rclcpp_components_register_nodes(task_component "comp_tasks::Task")
+#set(node_plugins "comp_tasks::Task;$<TARGET_FILE:task_component>\n")
 install(TARGETS
   task_component
   ARCHIVE DESTINATION lib
