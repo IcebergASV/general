@@ -49,8 +49,6 @@ namespace comp_tasks
     wp_cnt_ = 0;
     detection_frame_cnt_ = 0;
 
-    status_ = States::STOPPED;
-
     if (p_time_to_stop_before_recovery_ == 0.0)
     {
       timer_expired_ = true;

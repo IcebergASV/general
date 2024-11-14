@@ -75,9 +75,6 @@ protected:
 
     std::vector<std::reference_wrapper<std::string>> target_class_names_;
 
-    enum States {STOPPED, RECOVERING, HEADING_TO_TARGET }; 
-    States status_;
-
     sensor_msgs::msg::NavSatFix current_global_pose_;
     geometry_msgs::msg::PoseStamped current_local_pose_;
     yolov8_msgs::msg::DetectionArray stacked_detections_;

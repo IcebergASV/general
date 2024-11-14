@@ -11,6 +11,7 @@ namespace comp_tasks
     Maneuvering::getParam<int>("multiplier", p_multiplier_, 0, "Multiplies number by this integer");
     Maneuvering::getParam<double>("adder", p_adder_, 0, "Adds this double to a number");
     on_set_parameters_callback_handle_ = this->add_on_set_parameters_callback(std::bind(&Maneuvering::param_callback, this, std::placeholders::_1));
+    status_ = States::STOPPED;
   }
 
   rcl_interfaces::msg::SetParametersResult Maneuvering::param_callback(const std::vector<rclcpp::Parameter> &params)

@@ -26,6 +26,9 @@ private:
 
     int p_multiplier_;
     double p_adder_;
+
+    enum States {STOPPED, RECOVERING, HEADING_TO_TARGET }; 
+    States status_;
 };
 
 } // namespace comp_tasks
