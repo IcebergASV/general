@@ -31,16 +31,14 @@ protected:
     void localPoseCallback(const geometry_msgs::msg::PoseStamped::SharedPtr msg);
     void timerCallback();
     void bboxCallback(const yolov8_msgs::msg::DetectionArray::SharedPtr msg);
-    void sendFinishPnt();
     void wpReachedCallback(const mavros_msgs::msg::WaypointReached msg);
-    std::vector<yolov8_msgs::msg::Detection> filterAndSortLeftToRight(const yolov8_msgs::msg::DetectionArray detection_array, const std::string& class_name1, const std::string& class_name2);
-    bool hasDesiredDetections(const yolov8_msgs::msg::DetectionArray& detection_array);
-    void setTimerDuration(double duration);
-    void onTimerExpired();
+    void publishFinishPnt();
     void publishBehaviourStatus(std::string str_msg);
     void publishSearchStatus(std::string str_msg);
-    void executeRecoveryBehaviour();
     void publishWPTowardsDetections(const yolov8_msgs::msg::DetectionArray& detections);
+    void setTimerDuration(double duration);
+    void onTimerExpired();
+    void executeRecoveryBehaviour();
     virtual void taskLogic(const yolov8_msgs::msg::DetectionArray& detections) = 0;
 
     rclcpp::node_interfaces::OnSetParametersCallbackHandle::SharedPtr on_set_parameters_callback_handle_;
@@ -79,8 +77,6 @@ protected:
     geometry_msgs::msg::PoseStamped current_local_pose_;
     yolov8_msgs::msg::DetectionArray stacked_detections_;
 
-    bool global_pose_updated_;
-    bool local_pose_updated_;
     bool bboxes_updated_;
     bool wp_reached_;
     bool timer_expired_;

@@ -82,19 +82,10 @@ namespace comp_tasks
           if (timer_expired_)
           {
             publishSearchStatus("Searching");
-          }
-          else
-          {
-            publishSearchStatus("Search Paused");
-          }
-          
-          std::string str_cnt = std::to_string(wp_cnt_);
-          publishBehaviourStatus("Heading to WP " + str_cnt);
-
-          if (bbox_calculations::hasDesiredDetections(detections, target_class_names_) && timer_expired_)
-          {
-
-            publishWPTowardsDetections(detections);
+            if (bbox_calculations::hasDesiredDetections(detections, target_class_names_))
+            {
+              publishWPTowardsDetections(detections);
+            }
           }
           else if (wp_reached_)
           {
@@ -112,6 +103,10 @@ namespace comp_tasks
               setTimerDuration(p_time_to_stop_before_recovery_);
               status_ = States::STOPPED;
             }
+          }
+          else
+          {
+            publishSearchStatus("Search Paused");
           }
           break;
         }

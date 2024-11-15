@@ -42,8 +42,6 @@ namespace comp_tasks
 
     on_set_parameters_callback_handle_ = this->add_on_set_parameters_callback(std::bind(&Task::param_callback, this, std::placeholders::_1));
 
-    global_pose_updated_ = false;
-    local_pose_updated_ = false;
     bboxes_updated_ = false;
     wp_reached_ = false;
     wp_cnt_ = 0;
@@ -95,14 +93,12 @@ namespace comp_tasks
   void Task::globalPoseCallback(const sensor_msgs::msg::NavSatFix::SharedPtr msg)
   {
     current_global_pose_ = *msg;
-    global_pose_updated_ = true;
     RCLCPP_DEBUG(this->get_logger(), "Latitude: %f, Longitude: %f", current_global_pose_.latitude, current_global_pose_.longitude);
   }
 
   void Task::localPoseCallback(const geometry_msgs::msg::PoseStamped::SharedPtr msg)
   {
     current_local_pose_ = *msg;
-    local_pose_updated_ = true;
     RCLCPP_DEBUG(this->get_logger(), "Local Pose: x: %f, y: %f", msg->pose.position.x, msg->pose.position.y);
   }
 
@@ -111,6 +107,26 @@ namespace comp_tasks
     mavros_msgs::msg::State current_state = *msg;
     in_guided_ = task_lib::inGuided(current_state);
     return;
+  }
+
+  void Task::wpReachedCallback(const mavros_msgs::msg::WaypointReached msg)
+  {
+    RCLCPP_INFO(this->get_logger(), "Waypoint Reached");
+    mavros_msgs::msg::WaypointReached wpr = msg;
+    wp_reached_ = true;
+  }
+
+  void Task::bboxCallback(const yolov8_msgs::msg::DetectionArray::SharedPtr msg)
+  {
+    yolov8_msgs::msg::DetectionArray new_detections = *msg;
+    stacked_detections_.detections.insert(stacked_detections_.detections.end(), new_detections.detections.begin(), new_detections.detections.end());
+    detection_frame_cnt_++;
+    if (detection_frame_cnt_ >= p_frame_stack_size_)
+    {
+      this->taskLogic(stacked_detections_);
+      detection_frame_cnt_ = 0;
+      stacked_detections_.detections.clear();
+    }
   }
 
   void Task::publishSearchStatus(std::string str_msg)
@@ -126,19 +142,38 @@ namespace comp_tasks
     status_logger_pub_->publish(msg);
   }
 
-  void Task::setTimerDuration(double duration)
+  void Task::publishWPTowardsDetections(const yolov8_msgs::msg::DetectionArray& detections)
   {
-    timer_expired_ = false;
+    wp_reached_ = false;
+    publishSearchStatus("Found");
+    double angle = bbox_calculations::getAngleBetween2DiffTargets(detections, p_bbox_selection_, p_red_buoy_str_, p_second_red_buoy_str_,p_green_buoy_str_, p_second_green_buoy_str_, p_camera_fov_, p_camera_res_x_, p_angle_from_target_);
+    geometry_msgs::msg::PoseStamped wp = task_lib::relativePolarToLocalCoords(p_distance_to_move_, angle, current_local_pose_);
+    if (wp.pose.position.x != 0 && wp.pose.position.y != 0)
+    {
+      local_wp_pub_->publish(wp);
+      wp_cnt_++;
+      std::string str_cnt = std::to_string(wp_cnt_);
+      publishBehaviourStatus("Heading to WP " + str_cnt);
+    }
+    else{
+      RCLCPP_WARN(this->get_logger(), "Waypoint Empty - not publishing"); 
+    }
 
-    std::chrono::milliseconds ms = std::chrono::duration_cast<std::chrono::milliseconds>(std::chrono::duration<double, std::milli>(duration * 1000));
-    timer_ = this->create_wall_timer(
-        ms, std::bind(&Task::onTimerExpired, this));
-    RCLCPP_DEBUG(this->get_logger(), "Timer set to %f ms", duration); 
-  }
-  void Task::onTimerExpired()
-  {
-      RCLCPP_DEBUG(this->get_logger(), "Times up"); 
+    if (p_time_to_pause_search_ != 0.0) 
+    {
+      setTimerDuration(p_time_to_pause_search_);
+    }
+    else
+    {
       timer_expired_ = true;
+    }
+  }
+
+  void Task::publishFinishPnt()
+  {
+    geographic_msgs::msg::GeoPoseStamped finish_wp = task_lib::getGlobalWPMsg(p_finish_lat_, p_finish_lon_);
+    global_wp_pub_->publish(finish_wp);
+    RCLCPP_DEBUG(this->get_logger(), "Finish WP: lat=%f, lon=%f", finish_wp.pose.position.latitude, finish_wp.pose.position.longitude);
   }
 
   void Task::executeRecoveryBehaviour()
@@ -158,56 +193,20 @@ namespace comp_tasks
     return;
   }
 
-  void Task::publishWPTowardsDetections(const yolov8_msgs::msg::DetectionArray& detections)
+  void Task::setTimerDuration(double duration)
   {
-    wp_reached_ = false;
-    publishSearchStatus("Found");
-    double angle = bbox_calculations::getAngleBetween2DiffTargets(detections, p_bbox_selection_, p_red_buoy_str_, p_second_red_buoy_str_,p_green_buoy_str_, p_second_green_buoy_str_, p_camera_fov_, p_camera_res_x_, p_angle_from_target_);
-    geometry_msgs::msg::PoseStamped wp = task_lib::relativePolarToLocalCoords(p_distance_to_move_, angle, current_local_pose_);
-    if (wp.pose.position.x != 0 && wp.pose.position.y != 0)
-    {
-      local_wp_pub_->publish(wp);
-      wp_cnt_++;
-    }
-    else{
-      RCLCPP_WARN(this->get_logger(), "Waypoint Empty - not publishing"); 
-    }
+    timer_expired_ = false;
 
-    if (p_time_to_pause_search_ != 0.0) 
-    {
-      setTimerDuration(p_time_to_pause_search_);
-    }
-    else
-    {
+    std::chrono::milliseconds ms = std::chrono::duration_cast<std::chrono::milliseconds>(std::chrono::duration<double, std::milli>(duration * 1000));
+    timer_ = this->create_wall_timer(
+        ms, std::bind(&Task::onTimerExpired, this));
+    RCLCPP_DEBUG(this->get_logger(), "Timer set to %f ms", duration); 
+  }
+  void Task::onTimerExpired()
+  {
+      RCLCPP_DEBUG(this->get_logger(), "Times up"); 
       timer_expired_ = true;
-    }
   }
 
-  void Task::bboxCallback(const yolov8_msgs::msg::DetectionArray::SharedPtr msg)
-  {
-    yolov8_msgs::msg::DetectionArray new_detections = *msg;
-    stacked_detections_.detections.insert(stacked_detections_.detections.end(), new_detections.detections.begin(), new_detections.detections.end());
-    detection_frame_cnt_++;
-    if (detection_frame_cnt_ >= p_frame_stack_size_)
-    {
-      this->taskLogic(stacked_detections_);
-      detection_frame_cnt_ = 0;
-      stacked_detections_.detections.clear();
-    }
-  }
-
-  void Task::sendFinishPnt()
-  {
-    geographic_msgs::msg::GeoPoseStamped finish_wp = task_lib::getGlobalWPMsg(p_finish_lat_, p_finish_lon_);
-    global_wp_pub_->publish(finish_wp);
-    RCLCPP_DEBUG(this->get_logger(), "Finish WP: lat=%f, lon=%f", finish_wp.pose.position.latitude, finish_wp.pose.position.longitude);
-  }
-
-  void Task::wpReachedCallback(const mavros_msgs::msg::WaypointReached msg)
-  {
-    RCLCPP_INFO(this->get_logger(), "Waypoint Reached");
-    mavros_msgs::msg::WaypointReached wpr = msg;
-    wp_reached_ = true;
-  }
 }
 
