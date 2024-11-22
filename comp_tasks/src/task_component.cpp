@@ -105,7 +105,16 @@ namespace comp_tasks
   void Task::stateCallback(const mavros_msgs::msg::State::SharedPtr msg)
   {
     mavros_msgs::msg::State current_state = *msg;
+    bool prev_guided = in_guided_;
     in_guided_ = task_lib::inGuided(current_state);
+    if (in_guided_ && !prev_guided)
+    {
+      RCLCPP_INFO(this->get_logger(), "In GUIDED");
+    }
+    else if (!in_guided_)
+    {
+      RCLCPP_INFO_THROTTLE(this->get_logger(), *this->get_clock(), 1000, "Waiting for GUIDED");
+    }
     return;
   }
 
