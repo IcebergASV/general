@@ -18,7 +18,6 @@ namespace comp_tasks
 
     global_wp_pub_ = this->create_publisher<geographic_msgs::msg::GeoPoseStamped>("mavros/setpoint_position/global", 10);
     local_wp_pub_ = this->create_publisher<geometry_msgs::msg::PoseStamped>("mavros/setpoint_position/local", 10);
-    local_wp_pub_ = this->create_publisher<geometry_msgs::msg::PoseStamped>("mavros/setpoint_position/local", 10);
     status_logger_pub_ = this->create_publisher<std_msgs::msg::String>("/comp_tasks/task/status", 10);
 
     //timer_ = this->create_wall_timer(50ms, std::bind(&Task::timerCallback, this));
