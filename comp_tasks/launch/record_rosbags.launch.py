@@ -10,9 +10,11 @@ def generate_launch_description():
         '/mavros/global_position/global',
         '/mavros/global_position/local',
         '/mavros/local_position/pose',
+        '/mavros/local_position/odom',
         '/mavros/mission/reached',
         '/mavros/state',
-        '/yolo/detections'
+        '/yolo/detections',
+        '/scan'
     ]
 
     robot_logic_topics = [
@@ -21,6 +23,7 @@ def generate_launch_description():
         '/mavros/global_position/global',
         '/mavros/global_position/local',
         '/mavros/local_position/pose',
+        '/mavros/local_position/odom',
         '/mavros/mission/reached',
         '/mavros/setpoint_position/global',
         '/mavros/setpoint_position/local',
@@ -30,6 +33,7 @@ def generate_launch_description():
         '/comp_tasks/maneuvering/status',
         '/comp_tasks/task_completion_status',
         '/comp_tasks/task_to_execute',
+        '/scan',
         '/rosout'
     ]
 
