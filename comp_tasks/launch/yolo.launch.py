@@ -16,46 +16,26 @@ from launch_ros.substitutions import FindPackageShare
 
 def generate_launch_description():
 
-    comp_tasks = IncludeLaunchDescription(
-        PythonLaunchDescriptionSource(
-            [
-                PathJoinSubstitution(
-                    [
-                        FindPackageShare("comp_tasks"),
-                        "launch",
-                        "comp_tasks.launch.py",
-                    ]
-                ),
-            ]
-        )
-    )
-
-    odom_map_tf = Node(
-        package='tf2_ros',
-        executable='static_transform_publisher',
-        name='static_transform_publisher',
-        output='screen',
-        arguments=['0', '0', '0', '0', '0', '0', '1', 'laser', 'odom']
-    )
-
     yolov8_launch = IncludeLaunchDescription(
         PythonLaunchDescriptionSource(
             [
                 PathJoinSubstitution(
                     [
-                        FindPackageShare("comp_tasks"),
+                        FindPackageShare("yolov8_bringup"),
                         "launch",
-                        "yolo.launch.py",
+                        "yolov8.launch.py",
                     ]
                 )
-            ]
-        )
+            ],
+            ),
+            launch_arguments={
+                'input_image_topic': '/camera/camera/color/image_raw',
+                'model': '/home/icebergasv/ros2_ws/src/general/yolov8_ros/weights/marine_markers_v1.pt'
+            }.items()
     )
     return LaunchDescription(
         [
-            odom_map_tf,
             yolov8_launch,
-            comp_tasks,
         ]
     )
 
