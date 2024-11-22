@@ -1,0 +1,4 @@
+maneuvering:
+  ros__parameters:
+    recovery_lat: 63.4411718
+    recovery_lon: 10.4237096
