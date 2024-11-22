@@ -51,8 +51,6 @@ namespace task_lib
 
     geometry_msgs::msg::PoseStamped relativePolarToLocalCoords(double radius, double angle, geometry_msgs::msg::PoseStamped local_pose)
     {
-       
-        geometry_msgs::msg::PoseStamped local_coords;
         // Convert relative coordinates to local coordinates 
         // double heading = quaternionToHeading(local_pose.orientation);
         // double x_aligned = radius*cos(angle-((M_PI/2)-heading));
@@ -60,7 +58,8 @@ namespace task_lib
         geometry_msgs::msg::PoseStamped relative_pose;
         relative_pose.pose.position.x = radius*cos(angle);
         relative_pose.pose.position.y = radius*sin(angle);
-        local_coords = rel_to_local_cord_converter(relative_pose, local_pose);
+        geometry_msgs::msg::PoseStamped local_coords = rel_to_local_cord_converter(relative_pose, local_pose);
+        local_coords.header.frame_id = "map"; 
         // double x =  local_pose.position.x + x_aligned;
         // double y =  local_pose.position.y + y_aligned;
 
@@ -97,6 +96,7 @@ namespace task_lib
 
       geometry_msgs::msg::PoseStamped relative_position;
       //relative_position.header.frame_id = "base_link";  // Frame of reference for the robot
+      
       relative_position.pose.position.x = x_prime;
       relative_position.pose.position.y = y_prime;
 
@@ -124,6 +124,7 @@ namespace task_lib
     geometry_msgs::msg::PoseStamped getLocalWPMsg(double x, double y)
     {
         geometry_msgs::msg::PoseStamped msg;
+        msg.header.frame_id = "map"; 
         msg.pose.position.x = x;
         msg.pose.position.y = y;
         return msg;
