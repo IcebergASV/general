@@ -1,3 +1,0 @@
-Prop red_marker
-Prop green_marker
-geometry_msgs/Point midpoint

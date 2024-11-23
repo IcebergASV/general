@@ -1,0 +1,1 @@
+comp_tasks_interfaces/SimplifiedDetection[] detections
