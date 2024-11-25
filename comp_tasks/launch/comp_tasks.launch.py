@@ -11,6 +11,11 @@ def generate_launch_description():
         'config',
         'params.yaml'
         )
+    gps_points = os.path.join(
+        get_package_share_directory('comp_tasks'),
+        'config',
+        'gps_points.yaml'
+        )
 
     log_level_launch_arg = DeclareLaunchArgument(
         'log_level',
@@ -32,7 +37,7 @@ def generate_launch_description():
             executable='maneuvering_composition',
             namespace='',
             output='screen',
-            parameters=[config], 
+            parameters=[config, gps_points],
             arguments=['--ros-args', '--log-level', LaunchConfiguration('log_level')]
         ),
         # Node(

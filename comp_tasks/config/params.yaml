@@ -1,13 +1,5 @@
 task:
   ros__parameters:
-    wait_time: 100 # miliseconds
-    global_wp_reached_rad: 3.0 # meters
-    start_lat: 63.26480 #-35.3632222
-    start_lon: 10.25448 #149.1654373
-    finish_lat: 63.26445
-    finish_lon: 10.25413
-task:
-  ros__parameters:
     distance_to_move: 30.0 # meters
     angle_from_target: 20.0 # degrees
     camera_res_x: 640
@@ -30,9 +22,7 @@ maneuvering:
     angle_from_target: 20.0 # degrees
     camera_res_x: 640
     camera_fov: 70
-    finish_lat: 63.4411718
-    finish_lon: 10.4237096
-    recovery_behaviour: "STOP" # STOP, STRAIGHT, or FINISH_PNT
+    recovery_behaviour: "STOP" # STOP or RECOVERY_PNT
     time_to_pause_search: 3.0 #seconds
     time_between_recovery_actions: 20.0 #seconds
     time_to_stop_before_recovery: 20.0 #seconds

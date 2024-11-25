@@ -28,6 +28,8 @@ namespace comp_tasks
     Task::getParam<int>("camera_fov", p_camera_fov_, 0, "Camera field of view");
     Task::getParam<double>("finish_lat", p_finish_lat_, 0.0, "Finish latitude");
     Task::getParam<double>("finish_lon", p_finish_lon_, 0.0, "Finish longitude");
+    Task::getParam<double>("recovery_lat", p_recovery_lat_, 0.0, "Recovery latitude");
+    Task::getParam<double>("recovery_lon", p_recovery_lon_, 0.0, "Recovery longitude");
     Task::getStringParam("recovery_behaviour", p_recovery_behaviour_, "STOP", "Recovery behaviour");
     Task::getParam<double>("time_to_pause_search", p_time_to_pause_search_, 0.0, "Miliseconds to wait after finding a target before starting to search for new ones");
     Task::getParam<double>("time_between_recovery_actions", p_time_between_recovery_actions_, 0.0, "Miliseconds between executing a recovery action (like sending a waypoint)");
@@ -68,6 +70,8 @@ namespace comp_tasks
     else if (params[0].get_name() == "camera_fov") { p_camera_fov_ = params[0].as_int(); }
     else if (params[0].get_name() == "finish_lat") { p_finish_lat_ = params[0].as_double(); }
     else if (params[0].get_name() == "finish_lon") { p_finish_lon_ = params[0].as_double(); }
+    else if (params[0].get_name() == "recovery_lat") { p_recovery_lat_ = params[0].as_double(); }
+    else if (params[0].get_name() == "recovery_lon") { p_recovery_lon_ = params[0].as_double(); }
     else if (params[0].get_name() == "red_buoy_label") { p_red_buoy_str_ = params[0].as_string(); }
     else if (params[0].get_name() == "finish_lon") { p_finish_lon_ = params[0].as_double(); }
     else if (params[0].get_name() == "recovery_behaviour") { p_recovery_behaviour_ = params[0].as_string(); }
@@ -177,26 +181,27 @@ namespace comp_tasks
     }
   }
 
-  void Task::publishFinishPnt()
+  void Task::publishGlobalWP(double lat, double lon)
   {
-    geographic_msgs::msg::GeoPoseStamped finish_wp = task_lib::getGlobalWPMsg(p_finish_lat_, p_finish_lon_);
-    global_wp_pub_->publish(finish_wp);
-    RCLCPP_DEBUG(this->get_logger(), "Finish WP: lat=%f, lon=%f", finish_wp.pose.position.latitude, finish_wp.pose.position.longitude);
+    geographic_msgs::msg::GeoPoseStamped wp = task_lib::getGlobalWPMsg(lat, lon);
+    global_wp_pub_->publish(wp);
+    RCLCPP_DEBUG(this->get_logger(), "Global WP: lat=%f, lon=%f", wp.pose.position.latitude, wp.pose.position.longitude);
   }
 
   void Task::executeRecoveryBehaviour()
   {
     if (p_recovery_behaviour_ == "STOP")
     {
-
+      // Do Nothing
     }
-    else if (p_recovery_behaviour_ == "STRAIGHT")
+    else if (p_recovery_behaviour_ == "RECOVERY_PNT")
     {
-
+      publishGlobalWP(p_recovery_lat_, p_recovery_lon_);
+      RCLCPP_INFO(this->get_logger(), "Sent recovery waypoint");
     }
-    else if (p_recovery_behaviour_ == "FINISH_PNT")
+    else 
     {
-
+      RCLCPP_WARN(this->get_logger(), "Invalid Recovery Behavior: %s", p_recovery_behaviour_.c_str());
     }
     return;
   }
