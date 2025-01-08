@@ -110,6 +110,9 @@ namespace comp_tasks
     mavros_msgs::msg::State current_state = *msg;
     bool prev_guided = in_guided_;
     in_guided_ = task_lib::inGuided(current_state);
+    if (task_lib::inManual(current_state) && prev_guided){
+      wp_cnt_ = 0;
+    }
     if (in_guided_ && !prev_guided)
     {
       RCLCPP_INFO(this->get_logger(), "In GUIDED");
