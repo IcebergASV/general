@@ -36,6 +36,7 @@ protected:
     void publishBehaviourStatus(std::string str_msg);
     void publishSearchStatus(std::string str_msg);
     void publishWPTowardsDetections(const yolov8_msgs::msg::DetectionArray& detections);
+    void publishGlobalWP(double lat, double lon);
     void setTimerDuration(double duration);
     void onTimerExpired();
     void executeRecoveryBehaviour();
@@ -60,6 +61,8 @@ protected:
     int p_camera_fov_;
     double p_finish_lat_;
     double p_finish_lon_;
+    double p_recovery_lat_;
+    double p_recovery_lon_;
     std::string p_recovery_behaviour_;
     std::string p_bbox_selection_;
     std::string p_red_buoy_str_;
