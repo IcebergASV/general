@@ -12,6 +12,16 @@ namespace task_lib
 
         return false;
     }
+
+    bool inManual(const mavros_msgs::msg::State& state)
+    {
+        if (state.mode == "MANUAL")
+        {
+            return true;
+        }
+
+        return false;
+    }
     
     bool isReached(double lat, double lon, const geographic_msgs::msg::GeoPoseStamped& global_pose, double max_dist)
     {
