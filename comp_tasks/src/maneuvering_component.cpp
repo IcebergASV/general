@@ -61,7 +61,7 @@ namespace comp_tasks
         {
           RCLCPP_DEBUG(this->get_logger(), "Recovering"); 
           publishSearchStatus("Searching");
-          publishBehaviourStatus("Recovering with TODO INSERT RECOVERY BEHAVIOUR");
+          publishBehaviourStatus("Recovering with " + p_recovery_behaviour_);
           if (bbox_calculations::hasDesiredDetections(detections, target_class_names_))
           {
             publishWPTowardsDetections(detections);
