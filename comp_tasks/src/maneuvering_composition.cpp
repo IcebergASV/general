@@ -14,7 +14,7 @@ int main(int argc, char *argv[])
 
   auto maneuvering = std::make_shared<comp_tasks::Maneuvering>(options);
   
-  exec.add_node(maneuvering);
+  exec.add_node(maneuvering->get_node_base_interface());
   exec.spin();
 
   rclcpp::shutdown();
