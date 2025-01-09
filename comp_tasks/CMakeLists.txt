@@ -283,3 +283,28 @@ ament_target_dependencies(test_life_cycle_node_composition
 install(TARGETS
   test_life_cycle_node_composition
   DESTINATION lib/${PROJECT_NAME})
+add_library(task_controller_component SHARED src/task_controller_component.cpp)
+target_compile_definitions(task_controller_component PRIVATE "COMPOSITION_BUILDING_DLL")
+ament_target_dependencies(task_controller_component
+  "rclcpp"
+  "rclcpp_components"
+  "std_msgs"
+  "lifecycle_msgs")
+rclcpp_components_register_nodes(task_controller_component "comp_tasks::TaskController")
+set(node_plugins "comp_tasks::TaskController;$<TARGET_FILE:task_controller_component>\n")
+install(TARGETS
+  task_controller_component
+  ARCHIVE DESTINATION lib
+  LIBRARY DESTINATION lib
+  RUNTIME DESTINATION bin)
+
+# Add executable for task_controller
+add_executable(task_controller_composition
+  src/task_controller_composition.cpp)
+target_link_libraries(task_controller_composition
+task_controller_component)
+ament_target_dependencies(task_controller_composition
+  rclcpp)
+install(TARGETS
+  task_controller_composition
+  DESTINATION lib/${PROJECT_NAME})
