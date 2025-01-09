@@ -13,13 +13,14 @@
 #include "mavros_msgs/msg/waypoint_reached.hpp"
 #include "sensor_msgs/msg/nav_sat_fix.hpp"
 #include "mavros_msgs/msg/state.hpp"
+#include "rclcpp_lifecycle/lifecycle_node.hpp"
 
 using std::placeholders::_1;
 using namespace std::chrono_literals;
 namespace comp_tasks
 {
 
-class Task : public rclcpp::Node
+class Task : public rclcpp_lifecycle::LifecycleNode
 {
 public:
     explicit Task(const rclcpp::NodeOptions & options, std::string node_name = "task");
@@ -41,6 +42,11 @@ protected:
     void onTimerExpired();
     void executeRecoveryBehaviour();
     virtual void taskLogic(const yolov8_msgs::msg::DetectionArray& detections) = 0;
+    rclcpp_lifecycle::node_interfaces::LifecycleNodeInterface::CallbackReturn on_configure(const rclcpp_lifecycle::State &);
+    rclcpp_lifecycle::node_interfaces::LifecycleNodeInterface::CallbackReturn on_activate(const rclcpp_lifecycle::State &);
+    rclcpp_lifecycle::node_interfaces::LifecycleNodeInterface::CallbackReturn on_deactivate(const rclcpp_lifecycle::State &);
+    rclcpp_lifecycle::node_interfaces::LifecycleNodeInterface::CallbackReturn on_cleanup(const rclcpp_lifecycle::State &);
+    rclcpp_lifecycle::node_interfaces::LifecycleNodeInterface::CallbackReturn on_shutdown(const rclcpp_lifecycle::State &);
 
     rclcpp::node_interfaces::OnSetParametersCallbackHandle::SharedPtr on_set_parameters_callback_handle_;
     rclcpp::Subscription<sensor_msgs::msg::NavSatFix>::SharedPtr global_pose_sub_;

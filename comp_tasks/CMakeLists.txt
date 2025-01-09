@@ -97,7 +97,9 @@ ament_target_dependencies(task_component
   "comp_tasks_interfaces"
   "yolov8_msgs"
   "tf2"
-  "tf2_geometry_msgs")
+  "tf2_geometry_msgs"
+  "rclcpp_lifecycle"
+  )
 #rclcpp_components_register_nodes(task_component "comp_tasks::Task")
 #set(node_plugins "comp_tasks::Task;$<TARGET_FILE:task_component>\n")
 install(TARGETS
@@ -191,7 +193,8 @@ ament_target_dependencies(nav_channel_component
   "comp_tasks_interfaces"
   "yolov8_msgs"
   "tf2"
-  "tf2_geometry_msgs")
+  "tf2_geometry_msgs"
+  "rclcpp_lifecycle")
 rclcpp_components_register_nodes(nav_channel_component "comp_tasks::NavChannel")
 set(node_plugins "comp_tasks::NavChannel;$<TARGET_FILE:nav_channel_component>\n")
 install(TARGETS
@@ -229,7 +232,8 @@ ament_target_dependencies(maneuvering_component
   "comp_tasks_interfaces"
   "yolov8_msgs"
   "tf2"
-  "tf2_geometry_msgs")
+  "tf2_geometry_msgs"
+  "rclcpp_lifecycle")
 rclcpp_components_register_nodes(maneuvering_component "comp_tasks::Maneuvering")
 set(node_plugins "comp_tasks::Maneuvering;$<TARGET_FILE:maneuvering_component>\n")
 install(TARGETS

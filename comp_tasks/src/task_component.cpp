@@ -5,7 +5,7 @@
 namespace comp_tasks
 {
   Task::Task(const rclcpp::NodeOptions & options, std::string node_name)
-  : Node(node_name, options)
+  : rclcpp_lifecycle::LifecycleNode(node_name, options)
   {
     rmw_qos_profile_t qos_profile = rmw_qos_profile_sensor_data;
     auto qos = rclcpp::QoS(rclcpp::QoSInitialization(qos_profile.history, 5), qos_profile);
@@ -91,6 +91,31 @@ namespace comp_tasks
 
     result.successful = true;
     return result;
+  }
+  rclcpp_lifecycle::node_interfaces::LifecycleNodeInterface::CallbackReturn Task::on_configure(const rclcpp_lifecycle::State &)
+  {
+    RCLCPP_INFO(this->get_logger(), "on_configure callback");
+    return rclcpp_lifecycle::node_interfaces::LifecycleNodeInterface::CallbackReturn::SUCCESS;
+  }
+  rclcpp_lifecycle::node_interfaces::LifecycleNodeInterface::CallbackReturn Task::on_activate(const rclcpp_lifecycle::State & state)
+  {
+    RCLCPP_INFO(this->get_logger(), "on_activate callback");
+    return rclcpp_lifecycle::node_interfaces::LifecycleNodeInterface::CallbackReturn::SUCCESS;
+  }
+  rclcpp_lifecycle::node_interfaces::LifecycleNodeInterface::CallbackReturn Task::on_deactivate(const rclcpp_lifecycle::State & state)
+  {
+    RCLCPP_INFO(this->get_logger(), "on_deactivate callback");
+    return rclcpp_lifecycle::node_interfaces::LifecycleNodeInterface::CallbackReturn::SUCCESS;
+  }
+  rclcpp_lifecycle::node_interfaces::LifecycleNodeInterface::CallbackReturn Task::on_cleanup(const rclcpp_lifecycle::State &)
+  {
+    RCLCPP_INFO(this->get_logger(), "on_cleanup callback");
+    return rclcpp_lifecycle::node_interfaces::LifecycleNodeInterface::CallbackReturn::SUCCESS;
+  }
+  rclcpp_lifecycle::node_interfaces::LifecycleNodeInterface::CallbackReturn Task::on_shutdown(const rclcpp_lifecycle::State & state)
+  {
+    RCLCPP_INFO(this->get_logger(), "on_shutdown callback");
+    return rclcpp_lifecycle::node_interfaces::LifecycleNodeInterface::CallbackReturn::SUCCESS;
   }
 
   void Task::globalPoseCallback(const sensor_msgs::msg::NavSatFix::SharedPtr msg)

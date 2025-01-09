@@ -14,7 +14,7 @@ int main(int argc, char *argv[])
 
   auto nav_channel = std::make_shared<comp_tasks::NavChannel>(options);
   
-  exec.add_node(nav_channel);
+  exec.add_node(nav_channel->get_node_base_interface());
   exec.spin();
 
   rclcpp::shutdown();
