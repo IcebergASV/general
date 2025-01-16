@@ -18,7 +18,8 @@ namespace comp_tasks
   {
     rcl_interfaces::msg::SetParametersResult result;
 
-    if (params[0].get_name() == "multiplier") { p_multiplier_ = params[0].as_int(); }
+    if (Task::param_callback(params).successful) {}
+    else if (params[0].get_name() == "multiplier") { p_multiplier_ = params[0].as_int(); }
     else if (params[0].get_name() == "adder") { p_adder_ = params[0].as_double(); }
     else {
       RCLCPP_ERROR(this->get_logger(), "Invalid Param");
