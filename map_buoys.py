@@ -39,6 +39,9 @@ def main():
     for idx, position in enumerate(positions):
         color = "red" if position["label"] == "r" else "green"
         marker = {
+            "header": {
+                "frame_id": "odom"  # Replace "map" with your desired frame ID
+            },
             "id": idx,
             "type": 2,  # Sphere
             "action": 0,  # Add
@@ -58,7 +61,8 @@ def main():
 
     ros_command = (
         "ros2 topic pub /visualization_marker_array visualization_msgs/MarkerArray '{markers: "
-        f"{json.dumps(markers)}'"
+        f"{json.dumps(markers)}"
+        "}'"
     )
 
     # Write markers to a file
