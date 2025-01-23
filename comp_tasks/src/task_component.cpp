@@ -84,7 +84,6 @@ namespace comp_tasks
     else if (params[0].get_name() == "frame_stack_size") { p_frame_stack_size_ = params[0].as_int(); }
     else if (params[0].get_name() == "bbox_selection") { p_bbox_selection_ = params[0].as_string(); }
     else {
-      RCLCPP_ERROR(this->get_logger(), "Invalid Param");
       result.successful = false;
       return result;
     }

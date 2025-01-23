@@ -22,7 +22,7 @@ namespace comp_tasks
     else if (params[0].get_name() == "multiplier") { p_multiplier_ = params[0].as_int(); }
     else if (params[0].get_name() == "adder") { p_adder_ = params[0].as_double(); }
     else {
-      RCLCPP_ERROR(this->get_logger(), "Invalid Param");
+      RCLCPP_ERROR(this->get_logger(), "Invalid Param man %s", params[0].get_name().c_str());
       result.successful = false;
       return result;
     }
