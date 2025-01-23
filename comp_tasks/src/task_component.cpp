@@ -248,5 +248,10 @@ namespace comp_tasks
       timer_expired_ = true;
   }
 
+  void Task::signalTaskFinish()
+  {
+
+  }
+
 }
 
