@@ -35,6 +35,17 @@ namespace comp_tasks
     return result;
   }
 
+  void Maneuvering::checkIfFinished()
+  {
+    if (consecutive_recovery_attempts_remaining_ < 1)
+    {
+      signalTaskFinish();
+    }
+    else {
+      consecutive_recovery_attempts_remaining_--;
+    }
+  }
+
   void Maneuvering::taskLogic(const yolov8_msgs::msg::DetectionArray& detections)
   {
     if (in_guided_)
@@ -69,12 +80,14 @@ namespace comp_tasks
           publishBehaviourStatus("Recovering with " + p_recovery_behaviour_);
           if (bbox_calculations::hasDesiredDetections(detections, target_class_names_))
           {
+            consecutive_recovery_attempts_remaining_ = static_cast<int>(std::ceil(p_secs_till_timeout_ / p_time_between_recovery_actions_));
             publishWPTowardsDetections(detections);
 
             status_ = States::HEADING_TO_TARGET;
           }
           else if(timer_expired_)
           {
+            checkIfFinished();
             executeRecoveryBehaviour();
             setTimerDuration(p_time_between_recovery_actions_);
           }
