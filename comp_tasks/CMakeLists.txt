@@ -100,126 +100,12 @@ ament_target_dependencies(task_component
   "tf2_geometry_msgs"
   "rclcpp_lifecycle"
   )
-#rclcpp_components_register_nodes(task_component "comp_tasks::Task")
-#set(node_plugins "comp_tasks::Task;$<TARGET_FILE:task_component>\n")
+
 install(TARGETS
   task_component
   ARCHIVE DESTINATION lib
   LIBRARY DESTINATION lib
   RUNTIME DESTINATION bin)
-
-
-
-# add_library(task_component SHARED src/task_component.cpp)
-# target_compile_definitions(task_component PRIVATE "COMPOSITION_BUILDING_DLL")
-# ament_target_dependencies(task_component
-#   "rclcpp"
-#   "rclcpp_components"
-#   "std_msgs"
-#   "mavros_msgs"
-#   "geographic_msgs"
-#   "comp_tasks_interfaces")
-# rclcpp_components_register_nodes(task_component "comp_tasks::Task")
-# set(node_plugins "comp_tasks::Task;$<TARGET_FILE:task_component>\n")
-# install(TARGETS
-#   task_component
-#   ARCHIVE DESTINATION lib
-#   LIBRARY DESTINATION lib
-#   RUNTIME DESTINATION bin)
-
-
-  add_executable(detection_filter
-  src/detection_filter.cpp)
-  ament_target_dependencies(detection_filter
-  rclcpp yolov8_msgs comp_tasks_interfaces)
-  install(TARGETS
-  detection_filter
-  DESTINATION lib/${PROJECT_NAME})
-
-
-# # Add executable for task
-# add_executable(task_composition
-#   src/task_composition.cpp)
-# target_link_libraries(task_composition
-# task_component)
-# ament_target_dependencies(task_composition
-#   rclcpp comp_tasks_interfaces)
-# install(TARGETS
-#   task_composition
-#   DESTINATION lib/${PROJECT_NAME})
-
-# target_link_libraries(task_composition
-#   ${YAML_CPP_LIBRARIES}
-#   libtask_lib
-# )
-
-add_library(wp_sender_component SHARED src/wp_sender_component.cpp)
-target_compile_definitions(wp_sender_component PRIVATE "COMPOSITION_BUILDING_DLL")
-ament_target_dependencies(wp_sender_component
-  "rclcpp"
-  "rclcpp_components"
-  "std_msgs"
-  "mavros_msgs"
-  "geometry_msgs"
-  "geographic_msgs"
-  "tf2_geometry_msgs")
-rclcpp_components_register_nodes(wp_sender_component "comp_tasks::WPSender")
-set(node_plugins "comp_tasks::WPSender;$<TARGET_FILE:wp_sender_component>\n")
-install(TARGETS
-  wp_sender_component
-  ARCHIVE DESTINATION lib
-  LIBRARY DESTINATION lib
-  RUNTIME DESTINATION bin)
-
-# Add executable for wp_sender
-add_executable(wp_sender_composition
-  src/wp_sender_composition.cpp)
-target_link_libraries(wp_sender_composition
-wp_sender_component)
-ament_target_dependencies(wp_sender_composition
-  rclcpp)
-install(TARGETS
-  wp_sender_composition
-  DESTINATION lib/${PROJECT_NAME})
-
-add_library(nav_channel_component SHARED src/nav_channel_component.cpp)
-target_compile_definitions(nav_channel_component PRIVATE "COMPOSITION_BUILDING_DLL")
-ament_target_dependencies(nav_channel_component
-  "rclcpp"
-  "rclcpp_components"
-  "std_msgs"
-  "mavros_msgs"
-  "geographic_msgs"
-  "comp_tasks_interfaces"
-  "yolov8_msgs"
-  "tf2"
-  "tf2_geometry_msgs"
-  "rclcpp_lifecycle")
-rclcpp_components_register_nodes(nav_channel_component "comp_tasks::NavChannel")
-set(node_plugins "comp_tasks::NavChannel;$<TARGET_FILE:nav_channel_component>\n")
-install(TARGETS
-  nav_channel_component
-  ARCHIVE DESTINATION lib
-  LIBRARY DESTINATION lib
-  RUNTIME DESTINATION bin)
-
-# Add executable for nav_channel
-add_executable(nav_channel_composition
-  src/nav_channel_composition.cpp)
-target_link_libraries(nav_channel_composition
-nav_channel_component)
-ament_target_dependencies(nav_channel_composition
-  rclcpp)
-install(TARGETS
-  nav_channel_composition
-  DESTINATION lib/${PROJECT_NAME})
-
-target_link_libraries(nav_channel_composition
-  ${YAML_CPP_LIBRARIES}
-  task_component
-  libtask_lib
-  libbbox_calculations
-)
 
 add_library(maneuvering_component SHARED src/maneuvering_component.cpp)
 target_compile_definitions(maneuvering_component PRIVATE "COMPOSITION_BUILDING_DLL")
