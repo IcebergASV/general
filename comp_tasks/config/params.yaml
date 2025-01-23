@@ -32,7 +32,7 @@ maneuvering:
     second_green_buoy_label: "yellow_buoy"
     frame_stack_size: 4
     bbox_selection: "INNERMOST" # LARGEST, INNERMOST
-    adder: 10.0
+    secs_till_timeout: 21
 nav_channel:
   ros__parameters:
     multiplier: 5
