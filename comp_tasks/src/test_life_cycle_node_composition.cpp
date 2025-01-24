@@ -1,6 +1,6 @@
 #include <memory>
 
-#include "comp_tasks/maneuvering_component.hpp"
+#include "comp_tasks/test_life_cycle_node_component.hpp"
 #include "rclcpp/rclcpp.hpp"
 
 int main(int argc, char *argv[]) 
@@ -12,9 +12,9 @@ int main(int argc, char *argv[])
   rclcpp::executors::SingleThreadedExecutor exec;
   rclcpp::NodeOptions options;
 
-  auto maneuvering = std::make_shared<comp_tasks::Maneuvering>(options);
+  auto test_life_cycle_node = std::make_shared<comp_tasks::TestLifeCycleNode>(options);
   
-  exec.add_node(maneuvering->get_node_base_interface());
+  exec.add_node(test_life_cycle_node->get_node_base_interface());
   exec.spin();
 
   rclcpp::shutdown();
