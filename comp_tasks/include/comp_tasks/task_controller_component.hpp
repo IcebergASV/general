@@ -38,6 +38,7 @@ public:
     void init();
     unsigned int get_state(std::chrono::seconds time_out = 3s);
     bool change_state(std::uint8_t transition, std::chrono::seconds time_out = 3s);
+    void configureTask(char const * node_name);
 private:
     void callback(const std_msgs::msg::Int32::SharedPtr msg);
     rcl_interfaces::msg::SetParametersResult param_callback(const std::vector<rclcpp::Parameter> &params);
@@ -50,8 +51,8 @@ private:
     double p_adder_;
 
     static constexpr char const * lifecycle_node = "maneuvering";
-    static constexpr char const * node_get_state_topic = "maneuvering/get_state";
-    static constexpr char const * node_change_state_topic = "maneuvering/change_state";
+    std::string node_get_state_topic;
+    std::string node_change_state_topic;
     std::shared_ptr<rclcpp::Client<lifecycle_msgs::srv::GetState>> client_get_state_;
     std::shared_ptr<rclcpp::Client<lifecycle_msgs::srv::ChangeState>> client_change_state_;
     template <typename T>
