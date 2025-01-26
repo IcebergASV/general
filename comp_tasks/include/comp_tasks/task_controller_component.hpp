@@ -35,13 +35,14 @@ class TaskController : public rclcpp::Node
 {
 public:
     explicit TaskController(const rclcpp::NodeOptions & options);
-    void init();
-    unsigned int get_state(std::chrono::seconds time_out = 3s);
-    bool change_state(std::uint8_t transition, std::chrono::seconds time_out = 3s);
-    void configureTask(char const * node_name);
+    void configureTask(std::string node_name);
+    void runTask();
 private:
     void callback(const std_msgs::msg::Int32::SharedPtr msg);
     rcl_interfaces::msg::SetParametersResult param_callback(const std::vector<rclcpp::Parameter> &params);
+    void init(std::string node_name);
+    unsigned int get_state(std::chrono::seconds time_out = 3s);
+    bool change_state(std::uint8_t transition, std::chrono::seconds time_out = 3s);
 
     rclcpp::Subscription<std_msgs::msg::Int32>::SharedPtr example_sub_;
     rclcpp::Publisher<std_msgs::msg::Float64>::SharedPtr example_pub_;
@@ -49,6 +50,7 @@ private:
 
     int p_multiplier_;
     double p_adder_;
+    bool task_complete_;
 
     static constexpr char const * lifecycle_node = "maneuvering";
     std::string node_get_state_topic;
@@ -69,109 +71,12 @@ private:
     }
 };
 
-void
-callee_script(std::shared_ptr<TaskController> lc_client)
-{
-  rclcpp::WallRate time_between_state_changes(0.1);  // 10s
-
-  // configure
+  void
+  callee_script(std::shared_ptr<TaskController> lc_client)
   {
-    if (!lc_client->change_state(lifecycle_msgs::msg::Transition::TRANSITION_CONFIGURE)) {
-      return;
-    }
-    if (!lc_client->get_state()) {
-      return;
-    }
+    lc_client->configureTask("maneuvering");
+    lc_client->runTask();
   }
-
-  // activate
-  {
-    time_between_state_changes.sleep();
-    if (!rclcpp::ok()) {
-      return;
-    }
-    if (!lc_client->change_state(lifecycle_msgs::msg::Transition::TRANSITION_ACTIVATE)) {
-      return;
-    }
-    if (!lc_client->get_state()) {
-      return;
-    }
-  }
-
-  // deactivate
-  {
-    time_between_state_changes.sleep();
-    if (!rclcpp::ok()) {
-      return;
-    }
-    if (!lc_client->change_state(lifecycle_msgs::msg::Transition::TRANSITION_DEACTIVATE)) {
-      return;
-    }
-    if (!lc_client->get_state()) {
-      return;
-    }
-  }
-
-  // activate it again
-  {
-    time_between_state_changes.sleep();
-    if (!rclcpp::ok()) {
-      return;
-    }
-    if (!lc_client->change_state(lifecycle_msgs::msg::Transition::TRANSITION_ACTIVATE)) {
-      return;
-    }
-    if (!lc_client->get_state()) {
-      return;
-    }
-  }
-
-  // and deactivate it again
-  {
-    time_between_state_changes.sleep();
-    if (!rclcpp::ok()) {
-      return;
-    }
-    if (!lc_client->change_state(lifecycle_msgs::msg::Transition::TRANSITION_DEACTIVATE)) {
-      return;
-    }
-    if (!lc_client->get_state()) {
-      return;
-    }
-  }
-
-  // we cleanup
-  {
-    time_between_state_changes.sleep();
-    if (!rclcpp::ok()) {
-      return;
-    }
-    if (!lc_client->change_state(lifecycle_msgs::msg::Transition::TRANSITION_CLEANUP)) {
-      return;
-    }
-    if (!lc_client->get_state()) {
-      return;
-    }
-  }
-
-  // and finally shutdown
-  // Note: We have to be precise here on which shutdown transition id to call
-  // We are currently in the unconfigured state and thus have to call
-  // TRANSITION_UNCONFIGURED_SHUTDOWN
-  {
-    time_between_state_changes.sleep();
-    if (!rclcpp::ok()) {
-      return;
-    }
-    if (!lc_client->change_state(lifecycle_msgs::msg::Transition::TRANSITION_UNCONFIGURED_SHUTDOWN))
-    {
-      return;
-    }
-    if (!lc_client->get_state()) {
-      return;
-    }
-  }
-}
 } // namespace comp_tasks
 
 #endif // task_controller_HPP

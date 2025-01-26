@@ -21,7 +21,6 @@ int main(int argc, char *argv[])
   rclcpp::NodeOptions options;
 
   auto task_controller = std::make_shared<comp_tasks::TaskController>(options);
-  task_controller->init();
   exec.add_node(task_controller);
 
   std::shared_future<void> script = std::async(
