@@ -38,18 +38,13 @@ public:
     void configureTask(std::string node_name);
     void runTask();
 private:
-    void callback(const std_msgs::msg::Int32::SharedPtr msg);
-    rcl_interfaces::msg::SetParametersResult param_callback(const std::vector<rclcpp::Parameter> &params);
+    rcl_interfaces::msg::SetParametersResult param_callback(const std::vector<rclcpp::Parameter> &);
     void init(std::string node_name);
     unsigned int get_state(std::chrono::seconds time_out = 3s);
     bool change_state(std::uint8_t transition, std::chrono::seconds time_out = 3s);
 
-    rclcpp::Subscription<std_msgs::msg::Int32>::SharedPtr example_sub_;
-    rclcpp::Publisher<std_msgs::msg::Float64>::SharedPtr example_pub_;
     rclcpp::node_interfaces::OnSetParametersCallbackHandle::SharedPtr on_set_parameters_callback_handle_;
 
-    int p_multiplier_;
-    double p_adder_;
     bool task_complete_;
 
     static constexpr char const * lifecycle_node = "maneuvering";
