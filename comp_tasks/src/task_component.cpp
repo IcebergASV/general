@@ -7,6 +7,50 @@ namespace comp_tasks
   Task::Task(const rclcpp::NodeOptions & options, std::string node_name)
   : rclcpp_lifecycle::LifecycleNode(node_name, options)
   {
+    bboxes_updated_ = false;
+    wp_reached_ = false;
+    activated_ = false;
+    wp_cnt_ = 0;
+    detection_frame_cnt_ = 0;
+    target_class_names_ = {p_red_buoy_str_, p_green_buoy_str_, p_second_red_buoy_str_, p_second_green_buoy_str_};
+  }
+
+  rcl_interfaces::msg::SetParametersResult Task::param_callback(const std::vector<rclcpp::Parameter> &params)
+  {
+    rcl_interfaces::msg::SetParametersResult result;
+
+    if (params[0].get_name() == "distance_to_move") { p_distance_to_move_ = params[0].as_double(); }
+    else if (params[0].get_name() == "angle_from_target") { p_angle_from_target_ = params[0].as_double(); }
+    else if (params[0].get_name() == "camera_res_x") { p_camera_res_x_ = params[0].as_int(); }
+    else if (params[0].get_name() == "camera_fov") { p_camera_fov_ = params[0].as_int(); }
+    else if (params[0].get_name() == "finish_lat") { p_finish_lat_ = params[0].as_double(); }
+    else if (params[0].get_name() == "finish_lon") { p_finish_lon_ = params[0].as_double(); }
+    else if (params[0].get_name() == "recovery_lat") { p_recovery_lat_ = params[0].as_double(); }
+    else if (params[0].get_name() == "recovery_lon") { p_recovery_lon_ = params[0].as_double(); }
+    else if (params[0].get_name() == "red_buoy_label") { p_red_buoy_str_ = params[0].as_string(); }
+    else if (params[0].get_name() == "finish_lon") { p_finish_lon_ = params[0].as_double(); }
+    else if (params[0].get_name() == "recovery_behaviour") { p_recovery_behaviour_ = params[0].as_string(); }
+    else if (params[0].get_name() == "time_to_pause_search") { p_time_to_pause_search_ = params[0].as_double(); }
+    else if (params[0].get_name() == "time_between_recovery_actions") { p_time_between_recovery_actions_ = params[0].as_double(); }
+    else if (params[0].get_name() == "time_to_stop_before_recovery") { p_time_to_stop_before_recovery_ = params[0].as_double(); }
+    else if (params[0].get_name() == "green_buoy_label") { p_green_buoy_str_ = params[0].as_string(); }
+    else if (params[0].get_name() == "second_red_buoy_label") { p_second_red_buoy_str_ = params[0].as_string(); }
+    else if (params[0].get_name() == "second_green_buoy_label") { p_second_green_buoy_str_ = params[0].as_string(); }
+    else if (params[0].get_name() == "frame_stack_size") { p_frame_stack_size_ = params[0].as_int(); }
+    else if (params[0].get_name() == "bbox_selection") { p_bbox_selection_ = params[0].as_string(); }
+    else {
+      result.successful = false;
+      return result;
+    }
+
+    result.successful = true;
+    return result;
+  }
+
+  rclcpp_lifecycle::node_interfaces::LifecycleNodeInterface::CallbackReturn Task::on_configure(const rclcpp_lifecycle::State &)
+  {
+    RCLCPP_DEBUG(this->get_logger(), "on_configure callback");
+  
     rmw_qos_profile_t qos_profile = rmw_qos_profile_sensor_data;
     auto qos = rclcpp::QoS(rclcpp::QoSInitialization(qos_profile.history, 5), qos_profile);
 
@@ -43,11 +87,6 @@ namespace comp_tasks
 
     on_set_parameters_callback_handle_ = this->add_on_set_parameters_callback(std::bind(&Task::param_callback, this, std::placeholders::_1));
 
-    bboxes_updated_ = false;
-    wp_reached_ = false;
-    wp_cnt_ = 0;
-    detection_frame_cnt_ = 0;
-
     if (p_time_to_stop_before_recovery_ == 0.0)
     {
       timer_expired_ = true;
@@ -57,63 +96,32 @@ namespace comp_tasks
       setTimerDuration(p_time_to_stop_before_recovery_);
     }
 
-    target_class_names_ = {p_red_buoy_str_, p_green_buoy_str_, p_second_red_buoy_str_, p_second_green_buoy_str_};
-  }
-
-  rcl_interfaces::msg::SetParametersResult Task::param_callback(const std::vector<rclcpp::Parameter> &params)
-  {
-    rcl_interfaces::msg::SetParametersResult result;
-
-    if (params[0].get_name() == "distance_to_move") { p_distance_to_move_ = params[0].as_double(); }
-    else if (params[0].get_name() == "angle_from_target") { p_angle_from_target_ = params[0].as_double(); }
-    else if (params[0].get_name() == "camera_res_x") { p_camera_res_x_ = params[0].as_int(); }
-    else if (params[0].get_name() == "camera_fov") { p_camera_fov_ = params[0].as_int(); }
-    else if (params[0].get_name() == "finish_lat") { p_finish_lat_ = params[0].as_double(); }
-    else if (params[0].get_name() == "finish_lon") { p_finish_lon_ = params[0].as_double(); }
-    else if (params[0].get_name() == "recovery_lat") { p_recovery_lat_ = params[0].as_double(); }
-    else if (params[0].get_name() == "recovery_lon") { p_recovery_lon_ = params[0].as_double(); }
-    else if (params[0].get_name() == "red_buoy_label") { p_red_buoy_str_ = params[0].as_string(); }
-    else if (params[0].get_name() == "finish_lon") { p_finish_lon_ = params[0].as_double(); }
-    else if (params[0].get_name() == "recovery_behaviour") { p_recovery_behaviour_ = params[0].as_string(); }
-    else if (params[0].get_name() == "time_to_pause_search") { p_time_to_pause_search_ = params[0].as_double(); }
-    else if (params[0].get_name() == "time_between_recovery_actions") { p_time_between_recovery_actions_ = params[0].as_double(); }
-    else if (params[0].get_name() == "time_to_stop_before_recovery") { p_time_to_stop_before_recovery_ = params[0].as_double(); }
-    else if (params[0].get_name() == "green_buoy_label") { p_green_buoy_str_ = params[0].as_string(); }
-    else if (params[0].get_name() == "second_red_buoy_label") { p_second_red_buoy_str_ = params[0].as_string(); }
-    else if (params[0].get_name() == "second_green_buoy_label") { p_second_green_buoy_str_ = params[0].as_string(); }
-    else if (params[0].get_name() == "frame_stack_size") { p_frame_stack_size_ = params[0].as_int(); }
-    else if (params[0].get_name() == "bbox_selection") { p_bbox_selection_ = params[0].as_string(); }
-    else {
-      result.successful = false;
-      return result;
-    }
-
-    result.successful = true;
-    return result;
-  }
-  rclcpp_lifecycle::node_interfaces::LifecycleNodeInterface::CallbackReturn Task::on_configure(const rclcpp_lifecycle::State &)
-  {
-    RCLCPP_INFO(this->get_logger(), "on_configure callback");
     return rclcpp_lifecycle::node_interfaces::LifecycleNodeInterface::CallbackReturn::SUCCESS;
   }
-  rclcpp_lifecycle::node_interfaces::LifecycleNodeInterface::CallbackReturn Task::on_activate(const rclcpp_lifecycle::State & state)
+  rclcpp_lifecycle::node_interfaces::LifecycleNodeInterface::CallbackReturn Task::on_activate(const rclcpp_lifecycle::State & )
   {
-    RCLCPP_INFO(this->get_logger(), "on_activate callback");
+    RCLCPP_DEBUG(this->get_logger(), "on_activate callback");
+    activated_ = true;
     return rclcpp_lifecycle::node_interfaces::LifecycleNodeInterface::CallbackReturn::SUCCESS;
   }
-  rclcpp_lifecycle::node_interfaces::LifecycleNodeInterface::CallbackReturn Task::on_deactivate(const rclcpp_lifecycle::State & state)
+  rclcpp_lifecycle::node_interfaces::LifecycleNodeInterface::CallbackReturn Task::on_deactivate(const rclcpp_lifecycle::State & )
   {
-    RCLCPP_INFO(this->get_logger(), "on_deactivate callback");
+    RCLCPP_DEBUG(this->get_logger(), "on_deactivate callback");
+    activated_ = false;
     return rclcpp_lifecycle::node_interfaces::LifecycleNodeInterface::CallbackReturn::SUCCESS;
   }
   rclcpp_lifecycle::node_interfaces::LifecycleNodeInterface::CallbackReturn Task::on_cleanup(const rclcpp_lifecycle::State &)
   {
-    RCLCPP_INFO(this->get_logger(), "on_cleanup callback");
-    return rclcpp_lifecycle::node_interfaces::LifecycleNodeInterface::CallbackReturn::SUCCESS;
-  }
-  rclcpp_lifecycle::node_interfaces::LifecycleNodeInterface::CallbackReturn Task::on_shutdown(const rclcpp_lifecycle::State & state)
-  {
-    RCLCPP_INFO(this->get_logger(), "on_shutdown callback");
+    RCLCPP_DEBUG(this->get_logger(), "on_cleanup callback");
+    global_pose_sub_.reset();
+    local_pose_sub_.reset();
+    bbox_sub_.reset();
+    global_wp_pub_.reset();
+    local_wp_pub_.reset();
+    wp_reached_sub_.reset();
+    status_logger_pub_.reset();
+    state_sub_.reset();
+    timer_.reset();
     return rclcpp_lifecycle::node_interfaces::LifecycleNodeInterface::CallbackReturn::SUCCESS;
   }
 
@@ -183,36 +191,41 @@ namespace comp_tasks
 
   void Task::publishWPTowardsDetections(const yolov8_msgs::msg::DetectionArray& detections)
   {
-    wp_reached_ = false;
-    publishSearchStatus("Found");
-    double angle = bbox_calculations::getAngleBetween2DiffTargets(detections, p_bbox_selection_, p_red_buoy_str_, p_second_red_buoy_str_,p_green_buoy_str_, p_second_green_buoy_str_, p_camera_fov_, p_camera_res_x_, p_angle_from_target_);
-    geometry_msgs::msg::PoseStamped wp = task_lib::relativePolarToLocalCoords(p_distance_to_move_, angle, current_local_pose_);
-    if (wp.pose.position.x != 0 && wp.pose.position.y != 0)
-    {
-      local_wp_pub_->publish(wp);
-      wp_cnt_++;
-      std::string str_cnt = std::to_string(wp_cnt_);
-      publishBehaviourStatus("Heading to WP " + str_cnt);
-    }
-    else{
-      RCLCPP_WARN(this->get_logger(), "Waypoint Empty - not publishing"); 
-    }
+    if (activated_){
+      wp_reached_ = false;
+      publishSearchStatus("Found");
+      double angle = bbox_calculations::getAngleBetween2DiffTargets(detections, p_bbox_selection_, p_red_buoy_str_, p_second_red_buoy_str_,p_green_buoy_str_, p_second_green_buoy_str_, p_camera_fov_, p_camera_res_x_, p_angle_from_target_);
+      geometry_msgs::msg::PoseStamped wp = task_lib::relativePolarToLocalCoords(p_distance_to_move_, angle, current_local_pose_);
+      if (wp.pose.position.x != 0 && wp.pose.position.y != 0)
+      {
+        local_wp_pub_->publish(wp);
+        wp_cnt_++;
+        std::string str_cnt = std::to_string(wp_cnt_);
+        publishBehaviourStatus("Heading to WP " + str_cnt);
+      }
+      else{
+        RCLCPP_WARN(this->get_logger(), "Waypoint Empty - not publishing"); 
+      }
 
-    if (p_time_to_pause_search_ != 0.0) 
-    {
-      setTimerDuration(p_time_to_pause_search_);
-    }
-    else
-    {
-      timer_expired_ = true;
+      if (p_time_to_pause_search_ != 0.0) 
+      {
+        setTimerDuration(p_time_to_pause_search_);
+      }
+      else
+      {
+        timer_expired_ = true;
+      }
     }
   }
 
   void Task::publishGlobalWP(double lat, double lon)
   {
-    geographic_msgs::msg::GeoPoseStamped wp = task_lib::getGlobalWPMsg(lat, lon);
-    global_wp_pub_->publish(wp);
-    RCLCPP_DEBUG(this->get_logger(), "Global WP: lat=%f, lon=%f", wp.pose.position.latitude, wp.pose.position.longitude);
+    if (activated_)
+    {
+      geographic_msgs::msg::GeoPoseStamped wp = task_lib::getGlobalWPMsg(lat, lon);
+      global_wp_pub_->publish(wp);
+      RCLCPP_DEBUG(this->get_logger(), "Global WP: lat=%f, lon=%f", wp.pose.position.latitude, wp.pose.position.longitude);
+    }
   }
 
   void Task::executeRecoveryBehaviour()

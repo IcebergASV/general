@@ -37,9 +37,11 @@ namespace comp_tasks
     example_pub_->publish(new_value);
   }
 
-  void TaskController::init()
+  void TaskController::init(std::string node_name)
   {
-    client_get_state_ = this->create_client<lifecycle_msgs::srv::GetState>("maneuvering/get_state");
+    std::string node_get_state_topic = node_name + "/get_state";
+    std::string node_change_state_topic = node_name + "/change_state";
+    client_get_state_ = this->create_client<lifecycle_msgs::srv::GetState>(node_get_state_topic);
     client_change_state_ = this->create_client<lifecycle_msgs::srv::ChangeState>(node_change_state_topic);
   }
 
@@ -120,10 +122,54 @@ namespace comp_tasks
     }
   }
 
-  void TaskController::configureTask(std::string node_name)
+  void TaskController::configureTask(std::string node_name) // TODO add error handling
   {
-    std::string node_get_state_topic = node_name + "/get_state";
-    std::string node_change_state_topic = node_name + "/change_state";
+    init(node_name);
+
+    if (!change_state(lifecycle_msgs::msg::Transition::TRANSITION_CONFIGURE)) {
+      return;
+    }
+    if (!get_state()) {
+      return;
+    }
+  }
+
+  void TaskController::runTask() // TODO add error handling
+  {
+    if (!change_state(lifecycle_msgs::msg::Transition::TRANSITION_ACTIVATE)) {
+      return;
+    }
+    if (!get_state()) {
+      return;
+    }
+
+    if (task_complete_) // TODO implement service to check if a task is finished
+    {
+      task_complete_ = false;
+      {
+        if (!rclcpp::ok()) {
+          return;
+        }
+        if (!change_state(lifecycle_msgs::msg::Transition::TRANSITION_DEACTIVATE)) {
+          return;
+        }
+        if (!get_state()) {
+          return;
+        }
+      }
+
+      {
+        if (!rclcpp::ok()) {
+          return;
+        }
+        if (!change_state(lifecycle_msgs::msg::Transition::TRANSITION_CLEANUP)) {
+          return;
+        }
+        if (!get_state()) {
+          return;
+        }
+      }
+    }
   }
 
     
