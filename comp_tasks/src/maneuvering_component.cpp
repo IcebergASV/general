@@ -6,10 +6,7 @@ namespace comp_tasks
   Maneuvering::Maneuvering(const rclcpp::NodeOptions & options)
   : Task(options, "maneuvering")
   {
-    example_pub_ = this->create_publisher<std_msgs::msg::Float64>("comp_tasks/publishing_topic", 10);
-
     Maneuvering::getParam<int>("secs_till_timeout", p_secs_till_timeout_, 0, "Seconds robot is will stay in recovery if no targets found before finishing task, rounded up to nearest multiple of recovery time");
-    Maneuvering::getParam<double>("adder", p_adder_, 0, "Adds this double to a number");
     on_set_parameters_callback_handle_ = this->add_on_set_parameters_callback(std::bind(&Maneuvering::param_callback, this, std::placeholders::_1));
     status_ = States::STOPPED;
 
@@ -24,7 +21,6 @@ namespace comp_tasks
     if (Task::param_callback(params).successful) {}
     else if (params[0].get_name() == "secs_till_timeout") { p_secs_till_timeout_ = params[0].as_int();
       consecutive_recovery_attempts_remaining_ = static_cast<int>(std::ceil(p_secs_till_timeout_ / p_time_between_recovery_actions_)); }
-    else if (params[0].get_name() == "adder") { p_adder_ = params[0].as_double(); }
     else {
       RCLCPP_ERROR(this->get_logger(), "Invalid Param man %s", params[0].get_name().c_str());
       result.successful = false;
