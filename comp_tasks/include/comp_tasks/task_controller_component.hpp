@@ -8,6 +8,7 @@
 #include "lifecycle_msgs/msg/transition.hpp"
 #include "lifecycle_msgs/srv/change_state.hpp"
 #include "lifecycle_msgs/srv/get_state.hpp"
+#include <std_msgs/msg/bool.hpp>
 
 using std::placeholders::_1;
 using namespace std::chrono_literals;
@@ -35,19 +36,22 @@ class TaskController : public rclcpp::Node
 {
 public:
     explicit TaskController(const rclcpp::NodeOptions & options);
-    void configureTask(std::string node_name);
+    void configureNextTask();
     void runTask();
 private:
-    rcl_interfaces::msg::SetParametersResult param_callback(const std::vector<rclcpp::Parameter> &);
+    rcl_interfaces::msg::SetParametersResult param_callback(const std::vector<rclcpp::Parameter> &params);
     void init(std::string node_name);
+    void taskCompleteCallback(const std_msgs::msg::Bool::SharedPtr msg);
     unsigned int get_state(std::chrono::seconds time_out = 3s);
     bool change_state(std::uint8_t transition, std::chrono::seconds time_out = 3s);
+    bool setNextNodeName();
 
     rclcpp::node_interfaces::OnSetParametersCallbackHandle::SharedPtr on_set_parameters_callback_handle_;
 
-    bool task_complete_;
+    rclcpp::Subscription<std_msgs::msg::Bool>::SharedPtr task_complete_sub_;
 
-    static constexpr char const * lifecycle_node = "maneuvering";
+    std::string p_tasks_;
+    std::string node_name_;
     std::string node_get_state_topic;
     std::string node_change_state_topic;
     std::shared_ptr<rclcpp::Client<lifecycle_msgs::srv::GetState>> client_get_state_;
@@ -64,14 +68,18 @@ private:
 
       return;
     }
+    void getStringParam(std::string param_name, std::string& param, std::string default_value, std::string desc)
+    {
+      auto param_desc = rcl_interfaces::msg::ParameterDescriptor{};
+      param_desc.description = desc;
+      this->declare_parameter<std::string>(param_name, default_value, param_desc);
+      this->get_parameter(param_name, param);
+      std::string param_log_output = param_name + ": " + param;
+      RCLCPP_INFO(this->get_logger(), param_log_output.c_str()); 
+      return;
+    }
 };
 
-  void
-  callee_script(std::shared_ptr<TaskController> lc_client)
-  {
-    lc_client->configureTask("maneuvering");
-    lc_client->runTask();
-  }
 } // namespace comp_tasks
 
 #endif // task_controller_HPP

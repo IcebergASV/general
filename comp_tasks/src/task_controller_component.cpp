@@ -6,19 +6,21 @@ namespace comp_tasks
   : Node("task_controller", options)
   {
     on_set_parameters_callback_handle_ = this->add_on_set_parameters_callback(std::bind(&TaskController::param_callback, this, std::placeholders::_1));
+    TaskController::getStringParam("tasks", p_tasks_, "m", "Tasks and order");
+    task_complete_sub_ = this->create_subscription<std_msgs::msg::Bool>("/comp_tasks/task/complete", 10, std::bind(&TaskController::taskCompleteCallback, this, _1));
+    setNextNodeName();
   }
 
-  rcl_interfaces::msg::SetParametersResult TaskController::param_callback(const std::vector<rclcpp::Parameter> &)
+  rcl_interfaces::msg::SetParametersResult TaskController::param_callback(const std::vector<rclcpp::Parameter> &params)
   {
     rcl_interfaces::msg::SetParametersResult result;
 
-    // if (params[0].get_name() == "multiplier") { p_multiplier_ = params[0].as_int(); } // Commented out temporarily
-    // else if (params[0].get_name() == "adder") { p_adder_ = params[0].as_double(); }
-    // else {
-    //   RCLCPP_ERROR(this->get_logger(), "Invalid Param");
-    //   result.successful = false;
-    //   return result;
-    // }
+    if (params[0].get_name() == "tasks") { p_tasks_ = params[0].as_string(); } 
+    else {
+      RCLCPP_ERROR(this->get_logger(), "Invalid Param");
+      result.successful = false;
+      return result;
+    }
 
     result.successful = true;
     return result;
@@ -30,6 +32,62 @@ namespace comp_tasks
     std::string node_change_state_topic = node_name + "/change_state";
     client_get_state_ = this->create_client<lifecycle_msgs::srv::GetState>(node_get_state_topic);
     client_change_state_ = this->create_client<lifecycle_msgs::srv::ChangeState>(node_change_state_topic);
+  }
+
+  void TaskController::taskCompleteCallback(const std_msgs::msg::Bool::SharedPtr msg)
+  {
+    if (msg->data)
+    {
+      change_state(lifecycle_msgs::msg::Transition::TRANSITION_DEACTIVATE);
+      change_state(lifecycle_msgs::msg::Transition::TRANSITION_CLEANUP);
+      if (setNextNodeName())
+      {
+        configureNextTask();
+        runTask();
+      }
+      else
+      {
+        RCLCPP_INFO(
+        get_logger(),
+        "All tasks complete");
+      }
+    }
+    else{
+      RCLCPP_ERROR(
+        get_logger(),
+        "Task complete = False");
+    }
+    return;
+  }
+
+  bool TaskController::setNextNodeName()
+  {
+    if (p_tasks_.empty()) {
+        return "No tasks remaining";
+        return false;
+    }
+
+    char first_letter = p_tasks_[0]; // Get the first letter
+    p_tasks_.erase(0, 1);            // Remove the first letter
+
+    switch (first_letter) {
+        case 'm':
+            node_name_ = "maneuvering";
+            break;
+        case 'd':
+            node_name_ = "docking";
+            break;
+        case 's':
+            node_name_ = "speed_challenge";
+            break;
+        default:
+        {
+            RCLCPP_ERROR(this->get_logger(), "Invalid Node Name");
+            return false;
+        }
+    }
+    return true;
+
   }
 
   unsigned int TaskController::get_state(std::chrono::seconds time_out)
@@ -54,7 +112,7 @@ namespace comp_tasks
 
     if (future_status != std::future_status::ready) {
       RCLCPP_ERROR(
-        get_logger(), "Server time out while getting current state for node %s", lifecycle_node);
+        get_logger(), "Server time out while getting current state for node %s", node_name_.c_str());
       return lifecycle_msgs::msg::State::PRIMARY_STATE_UNKNOWN;
     }
 
@@ -62,11 +120,11 @@ namespace comp_tasks
     if (future_result.get()) {
       RCLCPP_INFO(
         get_logger(), "Node %s has current state %s.",
-        lifecycle_node, future_result.get()->current_state.label.c_str());
+        node_name_.c_str(), future_result.get()->current_state.label.c_str());
       return future_result.get()->current_state.id;
     } else {
       RCLCPP_ERROR(
-        get_logger(), "Failed to get current state for node %s", lifecycle_node);
+        get_logger(), "Failed to get current state for node %s", node_name_.c_str());
       return lifecycle_msgs::msg::State::PRIMARY_STATE_UNKNOWN;
     }
   }
@@ -92,8 +150,8 @@ namespace comp_tasks
     auto future_status = wait_for_result(future_result, time_out);
 
     if (future_status != std::future_status::ready) {
-      RCLCPP_ERROR(
-        get_logger(), "Server time out while getting current state for node %s", lifecycle_node);
+      RCLCPP_WARN(
+        get_logger(), "Server time out while getting current state for node %s", node_name_.c_str());
       return false;
     }
 
@@ -109,9 +167,9 @@ namespace comp_tasks
     }
   }
 
-  void TaskController::configureTask(std::string node_name) // TODO add error handling
+  void TaskController::configureNextTask() // TODO add error handling
   {
-    init(node_name);
+    init(node_name_);
 
     if (!change_state(lifecycle_msgs::msg::Transition::TRANSITION_CONFIGURE)) {
       return;
@@ -129,39 +187,12 @@ namespace comp_tasks
     if (!get_state()) {
       return;
     }
-
-    if (task_complete_) // TODO implement service to check if a task is finished
-    {
-      task_complete_ = false;
-      {
-        if (!rclcpp::ok()) {
-          return;
-        }
-        if (!change_state(lifecycle_msgs::msg::Transition::TRANSITION_DEACTIVATE)) {
-          return;
-        }
-        if (!get_state()) {
-          return;
-        }
-      }
-
-      {
-        if (!rclcpp::ok()) {
-          return;
-        }
-        if (!change_state(lifecycle_msgs::msg::Transition::TRANSITION_CLEANUP)) {
-          return;
-        }
-        if (!get_state()) {
-          return;
-        }
-      }
-    }
   }
 
     
   
 }
+
 #include "rclcpp_components/register_node_macro.hpp"
 
 RCLCPP_COMPONENTS_REGISTER_NODE(comp_tasks::TaskController)

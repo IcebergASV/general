@@ -63,6 +63,7 @@ namespace comp_tasks
     global_wp_pub_ = this->create_publisher<geographic_msgs::msg::GeoPoseStamped>("mavros/setpoint_position/global", 10);
     local_wp_pub_ = this->create_publisher<geometry_msgs::msg::PoseStamped>("mavros/setpoint_position/local", 10);
     status_logger_pub_ = this->create_publisher<std_msgs::msg::String>("/comp_tasks/task/status", 10);
+    task_complete_pub_ = this->create_publisher<std_msgs::msg::Bool>("/comp_tasks/task/complete", 10);
 
     //timer_ = this->create_wall_timer(50ms, std::bind(&Task::timerCallback, this));
 
@@ -193,7 +194,7 @@ namespace comp_tasks
   {
     if (activated_){
       wp_reached_ = false;
-      publishSearchStatus("Found");
+      //publishSearchStatus("Found");
       double angle = bbox_calculations::getAngleBetween2DiffTargets(detections, p_bbox_selection_, p_red_buoy_str_, p_second_red_buoy_str_,p_green_buoy_str_, p_second_green_buoy_str_, p_camera_fov_, p_camera_res_x_, p_angle_from_target_);
       geometry_msgs::msg::PoseStamped wp = task_lib::relativePolarToLocalCoords(p_distance_to_move_, angle, current_local_pose_);
       if (wp.pose.position.x != 0 && wp.pose.position.y != 0)
@@ -201,7 +202,7 @@ namespace comp_tasks
         local_wp_pub_->publish(wp);
         wp_cnt_++;
         std::string str_cnt = std::to_string(wp_cnt_);
-        publishBehaviourStatus("Heading to WP " + str_cnt);
+        //publishBehaviourStatus("Heading to WP " + str_cnt);
       }
       else{
         RCLCPP_WARN(this->get_logger(), "Waypoint Empty - not publishing"); 
@@ -263,7 +264,9 @@ namespace comp_tasks
 
   void Task::signalTaskFinish()
   {
-
+    std_msgs::msg::Bool task_complete;
+    task_complete.data = true;
+    task_complete_pub_->publish(task_complete);
   }
 
 }
