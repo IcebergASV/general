@@ -4,6 +4,7 @@
 #include <rclcpp/rclcpp.hpp>
 #include <std_msgs/msg/int32.hpp>
 #include <std_msgs/msg/string.hpp>
+#include <std_msgs/msg/bool.hpp>
 #include "comp_tasks_interfaces/msg/start_task.hpp"
 #include "geographic_msgs/msg/geo_pose_stamped.hpp"
 #include "geometry_msgs/msg/pose_stamped.hpp"
@@ -57,6 +58,7 @@ protected:
     rclcpp::Subscription<mavros_msgs::msg::WaypointReached>::SharedPtr wp_reached_sub_;
     rclcpp::Publisher<std_msgs::msg::String>::SharedPtr status_logger_pub_;
     rclcpp::Subscription<mavros_msgs::msg::State>::SharedPtr state_sub_;
+    rclcpp::Publisher<std_msgs::msg::Bool>::SharedPtr task_complete_pub_;
 
     rclcpp::TimerBase::SharedPtr timer_;
 

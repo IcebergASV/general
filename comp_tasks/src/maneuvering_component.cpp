@@ -6,12 +6,9 @@ namespace comp_tasks
   Maneuvering::Maneuvering(const rclcpp::NodeOptions & options)
   : Task(options, "maneuvering")
   {
-    Maneuvering::getParam<int>("secs_till_timeout", p_secs_till_timeout_, 0, "Seconds robot is will stay in recovery if no targets found before finishing task, rounded up to nearest multiple of recovery time");
+    Maneuvering::getParam<int>("max_consec_recoveries", p_max_consec_recoveries_, 0, "Maxmimum consecutive recovery attempts before task completes");
     on_set_parameters_callback_handle_ = this->add_on_set_parameters_callback(std::bind(&Maneuvering::param_callback, this, std::placeholders::_1));
     status_ = States::STOPPED;
-
-    consecutive_recovery_attempts_remaining_ = static_cast<int>(std::ceil(p_secs_till_timeout_ / p_time_between_recovery_actions_));
-    RCLCPP_DEBUG(this->get_logger(), "Max %d consecutive recovery attempts", consecutive_recovery_attempts_remaining_);
   }
 
   rcl_interfaces::msg::SetParametersResult Maneuvering::param_callback(const std::vector<rclcpp::Parameter> &params)
@@ -19,8 +16,7 @@ namespace comp_tasks
     rcl_interfaces::msg::SetParametersResult result;
 
     if (Task::param_callback(params).successful) {}
-    else if (params[0].get_name() == "secs_till_timeout") { p_secs_till_timeout_ = params[0].as_int();
-      consecutive_recovery_attempts_remaining_ = static_cast<int>(std::ceil(p_secs_till_timeout_ / p_time_between_recovery_actions_)); }
+    else if (params[0].get_name() == "max_consec_recoveries") { p_max_consec_recoveries_ = params[0].as_int();}
     else {
       RCLCPP_ERROR(this->get_logger(), "Invalid Param man %s", params[0].get_name().c_str());
       result.successful = false;
@@ -33,12 +29,12 @@ namespace comp_tasks
 
   void Maneuvering::checkIfFinished()
   {
-    if (consecutive_recovery_attempts_remaining_ < 1)
+    if (p_max_consec_recoveries_ < 1)
     {
       signalTaskFinish();
     }
     else {
-      consecutive_recovery_attempts_remaining_--;
+      p_max_consec_recoveries_--;
     }
   }
 
@@ -57,7 +53,7 @@ namespace comp_tasks
           if (bbox_calculations::hasDesiredDetections(detections, target_class_names_))
           {
             publishWPTowardsDetections(detections);
-
+            publishSearchStatus("Found");
             status_ = States::HEADING_TO_TARGET;
           }
           else if(timer_expired_)
@@ -76,9 +72,8 @@ namespace comp_tasks
           publishBehaviourStatus("Recovering with " + p_recovery_behaviour_);
           if (bbox_calculations::hasDesiredDetections(detections, target_class_names_))
           {
-            consecutive_recovery_attempts_remaining_ = static_cast<int>(std::ceil(p_secs_till_timeout_ / p_time_between_recovery_actions_));
             publishWPTowardsDetections(detections);
-
+            publishSearchStatus("Found");
             status_ = States::HEADING_TO_TARGET;
           }
           else if(timer_expired_)
@@ -92,6 +87,8 @@ namespace comp_tasks
 
         case States::HEADING_TO_TARGET: // parameterize wait time & reorganize
         {
+          std::string str_cnt = std::to_string(wp_cnt_);
+          publishBehaviourStatus("Heading to WP " + str_cnt);
           RCLCPP_DEBUG(this->get_logger(), "Heading to Target"); 
           if (timer_expired_)
           {
@@ -99,12 +96,26 @@ namespace comp_tasks
             if (bbox_calculations::hasDesiredDetections(detections, target_class_names_))
             {
               publishWPTowardsDetections(detections);
+              RCLCPP_DEBUG(this->get_logger(), "Has desired detections"); 
+            }
+            else if (p_time_to_stop_before_recovery_ == 0)
+            {
+              RCLCPP_DEBUG(this->get_logger(), "Going straight to recovery"); 
+              executeRecoveryBehaviour();
+              setTimerDuration(p_time_between_recovery_actions_);
+              status_ = States::RECOVERING;
+            }
+            else
+            {
+              RCLCPP_DEBUG(this->get_logger(), "No targets found, stopping"); 
+              setTimerDuration(p_time_to_stop_before_recovery_);
+              status_ = States::STOPPED;
             }
           }
           else if (wp_reached_)
           {
             std::string str_cnt = std::to_string(wp_cnt_);
-            publishBehaviourStatus("WP " + str_cnt + " Reached"); // TODO this gets overwritten too fast to see i think
+            //publishBehaviourStatus("WP " + str_cnt + " Reached"); // TODO this gets overwritten too fast to see i think
 
             if (p_time_to_stop_before_recovery_ == 0)
             {
