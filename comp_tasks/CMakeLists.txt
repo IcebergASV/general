@@ -146,33 +146,6 @@ target_link_libraries(maneuvering_composition
   libbbox_calculations
 )
 
-add_library(test_life_cycle_node_component SHARED src/test_life_cycle_node_component.cpp)
-target_compile_definitions(test_life_cycle_node_component PRIVATE "COMPOSITION_BUILDING_DLL")
-ament_target_dependencies(test_life_cycle_node_component
-  "rclcpp"
-  "rclcpp_components"
-  "std_msgs"
-  "lifecycle_msgs"
-  "rclcpp_lifecycle"
-  )
-rclcpp_components_register_nodes(test_life_cycle_node_component "comp_tasks::TestLifeCycleNode")
-set(node_plugins "comp_tasks::TestLifeCycleNode;$<TARGET_FILE:test_life_cycle_node_component>\n")
-install(TARGETS
-  test_life_cycle_node_component
-  ARCHIVE DESTINATION lib
-  LIBRARY DESTINATION lib
-  RUNTIME DESTINATION bin)
-
-# Add executable for test_life_cycle_node
-add_executable(test_life_cycle_node_composition
-  src/test_life_cycle_node_composition.cpp)
-target_link_libraries(test_life_cycle_node_composition
-test_life_cycle_node_component)
-ament_target_dependencies(test_life_cycle_node_composition
-  rclcpp)
-install(TARGETS
-  test_life_cycle_node_composition
-  DESTINATION lib/${PROJECT_NAME})
 add_library(task_controller_component SHARED src/task_controller_component.cpp)
 target_compile_definitions(task_controller_component PRIVATE "COMPOSITION_BUILDING_DLL")
 ament_target_dependencies(task_controller_component
