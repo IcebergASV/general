@@ -18,7 +18,7 @@ namespace comp_tasks
     if (Task::param_callback(params).successful) {}
     else if (params[0].get_name() == "max_consec_recoveries") { p_max_consec_recoveries_ = params[0].as_int();}
     else {
-      RCLCPP_ERROR(this->get_logger(), "Invalid Param man %s", params[0].get_name().c_str());
+      RCLCPP_ERROR(this->get_logger(), "Invalid Param manuevering: %s", params[0].get_name().c_str());
       result.successful = false;
       return result;
     }
