@@ -4,6 +4,7 @@
 #include <rclcpp/rclcpp.hpp>
 #include <std_msgs/msg/int32.hpp>
 #include <std_msgs/msg/string.hpp>
+#include <std_msgs/msg/bool.hpp>
 #include "comp_tasks_interfaces/msg/start_task.hpp"
 #include "geographic_msgs/msg/geo_pose_stamped.hpp"
 #include "geometry_msgs/msg/pose_stamped.hpp"
@@ -13,13 +14,14 @@
 #include "mavros_msgs/msg/waypoint_reached.hpp"
 #include "sensor_msgs/msg/nav_sat_fix.hpp"
 #include "mavros_msgs/msg/state.hpp"
+#include "rclcpp_lifecycle/lifecycle_node.hpp"
 
 using std::placeholders::_1;
 using namespace std::chrono_literals;
 namespace comp_tasks
 {
 
-class Task : public rclcpp::Node
+class Task : public rclcpp_lifecycle::LifecycleNode
 {
 public:
     explicit Task(const rclcpp::NodeOptions & options, std::string node_name = "task");
@@ -40,7 +42,12 @@ protected:
     void setTimerDuration(double duration);
     void onTimerExpired();
     void executeRecoveryBehaviour();
+    void signalTaskFinish(); // TODO
     virtual void taskLogic(const yolov8_msgs::msg::DetectionArray& detections) = 0;
+    rclcpp_lifecycle::node_interfaces::LifecycleNodeInterface::CallbackReturn on_configure(const rclcpp_lifecycle::State &);
+    rclcpp_lifecycle::node_interfaces::LifecycleNodeInterface::CallbackReturn on_activate(const rclcpp_lifecycle::State &);
+    rclcpp_lifecycle::node_interfaces::LifecycleNodeInterface::CallbackReturn on_deactivate(const rclcpp_lifecycle::State &);
+    rclcpp_lifecycle::node_interfaces::LifecycleNodeInterface::CallbackReturn on_cleanup(const rclcpp_lifecycle::State &);
 
     rclcpp::node_interfaces::OnSetParametersCallbackHandle::SharedPtr on_set_parameters_callback_handle_;
     rclcpp::Subscription<sensor_msgs::msg::NavSatFix>::SharedPtr global_pose_sub_;
@@ -51,6 +58,7 @@ protected:
     rclcpp::Subscription<mavros_msgs::msg::WaypointReached>::SharedPtr wp_reached_sub_;
     rclcpp::Publisher<std_msgs::msg::String>::SharedPtr status_logger_pub_;
     rclcpp::Subscription<mavros_msgs::msg::State>::SharedPtr state_sub_;
+    rclcpp::Publisher<std_msgs::msg::Bool>::SharedPtr task_complete_pub_;
 
     rclcpp::TimerBase::SharedPtr timer_;
 
@@ -86,6 +94,7 @@ protected:
     int wp_cnt_;
     int detection_frame_cnt_;
     bool in_guided_;
+    bool activated_;
 
     template <typename T>
     void getParam(std::string param_name, T& param, T default_value, std::string desc)
