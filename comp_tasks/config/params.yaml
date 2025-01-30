@@ -8,7 +8,7 @@ task:
     finish_lon: 10.4237096
     recovery_behaviour: "STOP" # STOP, STRAIGHT, or FINISH_PNT
     time_to_pause_search: 3.0 #seconds
-    time_between_recovery_actions: 2.0 #seconds
+    time_between_recovery_actions: 20.0 #seconds
     time_to_stop_before_recovery: 20.0 #seconds
     red_buoy_label: "red_buoy"
     green_buoy_label: "green_buoy"
@@ -24,15 +24,28 @@ maneuvering:
     camera_fov: 70
     recovery_behaviour: "STOP" # STOP or RECOVERY_PNT
     time_to_pause_search: 3.0 #seconds
-    time_between_recovery_actions: 2.0 #seconds
-    time_to_stop_before_recovery: 2.0 #seconds
+    time_between_recovery_actions: 20.0 #seconds
+    time_to_stop_before_recovery: 20.0 #seconds
     red_buoy_label: "red_buoy"
     green_buoy_label: "green_buoy"
     second_red_buoy_label: "black_buoy"
     second_green_buoy_label: "yellow_buoy"
     frame_stack_size: 4
     bbox_selection: "INNERMOST" # LARGEST, INNERMOST
-    max_consec_recoveries: 2
-task_controller:
+    adder: 10.0
+nav_channel:
   ros__parameters:
-    tasks: "ms"
+    multiplier: 5
+collision_avoidance:
+  ros__parameters:
+    finish_lat: 63.44090
+    finish_lon: 10.42370
+    min_dist: 0.01
+    max_dist:  5.0
+    fov: 30.0 # +/- from 90 degrees on each side, i.e. if fov = 20, fov is from 70 to 110
+    obstacle_length: 2.0
+    obstacle_length_range: 0.5
+    mode_when_obstacles: 1 # 0 for hold, 1 for loiter, 2 for manual
+wp_sender:
+  ros__parameters:
+    dist: 11.0

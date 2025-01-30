@@ -20,10 +20,12 @@ public:
 private:
     rcl_interfaces::msg::SetParametersResult param_callback(const std::vector<rclcpp::Parameter> &params) override;
     void taskLogic(const yolov8_msgs::msg::DetectionArray& detections) override;
-    void checkIfFinished();
+    rclcpp::Subscription<std_msgs::msg::Int32>::SharedPtr example_sub_;
+    rclcpp::Publisher<std_msgs::msg::Float64>::SharedPtr example_pub_;
     rclcpp::node_interfaces::OnSetParametersCallbackHandle::SharedPtr on_set_parameters_callback_handle_;
-    
-    int p_max_consec_recoveries_;
+
+    int p_multiplier_;
+    double p_adder_;
 
     enum States {STOPPED, RECOVERING, HEADING_TO_TARGET }; 
     States status_;
