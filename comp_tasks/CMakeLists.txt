@@ -18,6 +18,8 @@ find_package(yolov8_msgs REQUIRED)
 find_package(tf2 REQUIRED)
 find_package(tf2_geometry_msgs REQUIRED)
 find_package(visualization_msgs REQUIRED)
+find_package(rclcpp_lifecycle REQUIRED)
+find_package(lifecycle_msgs REQUIRED)
 
 include_directories(
     include
@@ -95,7 +97,9 @@ ament_target_dependencies(task_component
   "comp_tasks_interfaces"
   "yolov8_msgs"
   "tf2"
-  "tf2_geometry_msgs")
+  "tf2_geometry_msgs"
+  "rclcpp_lifecycle"
+  )
 
 install(TARGETS
   task_component
@@ -114,7 +118,8 @@ ament_target_dependencies(maneuvering_component
   "comp_tasks_interfaces"
   "yolov8_msgs"
   "tf2"
-  "tf2_geometry_msgs")
+  "tf2_geometry_msgs"
+  "rclcpp_lifecycle")
 rclcpp_components_register_nodes(maneuvering_component "comp_tasks::Maneuvering")
 set(node_plugins "comp_tasks::Maneuvering;$<TARGET_FILE:maneuvering_component>\n")
 install(TARGETS
@@ -140,3 +145,29 @@ target_link_libraries(maneuvering_composition
   libtask_lib
   libbbox_calculations
 )
+
+add_library(task_controller_component SHARED src/task_controller_component.cpp)
+target_compile_definitions(task_controller_component PRIVATE "COMPOSITION_BUILDING_DLL")
+ament_target_dependencies(task_controller_component
+  "rclcpp"
+  "rclcpp_components"
+  "std_msgs"
+  "lifecycle_msgs")
+rclcpp_components_register_nodes(task_controller_component "comp_tasks::TaskController")
+set(node_plugins "comp_tasks::TaskController;$<TARGET_FILE:task_controller_component>\n")
+install(TARGETS
+  task_controller_component
+  ARCHIVE DESTINATION lib
+  LIBRARY DESTINATION lib
+  RUNTIME DESTINATION bin)
+
+# Add executable for task_controller
+add_executable(task_controller_composition
+  src/task_controller_composition.cpp)
+target_link_libraries(task_controller_composition
+task_controller_component)
+ament_target_dependencies(task_controller_composition
+  rclcpp)
+install(TARGETS
+  task_controller_composition
+  DESTINATION lib/${PROJECT_NAME})
