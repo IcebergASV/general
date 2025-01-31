@@ -146,6 +146,45 @@ target_link_libraries(maneuvering_composition
   libbbox_calculations
 )
 
+add_library(speed_component SHARED src/speed_component.cpp)
+target_compile_definitions(speed_component PRIVATE "COMPOSITION_BUILDING_DLL")
+ament_target_dependencies(speed_component
+  "rclcpp"
+  "rclcpp_components"
+  "std_msgs"
+  "mavros_msgs"
+  "geographic_msgs"
+  "comp_tasks_interfaces"
+  "yolov8_msgs"
+  "tf2"
+  "tf2_geometry_msgs"
+  "rclcpp_lifecycle")
+rclcpp_components_register_nodes(speed_component "comp_tasks::speed")
+set(node_plugins "comp_tasks::speed;$<TARGET_FILE:speed_component>\n")
+install(TARGETS
+  speed_component
+  ARCHIVE DESTINATION lib
+  LIBRARY DESTINATION lib
+  RUNTIME DESTINATION bin)
+
+# Add executable for speed
+add_executable(speed_composition
+  src/speed_composition.cpp)
+target_link_libraries(speed_composition
+speed_component)
+ament_target_dependencies(speed_composition
+  rclcpp)
+install(TARGETS
+  speed_composition
+  DESTINATION lib/${PROJECT_NAME})
+
+target_link_libraries(speed_composition
+  ${YAML_CPP_LIBRARIES}
+  task_component
+  libtask_lib
+  libbbox_calculations
+)
+
 add_library(task_controller_component SHARED src/task_controller_component.cpp)
 target_compile_definitions(task_controller_component PRIVATE "COMPOSITION_BUILDING_DLL")
 ament_target_dependencies(task_controller_component
