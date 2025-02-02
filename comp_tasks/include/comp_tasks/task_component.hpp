@@ -94,6 +94,7 @@ protected:
     int wp_cnt_;
     int detection_frame_cnt_;
     bool in_guided_;
+    bool in_hold_;
     bool activated_;
 
     template <typename T>

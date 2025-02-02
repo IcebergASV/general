@@ -143,6 +143,7 @@ namespace comp_tasks
     mavros_msgs::msg::State current_state = *msg;
     bool prev_guided = in_guided_;
     in_guided_ = task_lib::inGuided(current_state);
+    in_hold_ = task_lib::inHold(current_state);
     if (task_lib::inManual(current_state) && prev_guided){
       wp_cnt_ = 0;
     }

@@ -12,6 +12,15 @@ namespace task_lib
 
         return false;
     }
+    bool inHold(const mavros_msgs::msg::State& state)
+    {
+        if (state.mode == "HOLD")
+        {
+            return true;
+        }
+
+        return false;
+    }
 
     bool inManual(const mavros_msgs::msg::State& state)
     {
