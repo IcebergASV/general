@@ -33,6 +33,7 @@ speed:
     second_green_buoy_label: "yellow_buoy"
     frame_stack_size: 4
     bbox_selection: "INNERMOST" # LARGEST, INNERMOST
+    use_start_point: true
 task_controller:
   ros__parameters:
     tasks: "ms"

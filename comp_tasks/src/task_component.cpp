@@ -27,6 +27,8 @@ namespace comp_tasks
     else if (params[0].get_name() == "finish_lon") { p_finish_lon_ = params[0].as_double(); }
     else if (params[0].get_name() == "recovery_lat") { p_recovery_lat_ = params[0].as_double(); }
     else if (params[0].get_name() == "recovery_lon") { p_recovery_lon_ = params[0].as_double(); }
+    else if (params[0].get_name() == "start_lat") { p_start_lat_ = params[0].as_double(); }
+    else if (params[0].get_name() == "start_lon") { p_start_lon_ = params[0].as_double(); }
     else if (params[0].get_name() == "red_buoy_label") { p_red_buoy_str_ = params[0].as_string(); }
     else if (params[0].get_name() == "finish_lon") { p_finish_lon_ = params[0].as_double(); }
     else if (params[0].get_name() == "recovery_behaviour") { p_recovery_behaviour_ = params[0].as_string(); }
@@ -77,6 +79,8 @@ namespace comp_tasks
     Task::getParam<double>("finish_lon", p_finish_lon_, 0.0, "Finish longitude");
     Task::getParam<double>("recovery_lat", p_recovery_lat_, 0.0, "Recovery latitude");
     Task::getParam<double>("recovery_lon", p_recovery_lon_, 0.0, "Recovery longitude");
+    Task::getParam<double>("start_lat", p_start_lat_, 0.0, "Starting latitude");
+    Task::getParam<double>("start_lon", p_start_lon_, 0.0, "Starting longitude");
     Task::getStringParam("recovery_behaviour", p_recovery_behaviour_, "STOP", "Recovery behaviour");
     Task::getParam<double>("time_to_pause_search", p_time_to_pause_search_, 0.0, "Miliseconds to wait after finding a target before starting to search for new ones");
     Task::getParam<double>("time_between_recovery_actions", p_time_between_recovery_actions_, 0.0, "Miliseconds between executing a recovery action (like sending a waypoint)");
