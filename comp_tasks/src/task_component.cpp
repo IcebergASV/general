@@ -36,6 +36,8 @@ namespace comp_tasks
     else if (params[0].get_name() == "green_buoy_label") { p_green_buoy_str_ = params[0].as_string(); }
     else if (params[0].get_name() == "second_red_buoy_label") { p_second_red_buoy_str_ = params[0].as_string(); }
     else if (params[0].get_name() == "second_green_buoy_label") { p_second_green_buoy_str_ = params[0].as_string(); }
+    else if (params[0].get_name() == "blue_buoy_label") { p_blue_buoy_str_ = params[0].as_string(); }
+    else if (params[0].get_name() == "second_blue_buoy_label") { p_blue_red_buoy_str_ = params[0].as_string(); }
     else if (params[0].get_name() == "frame_stack_size") { p_frame_stack_size_ = params[0].as_int(); }
     else if (params[0].get_name() == "bbox_selection") { p_bbox_selection_ = params[0].as_string(); }
     else {
@@ -82,6 +84,8 @@ namespace comp_tasks
     Task::getStringParam("red_buoy_label", p_red_buoy_str_, "red_buoy", "Red buoy label");
     Task::getStringParam("green_buoy_label", p_green_buoy_str_, "green_buoy", "Green buoy label");
     Task::getStringParam("second_red_buoy_label", p_second_red_buoy_str_, "red_buoy", "Additional red buoy label");
+    Task::getStringParam("blue_buoy_label", p_blue_buoy_str_, "blue_buoy", "Blue buoy label");
+    Task::getStringParam("second_blue_buoy_label", p_second_blue_buoy_str_, "blue_buoy", "Additional blue buoy label");
     Task::getStringParam("second_green_buoy_label", p_second_green_buoy_str_, "green_buoy", "Additional green buoy label");
     Task::getParam<int>("frame_stack_size", p_frame_stack_size_, 0, "Number of frames to stack before calculating angle");
     Task::getStringParam("bbox_selection", p_bbox_selection_, "LARGEST", "Selectes either largest or innermost bounding boxes");

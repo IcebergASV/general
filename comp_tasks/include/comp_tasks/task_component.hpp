@@ -75,6 +75,8 @@ protected:
     std::string p_bbox_selection_;
     std::string p_red_buoy_str_;
     std::string p_green_buoy_str_;
+    std::string p_blue_buoy_str_;
+    std::string p_second_blue_buoy_str_;
     std::string p_second_red_buoy_str_;
     std::string p_second_green_buoy_str_;
     double p_time_to_stop_before_recovery_;
