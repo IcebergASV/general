@@ -8,7 +8,7 @@ namespace comp_tasks
   {
     Speed::getParam<int>("max_consec_recoveries", p_max_consec_recoveries_, 0, "Maxmimum consecutive recovery attempts before task completes");
     on_set_parameters_callback_handle_ = this->add_on_set_parameters_callback(std::bind(&Speed::param_callback, this, std::placeholders::_1));
-    status_ = States::STOPPED;
+    status_ = States::SENDING_START_PNT;
   }
 
   rcl_interfaces::msg::SetParametersResult Speed::param_callback(const std::vector<rclcpp::Parameter> &params)
@@ -16,9 +16,9 @@ namespace comp_tasks
     rcl_interfaces::msg::SetParametersResult result;
 
     if (Task::param_callback(params).successful) {}
-    else if (params[0].get_name() == "max_consec_recoveries") { p_max_consec_recoveries_ = params[0].as_int();}
+    else if (params[0].get_name() == "use_start_point") { p_use_start_point_ = params[0].as_int();}
     else {
-      RCLCPP_ERROR(this->get_logger(), "Invalid Param manuevering: %s", params[0].get_name().c_str());
+      RCLCPP_ERROR(this->get_logger(), "Invalid Param speed: %s", params[0].get_name().c_str());
       result.successful = false;
       return result;
     }
@@ -27,111 +27,98 @@ namespace comp_tasks
     return result;
   }
 
-  void Speed::checkIfFinished()
-  {
-    if (p_max_consec_recoveries_ < 1)
-    {
-      signalTaskFinish();
-    }
-    else {
-      p_max_consec_recoveries_--;
-    }
-  }
-
   void Speed::taskLogic(const yolov8_msgs::msg::DetectionArray& detections)
   {
     if (in_guided_)
     {
       switch (status_)
       {
-        case States::STOPPED: // parameterize - don't go to this state at all in 0 secs
+        case States::SENDING_START_PNT:
         {
-          RCLCPP_DEBUG(this->get_logger(), "Stopped"); 
-          publishSearchStatus("Searching");
-          publishBehaviourStatus("Stopped");
+          RCLCPP_DEBUG(this->get_logger(), "SENDING_START_PNT"); 
+          publishBehaviourStatus("Sending start point");
 
-          if (bbox_calculations::hasDesiredDetections(detections, target_class_names_))
+          if (p_use_start_point_)
           {
-            publishWPTowardsDetections(detections);
-            publishSearchStatus("Found");
-            status_ = States::HEADING_TO_TARGET;
+            publishStartPoint();
           }
-          else if(timer_expired_)
-          {
-            executeRecoveryBehaviour();
-            setTimerDuration(p_time_between_recovery_actions_);
-            status_ = States::RECOVERING;
-          }
+
+          setTimerDuration(p_time_to_find_bay_);
+          status_ = States::GOING_TO_BAY;
           break;
         }
 
-        case States::RECOVERING: // parameterize recovery behaviour & whether it does a recovery
+        case States::GOING_TO_BAY:
         {
-          RCLCPP_DEBUG(this->get_logger(), "Recovering"); 
-          publishSearchStatus("Searching");
-          publishBehaviourStatus("Recovering with " + p_recovery_behaviour_);
+          
+          RCLCPP_DEBUG(this->get_logger(), "Going to start point"); 
+          publishBehaviourStatus("Going to start point");
+
           if (bbox_calculations::hasDesiredDetections(detections, target_class_names_))
           {
+            updateCalculatedRoute(detections, target_class_names_);
             publishWPTowardsDetections(detections);
-            publishSearchStatus("Found");
-            status_ = States::HEADING_TO_TARGET;
+            setTimerDuration(p_max_time_between_bay_detections_);
+            status_ = States::MANEUVER_THRU_BAY;
           }
-          else if(timer_expired_)
+          else if(timer_expired_) // Failed to find bay
           {
-            checkIfFinished();
-            executeRecoveryBehaviour();
-            setTimerDuration(p_time_between_recovery_actions_);
+            signalTaskFinish();
           }
           break;
         }
-
-        case States::HEADING_TO_TARGET: // parameterize wait time & reorganize
+        case States::MANEUVER_THRU_BAY: 
         {
-          std::string str_cnt = std::to_string(wp_cnt_);
-          publishBehaviourStatus("Heading to WP " + str_cnt);
-          RCLCPP_DEBUG(this->get_logger(), "Heading to Target"); 
-          if (timer_expired_)
+          if (bbox_calculations::hasDesiredDetections(detections, {p_red_buoy_str_, p_green_buoy_str_, p_second_red_buoy_str_, p_second_green_buoy_str_}))
           {
-            publishSearchStatus("Searching");
-            if (bbox_calculations::hasDesiredDetections(detections, target_class_names_))
-            {
-              publishWPTowardsDetections(detections);
-              RCLCPP_DEBUG(this->get_logger(), "Has desired detections"); 
-            }
-            else if (p_time_to_stop_before_recovery_ == 0)
-            {
-              RCLCPP_DEBUG(this->get_logger(), "Going straight to recovery"); 
-              executeRecoveryBehaviour();
-              setTimerDuration(p_time_between_recovery_actions_);
-              status_ = States::RECOVERING;
-            }
-            else
-            {
-              RCLCPP_DEBUG(this->get_logger(), "No targets found, stopping"); 
-              setTimerDuration(p_time_to_stop_before_recovery_);
-              status_ = States::STOPPED;
-            }
+            updateCalculatedRoute(detections, {p_red_buoy_str_, p_green_buoy_str_, p_second_red_buoy_str_, p_second_green_buoy_str_});
           }
-          else if (wp_reached_)
+          if(timer_expired_)
           {
-            std::string str_cnt = std::to_string(wp_cnt_);
-            //publishBehaviourStatus("WP " + str_cnt + " Reached"); // TODO this gets overwritten too fast to see i think
-
-            if (p_time_to_stop_before_recovery_ == 0)
-            {
-              executeRecoveryBehaviour();
-              setTimerDuration(p_time_between_recovery_actions_);
-              status_ = States::RECOVERING;
-            }
-            else
-            {
-              setTimerDuration(p_time_to_stop_before_recovery_);
-              status_ = States::STOPPED;
-            }
+            sendLocalWPList(calculated_route_);
+            wp_reached_cnt_ = 0;
+            status_ = States::CALCULATED_ROUTE;
+          }
+          break;
+        }
+        case States::CALCULATED_ROUTE:
+        {
+          if (bbox_calculations::hasDesiredDetections(detections, {p_blue_buoy_str_}))
+          {
+            publishWPTowardsDetections(detections, p_blue_buoy_str_);
+            setTimerDuration(p_max_time_between_buoy_detections_);
+            status_ = States::PASSING_BUOY;
           }
           else
           {
-            publishSearchStatus("Search Paused");
+            if (wp_reached_cnt_ >= wps_in_route_) // might need to update this to actually check if we are in same position as where we started
+            {
+              signalTaskFinish();
+            }
+          }
+          break;
+        }
+        case States::PASSING_BUOY: 
+        {
+          if (bbox_calculations::hasDesiredDetections(detections, {p_blue_buoy_str_}))
+          {
+            last_blue_buoy_ = detections;
+            publishWPTowardsDetections(detections, p_blue_buoy_str_);
+            setTimerDuration(p_max_time_between_buoy_detections_);
+          }
+          else if(timer_expired_)
+          {
+            calculateReturnRoute(last_blue_buoy_, getDistFromBay());
+            wp_reached_cnt_ = 0;
+            status_ = States::RETURNING;
+          }
+          break;
+        }
+        case States::RETURNING:
+        {
+          if (wp_reached_cnt_ >= wps_in_route_) // might need to update this to actually check if we are in same position as where we started
+          {
+            signalTaskFinish();
           }
           break;
         }
