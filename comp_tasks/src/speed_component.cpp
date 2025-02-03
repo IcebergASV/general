@@ -1,5 +1,6 @@
 #include "comp_tasks/speed_component.hpp"
 #include "comp_tasks/lib/bbox_calculations.hpp"
+#include "comp_tasks/lib/task_lib.hpp"
 
 namespace comp_tasks
 {
@@ -49,10 +50,9 @@ namespace comp_tasks
     return route;
   }
 
-  double getDistFromBay()
+  double Speed::getDistFromBay()
   {
-    double dist;
-    // TODO
+    double dist = task_lib::distBetween2Pnts(last_seen_gate_pose_.pose.position, last_seen_blue_buoy_pose_.pose.position);
     return dist;
   }
   void Speed::sendNextWP(std::vector<geometry_msgs::msg::Point> route)
@@ -91,6 +91,7 @@ namespace comp_tasks
 
           if (bbox_calculations::hasDesiredDetections(detections, target_class_names_))
           {
+            last_seen_gate_pose_ = current_local_pose_;
             calculated_route_ = calculateRoute(detections, target_class_names_);
             publishWPTowardsGate(detections);
             setTimerDuration(p_max_time_between_bay_detections_);
@@ -106,7 +107,10 @@ namespace comp_tasks
         {
           if (bbox_calculations::hasDesiredDetections(detections, {p_red_buoy_str_, p_green_buoy_str_, p_second_red_buoy_str_, p_second_green_buoy_str_}))
           {
+            last_seen_gate_pose_ = current_local_pose_;
             calculated_route_ = calculateRoute(detections, {p_red_buoy_str_, p_green_buoy_str_, p_second_red_buoy_str_, p_second_green_buoy_str_});
+            publishWPTowardsGate(detections);
+            setTimerDuration(p_max_time_between_bay_detections_);
           }
           if(timer_expired_)
           {
@@ -119,6 +123,7 @@ namespace comp_tasks
         {
           if (bbox_calculations::hasDesiredDetections(detections, {p_blue_buoy_str_}))
           {
+            last_seen_blue_buoy_pose_ = current_local_pose_;
             publishWPTowardsLargestTarget(detections, p_blue_buoy_str_, p_buoy_offset_angle_);
             setTimerDuration(p_max_time_between_buoy_detections_);
             status_ = States::PASSING_BUOY;
@@ -143,6 +148,7 @@ namespace comp_tasks
         {
           if (bbox_calculations::hasDesiredDetections(detections, {p_blue_buoy_str_}))
           {
+            last_seen_blue_buoy_pose_ = current_local_pose_;
             publishWPTowardsLargestTarget(detections, p_blue_buoy_str_, p_buoy_offset_angle_);
             setTimerDuration(p_max_time_between_buoy_detections_);
             calculateReturnRoute(detections);

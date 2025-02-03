@@ -23,7 +23,8 @@ private:
     void sendNextWP(std::vector<geometry_msgs::msg::Point> route);
     std::vector<geometry_msgs::msg::Point> calculateReturnRoute(const yolov8_msgs::msg::DetectionArray& detections);
     std::vector<geometry_msgs::msg::Point> calculateRoute(const yolov8_msgs::msg::DetectionArray& detections, const std::vector<std::reference_wrapper<std::string>>& target_class_names_);
-
+    double getDistFromBay();
+    
     int p_use_start_point_;
     double p_time_to_find_bay_;
     double p_max_time_between_bay_detections_;
@@ -35,6 +36,9 @@ private:
 
     std::vector<geometry_msgs::msg::Point> calculated_route_;
     std::vector<geometry_msgs::msg::Point> return_route_;
+    geometry_msgs::msg::PoseStamped last_seen_gate_pose_;
+    geometry_msgs::msg::PoseStamped last_seen_blue_buoy_pose_;
+
 };
 
 } // namespace comp_tasks

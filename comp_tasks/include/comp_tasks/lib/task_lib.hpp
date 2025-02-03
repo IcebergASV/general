@@ -27,5 +27,6 @@ namespace task_lib
     geographic_msgs::msg::GeoPoseStamped getGlobalWPMsg(double lat, double lon);
     geometry_msgs::msg::PoseStamped getLocalWPMsg(double x, double y);
     geometry_msgs::msg::Point polarToCartesian(double radius, double angle);
+    double distBetween2Pnts(geometry_msgs::msg::Point p1, geometry_msgs::msg::Point p2);
 }
 #endif // TASKLIB_HPP
