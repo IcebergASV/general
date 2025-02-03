@@ -154,6 +154,7 @@ ament_target_dependencies(speed_component
   "std_msgs"
   "mavros_msgs"
   "geographic_msgs"
+  "geometry_msgs"
   "comp_tasks_interfaces"
   "yolov8_msgs"
   "tf2"

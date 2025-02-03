@@ -35,10 +35,13 @@ protected:
     void bboxCallback(const yolov8_msgs::msg::DetectionArray::SharedPtr msg);
     void wpReachedCallback(const mavros_msgs::msg::WaypointReached msg);
     void publishFinishPnt();
+    void publishStartPoint();
     void publishBehaviourStatus(std::string str_msg);
     void publishSearchStatus(std::string str_msg);
-    void publishWPTowardsDetections(const yolov8_msgs::msg::DetectionArray& detections);
+    void publishWPTowardsGate(const yolov8_msgs::msg::DetectionArray& detections);
+    void publishWPTowardsLargestTarget(const yolov8_msgs::msg::DetectionArray& detections, std::string target_label, double angle);
     void publishGlobalWP(double lat, double lon);
+    void publishLocalWP(double x, double y);
     void setTimerDuration(double duration);
     void onTimerExpired();
     void executeRecoveryBehaviour();

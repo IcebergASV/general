@@ -39,7 +39,7 @@ namespace comp_tasks
     else if (params[0].get_name() == "second_red_buoy_label") { p_second_red_buoy_str_ = params[0].as_string(); }
     else if (params[0].get_name() == "second_green_buoy_label") { p_second_green_buoy_str_ = params[0].as_string(); }
     else if (params[0].get_name() == "blue_buoy_label") { p_blue_buoy_str_ = params[0].as_string(); }
-    else if (params[0].get_name() == "second_blue_buoy_label") { p_blue_red_buoy_str_ = params[0].as_string(); }
+    else if (params[0].get_name() == "second_blue_buoy_label") { p_second_blue_buoy_str_ = params[0].as_string(); }
     else if (params[0].get_name() == "frame_stack_size") { p_frame_stack_size_ = params[0].as_int(); }
     else if (params[0].get_name() == "bbox_selection") { p_bbox_selection_ = params[0].as_string(); }
     else {
@@ -199,7 +199,7 @@ namespace comp_tasks
     status_logger_pub_->publish(msg);
   }
 
-  void Task::publishWPTowardsDetections(const yolov8_msgs::msg::DetectionArray& detections)
+  void Task::publishWPTowardsGate(const yolov8_msgs::msg::DetectionArray& detections)
   {
     if (activated_){
       wp_reached_ = false;
@@ -217,7 +217,7 @@ namespace comp_tasks
         RCLCPP_WARN(this->get_logger(), "Waypoint Empty - not publishing"); 
       }
 
-      if (p_time_to_pause_search_ != 0.0) 
+      if (p_time_to_pause_search_ != 0.0) // TODO move out of task node to derived class
       {
         setTimerDuration(p_time_to_pause_search_);
       }
@@ -228,6 +228,33 @@ namespace comp_tasks
     }
   }
 
+  // negative angle is to the left of the target, positive angle is to the right of target
+  void Task::publishWPTowardsLargestTarget(const yolov8_msgs::msg::DetectionArray& detections, std::string target_label, double offset_angle)
+  {
+    if (activated_){
+      wp_reached_ = false;
+
+      double angle = bbox_calculations::getAngleToLargestTarget(detections, target_label, p_camera_fov_, p_camera_res_x_);
+      angle += offset_angle*M_PI/180;
+      geometry_msgs::msg::PoseStamped wp = task_lib::relativePolarToLocalCoords(p_distance_to_move_, angle, current_local_pose_);
+      if (wp.pose.position.x != 0 && wp.pose.position.y != 0)
+      {
+        local_wp_pub_->publish(wp);
+        wp_cnt_++;
+        std::string str_cnt = std::to_string(wp_cnt_);
+        //publishBehaviourStatus("Heading to WP " + str_cnt);
+      }
+      else{
+        RCLCPP_WARN(this->get_logger(), "Waypoint Empty - not publishing"); 
+      }
+    }
+  }
+
+  void Task::publishStartPoint()
+  {
+    publishGlobalWP(p_start_lat_, p_start_lon_);
+  }
+
   void Task::publishGlobalWP(double lat, double lon)
   {
     if (activated_)
@@ -235,6 +262,16 @@ namespace comp_tasks
       geographic_msgs::msg::GeoPoseStamped wp = task_lib::getGlobalWPMsg(lat, lon);
       global_wp_pub_->publish(wp);
       RCLCPP_DEBUG(this->get_logger(), "Global WP: lat=%f, lon=%f", wp.pose.position.latitude, wp.pose.position.longitude);
+    }
+  }
+
+  void Task::publishLocalWP(double x, double y)
+  {
+    if (activated_)
+    {
+      geometry_msgs::msg::PoseStamped wp = task_lib::getLocalWPMsg(x, y);
+      local_wp_pub_->publish(wp);
+      RCLCPP_DEBUG(this->get_logger(), "Local WP: x=%f, y=%f", wp.pose.position.x, wp.pose.position.y);
     }
   }
 

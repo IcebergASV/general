@@ -34,6 +34,10 @@ speed:
     frame_stack_size: 4
     bbox_selection: "INNERMOST" # LARGEST, INNERMOST
     use_start_point: true
+    time_to_find_bay: 5.0
+    max_time_between_bay_detections: 3.0
+    max_time_between_buoy_detections: 3.0
+    buoy_offset_angle: 0.0
 task_controller:
   ros__parameters:
     tasks: "ms"

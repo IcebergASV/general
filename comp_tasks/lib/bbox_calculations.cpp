@@ -60,6 +60,18 @@ namespace bbox_calculations
     return angle;
   }
 
+  double getAngleToLargestTarget(const yolov8_msgs::msg::DetectionArray bboxes, std::string target_label, double cam_fov, double cam_res_x)
+  {
+    std::vector<yolov8_msgs::msg::Detection> targets = filterAndSort(bboxes, "LARGEST", target_label, target_label);
+    if (targets.size() <= 0)
+    {
+      RCLCPP_ERROR(logger, "No targets detected - wp will be empty"); //TODO THROW AN ERROR - should never get here
+    }
+    double angle = angle = bbox_calculations::pixelToAngle(cam_fov, cam_res_x, targets[0].bbox.center.position.x);
+    angle = angle - M_PI/2; // TODO Test
+    return angle;
+  }
+
   std::vector<yolov8_msgs::msg::Detection> extractTargetDetections(const yolov8_msgs::msg::DetectionArray& detection_array, const std::string& class_name1, const std::string& class_name2)
   {
     std::vector<yolov8_msgs::msg::Detection> filtered_detections;

@@ -52,7 +52,7 @@ namespace comp_tasks
 
           if (bbox_calculations::hasDesiredDetections(detections, target_class_names_))
           {
-            publishWPTowardsDetections(detections);
+            publishWPTowardsGate(detections);
             publishSearchStatus("Found");
             status_ = States::HEADING_TO_TARGET;
           }
@@ -72,7 +72,7 @@ namespace comp_tasks
           publishBehaviourStatus("Recovering with " + p_recovery_behaviour_);
           if (bbox_calculations::hasDesiredDetections(detections, target_class_names_))
           {
-            publishWPTowardsDetections(detections);
+            publishWPTowardsGate(detections);
             publishSearchStatus("Found");
             status_ = States::HEADING_TO_TARGET;
           }
@@ -95,7 +95,7 @@ namespace comp_tasks
             publishSearchStatus("Searching");
             if (bbox_calculations::hasDesiredDetections(detections, target_class_names_))
             {
-              publishWPTowardsDetections(detections);
+              publishWPTowardsGate(detections);
               RCLCPP_DEBUG(this->get_logger(), "Has desired detections"); 
             }
             else if (p_time_to_stop_before_recovery_ == 0)
