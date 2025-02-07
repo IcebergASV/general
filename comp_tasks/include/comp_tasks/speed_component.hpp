@@ -22,7 +22,7 @@ private:
     rclcpp::node_interfaces::OnSetParametersCallbackHandle::SharedPtr on_set_parameters_callback_handle_;
     void sendNextWP(std::vector<geometry_msgs::msg::Point> route);
     std::vector<geometry_msgs::msg::Point> calculateReturnRoute(const yolov8_msgs::msg::DetectionArray& detections);
-    std::vector<geometry_msgs::msg::Point> calculateRoute(const yolov8_msgs::msg::DetectionArray& detections, const std::vector<std::reference_wrapper<std::string>>& target_class_names_);
+    std::vector<geometry_msgs::msg::Point> calculateRouteFromGates(const yolov8_msgs::msg::DetectionArray& detections);
     double getDistFromBay();
     
     int p_use_start_point_;
@@ -30,13 +30,16 @@ private:
     double p_max_time_between_bay_detections_;
     double p_max_time_between_buoy_detections_;
     double p_buoy_offset_angle_;
+    double p_estimated_buoy_dist_;
+    double p_buoy_circling_radius_;
+    int p_num_pnts_on_semicircle_;
 
     enum States {SENDING_START_PNT, GOING_TO_BAY, MANEUVER_THRU_BAY, CALCULATED_ROUTE, PASSING_BUOY, RETURNING }; 
     States status_;
 
     std::vector<geometry_msgs::msg::Point> calculated_route_;
     std::vector<geometry_msgs::msg::Point> return_route_;
-    geometry_msgs::msg::PoseStamped last_seen_gate_pose_;
+    geometry_msgs::msg::PoseStamped last_seen_bay_pose_;
     geometry_msgs::msg::PoseStamped last_seen_blue_buoy_pose_;
 
 };

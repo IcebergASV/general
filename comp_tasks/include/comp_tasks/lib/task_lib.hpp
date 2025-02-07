@@ -10,7 +10,7 @@
 #include "geometry_msgs/msg/pose_stamped.hpp"
 #include <tf2/LinearMath/Quaternion.h>
 #include <tf2/LinearMath/Matrix3x3.h>
-
+#include "geometry_msgs/msg/point.hpp"
 namespace task_lib
 {
     rclcpp::Logger logger = rclcpp::get_logger("task_lib_logger");
@@ -28,5 +28,7 @@ namespace task_lib
     geometry_msgs::msg::PoseStamped getLocalWPMsg(double x, double y);
     geometry_msgs::msg::Point polarToCartesian(double radius, double angle);
     double distBetween2Pnts(geometry_msgs::msg::Point p1, geometry_msgs::msg::Point p2);
+    std::vector<geometry_msgs::msg::Point> generateCirclePoints(const geometry_msgs::msg::Point& center, double radius, int num_points);
+    std::vector<geometry_msgs::msg::Point> createSemicirce(const std::vector<geometry_msgs::msg::Point>& circle_points, const geometry_msgs::msg::Point& reference_point);
 }
 #endif // TASKLIB_HPP

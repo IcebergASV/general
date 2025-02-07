@@ -38,6 +38,9 @@ speed:
     max_time_between_bay_detections: 3.0
     max_time_between_buoy_detections: 3.0
     buoy_offset_angle: 0.0
+    estimated_buoy_dist: 10.0
+    buoy_circling_radius: 3.0
+    num_pnts_on_semicircle: 4
 task_controller:
   ros__parameters:
     tasks: "ms"

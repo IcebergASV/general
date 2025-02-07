@@ -157,5 +157,15 @@ bool hasDesiredDetections(const yolov8_msgs::msg::DetectionArray& detection_arra
         }
     }
     return false;
-  }
+}
+
+bool hasGate(const yolov8_msgs::msg::DetectionArray& detection_array, const std::vector<std::reference_wrapper<std::string>>& left_marker_names, const std::vector<std::reference_wrapper<std::string>>& right_marker_names )
+{
+
+    // TODO
+    return false;
+}
+
+
+
 }

@@ -164,4 +164,55 @@ namespace task_lib
     {
         return std::sqrt(std::pow((p2.x - p1.x), 2) + std::pow((p2.y - p1.y), 2));
     }
+
+    std::vector<geometry_msgs::msg::Point> generateCirclePoints(
+        const geometry_msgs::msg::Point& center, double radius, int num_points) {
+        
+        std::vector<geometry_msgs::msg::Point> circle_points;
+        circle_points.reserve(num_points);
+        
+        const double angle_increment = 2.0 * M_PI / num_points;
+        
+        for (int i = 0; i < num_points; ++i) {
+            double angle = i * angle_increment;
+            geometry_msgs::msg::Point point;
+            point.x = center.x + radius * std::cos(angle);
+            point.y = center.y + radius * std::sin(angle);
+            point.z = center.z; // Keeping the original z value from center
+            circle_points.push_back(point);
+        }
+        
+        return circle_points;
+    }
+
+    std::vector<geometry_msgs::msg::Point> createSemicirce(
+        const std::vector<geometry_msgs::msg::Point>& circle_points,
+        const geometry_msgs::msg::Point& reference_point) {
+        
+        std::vector<double> distances;
+        distances.reserve(circle_points.size());
+        
+        for (const auto& point : circle_points) {
+            distances.push_back(std::hypot(point.x - reference_point.x, point.y - reference_point.y));
+        }
+        
+        std::vector<size_t> indices(circle_points.size());
+        std::iota(indices.begin(), indices.end(), 0);
+        
+        std::nth_element(indices.begin(), indices.begin() + indices.size() / 2, indices.end(),
+            [&distances](size_t i1, size_t i2) {
+                return distances[i1] < distances[i2];
+            });
+        
+        std::unordered_set<size_t> remove_indices(indices.begin(), indices.begin() + indices.size() / 2);
+        
+        std::vector<geometry_msgs::msg::Point> farther_points;
+        for (size_t i = 0; i < circle_points.size(); ++i) {
+            if (remove_indices.find(i) == remove_indices.end()) {
+                farther_points.push_back(circle_points[i]);
+            }
+        }
+        
+        return farther_points;
+    }
 }

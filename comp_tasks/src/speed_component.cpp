@@ -11,6 +11,9 @@ namespace comp_tasks
     Speed::getParam<double>("max_time_between_bay_detections", p_max_time_between_bay_detections_, 0.0, "Max time to search for bay before moving on");
     Speed::getParam<double>("max_time_between_buoy_detections", p_max_time_between_buoy_detections_, 0.0, "Max time to search for blue buoy before turning around");
     Speed::getParam<double>("buoy_offset_angle", p_buoy_offset_angle_, 0.0, "Angle to offset by when heading to a target in degrees, negative is to the left, positive to the right");
+    Speed::getParam<double>("estimated_buoy_dist", p_estimated_buoy_dist_, 0.0, "Angle to offset by when heading to a target in degrees, negative is to the left, positive to the right");
+    Speed::getParam<double>("buoy_circling_radius", p_buoy_circling_radius_, 0.0, "Circling radius for buoy on calculated route");
+    Speed::getParam<int>("num_pnts_on_semicircle", p_num_pnts_on_semicircle_, 0, "How many waypoints to send to turn around buoy on calculated route");
     on_set_parameters_callback_handle_ = this->add_on_set_parameters_callback(std::bind(&Speed::param_callback, this, std::placeholders::_1));
     status_ = States::SENDING_START_PNT;
     wp_cnt_ = 0;
@@ -26,6 +29,9 @@ namespace comp_tasks
     else if (params[0].get_name() == "max_time_between_bay_detections") { p_max_time_between_bay_detections_ = params[0].as_double();}
     else if (params[0].get_name() == "max_time_between_buoy_detections") { p_max_time_between_buoy_detections_ = params[0].as_double();}
     else if (params[0].get_name() == "buoy_offset_angle") { p_buoy_offset_angle_ = params[0].as_double();}
+    else if (params[0].get_name() == "estimated_buoy_dist") { p_estimated_buoy_dist_ = params[0].as_double();}
+    else if (params[0].get_name() == "buoy_circling_radius") { p_buoy_circling_radius_ = params[0].as_double();}
+    else if (params[0].get_name() == "num_pnts_on_semicircle") { p_num_pnts_on_semicircle_ = params[0].as_int();}
     else {
       RCLCPP_ERROR(this->get_logger(), "Invalid Param speed: %s", params[0].get_name().c_str());
       result.successful = false;
@@ -36,10 +42,21 @@ namespace comp_tasks
     return result;
   }
 
-  std::vector<geometry_msgs::msg::Point> Speed::calculateRoute(const yolov8_msgs::msg::DetectionArray& detections, const std::vector<std::reference_wrapper<std::string>>& target_class_names_)
+  std::vector<geometry_msgs::msg::Point> Speed::calculateRouteFromGates(const yolov8_msgs::msg::DetectionArray& detections)
   {
-    std::vector<geometry_msgs::msg::Point> route;
-    // TODO
+    // get wp for circle center
+    double angle = bbox_calculations::getAngleBetween2DiffTargets(detections, p_bbox_selection_, p_red_buoy_str_, p_second_red_buoy_str_,p_green_buoy_str_, p_second_green_buoy_str_, p_camera_fov_, p_camera_res_x_, 0);
+    geometry_msgs::msg::PoseStamped wp = task_lib::relativePolarToLocalCoords(p_estimated_buoy_dist_, angle, current_local_pose_);
+
+    // calculate points around center
+    std::vector<geometry_msgs::msg::Point> points = task_lib::generateCirclePoints(wp.pose.position, p_buoy_circling_radius_, p_num_pnts_on_semicircle_*2);
+
+    // create a semicircle around the estimated buoy position by cutting out the part of the circle closest to our current position
+    std::vector<geometry_msgs::msg::Point> route = task_lib::createSemicirce(points, current_local_pose_.pose.position);
+
+    // add current position to the route so we can get back to the starting point
+    route.push_back(current_local_pose_.pose.position);
+
     return route;
   }
 
@@ -52,7 +69,7 @@ namespace comp_tasks
 
   double Speed::getDistFromBay()
   {
-    double dist = task_lib::distBetween2Pnts(last_seen_gate_pose_.pose.position, last_seen_blue_buoy_pose_.pose.position);
+    double dist = task_lib::distBetween2Pnts(last_seen_bay_pose_.pose.position, last_seen_blue_buoy_pose_.pose.position);
     return dist;
   }
   void Speed::sendNextWP(std::vector<geometry_msgs::msg::Point> route)
@@ -89,10 +106,13 @@ namespace comp_tasks
           RCLCPP_DEBUG(this->get_logger(), "Going to start point"); 
           publishBehaviourStatus("Going to start point");
 
-          if (bbox_calculations::hasDesiredDetections(detections, target_class_names_))
+          if (bbox_calculations::hasDesiredDetections(detections, {p_red_buoy_str_, p_green_buoy_str_, p_second_red_buoy_str_, p_second_green_buoy_str_}))
           {
-            last_seen_gate_pose_ = current_local_pose_;
-            calculated_route_ = calculateRoute(detections, target_class_names_);
+            last_seen_bay_pose_ = current_local_pose_;
+            if (bbox_calculations::hasGate(detections, {p_red_buoy_str_, p_second_red_buoy_str_}, {p_green_buoy_str_, p_second_green_buoy_str_}))
+            {
+              calculated_route_ = calculateRouteFromGates(detections);
+            }
             publishWPTowardsGate(detections);
             setTimerDuration(p_max_time_between_bay_detections_);
             status_ = States::MANEUVER_THRU_BAY;
@@ -107,8 +127,11 @@ namespace comp_tasks
         {
           if (bbox_calculations::hasDesiredDetections(detections, {p_red_buoy_str_, p_green_buoy_str_, p_second_red_buoy_str_, p_second_green_buoy_str_}))
           {
-            last_seen_gate_pose_ = current_local_pose_;
-            calculated_route_ = calculateRoute(detections, {p_red_buoy_str_, p_green_buoy_str_, p_second_red_buoy_str_, p_second_green_buoy_str_});
+            last_seen_bay_pose_ = current_local_pose_;
+            if (bbox_calculations::hasGate(detections, {p_red_buoy_str_, p_second_red_buoy_str_}, {p_green_buoy_str_, p_second_green_buoy_str_}))
+            {
+              calculated_route_ = calculateRouteFromGates(detections);
+            }
             publishWPTowardsGate(detections);
             setTimerDuration(p_max_time_between_bay_detections_);
           }
