@@ -171,3 +171,28 @@ ament_target_dependencies(task_controller_composition
 install(TARGETS
   task_controller_composition
   DESTINATION lib/${PROJECT_NAME})
+
+add_library(docking_component SHARED src/docking_component.cpp)
+target_compile_definitions(docking_component PRIVATE "COMPOSITION_BUILDING_DLL")
+ament_target_dependencies(docking_component
+  "rclcpp"
+  "rclcpp_components"
+  "std_msgs")
+rclcpp_components_register_nodes(docking_component "comp_tasks::Docking")
+set(node_plugins "comp_tasks::Docking;$<TARGET_FILE:docking_component>\n")
+install(TARGETS
+  docking_component
+  ARCHIVE DESTINATION lib
+  LIBRARY DESTINATION lib
+  RUNTIME DESTINATION bin)
+
+# Add executable for docking
+add_executable(docking_composition
+  src/docking_composition.cpp)
+target_link_libraries(docking_composition
+docking_component)
+ament_target_dependencies(docking_composition
+  rclcpp)
+install(TARGETS
+  docking_composition
+  DESTINATION lib/${PROJECT_NAME})
