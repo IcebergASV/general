@@ -1,6 +1,8 @@
 #include "comp_tasks/maneuvering_component.hpp"
 #include "comp_tasks/lib/bbox_calculations.hpp"
 
+using namespace std::chrono_literals;
+
 namespace comp_tasks
 {
   Maneuvering::Maneuvering(const rclcpp::NodeOptions & options)
@@ -9,6 +11,15 @@ namespace comp_tasks
     Maneuvering::getParam<int>("max_consec_recoveries", p_max_consec_recoveries_, 0, "Maxmimum consecutive recovery attempts before task completes");
     on_set_parameters_callback_handle_ = this->add_on_set_parameters_callback(std::bind(&Maneuvering::param_callback, this, std::placeholders::_1));
     status_ = States::STOPPED;
+
+    //Set initial gate detection (start point, so that lat/long varaiables for last gate are initialized)
+    p_left_gate_names_ = {p_green_buoy_str_, p_second_green_buoy_str_};
+    p_right_gate_names_ = {p_red_buoy_str_, p_second_red_buoy_str_};
+
+    //Create publishers for component statuses
+    mavros_state_subscriber = this->create_subscription<mavros_msgs::msg::State>("/mavros/state", 10, std::bind(&Maneuvering::republishMAVROSStatus, this, _1));
+    mavros_state_publisher = this->create_publisher<std_msgs::msg::Bool>("/guided_status", 10);
+
   }
 
   rcl_interfaces::msg::SetParametersResult Maneuvering::param_callback(const std::vector<rclcpp::Parameter> &params)
@@ -38,6 +49,29 @@ namespace comp_tasks
     }
   }
 
+  void Maneuvering::executeRecoveryBehaviour() //Overwritten recovery behaviour function
+  {
+    if (p_recovery_behaviour_ == "STOP")
+    {
+      // Do Nothing
+    }
+    else if (p_recovery_behaviour_ == "RECOVERY_PNT")
+    {
+      publishGlobalWP(p_recovery_lat_, p_recovery_lon_);
+      RCLCPP_INFO(this->get_logger(), "Sent recovery waypoint");
+    }
+    else if (p_recovery_behaviour_ == "RECOVERY_GATE") {  //Added Gate recovery behaviour
+      publishGlobalWP(p_gate_lat_, p_gate_lon_);
+      RCLCPP_INFO(this->get_logger(), "Sent recovery waypoint for last gate");
+    }
+
+    else 
+    {
+      RCLCPP_WARN(this->get_logger(), "Invalid Recovery Behavior: %s", p_recovery_behaviour_.c_str());
+    }
+    return;
+  }
+
   void Maneuvering::taskLogic(const yolov8_msgs::msg::DetectionArray& detections)
   {
     if (in_guided_)
@@ -52,7 +86,19 @@ namespace comp_tasks
 
           if (bbox_calculations::hasDesiredDetections(detections, target_class_names_))
           {
-            publishWPTowardsDetections(detections);
+            //get Coords associated with gate
+            std::vector<double> d = publishWPTowardsDetections(detections);
+
+            //If gate is detected
+            if (bbox_calculations::hasGate(detections, p_left_gate_names_, p_right_gate_names_))
+            { //Store set waypoint, should look at making this a vector perhaps for lat and long, and push back places, using stack structure?
+              p_gate_lat_ = d[0];
+              p_gate_lon_ = d[1];
+
+              //Log lat/long coords in class members
+              RCLCPP_DEBUG(this->get_logger(), "Has gate, recording lat/long");
+            }
+
             publishSearchStatus("Found");
             status_ = States::HEADING_TO_TARGET;
           }
@@ -72,7 +118,19 @@ namespace comp_tasks
           publishBehaviourStatus("Recovering with " + p_recovery_behaviour_);
           if (bbox_calculations::hasDesiredDetections(detections, target_class_names_))
           {
-            publishWPTowardsDetections(detections);
+            //get Coords associated with gate
+            std::vector<double> d = publishWPTowardsDetections(detections);
+
+            //If gate is detected
+            if (bbox_calculations::hasGate(detections, p_left_gate_names_, p_right_gate_names_))
+            { //Store set waypoint, should look at making this a vector perhaps for lat and long, and push back places, using stack structure?
+              p_gate_lat_ = d[0];
+              p_gate_lon_ = d[1];
+
+              //Log lat/long coords in class members
+              RCLCPP_DEBUG(this->get_logger(), "Has gate, recording lat/long");
+            }
+
             publishSearchStatus("Found");
             status_ = States::HEADING_TO_TARGET;
           }
@@ -93,11 +151,26 @@ namespace comp_tasks
           if (timer_expired_)
           {
             publishSearchStatus("Searching");
+
+
             if (bbox_calculations::hasDesiredDetections(detections, target_class_names_))
             {
-              publishWPTowardsDetections(detections);
-              RCLCPP_DEBUG(this->get_logger(), "Has desired detections"); 
+            //get Coords associated with gate
+            std::vector<double> d = publishWPTowardsDetections(detections);
+
+            //If gate is detected
+            if (bbox_calculations::hasGate(detections, p_left_gate_names_, p_right_gate_names_))
+            { //Store set waypoint, should look at making this a vector perhaps for lat and long, and push back places, using stack structure?
+              p_gate_lat_ = d[0];
+              p_gate_lon_ = d[1];
+
+              //Log lat/long coords in class members
+              RCLCPP_DEBUG(this->get_logger(), "Has gate, recording lat/long");
             }
+
+              RCLCPP_DEBUG(this->get_logger(), "Has desired detections");
+            }
+            
             else if (p_time_to_stop_before_recovery_ == 0)
             {
               RCLCPP_DEBUG(this->get_logger(), "Going straight to recovery"); 
@@ -138,6 +211,19 @@ namespace comp_tasks
       }
     }
   }
+
+  void Maneuvering::republishMAVROSStatus(const mavros_msgs::msg::State::SharedPtr msg) {
+    auto bool_msg = std_msgs::msg::Bool();
+        
+    //Check flight mode (adjust "GUIDED" for your autopilot)
+    bool_msg.data = (msg->mode == "GUIDED");  // ArduPilot
+    //bool_msg.data = (msg->mode == "OFFBOARD");  // PX4
+        
+    mavros_state_publisher->publish(bool_msg);
+    RCLCPP_DEBUG(this->get_logger(), "Guided Status: %s", bool_msg.data ? "true" : "false");
+
+  }
+
 }
 #include "rclcpp_components/register_node_macro.hpp"
 

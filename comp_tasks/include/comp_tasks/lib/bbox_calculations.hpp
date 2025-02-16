@@ -14,6 +14,8 @@ namespace bbox_calculations
     double pixelToAngle(double fov_in_degrees, int res, int pixel);
     double getAngleBetween2DiffTargets(const yolov8_msgs::msg::DetectionArray bboxes, std::string bbox_selection, std::string left_target_class_name1, std::string left_target_class_name2, std::string right_target_class_name1, std::string right_target_class_name2, double cam_fov, double cam_res_x, double angle_from_target);
     bool hasDesiredDetections(const yolov8_msgs::msg::DetectionArray& detection_array, const std::vector<std::reference_wrapper<std::string>>& desired_class_names);
+    bool hasGate(const yolov8_msgs::msg::DetectionArray& detection_array, const std::vector<std::reference_wrapper<std::string>>& left_obj_names, const std::vector<std::reference_wrapper<std::string>>& right_obj_names);
+    
     std::vector<yolov8_msgs::msg::Detection> extractTargetDetections(const yolov8_msgs::msg::DetectionArray& detection_array, const std::string& class_name1, const std::string& class_name2);
     std::vector<yolov8_msgs::msg::Detection> filterAndSort(const yolov8_msgs::msg::DetectionArray detection_array, std::string bbox_selection, std::string& class_name1, const std::string& class_name2);
     std::vector<yolov8_msgs::msg::Detection> getLargest(const yolov8_msgs::msg::DetectionArray detection_array);

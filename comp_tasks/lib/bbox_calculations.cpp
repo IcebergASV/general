@@ -146,4 +146,43 @@ bool hasDesiredDetections(const yolov8_msgs::msg::DetectionArray& detection_arra
     }
     return false;
   }
+
+  bool hasGate(
+    const yolov8_msgs::msg::DetectionArray& detection_array,
+    const std::vector<std::reference_wrapper<std::string>>& left_obj_names,
+    const std::vector<std::reference_wrapper<std::string>>& right_obj_names)
+    {
+    bool left_detected = false;
+    bool right_detected = false;
+
+    for (const auto& detection : detection_array.detections) {
+        const std::string& class_name = detection.class_name;
+        float x_center = detection.bbox.center.position.x; // Assuming normalized [0, 1]
+
+        // Check if the detected object is in the left_obj_names list and on the left side
+        auto left_it = std::find_if(
+            left_obj_names.begin(), left_obj_names.end(),
+            [&class_name](const std::reference_wrapper<std::string>& class_name_ref) {
+                return class_name == class_name_ref.get();
+            });
+        if (left_it != left_obj_names.end() && x_center < 0.5f) {
+            left_detected = true;
+        }
+
+        // Check if the detected object is in the right_obj_names list and on the right side
+        auto right_it = std::find_if(
+            right_obj_names.begin(), right_obj_names.end(),
+            [&class_name](const std::reference_wrapper<std::string>& class_name_ref) {
+                return class_name == class_name_ref.get();
+            });
+        if (right_it != right_obj_names.end() && x_center >= 0.5f) {
+            right_detected = true;
+        }
+    }
+
+    bool result = left_detected && right_detected;
+
+    return result;
 }
+}
+

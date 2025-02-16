@@ -37,11 +37,11 @@ protected:
     void publishFinishPnt();
     void publishBehaviourStatus(std::string str_msg);
     void publishSearchStatus(std::string str_msg);
-    void publishWPTowardsDetections(const yolov8_msgs::msg::DetectionArray& detections);
+    std::vector<double> publishWPTowardsDetections(const yolov8_msgs::msg::DetectionArray& detections);
     void publishGlobalWP(double lat, double lon);
     void setTimerDuration(double duration);
     void onTimerExpired();
-    void executeRecoveryBehaviour();
+    virtual void executeRecoveryBehaviour();
     void signalTaskFinish(); // TODO
     virtual void taskLogic(const yolov8_msgs::msg::DetectionArray& detections) = 0;
     rclcpp_lifecycle::node_interfaces::LifecycleNodeInterface::CallbackReturn on_configure(const rclcpp_lifecycle::State &);
@@ -61,7 +61,6 @@ protected:
     rclcpp::Publisher<std_msgs::msg::Bool>::SharedPtr task_complete_pub_;
 
     rclcpp::TimerBase::SharedPtr timer_;
-
 
     double p_distance_to_move_;
     double p_angle_from_target_;
