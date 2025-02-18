@@ -2,7 +2,6 @@ import rclpy
 from rclpy.node import Node
 from mavros_msgs.msg import State
 import gpiod
-from std_msgs.msg import Bool
 
 #To build the code use: colcon build --packages-select mavros_subscriber_for_led_tower
 #Don't forget to do: source install/setup.bash 
@@ -89,14 +88,11 @@ class MavrosStateSubscriber(Node):
             self.state_callback,
             10)
         self.subscription  # prevent unused variable warning
-        self.guided_status_publisher = self.create_publisher(Bool, 'guided_status', 10)
+        self.led_tower = LedController() #Instantiate the LED tower controller to set the GPIOs
 
     def state_callback(self, msg):
         guided = msg.guided #Get the value of guided
-
-        guided_msg = Bool()
-        guided_msg.data = guided
-        self.guided_status_publisher.publish(guided_msg)
+        self.led_tower.led_tower_control(guided) #pass that to the led tower so that it sets the LED light properly
 
         #print statement that can help in debugging (ONLY USE IT FOR DEBUGING)\/
         #self.get_logger().info(f'Autonomous: {guided}')

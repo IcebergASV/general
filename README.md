@@ -15,7 +15,9 @@ Groups LiDAR data into segments and publishes segment array.
  
 ## [mavros_subscriber_for_led_tower](https://github.com/IcebergASV/general/tree/fk-led-tower/mavros_subscriber_for_led_tower)
 
-The package that listens to mavros topic and changes the led tower light from the RasberryPi GPIO pins.
+## Note:
+The `mavros_subscriber_for_led_tower` currently only works on subscribing to the mavros state topic, and sends it in std_msg bool to the Pico PI.
+The `mavros_subscriber_for_led_tower_with_gpio_control` listens to mavros topic and changes the led tower light from the RasberryPi 4 GPIO pins. Currently no setup script is set for this one.
 
 ## The RasberryPi password: rasberry
 
@@ -29,7 +31,7 @@ The package that listens to mavros topic and changes the led tower light from th
 ## PI GPIO Pinout
 ![PI GPIO Pinout](https://i.sstatic.net/nQG4G.jpg)
 
-### Pinout Connections for LED Tower
+### Pinout Connections for LED Tower from Pi 4.
 
 - Pin 13 (GPIO27) is for red
 - Pin 15 (GPIO22) is for yellow
