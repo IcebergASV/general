@@ -1,0 +1,19 @@
+// generated from rosidl_adapter/resource/msg.idl.em
+// with input from comp_tasks_interfaces/msg/Task.msg
+// generated code does not contain a copyright notice
+
+
+module comp_tasks_interfaces {
+  module msg {
+    module Task_Constants {
+      const uint8 TASK_NOT_SET = 0;
+      const uint8 MANEUVERING = 1;
+      const uint8 NAVIGATION = 2;
+      const uint8 COLLISION_AVOIDANCE = 3;
+      const uint8 DOCKING = 4;
+    };
+    struct Task {
+      uint8 current_task;
+    };
+  };
+};

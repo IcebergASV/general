@@ -1,0 +1,14 @@
+{
+	"backtraceGraph" : 
+	{
+		"commands" : [],
+		"files" : [],
+		"nodes" : []
+	},
+	"installers" : [],
+	"paths" : 
+	{
+		"build" : "comp_tasks_interfaces__py",
+		"source" : "/home/robert/Projects/ros_ws/src/general/build/comp_tasks_interfaces/comp_tasks_interfaces__py"
+	}
+}

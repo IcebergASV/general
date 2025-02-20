@@ -4,8 +4,6 @@
 #include <rclcpp/rclcpp.hpp>
 #include <comp_tasks/task_component.hpp>
 
-#include "std_msgs/msg/bool.hpp"
-
 using std::placeholders::_1;
 
 namespace comp_tasks

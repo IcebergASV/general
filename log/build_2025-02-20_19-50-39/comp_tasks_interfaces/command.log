@@ -1,0 +1,4 @@
+Invoking command in '/home/robert/Projects/ros_ws/src/general/build/comp_tasks_interfaces': CMAKE_PREFIX_PATH=/opt/ros/humble /usr/bin/cmake --build /home/robert/Projects/ros_ws/src/general/build/comp_tasks_interfaces -- -j12 -l12
+Invoked command in '/home/robert/Projects/ros_ws/src/general/build/comp_tasks_interfaces' returned '0': CMAKE_PREFIX_PATH=/opt/ros/humble /usr/bin/cmake --build /home/robert/Projects/ros_ws/src/general/build/comp_tasks_interfaces -- -j12 -l12
+Invoking command in '/home/robert/Projects/ros_ws/src/general/build/comp_tasks_interfaces': CMAKE_PREFIX_PATH=/opt/ros/humble /usr/bin/cmake --install /home/robert/Projects/ros_ws/src/general/build/comp_tasks_interfaces
+Invoked command in '/home/robert/Projects/ros_ws/src/general/build/comp_tasks_interfaces' returned '0': CMAKE_PREFIX_PATH=/opt/ros/humble /usr/bin/cmake --install /home/robert/Projects/ros_ws/src/general/build/comp_tasks_interfaces

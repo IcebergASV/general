@@ -136,7 +136,6 @@ ament_target_dependencies(mavros_repub_component
   "yolov8_msgs"
   "tf2"
   "tf2_geometry_msgs"
-  "example_interfaces"
   "rclcpp_lifecycle")
 rclcpp_components_register_nodes(mavros_repub_component "comp_tasks::MavROSRepublisher")
 set(node_plugins "comp_tasks::MavROSRepublisher;$<TARGET_FILE:mavros_repub_component>\n")

@@ -15,7 +15,6 @@ namespace comp_tasks
     //Set initial gate detection (start point, so that lat/long varaiables for last gate are initialized)
     p_left_gate_names_ = {p_green_buoy_str_, p_second_green_buoy_str_};
     p_right_gate_names_ = {p_red_buoy_str_, p_second_red_buoy_str_};
-
   }
 
   rcl_interfaces::msg::SetParametersResult Maneuvering::param_callback(const std::vector<rclcpp::Parameter> &params)
