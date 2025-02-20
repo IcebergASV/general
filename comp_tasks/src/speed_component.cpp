@@ -14,6 +14,7 @@ namespace comp_tasks
     Speed::getParam<double>("estimated_buoy_dist", p_estimated_buoy_dist_, 0.0, "Angle to offset by when heading to a target in degrees, negative is to the left, positive to the right");
     Speed::getParam<double>("buoy_circling_radius", p_buoy_circling_radius_, 0.0, "Circling radius for buoy on calculated route");
     Speed::getParam<int>("num_pnts_on_semicircle", p_num_pnts_on_semicircle_, 0, "How many waypoints to send to turn around buoy on calculated route");
+    Speed::getParam<double>("min_dist_from_bay_b4_return", p_min_dist_from_bay_b4_return_, 0.0, "Minimum distance to travel from bay before executing return route");
     on_set_parameters_callback_handle_ = this->add_on_set_parameters_callback(std::bind(&Speed::param_callback, this, std::placeholders::_1));
     status_ = States::SENDING_START_PNT;
     wp_cnt_ = 0;
@@ -32,6 +33,7 @@ namespace comp_tasks
     else if (params[0].get_name() == "estimated_buoy_dist") { p_estimated_buoy_dist_ = params[0].as_double();}
     else if (params[0].get_name() == "buoy_circling_radius") { p_buoy_circling_radius_ = params[0].as_double();}
     else if (params[0].get_name() == "num_pnts_on_semicircle") { p_num_pnts_on_semicircle_ = params[0].as_int();}
+    else if (params[0].get_name() == "min_dist_from_bay_b4_return") { p_min_dist_from_bay_b4_return_ = params[0].as_double();}
     else {
       RCLCPP_ERROR(this->get_logger(), "Invalid Param speed: %s", params[0].get_name().c_str());
       result.successful = false;
@@ -63,8 +65,35 @@ namespace comp_tasks
   std::vector<geometry_msgs::msg::Point> Speed::calculateReturnRoute(const yolov8_msgs::msg::DetectionArray& detections)
   {
     std::vector<geometry_msgs::msg::Point> route;
-    // TODO
+
+    // calculate points around current position
+    std::vector<geometry_msgs::msg::Point> points = task_lib::generateCirclePoints(current_local_pose_.pose.position, p_buoy_circling_radius_, p_num_pnts_on_semicircle_*2);
+    route = task_lib::createSemicirce(points, last_seen_bay_pose_.pose.position);
+
+    bool left;
+    if (bbox_calculations::isLeft(detections, p_blue_buoy_str_, p_camera_fov_, p_camera_res_x_))
+    {
+      left = true;
+    }
+    else{
+      left = false;
+    }
+    task_lib::createQuarterCircle(route, task_lib::quaternionToHeading(current_local_pose_.pose.orientation), left);
+
+    route.push_back(last_seen_bay_pose_.pose.position);
+
     return route;
+  }
+
+  void Speed::continuePastBuoy()
+  {
+    Task::publishLocalWP(this->continue_past_buoys_pnt_.pose.position.x, this->continue_past_buoys_pnt_.pose.position.y);
+  }
+
+  bool Speed::isFarEnoughFromBay()
+  {
+    double dist = task_lib::distBetween2Pnts(last_seen_bay_pose_.pose.position, current_local_pose_.pose.position);
+    return p_min_dist_from_bay_b4_return_ > dist;
   }
 
   double Speed::getDistFromBay()
@@ -148,6 +177,7 @@ namespace comp_tasks
           {
             last_seen_blue_buoy_pose_ = current_local_pose_;
             publishWPTowardsLargestTarget(detections, p_blue_buoy_str_, p_buoy_offset_angle_);
+            continue_past_buoys_pnt_ = getWPTowardsLargestTarget(detections, p_blue_buoy_str_, p_buoy_offset_angle_, p_min_dist_from_bay_b4_return_);
             setTimerDuration(p_max_time_between_buoy_detections_);
             status_ = States::PASSING_BUOY;
           }
@@ -173,10 +203,36 @@ namespace comp_tasks
           {
             last_seen_blue_buoy_pose_ = current_local_pose_;
             publishWPTowardsLargestTarget(detections, p_blue_buoy_str_, p_buoy_offset_angle_);
+            continue_past_buoys_pnt_ = getWPTowardsLargestTarget(detections, p_blue_buoy_str_, p_buoy_offset_angle_, p_min_dist_from_bay_b4_return_);
             setTimerDuration(p_max_time_between_buoy_detections_);
             calculateReturnRoute(detections);
           }
           else if(timer_expired_)
+          {
+            if (isFarEnoughFromBay())
+            {
+              sendNextWP(return_route_);
+              status_ = States::RETURNING;
+            }
+            else
+            {
+              continuePastBuoy();
+              status_ = States::CONTINUE_PASSING_BUOY;
+            }
+          }
+          break;
+        }
+        case States::CONTINUE_PASSING_BUOY: 
+        {
+          if (bbox_calculations::hasDesiredDetections(detections, {p_blue_buoy_str_}))
+          {
+            last_seen_blue_buoy_pose_ = current_local_pose_;
+            publishWPTowardsLargestTarget(detections, p_blue_buoy_str_, p_buoy_offset_angle_);
+            continue_past_buoys_pnt_ = getWPTowardsLargestTarget(detections, p_blue_buoy_str_, p_buoy_offset_angle_, p_min_dist_from_bay_b4_return_);
+            setTimerDuration(p_max_time_between_buoy_detections_);
+            status_ = States::PASSING_BUOY;
+          }
+          else if (isFarEnoughFromBay())
           {
             sendNextWP(return_route_);
             status_ = States::RETURNING;

@@ -24,6 +24,8 @@ private:
     std::vector<geometry_msgs::msg::Point> calculateReturnRoute(const yolov8_msgs::msg::DetectionArray& detections);
     std::vector<geometry_msgs::msg::Point> calculateRouteFromGates(const yolov8_msgs::msg::DetectionArray& detections);
     double getDistFromBay();
+    void continuePastBuoy();
+    bool isFarEnoughFromBay();
     
     int p_use_start_point_;
     double p_time_to_find_bay_;
@@ -33,14 +35,16 @@ private:
     double p_estimated_buoy_dist_;
     double p_buoy_circling_radius_;
     int p_num_pnts_on_semicircle_;
+    double p_min_dist_from_bay_b4_return_;
 
-    enum States {SENDING_START_PNT, GOING_TO_BAY, MANEUVER_THRU_BAY, CALCULATED_ROUTE, PASSING_BUOY, RETURNING }; 
+    enum States {SENDING_START_PNT, GOING_TO_BAY, MANEUVER_THRU_BAY, CALCULATED_ROUTE, PASSING_BUOY, CONTINUE_PASSING_BUOY, RETURNING }; 
     States status_;
 
     std::vector<geometry_msgs::msg::Point> calculated_route_;
     std::vector<geometry_msgs::msg::Point> return_route_;
     geometry_msgs::msg::PoseStamped last_seen_bay_pose_;
     geometry_msgs::msg::PoseStamped last_seen_blue_buoy_pose_;
+    geometry_msgs::msg::PoseStamped continue_past_buoys_pnt_;
 
 };
 
