@@ -20,7 +20,6 @@ find_package(tf2_geometry_msgs REQUIRED)
 find_package(visualization_msgs REQUIRED)
 find_package(rclcpp_lifecycle REQUIRED)
 find_package(lifecycle_msgs REQUIRED)
-find_package(example_interfaces REQUIRED)
 
 include_directories(
     include
@@ -98,7 +97,6 @@ ament_target_dependencies(maneuvering_component
   "yolov8_msgs"
   "tf2"
   "tf2_geometry_msgs"
-  "example_interfaces"
   "rclcpp_lifecycle")
 rclcpp_components_register_nodes(maneuvering_component "comp_tasks::Maneuvering")
 set(node_plugins "comp_tasks::Maneuvering;$<TARGET_FILE:maneuvering_component>\n")
