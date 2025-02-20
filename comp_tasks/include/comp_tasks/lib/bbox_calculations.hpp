@@ -20,6 +20,7 @@ namespace bbox_calculations
     std::vector<yolov8_msgs::msg::Detection> filterAndSort(const yolov8_msgs::msg::DetectionArray detection_array, std::string bbox_selection, std::string& class_name1, const std::string& class_name2);
     std::vector<yolov8_msgs::msg::Detection> getLargest(const yolov8_msgs::msg::DetectionArray detection_array);
     std::vector<yolov8_msgs::msg::Detection> sortLeftToRight(const yolov8_msgs::msg::DetectionArray detection_array);
+    bool isLeft(const yolov8_msgs::msg::DetectionArray bboxes, std::string target_label, double cam_fov, double cam_res_x);
 
 }
 #endif // BBOXCALCULATIONS_H

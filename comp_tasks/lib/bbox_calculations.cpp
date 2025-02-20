@@ -67,7 +67,7 @@ namespace bbox_calculations
     {
       RCLCPP_ERROR(logger, "No targets detected - wp will be empty"); //TODO THROW AN ERROR - should never get here
     }
-    double angle = angle = bbox_calculations::pixelToAngle(cam_fov, cam_res_x, targets[0].bbox.center.position.x);
+    double angle = bbox_calculations::pixelToAngle(cam_fov, cam_res_x, targets[0].bbox.center.position.x);
     angle = angle - M_PI/2; // TODO Test
     return angle;
   }
@@ -164,6 +164,20 @@ bool hasGate(const yolov8_msgs::msg::DetectionArray& detection_array, const std:
 
     // TODO
     return false;
+}
+
+bool isLeft(const yolov8_msgs::msg::DetectionArray bboxes, std::string target_label, double cam_fov, double cam_res_x)
+{
+  double angle = getAngleToLargestTarget(bboxes, target_label, cam_fov, cam_res_x);
+  
+  if (angle > 0) // TODO test checking condition
+  {
+    return true;
+  }
+  else{
+    return false;
+  }
+
 }
 
 
