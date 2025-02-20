@@ -16,10 +16,6 @@ namespace comp_tasks
     p_left_gate_names_ = {p_green_buoy_str_, p_second_green_buoy_str_};
     p_right_gate_names_ = {p_red_buoy_str_, p_second_red_buoy_str_};
 
-    //Create publishers for component statuses
-    mavros_state_subscriber = this->create_subscription<mavros_msgs::msg::State>("/mavros/state", 10, std::bind(&Maneuvering::republishMAVROSStatus, this, _1));
-    mavros_state_publisher = this->create_publisher<std_msgs::msg::Bool>("/guided_status", 10);
-
   }
 
   rcl_interfaces::msg::SetParametersResult Maneuvering::param_callback(const std::vector<rclcpp::Parameter> &params)
@@ -210,18 +206,6 @@ namespace comp_tasks
         }
       }
     }
-  }
-
-  void Maneuvering::republishMAVROSStatus(const mavros_msgs::msg::State::SharedPtr msg) {
-    auto bool_msg = std_msgs::msg::Bool();
-        
-    //Check flight mode (adjust "GUIDED" for your autopilot)
-    bool_msg.data = (msg->mode == "GUIDED");  // ArduPilot
-    //bool_msg.data = (msg->mode == "OFFBOARD");  // PX4
-        
-    mavros_state_publisher->publish(bool_msg);
-    RCLCPP_DEBUG(this->get_logger(), "Guided Status: %s", bool_msg.data ? "true" : "false");
-
   }
 
 }

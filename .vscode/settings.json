@@ -4,6 +4,8 @@
         "chrono": "cpp",
         "string": "cpp",
         "vector": "cpp",
-        "cmath": "cpp"
+        "cmath": "cpp",
+        "dense": "cpp",
+        "functional": "cpp"
     }
 }

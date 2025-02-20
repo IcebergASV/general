@@ -193,8 +193,8 @@ namespace comp_tasks
   //CAUTION: Returns 0, 0 if not activated
   std::vector<double> Task::publishWPTowardsDetections(const yolov8_msgs::msg::DetectionArray& detections)
   {
-    double x = 0.0d;
-    double y = 0.0d;
+    double x = 0.0;
+    double y = 0.0;
 
     if (activated_){
       wp_reached_ = false;
