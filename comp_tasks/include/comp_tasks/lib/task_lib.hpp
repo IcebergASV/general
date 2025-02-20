@@ -30,5 +30,6 @@ namespace task_lib
     double distBetween2Pnts(geometry_msgs::msg::Point p1, geometry_msgs::msg::Point p2);
     std::vector<geometry_msgs::msg::Point> generateCirclePoints(const geometry_msgs::msg::Point& center, double radius, int num_points);
     std::vector<geometry_msgs::msg::Point> createSemicirce(const std::vector<geometry_msgs::msg::Point>& circle_points, const geometry_msgs::msg::Point& reference_point);
+    std::vector<geometry_msgs::msg::Point> createQuarterCircle(const std::vector<geometry_msgs::msg::Point>& semicircle, double heading, bool left);
 }
 #endif // TASKLIB_HPP

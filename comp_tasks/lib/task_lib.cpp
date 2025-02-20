@@ -215,4 +215,36 @@ namespace task_lib
         
         return farther_points;
     }
+
+    std::vector<geometry_msgs::msg::Point> createQuarterCircle(
+        const std::vector<geometry_msgs::msg::Point>& semicircle,
+        double heading,
+        bool left)
+    {
+        std::vector<geometry_msgs::msg::Point> quarter_circle;
+        
+        // Normalize the heading to the range [-pi, pi]
+        heading = std::atan2(std::sin(heading), std::cos(heading));
+        
+        for (const auto& point : semicircle)
+        {
+            // Compute the angle of the point relative to the origin
+            double point_angle = std::atan2(point.y, point.x);
+            
+            // Normalize the point angle to the range [-pi, pi]
+            point_angle = std::atan2(std::sin(point_angle), std::cos(point_angle));
+            
+            // Compute the relative angle difference
+            double angle_diff = point_angle - heading;
+            angle_diff = std::atan2(std::sin(angle_diff), std::cos(angle_diff));
+            
+            // If left, keep points on the left (angle_diff > 0); otherwise, keep right (angle_diff < 0)
+            if ((left && angle_diff > 0) || (!left && angle_diff < 0))
+            {
+                quarter_circle.push_back(point);
+            }
+        }
+        
+        return quarter_circle;
+    }
 }
