@@ -229,14 +229,12 @@ namespace comp_tasks
   }
 
   // negative angle is to the left of the target, positive angle is to the right of target
-  void Task::publishWPTowardsLargestTarget(const yolov8_msgs::msg::DetectionArray& detections, std::string target_label, double offset_angle)
+    void Task::publishWPTowardsLargestTarget(const yolov8_msgs::msg::DetectionArray& detections, std::string target_label, double offset_angle)
   {
     if (activated_){
       wp_reached_ = false;
 
-      double angle = bbox_calculations::getAngleToLargestTarget(detections, target_label, p_camera_fov_, p_camera_res_x_);
-      angle += offset_angle*M_PI/180;
-      geometry_msgs::msg::PoseStamped wp = task_lib::relativePolarToLocalCoords(p_distance_to_move_, angle, current_local_pose_);
+      geometry_msgs::msg::PoseStamped wp = getWPTowardsLargestTarget(detections, target_label, offset_angle, p_distance_to_move_);
       if (wp.pose.position.x != 0 && wp.pose.position.y != 0)
       {
         local_wp_pub_->publish(wp);
@@ -248,6 +246,14 @@ namespace comp_tasks
         RCLCPP_WARN(this->get_logger(), "Waypoint Empty - not publishing"); 
       }
     }
+  }
+
+  geometry_msgs::msg::PoseStamped Task::getWPTowardsLargestTarget(const yolov8_msgs::msg::DetectionArray& detections, std::string target_label, double offset_angle, double dist) //TODO move to lib
+  {
+    double angle = bbox_calculations::getAngleToLargestTarget(detections, target_label, p_camera_fov_, p_camera_res_x_);
+    angle += offset_angle*M_PI/180;
+    geometry_msgs::msg::PoseStamped wp = task_lib::relativePolarToLocalCoords(p_distance_to_move_, angle, current_local_pose_);
+    return wp;
   }
 
   void Task::publishStartPoint()

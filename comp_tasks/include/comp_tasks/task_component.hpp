@@ -40,6 +40,7 @@ protected:
     void publishSearchStatus(std::string str_msg);
     void publishWPTowardsGate(const yolov8_msgs::msg::DetectionArray& detections);
     void publishWPTowardsLargestTarget(const yolov8_msgs::msg::DetectionArray& detections, std::string target_label, double angle);
+    geometry_msgs::msg::PoseStamped getWPTowardsLargestTarget(const yolov8_msgs::msg::DetectionArray& detections, std::string target_label, double offset_angle, double dist);
     void publishGlobalWP(double lat, double lon);
     void publishLocalWP(double x, double y);
     void setTimerDuration(double duration);
