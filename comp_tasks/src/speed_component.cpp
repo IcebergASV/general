@@ -185,7 +185,7 @@ namespace comp_tasks
           {
             if (wp_reached_)
             {
-              if (wp_cnt_ >= calculated_route_.size()) // might need to update this to actually check if we are in same position as where we started
+              if (wp_cnt_ >= static_cast<int>(calculated_route_.size())) // might need to update this to actually check if we are in same position as where we started
               {
                 signalTaskFinish();
               }
@@ -243,7 +243,7 @@ namespace comp_tasks
         {
           if (wp_reached_)
           {
-            if (wp_cnt_ >= return_route_.size()) // might need to update this to actually check if we are in same position as where we started
+            if (wp_cnt_ >= static_cast<int>(return_route_.size())) // might need to update this to actually check if we are in same position as where we started
             {
               signalTaskFinish();
             }
