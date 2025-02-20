@@ -41,6 +41,7 @@ speed:
     estimated_buoy_dist: 10.0
     buoy_circling_radius: 3.0
     num_pnts_on_semicircle: 4
+    min_dist_from_bay_b4_return: 30.0
 task_controller:
   ros__parameters:
     tasks: "ms"
