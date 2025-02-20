@@ -239,6 +239,16 @@ namespace comp_tasks
     }
   }
 
+  void Task::publishLocalWP(double x, double y)
+  {
+    if (activated_)
+    {
+      geometry_msgs::msg::PoseStamped wp = task_lib::getLocalWPMsg(x, y);
+      local_wp_pub_->publish(wp);
+      RCLCPP_DEBUG(this->get_logger(), "Local WP: x=%f, y=%f", wp.pose.position.x, wp.pose.position.y);
+    }
+  }
+
   void Task::executeRecoveryBehaviour()
   {
     if (p_recovery_behaviour_ == "STOP")

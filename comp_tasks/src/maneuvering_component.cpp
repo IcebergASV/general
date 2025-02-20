@@ -52,7 +52,7 @@ namespace comp_tasks
     }
     else if (p_recovery_behaviour_ == "RECOVERY_PNT")
     {
-      publishGlobalWP(p_recovery_lat_, p_recovery_lon_);
+      publishLocalWP(p_recovery_lat_, p_recovery_lon_);
       RCLCPP_INFO(this->get_logger(), "Sent recovery waypoint");
     }
     else if (p_recovery_behaviour_ == "RECOVERY_GATE") {  //Added Gate recovery behaviour

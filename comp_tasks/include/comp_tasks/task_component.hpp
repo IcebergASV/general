@@ -39,6 +39,7 @@ protected:
     void publishSearchStatus(std::string str_msg);
     std::vector<double> publishWPTowardsDetections(const yolov8_msgs::msg::DetectionArray& detections);
     void publishGlobalWP(double lat, double lon);
+    void publishLocalWP(double x, double y);
     void setTimerDuration(double duration);
     void onTimerExpired();
     virtual void executeRecoveryBehaviour();
