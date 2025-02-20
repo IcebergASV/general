@@ -1,1 +1,0 @@
-rclcpp;rclcpp_components;composition;mavros_msgs;sensor_msgs;comp_tasks_interfaces;visualization_msgs;yolov8_msgs;geographic_msgs;tf2;tf2_geometry_msgs;rclcpp_lifecycle;lifecycle_msgs;ament_lint_auto;ament_lint_common

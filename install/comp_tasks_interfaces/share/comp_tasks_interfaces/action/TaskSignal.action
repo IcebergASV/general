@@ -1,5 +1,0 @@
-Task task
----
-int32 status
----
-bool task_complete
