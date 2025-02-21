@@ -86,7 +86,7 @@ ament_target_dependencies(libbbox_calculations
 ament_package()
 add_library(task_component SHARED src/task_component.cpp)
 
-target_compile_definitions(task_component PRIVATE "COMPOSITION_BUILDING_DLL")
+target_compile_definitions(task_component PRIVATE "COMPOSITION_BUILDING_DLL") #TODO remove
 ament_target_dependencies(task_component
   "rclcpp"
   "rclcpp_components"

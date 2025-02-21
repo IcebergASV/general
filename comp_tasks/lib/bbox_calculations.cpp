@@ -159,11 +159,31 @@ bool hasDesiredDetections(const yolov8_msgs::msg::DetectionArray& detection_arra
     return false;
 }
 
-bool hasGate(const yolov8_msgs::msg::DetectionArray& detection_array, const std::vector<std::reference_wrapper<std::string>>& left_marker_names, const std::vector<std::reference_wrapper<std::string>>& right_marker_names )
+bool hasGate(const yolov8_msgs::msg::DetectionArray& detection_array, std::string left_marker_name1, std::string left_marker_name2, std::string right_marker_name1, std::string right_marker_name2)
 {
+  std::vector<yolov8_msgs::msg::Detection> left_targets = filterAndSort(detection_array, "LARGEST", left_marker_name1, left_marker_name2);
+  std::vector<yolov8_msgs::msg::Detection> right_targets = filterAndSort(detection_array, "LARGEST", right_marker_name1, right_marker_name2);
 
-    // TODO
-    return false;
+  if (left_targets.size() == 0 && right_targets.size() == 0)
+  {
+    RCLCPP_ERROR(logger, "No targets detected - wp will be empty"); //TODO THROW AN ERROR - should never get here
+  }
+
+  if ((right_targets.size() > 0) && (left_targets.size() > 0))// move in between innermost red and green
+  {
+    if ((right_targets[0].bbox.center.position.x - left_targets[left_targets.size()-1].bbox.center.position.x) < 0) // TODO test
+    {
+      RCLCPP_WARN(logger, "Expected %s on the left and %s on the right but detected the opposite",left_marker_name1.c_str(), right_marker_name1.c_str() ); // TODO get it to go to recovery if this happens or turn around
+    }
+    else 
+    {
+      // found gate
+      return true;
+    }
+    RCLCPP_INFO(logger, "Detected  a gate");
+
+  }
+  return false;
 }
 
 bool isLeft(const yolov8_msgs::msg::DetectionArray bboxes, std::string target_label, double cam_fov, double cam_res_x)

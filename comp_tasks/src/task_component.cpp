@@ -252,7 +252,7 @@ namespace comp_tasks
   {
     double angle = bbox_calculations::getAngleToLargestTarget(detections, target_label, p_camera_fov_, p_camera_res_x_);
     angle += offset_angle*M_PI/180;
-    geometry_msgs::msg::PoseStamped wp = task_lib::relativePolarToLocalCoords(p_distance_to_move_, angle, current_local_pose_);
+    geometry_msgs::msg::PoseStamped wp = task_lib::relativePolarToLocalCoords(dist, angle, current_local_pose_);
     return wp;
   }
 

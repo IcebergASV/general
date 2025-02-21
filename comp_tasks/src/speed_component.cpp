@@ -138,7 +138,7 @@ namespace comp_tasks
           if (bbox_calculations::hasDesiredDetections(detections, {p_red_buoy_str_, p_green_buoy_str_, p_second_red_buoy_str_, p_second_green_buoy_str_}))
           {
             last_seen_bay_pose_ = current_local_pose_;
-            if (bbox_calculations::hasGate(detections, {p_red_buoy_str_, p_second_red_buoy_str_}, {p_green_buoy_str_, p_second_green_buoy_str_}))
+            if (bbox_calculations::hasGate(detections, p_red_buoy_str_, p_second_red_buoy_str_, p_green_buoy_str_, p_second_green_buoy_str_))
             {
               calculated_route_ = calculateRouteFromGates(detections);
             }
@@ -157,7 +157,7 @@ namespace comp_tasks
           if (bbox_calculations::hasDesiredDetections(detections, {p_red_buoy_str_, p_green_buoy_str_, p_second_red_buoy_str_, p_second_green_buoy_str_}))
           {
             last_seen_bay_pose_ = current_local_pose_;
-            if (bbox_calculations::hasGate(detections, {p_red_buoy_str_, p_second_red_buoy_str_}, {p_green_buoy_str_, p_second_green_buoy_str_}))
+            if (bbox_calculations::hasGate(detections, p_red_buoy_str_, p_second_red_buoy_str_, p_green_buoy_str_, p_second_green_buoy_str_))
             {
               calculated_route_ = calculateRouteFromGates(detections);
             }
