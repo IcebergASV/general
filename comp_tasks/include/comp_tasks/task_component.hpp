@@ -8,6 +8,7 @@
 #include "comp_tasks_interfaces/msg/start_task.hpp"
 #include "geographic_msgs/msg/geo_pose_stamped.hpp"
 #include "geometry_msgs/msg/pose_stamped.hpp"
+#include "geometry_msgs/msg/point.hpp"
 #include "yolov8_msgs/msg/detection_array.hpp"
 #include <string>
 #include <chrono>
@@ -37,7 +38,7 @@ protected:
     void publishFinishPnt();
     void publishBehaviourStatus(std::string str_msg);
     void publishSearchStatus(std::string str_msg);
-    std::vector<double> publishWPTowardsDetections(const yolov8_msgs::msg::DetectionArray& detections);
+    geometry_msgs::msg::Point publishWPTowardsDetections(const yolov8_msgs::msg::DetectionArray& detections);
     void publishGlobalWP(double lat, double lon);
     void publishLocalWP(double x, double y);
     void setTimerDuration(double duration);

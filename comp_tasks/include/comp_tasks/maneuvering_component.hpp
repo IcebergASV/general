@@ -24,8 +24,8 @@ private:
     void checkIfFinished();
     rclcpp::node_interfaces::OnSetParametersCallbackHandle::SharedPtr on_set_parameters_callback_handle_;
 
-    double p_gate_lat_;
-    double p_gate_lon_;
+    double p_gate_x_;
+    double p_gate_y_;
 
     std::vector<std::reference_wrapper<std::string>> p_left_gate_names_;
     std::vector<std::reference_wrapper<std::string>> p_right_gate_names_;

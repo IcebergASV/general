@@ -191,10 +191,9 @@ namespace comp_tasks
   }
 
   //CAUTION: Returns 0, 0 if not activated
-  std::vector<double> Task::publishWPTowardsDetections(const yolov8_msgs::msg::DetectionArray& detections)
+  geometry_msgs::msg::Point Task::publishWPTowardsDetections(const yolov8_msgs::msg::DetectionArray& detections)
   {
-    double x = 0.0;
-    double y = 0.0;
+    geometry_msgs::msg::Point point;
 
     if (activated_){
       wp_reached_ = false;
@@ -207,8 +206,11 @@ namespace comp_tasks
         wp_cnt_++;
         std::string str_cnt = std::to_string(wp_cnt_);
         //publishBehaviourStatus("Heading to WP " + str_cnt);
-        x = wp.pose.position.x;
-        y = wp.pose.position.y;
+
+        //Modify the attributes
+        point.x = wp.pose.position.x;
+        point.y = wp.pose.position.y;
+        point.z = 0;
       }
       else{
         RCLCPP_WARN(this->get_logger(), "Waypoint Empty - not publishing"); 
@@ -225,8 +227,7 @@ namespace comp_tasks
       
     }
 
-    std::vector<double> coords = {x, y};
-    return coords;
+    return point;
   }
 
   void Task::publishGlobalWP(double lat, double lon)
