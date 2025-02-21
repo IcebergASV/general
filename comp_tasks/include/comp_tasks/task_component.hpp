@@ -8,6 +8,7 @@
 #include "comp_tasks_interfaces/msg/start_task.hpp"
 #include "geographic_msgs/msg/geo_pose_stamped.hpp"
 #include "geometry_msgs/msg/pose_stamped.hpp"
+#include "geometry_msgs/msg/point.hpp"
 #include "yolov8_msgs/msg/detection_array.hpp"
 #include <string>
 #include <chrono>
@@ -37,11 +38,12 @@ protected:
     void publishFinishPnt();
     void publishBehaviourStatus(std::string str_msg);
     void publishSearchStatus(std::string str_msg);
-    void publishWPTowardsDetections(const yolov8_msgs::msg::DetectionArray& detections);
+    geometry_msgs::msg::Point publishWPTowardsDetections(const yolov8_msgs::msg::DetectionArray& detections);
     void publishGlobalWP(double lat, double lon);
+    void publishLocalWP(double x, double y);
     void setTimerDuration(double duration);
     void onTimerExpired();
-    void executeRecoveryBehaviour();
+    virtual void executeRecoveryBehaviour();
     void signalTaskFinish(); // TODO
     virtual void taskLogic(const yolov8_msgs::msg::DetectionArray& detections) = 0;
     rclcpp_lifecycle::node_interfaces::LifecycleNodeInterface::CallbackReturn on_configure(const rclcpp_lifecycle::State &);
@@ -61,7 +63,6 @@ protected:
     rclcpp::Publisher<std_msgs::msg::Bool>::SharedPtr task_complete_pub_;
 
     rclcpp::TimerBase::SharedPtr timer_;
-
 
     double p_distance_to_move_;
     double p_angle_from_target_;
