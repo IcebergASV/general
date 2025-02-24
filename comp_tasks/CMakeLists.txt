@@ -20,6 +20,7 @@ find_package(tf2_geometry_msgs REQUIRED)
 find_package(visualization_msgs REQUIRED)
 find_package(rclcpp_lifecycle REQUIRED)
 find_package(lifecycle_msgs REQUIRED)
+find_package(yaml-cpp REQUIRED)
 
 include_directories(
     include
@@ -84,6 +85,7 @@ ament_target_dependencies(libbbox_calculations
 )
 
 ament_package()
+<<<<<<< HEAD
 add_library(task_component SHARED src/task_component.cpp)
 
 target_compile_definitions(task_component PRIVATE "COMPOSITION_BUILDING_DLL") #TODO remove
@@ -106,6 +108,8 @@ install(TARGETS
   ARCHIVE DESTINATION lib
   LIBRARY DESTINATION lib
   RUNTIME DESTINATION bin)
+=======
+>>>>>>> 76d223467b4b34b008793dff68b88e4fc63a7237
 
 add_library(maneuvering_component SHARED src/maneuvering_component.cpp)
 target_compile_definitions(maneuvering_component PRIVATE "COMPOSITION_BUILDING_DLL")
@@ -119,7 +123,8 @@ ament_target_dependencies(maneuvering_component
   "yolov8_msgs"
   "tf2"
   "tf2_geometry_msgs"
-  "rclcpp_lifecycle")
+  "rclcpp_lifecycle"
+  "yaml-cpp")
 rclcpp_components_register_nodes(maneuvering_component "comp_tasks::Maneuvering")
 set(node_plugins "comp_tasks::Maneuvering;$<TARGET_FILE:maneuvering_component>\n")
 install(TARGETS
@@ -144,30 +149,48 @@ target_link_libraries(maneuvering_composition
   task_component
   libtask_lib
   libbbox_calculations
+  yaml-cpp
 )
 
+<<<<<<< HEAD
 add_library(speed_component SHARED src/speed_component.cpp)
 target_compile_definitions(speed_component PRIVATE "COMPOSITION_BUILDING_DLL")
 ament_target_dependencies(speed_component
+=======
+add_library(mavros_repub_component SHARED src/mavros_repub_component.cpp)
+target_compile_definitions(mavros_repub_component PRIVATE "COMPOSITION_BUILDING_DLL")
+ament_target_dependencies(mavros_repub_component
+>>>>>>> 76d223467b4b34b008793dff68b88e4fc63a7237
   "rclcpp"
   "rclcpp_components"
   "std_msgs"
   "mavros_msgs"
   "geographic_msgs"
+<<<<<<< HEAD
   "geometry_msgs"
+=======
+>>>>>>> 76d223467b4b34b008793dff68b88e4fc63a7237
   "comp_tasks_interfaces"
   "yolov8_msgs"
   "tf2"
   "tf2_geometry_msgs"
   "rclcpp_lifecycle")
+<<<<<<< HEAD
 rclcpp_components_register_nodes(speed_component "comp_tasks::speed")
 set(node_plugins "comp_tasks::speed;$<TARGET_FILE:speed_component>\n")
 install(TARGETS
   speed_component
+=======
+rclcpp_components_register_nodes(mavros_repub_component "comp_tasks::MavROSRepublisher")
+set(node_plugins "comp_tasks::MavROSRepublisher;$<TARGET_FILE:mavros_repub_component>\n")
+install(TARGETS
+mavros_repub_component
+>>>>>>> 76d223467b4b34b008793dff68b88e4fc63a7237
   ARCHIVE DESTINATION lib
   LIBRARY DESTINATION lib
   RUNTIME DESTINATION bin)
 
+<<<<<<< HEAD
 # Add executable for speed
 add_executable(speed_composition
   src/speed_composition.cpp)
@@ -180,12 +203,54 @@ install(TARGETS
   DESTINATION lib/${PROJECT_NAME})
 
 target_link_libraries(speed_composition
+=======
+# Add executable for mavros_repub
+add_executable(mavros_repub_composition
+  src/mavros_repub_composition.cpp)
+target_link_libraries(mavros_repub_composition
+mavros_repub_component)
+ament_target_dependencies(mavros_repub_composition
+  rclcpp)
+install(TARGETS
+mavros_repub_composition
+  DESTINATION lib/${PROJECT_NAME})
+
+target_link_libraries(mavros_repub_composition
+>>>>>>> 76d223467b4b34b008793dff68b88e4fc63a7237
   ${YAML_CPP_LIBRARIES}
   task_component
   libtask_lib
   libbbox_calculations
 )
 
+<<<<<<< HEAD
+=======
+add_library(task_component SHARED src/task_component.cpp)
+
+target_compile_definitions(task_component PRIVATE "COMPOSITION_BUILDING_DLL")
+ament_target_dependencies(task_component
+  "rclcpp"
+  "rclcpp_components"
+  "std_msgs"
+  "mavros_msgs"
+  "sensor_msgs"
+  "geographic_msgs"
+  "comp_tasks_interfaces"
+  "yolov8_msgs"
+  "tf2"
+  "tf2_geometry_msgs"
+  "rclcpp_lifecycle"
+  "yaml-cpp"
+  )
+  target_link_libraries(task_component yaml-cpp)
+
+install(TARGETS
+  task_component
+  ARCHIVE DESTINATION lib
+  LIBRARY DESTINATION lib
+  RUNTIME DESTINATION bin)
+
+>>>>>>> 76d223467b4b34b008793dff68b88e4fc63a7237
 add_library(task_controller_component SHARED src/task_controller_component.cpp)
 target_compile_definitions(task_controller_component PRIVATE "COMPOSITION_BUILDING_DLL")
 ament_target_dependencies(task_controller_component

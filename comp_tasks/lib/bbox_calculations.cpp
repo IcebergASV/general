@@ -200,6 +200,5 @@ bool isLeft(const yolov8_msgs::msg::DetectionArray bboxes, std::string target_la
 
 }
 
-
-
 }
+

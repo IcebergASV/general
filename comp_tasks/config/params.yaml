@@ -1,19 +1,33 @@
+<<<<<<< HEAD
 /maneuvering:
+=======
+/task:
+>>>>>>> 76d223467b4b34b008793dff68b88e4fc63a7237
   ros__parameters:
     distance_to_move: 30.0
     angle_from_target: 20.0
     camera_res_x: 640
     camera_fov: 70
+<<<<<<< HEAD
     recovery_behaviour: STOP
     time_to_pause_search: 3.0
     time_between_recovery_actions: 2.0
     time_to_stop_before_recovery: 2.0
+=======
+    finish_lat: 63.4411718
+    finish_lon: 10.4237096
+    recovery_behaviour: STOP
+    time_to_pause_search: 3.0
+    time_between_recovery_actions: 2.0
+    time_to_stop_before_recovery: 20.0
+>>>>>>> 76d223467b4b34b008793dff68b88e4fc63a7237
     red_buoy_label: red_buoy
     green_buoy_label: green_buoy
     second_red_buoy_label: black_buoy
     second_green_buoy_label: yellow_buoy
     frame_stack_size: 4
     bbox_selection: INNERMOST
+<<<<<<< HEAD
     max_consec_recoveries: 2
 /speed:
   ros__parameters:
@@ -45,3 +59,25 @@
 /task_controller:
   ros__parameters:
     tasks: ms
+=======
+/maneuvering:
+  ros__parameters:
+    distance_to_move: 30.0
+    angle_from_target: 20.0
+    camera_res_x: 640
+    camera_fov: 70
+    recovery_behaviour: STOP
+    time_to_pause_search: 3.0
+    time_between_recovery_actions: 2.0
+    time_to_stop_before_recovery: 2.0
+    red_buoy_label: red_buoy
+    green_buoy_label: green_buoy
+    second_red_buoy_label: black_buoy
+    second_green_buoy_label: yellow_buoy
+    frame_stack_size: 4
+    bbox_selection: INNERMOST
+    max_consec_recoveries: 2
+/task_controller:
+  ros__parameters:
+    tasks: ms
+>>>>>>> 76d223467b4b34b008793dff68b88e4fc63a7237
