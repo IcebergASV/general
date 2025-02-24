@@ -63,6 +63,19 @@ namespace comp_tasks
     return;
   }
 
+  void Maneuvering::handleDetections(const yolov8_msgs::msg::DetectionArray& detections)
+  {
+    geometry_msgs::msg::Point p = publishWPTowardsDetections(detections);
+
+    if (bbox_calculations::hasGate(detections, p_red_buoy_str_, p_second_red_buoy_str_, p_green_buoy_str_, p_second_green_buoy_str_))
+    {
+      gate_x_ = p.x;
+      gate_y_ = p.y;
+    }
+
+    publishSearchStatus("Found");
+  }
+
   void Maneuvering::taskLogic(const yolov8_msgs::msg::DetectionArray& detections)
   {
     if (in_guided_)
@@ -77,16 +90,7 @@ namespace comp_tasks
 
           if (bbox_calculations::hasDesiredDetections(detections, target_class_names_))
           {
-            //get Coords associated with gate
-            geometry_msgs::msg::Point p = publishWPTowardsDetections(detections);
-
-            if (bbox_calculations::hasGate(detections, p_red_buoy_str_, p_second_red_buoy_str_, p_green_buoy_str_, p_second_green_buoy_str_))
-            {
-              gate_x_ = p.x;
-              gate_y_ = p.y;
-            }
-
-            publishSearchStatus("Found");
+            handleDetections(detections);
             status_ = States::HEADING_TO_TARGET;
           }
           else if(timer_expired_)
@@ -105,16 +109,7 @@ namespace comp_tasks
           publishBehaviourStatus("Recovering with " + p_recovery_behaviour_);
           if (bbox_calculations::hasDesiredDetections(detections, target_class_names_))
           {
-            //get Coords associated with gate
-            geometry_msgs::msg::Point p = publishWPTowardsDetections(detections);
-
-            if (bbox_calculations::hasGate(detections, p_red_buoy_str_, p_second_red_buoy_str_, p_green_buoy_str_, p_second_green_buoy_str_))
-            {
-              gate_x_ = p.x;
-              gate_y_ = p.y;
-            }
-
-            publishSearchStatus("Found");
+            handleDetections(detections);
             status_ = States::HEADING_TO_TARGET;
           }
           else if(timer_expired_)
@@ -138,17 +133,7 @@ namespace comp_tasks
 
             if (bbox_calculations::hasDesiredDetections(detections, target_class_names_))
             {
-            //get Coords associated with gate
-            geometry_msgs::msg::Point p = publishWPTowardsDetections(detections);
-
-            //If gate is detected
-            if (bbox_calculations::hasGate(detections, p_red_buoy_str_, p_second_red_buoy_str_, p_green_buoy_str_, p_second_green_buoy_str_))
-            {
-              gate_x_ = p.x;
-              gate_y_ = p.y;
-            }
-
-              RCLCPP_DEBUG(this->get_logger(), "Has desired detections");
+              handleDetections(detections);
             }
             
             else if (p_time_to_stop_before_recovery_ == 0)

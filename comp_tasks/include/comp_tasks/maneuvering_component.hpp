@@ -22,6 +22,7 @@ private:
     void executeRecoveryBehaviour() override;
     void taskLogic(const yolov8_msgs::msg::DetectionArray& detections) override;
     void checkIfFinished();
+    void handleDetections(const yolov8_msgs::msg::DetectionArray& detections);
     rclcpp::node_interfaces::OnSetParametersCallbackHandle::SharedPtr on_set_parameters_callback_handle_;
     
     int p_max_consec_recoveries_;
