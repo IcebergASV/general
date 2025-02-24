@@ -16,6 +16,8 @@
 #include "sensor_msgs/msg/nav_sat_fix.hpp"
 #include "mavros_msgs/msg/state.hpp"
 #include "rclcpp_lifecycle/lifecycle_node.hpp"
+#include <fstream>
+#include <yaml-cpp/yaml.h>
 
 using std::placeholders::_1;
 using namespace std::chrono_literals;
@@ -119,6 +121,35 @@ protected:
       std::string param_log_output = param_name + ": " + param;
       RCLCPP_INFO(this->get_logger(), param_log_output.c_str()); 
       return;
+    }
+    template <typename T>
+    void updateYamlParam(const std::string &nodeName, const std::string &paramName, T newValue, const std::string &filePath) {
+      try {
+          // Load the YAML file
+          YAML::Node config = YAML::LoadFile(filePath);
+    
+          // Check if the node and parameter exist
+          if (!config[nodeName] || !config[nodeName]["ros__parameters"] || !config[nodeName]["ros__parameters"][paramName]) {
+              std::cerr << "Error: Node or parameter not found in YAML file." << std::endl;
+              return;
+          }
+    
+          // Update the parameter value
+          config[nodeName]["ros__parameters"][paramName] = newValue;
+    
+          // Write back to file
+          std::ofstream outFile(filePath);
+          if (!outFile) {
+              std::cerr << "Error: Unable to open file for writing." << std::endl;
+              return;
+          }
+          outFile << config;
+          outFile.close();
+    
+          std::cout << "Successfully updated " << paramName << " in " << nodeName << " node." << std::endl;
+      } catch (const std::exception &e) {
+          std::cerr << "Exception: " << e.what() << std::endl;
+      }
     }
 
 };

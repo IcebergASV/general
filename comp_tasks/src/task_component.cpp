@@ -1,6 +1,9 @@
 #include "comp_tasks/task_component.hpp"
 #include "comp_tasks/lib/bbox_calculations.hpp"
 #include "comp_tasks/lib/task_lib.hpp"
+#include <yaml-cpp/yaml.h>
+
+
 
 namespace comp_tasks
 {
@@ -19,7 +22,7 @@ namespace comp_tasks
   {
     rcl_interfaces::msg::SetParametersResult result;
 
-    if (params[0].get_name() == "distance_to_move") { p_distance_to_move_ = params[0].as_double(); }
+    if (params[0].get_name() == "distance_to_move") { p_distance_to_move_ = params[0].as_double(); updateYamlParam("maneuvering", "distance_to_move", params[0].as_double(), "/home/gracepearcey/repos/iceberg/ros2_ws/src/general/comp_tasks/config/params.yaml");}
     else if (params[0].get_name() == "angle_from_target") { p_angle_from_target_ = params[0].as_double(); }
     else if (params[0].get_name() == "camera_res_x") { p_camera_res_x_ = params[0].as_int(); }
     else if (params[0].get_name() == "camera_fov") { p_camera_fov_ = params[0].as_int(); }

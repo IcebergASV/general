@@ -20,6 +20,7 @@ find_package(tf2_geometry_msgs REQUIRED)
 find_package(visualization_msgs REQUIRED)
 find_package(rclcpp_lifecycle REQUIRED)
 find_package(lifecycle_msgs REQUIRED)
+find_package(yaml-cpp REQUIRED)
 
 include_directories(
     include
@@ -97,7 +98,8 @@ ament_target_dependencies(maneuvering_component
   "yolov8_msgs"
   "tf2"
   "tf2_geometry_msgs"
-  "rclcpp_lifecycle")
+  "rclcpp_lifecycle"
+  "yaml-cpp")
 rclcpp_components_register_nodes(maneuvering_component "comp_tasks::Maneuvering")
 set(node_plugins "comp_tasks::Maneuvering;$<TARGET_FILE:maneuvering_component>\n")
 install(TARGETS
@@ -122,6 +124,7 @@ target_link_libraries(maneuvering_composition
   task_component
   libtask_lib
   libbbox_calculations
+  yaml-cpp
 )
 
 add_library(mavros_repub_component SHARED src/mavros_repub_component.cpp)
@@ -178,7 +181,9 @@ ament_target_dependencies(task_component
   "tf2"
   "tf2_geometry_msgs"
   "rclcpp_lifecycle"
+  "yaml-cpp"
   )
+  target_link_libraries(task_component yaml-cpp)
 
 install(TARGETS
   task_component
