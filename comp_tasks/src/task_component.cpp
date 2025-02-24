@@ -1,6 +1,7 @@
 #include "comp_tasks/task_component.hpp"
 #include "comp_tasks/lib/bbox_calculations.hpp"
 #include "comp_tasks/lib/task_lib.hpp"
+#include <yaml-cpp/yaml.h>
 
 namespace comp_tasks
 {
@@ -19,25 +20,24 @@ namespace comp_tasks
   {
     rcl_interfaces::msg::SetParametersResult result;
 
-    if (params[0].get_name() == "distance_to_move") { p_distance_to_move_ = params[0].as_double(); }
-    else if (params[0].get_name() == "angle_from_target") { p_angle_from_target_ = params[0].as_double(); }
-    else if (params[0].get_name() == "camera_res_x") { p_camera_res_x_ = params[0].as_int(); }
-    else if (params[0].get_name() == "camera_fov") { p_camera_fov_ = params[0].as_int(); }
-    else if (params[0].get_name() == "finish_lat") { p_finish_lat_ = params[0].as_double(); }
-    else if (params[0].get_name() == "finish_lon") { p_finish_lon_ = params[0].as_double(); }
-    else if (params[0].get_name() == "recovery_lat") { p_recovery_lat_ = params[0].as_double(); }
-    else if (params[0].get_name() == "recovery_lon") { p_recovery_lon_ = params[0].as_double(); }
-    else if (params[0].get_name() == "red_buoy_label") { p_red_buoy_str_ = params[0].as_string(); }
-    else if (params[0].get_name() == "finish_lon") { p_finish_lon_ = params[0].as_double(); }
-    else if (params[0].get_name() == "recovery_behaviour") { p_recovery_behaviour_ = params[0].as_string(); }
-    else if (params[0].get_name() == "time_to_pause_search") { p_time_to_pause_search_ = params[0].as_double(); }
-    else if (params[0].get_name() == "time_between_recovery_actions") { p_time_between_recovery_actions_ = params[0].as_double(); }
-    else if (params[0].get_name() == "time_to_stop_before_recovery") { p_time_to_stop_before_recovery_ = params[0].as_double(); }
-    else if (params[0].get_name() == "green_buoy_label") { p_green_buoy_str_ = params[0].as_string(); }
-    else if (params[0].get_name() == "second_red_buoy_label") { p_second_red_buoy_str_ = params[0].as_string(); }
-    else if (params[0].get_name() == "second_green_buoy_label") { p_second_green_buoy_str_ = params[0].as_string(); }
-    else if (params[0].get_name() == "frame_stack_size") { p_frame_stack_size_ = params[0].as_int(); }
-    else if (params[0].get_name() == "bbox_selection") { p_bbox_selection_ = params[0].as_string(); }
+    if (params[0].get_name() == "distance_to_move") { p_distance_to_move_ = params[0].as_double(); updateYamlParam("distance_to_move", params[0].as_double());}
+    else if (params[0].get_name() == "angle_from_target") { p_angle_from_target_ = params[0].as_double(); updateYamlParam("angle_from_target", params[0].as_double());}
+    else if (params[0].get_name() == "camera_res_x") { p_camera_res_x_ = params[0].as_int(); updateYamlParam("camera_res_x", params[0].as_int());}
+    else if (params[0].get_name() == "camera_fov") { p_camera_fov_ = params[0].as_int(); updateYamlParam("camera_fov", params[0].as_int());}
+    else if (params[0].get_name() == "finish_lat") { p_finish_lat_ = params[0].as_double(); updateYamlParam("finish_lat", params[0].as_double());}
+    else if (params[0].get_name() == "finish_lon") { p_finish_lon_ = params[0].as_double(); updateYamlParam("finish_lon", params[0].as_double());}
+    else if (params[0].get_name() == "recovery_lat") { p_recovery_lat_ = params[0].as_double(); updateYamlParam("recovery_lat", params[0].as_double());}
+    else if (params[0].get_name() == "recovery_lon") { p_recovery_lon_ = params[0].as_double(); updateYamlParam("recovery_lon", params[0].as_double());}
+    else if (params[0].get_name() == "red_buoy_label") { p_red_buoy_str_ = params[0].as_string(); updateYamlParam("red_buoy_label", params[0].as_string());}
+    else if (params[0].get_name() == "recovery_behaviour") { p_recovery_behaviour_ = params[0].as_string(); updateYamlParam("as_string", params[0].as_string());}
+    else if (params[0].get_name() == "time_to_pause_search") { p_time_to_pause_search_ = params[0].as_double(); updateYamlParam("time_to_pause_search", params[0].as_double());}
+    else if (params[0].get_name() == "time_between_recovery_actions") { p_time_between_recovery_actions_ = params[0].as_double(); updateYamlParam("recovery_lat", params[0].as_double());}
+    else if (params[0].get_name() == "time_to_stop_before_recovery") { p_time_to_stop_before_recovery_ = params[0].as_double(); updateYamlParam("time_to_stop_before_recovery", params[0].as_double());}
+    else if (params[0].get_name() == "green_buoy_label") { p_green_buoy_str_ = params[0].as_string(); updateYamlParam("green_buoy_label", params[0].as_string());}
+    else if (params[0].get_name() == "second_red_buoy_label") { p_second_red_buoy_str_ = params[0].as_string(); updateYamlParam("second_red_buoy_label", params[0].as_string());}
+    else if (params[0].get_name() == "second_green_buoy_label") { p_second_green_buoy_str_ = params[0].as_string(); updateYamlParam("second_green_buoy_label", params[0].as_string());}
+    else if (params[0].get_name() == "frame_stack_size") { p_frame_stack_size_ = params[0].as_int(); updateYamlParam("frame_stack_size", params[0].as_int());}
+    else if (params[0].get_name() == "bbox_selection") { p_bbox_selection_ = params[0].as_string(); updateYamlParam("bbox_selection", params[0].as_string());}
     else {
       result.successful = false;
       return result;
@@ -130,6 +130,14 @@ namespace comp_tasks
   {
     current_global_pose_ = *msg;
     RCLCPP_DEBUG(this->get_logger(), "Latitude: %f, Longitude: %f", current_global_pose_.latitude, current_global_pose_.longitude);
+  }
+
+  bool Task::isActive() {
+    auto state = this->get_current_state();
+    if (state.id() == lifecycle_msgs::msg::State::PRIMARY_STATE_ACTIVE) {
+        return true;
+    }
+    return false;
   }
 
   void Task::localPoseCallback(const geometry_msgs::msg::PoseStamped::SharedPtr msg)
