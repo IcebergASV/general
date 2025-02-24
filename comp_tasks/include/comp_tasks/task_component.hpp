@@ -18,6 +18,8 @@
 #include "rclcpp_lifecycle/lifecycle_node.hpp"
 #include <fstream>
 #include <yaml-cpp/yaml.h>
+#include <filesystem>
+#include <lifecycle_msgs/msg/state.hpp>
 
 using std::placeholders::_1;
 using namespace std::chrono_literals;
@@ -45,6 +47,7 @@ protected:
     void publishLocalWP(double x, double y);
     void setTimerDuration(double duration);
     void onTimerExpired();
+    bool isActive();
     virtual void executeRecoveryBehaviour();
     void signalTaskFinish(); // TODO
     virtual void taskLogic(const yolov8_msgs::msg::DetectionArray& detections) = 0;
@@ -122,33 +125,54 @@ protected:
       RCLCPP_INFO(this->get_logger(), param_log_output.c_str()); 
       return;
     }
+
     template <typename T>
-    void updateYamlParam(const std::string &nodeName, const std::string &paramName, T newValue, const std::string &filePath) {
-      try {
-          // Load the YAML file
-          YAML::Node config = YAML::LoadFile(filePath);
-    
-          // Check if the node and parameter exist
-          if (!config[nodeName] || !config[nodeName]["ros__parameters"] || !config[nodeName]["ros__parameters"][paramName]) {
-              std::cerr << "Error: Node or parameter not found in YAML file." << std::endl;
-              return;
-          }
-    
-          // Update the parameter value
-          config[nodeName]["ros__parameters"][paramName] = newValue;
-    
-          // Write back to file
-          std::ofstream outFile(filePath);
-          if (!outFile) {
-              std::cerr << "Error: Unable to open file for writing." << std::endl;
-              return;
-          }
-          outFile << config;
-          outFile.close();
-    
-          std::cout << "Successfully updated " << paramName << " in " << nodeName << " node." << std::endl;
-      } catch (const std::exception &e) {
-          std::cerr << "Exception: " << e.what() << std::endl;
+    void updateYamlParam(const std::string &paramName, T newValue) {
+      if (isActive()){
+        try {
+            std::string nodeName = "/" + std::string(this->get_name());
+            std::filesystem::path current_file(__FILE__); 
+            std::filesystem::path package_path = current_file.parent_path().parent_path().parent_path();
+
+            std::string file_path = package_path.string() + "/config/params.yaml";
+
+            // Load the YAML file
+            YAML::Node config = YAML::LoadFile(file_path);
+      
+            // Check if the node and parameter exist
+            if (!config[nodeName]) {
+                std::cerr << "Error: Node " << nodeName << " not found in YAML file." << std::endl;
+                return;
+            }
+
+            // Check if the node and parameter exist
+            if (!config[nodeName] || !config[nodeName]["ros__parameters"] || !config[nodeName]["ros__parameters"][paramName]) {
+                std::cerr << "Error: Parameter " << paramName << " not found in YAML file." << std::endl;
+                return;
+            }
+      
+              // Update the parameter value
+            if constexpr (std::is_same_v<T, double>) {
+                std::ostringstream oss;
+                oss << std::fixed << std::setprecision(3) << newValue;
+                config[nodeName]["ros__parameters"][paramName] = oss.str();
+            } else {
+                config[nodeName]["ros__parameters"][paramName] = newValue;
+            }
+      
+            // Write back to file
+            std::ofstream outFile(file_path);
+            if (!outFile) {
+                std::cerr << "Error: Unable to open file for writing." << std::endl;
+                return;
+            }
+            outFile << config;
+            outFile.close();
+      
+            std::cout << "Successfully updated " << paramName << " in " << nodeName << " node." << std::endl;
+        } catch (const std::exception &e) {
+            std::cerr << "Exception: " << e.what() << std::endl;
+        }
       }
     }
 
