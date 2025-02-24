@@ -23,9 +23,6 @@ private:
     void taskLogic(const yolov8_msgs::msg::DetectionArray& detections) override;
     void checkIfFinished();
     rclcpp::node_interfaces::OnSetParametersCallbackHandle::SharedPtr on_set_parameters_callback_handle_;
-
-   // std::vector<std::reference_wrapper<std::string>> p_left_gate_names_;
-   // std::vector<std::reference_wrapper<std::string>> p_right_gate_names_;
     
     int p_max_consec_recoveries_;
 
