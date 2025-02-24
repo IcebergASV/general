@@ -18,10 +18,10 @@
     bbox_selection: INNERMOST
 /maneuvering:
   ros__parameters:
-    distance_to_move: 30.000
+    distance_to_move: 30.0
     angle_from_target: 20.0
     camera_res_x: 640
-    camera_fov: 71
+    camera_fov: 70
     recovery_behaviour: STOP
     time_to_pause_search: 3.0
     time_between_recovery_actions: 2.0
