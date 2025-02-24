@@ -169,7 +169,7 @@ protected:
             outFile << config;
             outFile.close();
       
-            std::cout << "Successfully updated " << paramName << " in " << nodeName << " node." << std::endl;
+            std::cout << "Successfully updated " << paramName << " to "<< newValue << std::endl;
         } catch (const std::exception &e) {
             std::cerr << "Exception: " << e.what() << std::endl;
         }
