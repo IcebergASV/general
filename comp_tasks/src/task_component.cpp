@@ -135,10 +135,7 @@ namespace comp_tasks
   bool Task::isActive() {
     auto state = this->get_current_state();
     if (state.id() == lifecycle_msgs::msg::State::PRIMARY_STATE_ACTIVE) {
-        RCLCPP_INFO(this->get_logger(), "The node is ACTIVE.");
         return true;
-    } else {
-        RCLCPP_INFO(this->get_logger(), "The node is NOT active. Current state: %s", state.label().c_str());
     }
     return false;
   }
