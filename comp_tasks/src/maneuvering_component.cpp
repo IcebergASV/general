@@ -11,10 +11,6 @@ namespace comp_tasks
     Maneuvering::getParam<int>("max_consec_recoveries", p_max_consec_recoveries_, 0, "Maxmimum consecutive recovery attempts before task completes");
     on_set_parameters_callback_handle_ = this->add_on_set_parameters_callback(std::bind(&Maneuvering::param_callback, this, std::placeholders::_1));
     status_ = States::STOPPED;
-
-    //Set initial gate detection (start point, so that lat/long varaiables for last gate are initialized)
-    p_left_gate_names_ = {p_green_buoy_str_, p_second_green_buoy_str_};
-    p_right_gate_names_ = {p_red_buoy_str_, p_second_red_buoy_str_};
   }
 
   rcl_interfaces::msg::SetParametersResult Maneuvering::param_callback(const std::vector<rclcpp::Parameter> &params)
@@ -56,7 +52,7 @@ namespace comp_tasks
       RCLCPP_INFO(this->get_logger(), "Sent recovery waypoint");
     }
     else if (p_recovery_behaviour_ == "RECOVERY_GATE") {  //Added Gate recovery behaviour
-      publishLocalWP(p_gate_x_, p_gate_y_);
+      publishLocalWP(gate_x_, gate_y_);
       RCLCPP_INFO(this->get_logger(), "Sent recovery waypoint for last gate");
     }
 
@@ -84,14 +80,10 @@ namespace comp_tasks
             //get Coords associated with gate
             geometry_msgs::msg::Point p = publishWPTowardsDetections(detections);
 
-            //If gate is detected
-            if (bbox_calculations::hasGate(detections, p_left_gate_names_, p_right_gate_names_))
-            { //Store set waypoint, should look at making this a vector perhaps for lat and long, and push back places, using stack structure?
-              p_gate_x_ = p.x;
-              p_gate_y_ = p.y;
-
-              //Log lat/long coords in class members
-              RCLCPP_DEBUG(this->get_logger(), "Has gate, recording lat/long");
+            if (bbox_calculations::hasGate(detections, p_red_buoy_str_, p_second_red_buoy_str_, p_green_buoy_str_, p_second_green_buoy_str_))
+            {
+              gate_x_ = p.x;
+              gate_y_ = p.y;
             }
 
             publishSearchStatus("Found");
@@ -116,14 +108,10 @@ namespace comp_tasks
             //get Coords associated with gate
             geometry_msgs::msg::Point p = publishWPTowardsDetections(detections);
 
-            //If gate is detected
-            if (bbox_calculations::hasGate(detections, p_left_gate_names_, p_right_gate_names_))
-            { //Store set waypoint, should look at making this a vector perhaps for lat and long, and push back places, using stack structure?
-              p_gate_x_ = p.x;
-              p_gate_y_ = p.y;
-
-              //Log lat/long coords in class members
-              RCLCPP_DEBUG(this->get_logger(), "Has gate, recording lat/long");
+            if (bbox_calculations::hasGate(detections, p_red_buoy_str_, p_second_red_buoy_str_, p_green_buoy_str_, p_second_green_buoy_str_))
+            {
+              gate_x_ = p.x;
+              gate_y_ = p.y;
             }
 
             publishSearchStatus("Found");
@@ -154,13 +142,10 @@ namespace comp_tasks
             geometry_msgs::msg::Point p = publishWPTowardsDetections(detections);
 
             //If gate is detected
-            if (bbox_calculations::hasGate(detections, p_left_gate_names_, p_right_gate_names_))
-            { //Store set waypoint, should look at making this a vector perhaps for lat and long, and push back places, using stack structure?
-              p_gate_x_ = p.x;
-              p_gate_y_ = p.y;
-
-              //Log lat/long coords in class members
-              RCLCPP_DEBUG(this->get_logger(), "Has gate, recording lat/long");
+            if (bbox_calculations::hasGate(detections, p_red_buoy_str_, p_second_red_buoy_str_, p_green_buoy_str_, p_second_green_buoy_str_))
+            {
+              gate_x_ = p.x;
+              gate_y_ = p.y;
             }
 
               RCLCPP_DEBUG(this->get_logger(), "Has desired detections");
