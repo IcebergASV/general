@@ -70,14 +70,8 @@ namespace comp_tasks
     std::vector<geometry_msgs::msg::Point> points = task_lib::generateCirclePoints(current_local_pose_.pose.position, p_buoy_circling_radius_, p_num_pnts_on_semicircle_*2);
     route = task_lib::createSemicirce(points, last_seen_bay_pose_.pose.position);
 
-    bool left;
-    if (bbox_calculations::isLeft(detections, p_blue_buoy_str_, p_camera_fov_, p_camera_res_x_))
-    {
-      left = true;
-    }
-    else{
-      left = false;
-    }
+    bool left = bbox_calculations::isLeft(detections, p_blue_buoy_str_, p_camera_fov_, p_camera_res_x_);
+
     task_lib::createQuarterCircle(route, task_lib::quaternionToHeading(current_local_pose_.pose.orientation), left);
 
     route.push_back(last_seen_bay_pose_.pose.position);
@@ -108,6 +102,26 @@ namespace comp_tasks
     wp_cnt_++;
   }
 
+  void Speed::handleGateDetections(const yolov8_msgs::msg::DetectionArray& detections)
+  {
+    if (bbox_calculations::hasGate(detections, p_red_buoy_str_, p_second_red_buoy_str_, p_green_buoy_str_, p_second_green_buoy_str_))
+    {
+      last_seen_bay_pose_ = current_local_pose_;
+      calculated_route_ = calculateRouteFromGates(detections);
+    }
+    publishWPTowardsGate(detections);
+    setTimerDuration(p_max_time_between_bay_detections_);
+  }
+
+  void Speed::handleBlueBuoyDetections(const yolov8_msgs::msg::DetectionArray& detections)
+  {
+    last_seen_blue_buoy_pose_ = current_local_pose_;
+    publishWPTowardsLargestTarget(detections, p_blue_buoy_str_, p_buoy_offset_angle_);
+    continue_past_buoys_pnt_ = getWPTowardsLargestTarget(detections, p_blue_buoy_str_, p_buoy_offset_angle_, p_min_dist_from_bay_b4_return_);
+    setTimerDuration(p_max_time_between_buoy_detections_);
+    return_route_ = calculateReturnRoute(detections);
+  }
+
   void Speed::taskLogic(const yolov8_msgs::msg::DetectionArray& detections)
   {
     if (in_guided_)
@@ -116,11 +130,10 @@ namespace comp_tasks
       {
         case States::SENDING_START_PNT:
         {
-          RCLCPP_DEBUG(this->get_logger(), "SENDING_START_PNT"); 
-          publishBehaviourStatus("Sending start point");
-
           if (p_use_start_point_)
           {
+            RCLCPP_DEBUG(this->get_logger(), "SENDING_START_PNT"); 
+            publishBehaviourStatus("Sending start point");
             publishStartPoint();
           }
 
@@ -137,13 +150,7 @@ namespace comp_tasks
 
           if (bbox_calculations::hasDesiredDetections(detections, {p_red_buoy_str_, p_green_buoy_str_, p_second_red_buoy_str_, p_second_green_buoy_str_}))
           {
-            last_seen_bay_pose_ = current_local_pose_;
-            if (bbox_calculations::hasGate(detections, p_red_buoy_str_, p_second_red_buoy_str_, p_green_buoy_str_, p_second_green_buoy_str_))
-            {
-              calculated_route_ = calculateRouteFromGates(detections);
-            }
-            publishWPTowardsGate(detections);
-            setTimerDuration(p_max_time_between_bay_detections_);
+            handleGateDetections(detections);
             status_ = States::MANEUVER_THRU_BAY;
           }
           else if(timer_expired_) // Failed to find bay
@@ -156,18 +163,19 @@ namespace comp_tasks
         {
           if (bbox_calculations::hasDesiredDetections(detections, {p_red_buoy_str_, p_green_buoy_str_, p_second_red_buoy_str_, p_second_green_buoy_str_}))
           {
-            last_seen_bay_pose_ = current_local_pose_;
-            if (bbox_calculations::hasGate(detections, p_red_buoy_str_, p_second_red_buoy_str_, p_green_buoy_str_, p_second_green_buoy_str_))
-            {
-              calculated_route_ = calculateRouteFromGates(detections);
-            }
-            publishWPTowardsGate(detections);
-            setTimerDuration(p_max_time_between_bay_detections_);
+            handleGateDetections(detections);
           }
           if(timer_expired_)
           {
-            sendNextWP(calculated_route_);
-            status_ = States::CALCULATED_ROUTE;
+            if (calculated_route_.size() == 0)
+            {
+              signalTaskFinish();
+            }
+            else
+            {
+              sendNextWP(calculated_route_);
+              status_ = States::CALCULATED_ROUTE;
+            }
           }
           break;
         }
@@ -175,10 +183,7 @@ namespace comp_tasks
         {
           if (bbox_calculations::hasDesiredDetections(detections, {p_blue_buoy_str_}))
           {
-            last_seen_blue_buoy_pose_ = current_local_pose_;
-            publishWPTowardsLargestTarget(detections, p_blue_buoy_str_, p_buoy_offset_angle_);
-            continue_past_buoys_pnt_ = getWPTowardsLargestTarget(detections, p_blue_buoy_str_, p_buoy_offset_angle_, p_min_dist_from_bay_b4_return_);
-            setTimerDuration(p_max_time_between_buoy_detections_);
+            handleBlueBuoyDetections(detections);
             status_ = States::PASSING_BUOY;
           }
           else
@@ -201,11 +206,7 @@ namespace comp_tasks
         {
           if (bbox_calculations::hasDesiredDetections(detections, {p_blue_buoy_str_}))
           {
-            last_seen_blue_buoy_pose_ = current_local_pose_;
-            publishWPTowardsLargestTarget(detections, p_blue_buoy_str_, p_buoy_offset_angle_);
-            continue_past_buoys_pnt_ = getWPTowardsLargestTarget(detections, p_blue_buoy_str_, p_buoy_offset_angle_, p_min_dist_from_bay_b4_return_);
-            setTimerDuration(p_max_time_between_buoy_detections_);
-            calculateReturnRoute(detections);
+            handleBlueBuoyDetections(detections);
           }
           else if(timer_expired_)
           {
@@ -226,10 +227,7 @@ namespace comp_tasks
         {
           if (bbox_calculations::hasDesiredDetections(detections, {p_blue_buoy_str_}))
           {
-            last_seen_blue_buoy_pose_ = current_local_pose_;
-            publishWPTowardsLargestTarget(detections, p_blue_buoy_str_, p_buoy_offset_angle_);
-            continue_past_buoys_pnt_ = getWPTowardsLargestTarget(detections, p_blue_buoy_str_, p_buoy_offset_angle_, p_min_dist_from_bay_b4_return_);
-            setTimerDuration(p_max_time_between_buoy_detections_);
+            handleBlueBuoyDetections(detections);
             status_ = States::PASSING_BUOY;
           }
           else if (isFarEnoughFromBay())

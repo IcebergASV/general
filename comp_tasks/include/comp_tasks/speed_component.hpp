@@ -23,6 +23,8 @@ private:
     void sendNextWP(std::vector<geometry_msgs::msg::Point> route);
     std::vector<geometry_msgs::msg::Point> calculateReturnRoute(const yolov8_msgs::msg::DetectionArray& detections);
     std::vector<geometry_msgs::msg::Point> calculateRouteFromGates(const yolov8_msgs::msg::DetectionArray& detections);
+    void handleBlueBuoyDetections(const yolov8_msgs::msg::DetectionArray& detections);
+    void handleGateDetections(const yolov8_msgs::msg::DetectionArray& detections);
     double getDistFromBay();
     void continuePastBuoy();
     bool isFarEnoughFromBay();
