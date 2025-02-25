@@ -178,11 +178,16 @@ namespace comp_tasks
           RCLCPP_DEBUG(this->get_logger(), "MANEUVER_THRU_BAY"); 
           publishStateStatus("MANEUVER_THRU_BAY");
           publishSearchStatus("Searching for Gates");
-          if (bbox_calculations::hasDesiredDetections(detections, {p_red_buoy_str_, p_green_buoy_str_, p_second_red_buoy_str_, p_second_green_buoy_str_}))
+          if(bbox_calculations::hasDesiredDetections(detections, {p_blue_buoy_str_}))
+          {
+            handleBlueBuoyDetections(detections);
+            status_ = States::PASSING_BUOY;
+          }
+          else if (bbox_calculations::hasDesiredDetections(detections, {p_red_buoy_str_, p_green_buoy_str_, p_second_red_buoy_str_, p_second_green_buoy_str_}))
           {
             handleGateDetections(detections);
           }
-          if(timer_expired_)
+          else if(timer_expired_)
           {
             if (calculated_route_.size() == 0)
             {
