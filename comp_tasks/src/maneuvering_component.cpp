@@ -67,6 +67,15 @@ namespace comp_tasks
   {
     geometry_msgs::msg::Point p = publishWPTowardsGate(detections);
 
+    if (p_time_to_pause_search_ != 0.0)
+    {
+      setTimerDuration(p_time_to_pause_search_);
+    }
+    else
+    {
+      timer_expired_ = true;
+    }
+
     if (bbox_calculations::hasGate(detections, p_red_buoy_str_, p_second_red_buoy_str_, p_green_buoy_str_, p_second_green_buoy_str_))
     {
       gate_x_ = p.x;
@@ -134,6 +143,8 @@ namespace comp_tasks
             if (bbox_calculations::hasDesiredDetections(detections, target_class_names_))
             {
               handleDetections(detections);
+            }
+            else if (p_time_to_stop_before_recovery_ == 0)
             {
               executeRecoveryBehaviour();
               setTimerDuration(p_time_between_recovery_actions_);
