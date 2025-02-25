@@ -217,8 +217,17 @@ namespace task_lib
                 farther_points.push_back(circle_points[i]);
             }
         }
-        
-        return farther_points;
+        std::vector<geometry_msgs::msg::Point> ordered_points = farther_points;
+        std::sort(ordered_points.begin(), ordered_points.end(),
+        [&reference_point](const geometry_msgs::msg::Point& p1, const geometry_msgs::msg::Point& p2) {
+            // Compute angles relative to the reference point
+            double angle1 = std::atan2(p1.y - reference_point.y, p1.x - reference_point.x);
+            double angle2 = std::atan2(p2.y - reference_point.y, p2.x - reference_point.x);
+            
+            return angle1 > angle2;  // Sort in descending order (right to left)
+        });
+
+        return ordered_points;
     }
 
     std::vector<geometry_msgs::msg::Point> createQuarterCircle(
