@@ -178,11 +178,13 @@ bool hasGate(const yolov8_msgs::msg::DetectionArray& detection_array, std::strin
     else 
     {
       // found gate
+      RCLCPP_INFO(logger, "Detected a gate");
       return true;
     }
-    RCLCPP_INFO(logger, "Detected  a gate");
+    
 
   }
+  RCLCPP_INFO(logger, "No gate detected, left targets : %ld, right targets : %ld", left_targets.size(), right_targets.size());
   return false;
 }
 

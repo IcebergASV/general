@@ -111,6 +111,14 @@ namespace comp_tasks
     {
       last_seen_bay_pose_ = current_local_pose_;
       calculated_route_ = calculateRouteFromGates(detections);
+      publishSearchStatus("Found gate");
+    }
+    else if (bbox_calculations::hasDesiredDetections(detections, {p_red_buoy_str_, p_second_red_buoy_str_}))
+    {
+      publishSearchStatus("Found " + p_red_buoy_str_);
+    }
+    else{
+      publishSearchStatus("Found " + p_green_buoy_str_);
     }
     publishWPTowardsGate(detections);
     setTimerDuration(p_max_time_between_bay_detections_);
@@ -119,6 +127,7 @@ namespace comp_tasks
   void Speed::handleBlueBuoyDetections(const yolov8_msgs::msg::DetectionArray& detections)
   {
     publishBehaviourStatus("Going towards blue buoy");
+    publishSearchStatus("Found " + p_blue_buoy_str_);
     last_seen_blue_buoy_pose_ = current_local_pose_;
     publishWPTowardsLargestTarget(detections, p_blue_buoy_str_, p_buoy_offset_angle_);
     continue_past_buoys_pnt_ = getWPTowardsLargestTarget(detections, p_blue_buoy_str_, p_buoy_offset_angle_, p_min_dist_from_bay_b4_return_);
