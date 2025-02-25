@@ -78,7 +78,7 @@ namespace comp_tasks
             node_name_ = "docking";
             break;
         case 's':
-            node_name_ = "speed_challenge";
+            node_name_ = "speed";
             break;
         default:
         {
@@ -167,16 +167,28 @@ namespace comp_tasks
     }
   }
 
-  void TaskController::configureNextTask() // TODO add error handling
+  void TaskController::configureNextTask() 
   {
-    init(node_name_);
-
-    if (!change_state(lifecycle_msgs::msg::Transition::TRANSITION_CONFIGURE)) {
-      return;
-    }
-    if (!get_state()) {
-      return;
-    }
+      try {
+          init(node_name_);
+  
+          if (!change_state(lifecycle_msgs::msg::Transition::TRANSITION_CONFIGURE)) {
+              RCLCPP_ERROR(get_logger(), "Failed to configure node %s", node_name_.c_str());
+              return;
+          }
+  
+          unsigned int state = get_state();
+          if (state != lifecycle_msgs::msg::State::PRIMARY_STATE_INACTIVE) {
+              RCLCPP_ERROR(get_logger(), "Node %s is not in INACTIVE state after configuration. Current state: %u", node_name_.c_str(), state);
+              return;
+          }
+  
+          RCLCPP_INFO(get_logger(), "Node %s successfully configured and is in INACTIVE state.", node_name_.c_str());
+      } catch (const std::exception &e) {
+          RCLCPP_ERROR(get_logger(), "Exception caught during configureNextTask: %s", e.what());
+      } catch (...) {
+          RCLCPP_ERROR(get_logger(), "Unknown exception caught during configureNextTask");
+      }
   }
 
   void TaskController::runTask() // TODO add error handling
