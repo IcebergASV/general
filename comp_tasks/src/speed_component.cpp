@@ -135,6 +135,7 @@ namespace comp_tasks
         case States::SENDING_START_PNT:
         {
           RCLCPP_DEBUG(this->get_logger(), "SENDING_START_PNT"); 
+          publishStateStatus("SENDING_START_PNT");
           publishSearchStatus("");
           if (p_use_start_point_)
           {
@@ -150,6 +151,7 @@ namespace comp_tasks
         case States::GOING_TO_BAY:
         {
           RCLCPP_DEBUG(this->get_logger(), "GOING_TO_BAY"); 
+          publishStateStatus("GOING_TO_BAY");
           publishSearchStatus("Searching for Gates");
           if (bbox_calculations::hasDesiredDetections(detections, {p_red_buoy_str_, p_green_buoy_str_, p_second_red_buoy_str_, p_second_green_buoy_str_}))
           {
@@ -165,6 +167,7 @@ namespace comp_tasks
         case States::MANEUVER_THRU_BAY: 
         {
           RCLCPP_DEBUG(this->get_logger(), "MANEUVER_THRU_BAY"); 
+          publishStateStatus("MANEUVER_THRU_BAY");
           publishSearchStatus("Searching for Gates");
           if (bbox_calculations::hasDesiredDetections(detections, {p_red_buoy_str_, p_green_buoy_str_, p_second_red_buoy_str_, p_second_green_buoy_str_}))
           {
@@ -188,6 +191,7 @@ namespace comp_tasks
         case States::CALCULATED_ROUTE:
         {
           RCLCPP_DEBUG(this->get_logger(), "CALCULATED_ROUTE"); 
+          publishStateStatus("CALCULATED_ROUTE");
           publishSearchStatus("Searching for Blue Buoy");
           if (bbox_calculations::hasDesiredDetections(detections, {p_blue_buoy_str_}))
           {
@@ -214,6 +218,7 @@ namespace comp_tasks
         case States::PASSING_BUOY: 
         {
           RCLCPP_DEBUG(this->get_logger(), "PASSING_BUOY"); 
+          publishStateStatus("PASSING_BUOY");
           publishSearchStatus("Searching for Blue Buoy");
           if (bbox_calculations::hasDesiredDetections(detections, {p_blue_buoy_str_}))
           {
@@ -246,6 +251,7 @@ namespace comp_tasks
         case States::CONTINUE_PASSING_BUOY: 
         {
           RCLCPP_DEBUG(this->get_logger(), "CONTINUE_PASSING_BUOY"); 
+          publishStateStatus("CONTINUE_PASSING_BUOY");
           publishBehaviourStatus("Going min distance needed to 'pass buoy'");
           publishSearchStatus("Searching for Blue Buoy");
           if (bbox_calculations::hasDesiredDetections(detections, {p_blue_buoy_str_}))
@@ -272,6 +278,7 @@ namespace comp_tasks
         case States::RETURNING:
         {
           RCLCPP_DEBUG(this->get_logger(), "RETURNING"); 
+          publishStateStatus("RETURNING");
           publishSearchStatus("");
           if (wp_reached_)
           {

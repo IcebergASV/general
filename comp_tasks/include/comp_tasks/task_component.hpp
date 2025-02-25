@@ -43,6 +43,7 @@ protected:
     void publishStartPoint();
     void publishBehaviourStatus(std::string str_msg);
     void publishSearchStatus(std::string str_msg);
+    void publishStateStatus(std::string str_msg);
     geometry_msgs::msg::Point publishWPTowardsGate(const yolov8_msgs::msg::DetectionArray& detections);
     geometry_msgs::msg::PoseStamped publishWPTowardsLargestTarget(const yolov8_msgs::msg::DetectionArray& detections, std::string target_label, double angle);
     geometry_msgs::msg::PoseStamped getWPTowardsLargestTarget(const yolov8_msgs::msg::DetectionArray& detections, std::string target_label, double offset_angle, double dist);

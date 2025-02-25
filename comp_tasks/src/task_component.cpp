@@ -206,6 +206,12 @@ namespace comp_tasks
     msg.data = "BEHAVIOUR STATUS: " + str_msg;
     status_logger_pub_->publish(msg);
   }
+  void Task::publishStateStatus(std::string str_msg)
+  {
+    std_msgs::msg::String msg;
+    msg.data = "STATE: " + str_msg;
+    status_logger_pub_->publish(msg);
+  }
 
   void Task::publishWP(geometry_msgs::msg::PoseStamped wp)
   {
