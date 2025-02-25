@@ -26,15 +26,15 @@ namespace comp_tasks
     rcl_interfaces::msg::SetParametersResult result;
 
     if (Task::param_callback(params).successful) {}
-    else if (params[0].get_name() == "use_start_point") { p_use_start_point_ = params[0].as_int();}
-    else if (params[0].get_name() == "time_to_find_bay") { p_time_to_find_bay_ = params[0].as_double();}
-    else if (params[0].get_name() == "max_time_between_bay_detections") { p_max_time_between_bay_detections_ = params[0].as_double();}
-    else if (params[0].get_name() == "max_time_between_buoy_detections") { p_max_time_between_buoy_detections_ = params[0].as_double();}
-    else if (params[0].get_name() == "buoy_offset_angle") { p_buoy_offset_angle_ = params[0].as_double();}
-    else if (params[0].get_name() == "estimated_buoy_dist") { p_estimated_buoy_dist_ = params[0].as_double();}
-    else if (params[0].get_name() == "buoy_circling_radius") { p_buoy_circling_radius_ = params[0].as_double();}
-    else if (params[0].get_name() == "num_pnts_on_semicircle") { p_num_pnts_on_semicircle_ = params[0].as_int();}
-    else if (params[0].get_name() == "min_dist_from_bay_b4_return") { p_min_dist_from_bay_b4_return_ = params[0].as_double();}
+    else if (params[0].get_name() == "use_start_point") { p_use_start_point_ = params[0].as_int(); updateYamlParam("use_start_point", params[0].as_int());}
+    else if (params[0].get_name() == "time_to_find_bay") { p_time_to_find_bay_ = params[0].as_double(); updateYamlParam("time_to_find_bay", params[0].as_double());}
+    else if (params[0].get_name() == "max_time_between_bay_detections") { p_max_time_between_bay_detections_ = params[0].as_double(); updateYamlParam("max_time_between_bay_detections", params[0].as_double());}
+    else if (params[0].get_name() == "max_time_between_buoy_detections") { p_max_time_between_buoy_detections_ = params[0].as_double(); updateYamlParam("max_time_between_buoy_detections", params[0].as_double());} 
+    else if (params[0].get_name() == "buoy_offset_angle") { p_buoy_offset_angle_ = params[0].as_double(); updateYamlParam("buoy_offset_angle", params[0].as_double());}
+    else if (params[0].get_name() == "estimated_buoy_dist") { p_estimated_buoy_dist_ = params[0].as_double();updateYamlParam("estimated_buoy_dist", params[0].as_double());}
+    else if (params[0].get_name() == "buoy_circling_radius") { p_buoy_circling_radius_ = params[0].as_double(); updateYamlParam("buoy_circling_radius", params[0].as_double());}
+    else if (params[0].get_name() == "num_pnts_on_semicircle") { p_num_pnts_on_semicircle_ = params[0].as_int(); updateYamlParam("num_pnts_on_semicircle", params[0].as_int());}
+    else if (params[0].get_name() == "min_dist_from_bay_b4_return") { p_min_dist_from_bay_b4_return_ = params[0].as_double(); updateYamlParam("min_dist_from_bay_b4_return", params[0].as_double());}
     else {
       RCLCPP_ERROR(this->get_logger(), "Invalid Param speed: %s", params[0].get_name().c_str());
       result.successful = false;

@@ -31,15 +31,16 @@ namespace comp_tasks
     else if (params[0].get_name() == "start_lat") { p_start_lat_ = params[0].as_double(); updateYamlParam("start_lat", params[0].as_double());}
     else if (params[0].get_name() == "start_lon") { p_start_lon_ = params[0].as_double(); updateYamlParam("start_lon", params[0].as_double());}
     else if (params[0].get_name() == "red_buoy_label") { p_red_buoy_str_ = params[0].as_string(); updateYamlParam("red_buoy_label", params[0].as_string());}
-    else if (params[0].get_name() == "recovery_behaviour") { p_recovery_behaviour_ = params[0].as_string(); updateYamlParam("as_string", params[0].as_string());}
+    else if (params[0].get_name() == "recovery_behaviour") { p_recovery_behaviour_ = params[0].as_string(); updateYamlParam("recovery_behaviour", params[0].as_string());}
     else if (params[0].get_name() == "time_to_pause_search") { p_time_to_pause_search_ = params[0].as_double(); updateYamlParam("time_to_pause_search", params[0].as_double());}
-    else if (params[0].get_name() == "time_between_recovery_actions") { p_time_between_recovery_actions_ = params[0].as_double(); updateYamlParam("recovery_lat", params[0].as_double());}
+    else if (params[0].get_name() == "time_between_recovery_actions") { p_time_between_recovery_actions_ = params[0].as_double(); updateYamlParam("time_between_recovery_actions", params[0].as_double());}
     else if (params[0].get_name() == "time_to_stop_before_recovery") { p_time_to_stop_before_recovery_ = params[0].as_double(); updateYamlParam("time_to_stop_before_recovery", params[0].as_double());}
     else if (params[0].get_name() == "green_buoy_label") { p_green_buoy_str_ = params[0].as_string(); updateYamlParam("green_buoy_label", params[0].as_string());}
     else if (params[0].get_name() == "second_red_buoy_label") { p_second_red_buoy_str_ = params[0].as_string(); updateYamlParam("second_red_buoy_label", params[0].as_string());}
     else if (params[0].get_name() == "second_green_buoy_label") { p_second_green_buoy_str_ = params[0].as_string(); updateYamlParam("second_green_buoy_label", params[0].as_string());}
-    else if (params[0].get_name() == "blue_buoy_label") { p_blue_buoy_str_ = params[0].as_string(); }
-    else if (params[0].get_name() == "second_blue_buoy_label") { p_second_blue_buoy_str_ = params[0].as_string(); }    else if (params[0].get_name() == "frame_stack_size") { p_frame_stack_size_ = params[0].as_int(); updateYamlParam("frame_stack_size", params[0].as_int());}
+    else if (params[0].get_name() == "blue_buoy_label") { p_blue_buoy_str_ = params[0].as_string(); updateYamlParam("blue_buoy_label", params[0].as_string());}
+    else if (params[0].get_name() == "second_blue_buoy_label") { p_second_blue_buoy_str_ = params[0].as_string(); updateYamlParam("second_blue_buoy_label", params[0].as_string());}    
+    else if (params[0].get_name() == "frame_stack_size") { p_frame_stack_size_ = params[0].as_int(); updateYamlParam("frame_stack_size", params[0].as_int());}
     else if (params[0].get_name() == "bbox_selection") { p_bbox_selection_ = params[0].as_string(); updateYamlParam("bbox_selection", params[0].as_string());}
     else {
       result.successful = false;
