@@ -20,31 +20,6 @@ namespace comp_tasks
   {
     rcl_interfaces::msg::SetParametersResult result;
 
-<<<<<<< HEAD
-    if (params[0].get_name() == "distance_to_move") { p_distance_to_move_ = params[0].as_double(); }
-    else if (params[0].get_name() == "angle_from_target") { p_angle_from_target_ = params[0].as_double(); }
-    else if (params[0].get_name() == "camera_res_x") { p_camera_res_x_ = params[0].as_int(); }
-    else if (params[0].get_name() == "camera_fov") { p_camera_fov_ = params[0].as_int(); }
-    else if (params[0].get_name() == "finish_lat") { p_finish_lat_ = params[0].as_double(); }
-    else if (params[0].get_name() == "finish_lon") { p_finish_lon_ = params[0].as_double(); }
-    else if (params[0].get_name() == "recovery_lat") { p_recovery_lat_ = params[0].as_double(); }
-    else if (params[0].get_name() == "recovery_lon") { p_recovery_lon_ = params[0].as_double(); }
-    else if (params[0].get_name() == "start_lat") { p_start_lat_ = params[0].as_double(); }
-    else if (params[0].get_name() == "start_lon") { p_start_lon_ = params[0].as_double(); }
-    else if (params[0].get_name() == "red_buoy_label") { p_red_buoy_str_ = params[0].as_string(); }
-    else if (params[0].get_name() == "finish_lon") { p_finish_lon_ = params[0].as_double(); }
-    else if (params[0].get_name() == "recovery_behaviour") { p_recovery_behaviour_ = params[0].as_string(); }
-    else if (params[0].get_name() == "time_to_pause_search") { p_time_to_pause_search_ = params[0].as_double(); }
-    else if (params[0].get_name() == "time_between_recovery_actions") { p_time_between_recovery_actions_ = params[0].as_double(); }
-    else if (params[0].get_name() == "time_to_stop_before_recovery") { p_time_to_stop_before_recovery_ = params[0].as_double(); }
-    else if (params[0].get_name() == "green_buoy_label") { p_green_buoy_str_ = params[0].as_string(); }
-    else if (params[0].get_name() == "second_red_buoy_label") { p_second_red_buoy_str_ = params[0].as_string(); }
-    else if (params[0].get_name() == "second_green_buoy_label") { p_second_green_buoy_str_ = params[0].as_string(); }
-    else if (params[0].get_name() == "blue_buoy_label") { p_blue_buoy_str_ = params[0].as_string(); }
-    else if (params[0].get_name() == "second_blue_buoy_label") { p_second_blue_buoy_str_ = params[0].as_string(); }
-    else if (params[0].get_name() == "frame_stack_size") { p_frame_stack_size_ = params[0].as_int(); }
-    else if (params[0].get_name() == "bbox_selection") { p_bbox_selection_ = params[0].as_string(); }
-=======
     if (params[0].get_name() == "distance_to_move") { p_distance_to_move_ = params[0].as_double(); updateYamlParam("distance_to_move", params[0].as_double());}
     else if (params[0].get_name() == "angle_from_target") { p_angle_from_target_ = params[0].as_double(); updateYamlParam("angle_from_target", params[0].as_double());}
     else if (params[0].get_name() == "camera_res_x") { p_camera_res_x_ = params[0].as_int(); updateYamlParam("camera_res_x", params[0].as_int());}
@@ -53,6 +28,8 @@ namespace comp_tasks
     else if (params[0].get_name() == "finish_lon") { p_finish_lon_ = params[0].as_double(); updateYamlParam("finish_lon", params[0].as_double());}
     else if (params[0].get_name() == "recovery_lat") { p_recovery_lat_ = params[0].as_double(); updateYamlParam("recovery_lat", params[0].as_double());}
     else if (params[0].get_name() == "recovery_lon") { p_recovery_lon_ = params[0].as_double(); updateYamlParam("recovery_lon", params[0].as_double());}
+    else if (params[0].get_name() == "start_lat") { p_start_lat_ = params[0].as_double(); updateYamlParam("start_lat", params[0].as_double());}
+    else if (params[0].get_name() == "start_lon") { p_start_lon_ = params[0].as_double(); updateYamlParam("start_lon", params[0].as_double());}
     else if (params[0].get_name() == "red_buoy_label") { p_red_buoy_str_ = params[0].as_string(); updateYamlParam("red_buoy_label", params[0].as_string());}
     else if (params[0].get_name() == "recovery_behaviour") { p_recovery_behaviour_ = params[0].as_string(); updateYamlParam("as_string", params[0].as_string());}
     else if (params[0].get_name() == "time_to_pause_search") { p_time_to_pause_search_ = params[0].as_double(); updateYamlParam("time_to_pause_search", params[0].as_double());}
@@ -61,9 +38,9 @@ namespace comp_tasks
     else if (params[0].get_name() == "green_buoy_label") { p_green_buoy_str_ = params[0].as_string(); updateYamlParam("green_buoy_label", params[0].as_string());}
     else if (params[0].get_name() == "second_red_buoy_label") { p_second_red_buoy_str_ = params[0].as_string(); updateYamlParam("second_red_buoy_label", params[0].as_string());}
     else if (params[0].get_name() == "second_green_buoy_label") { p_second_green_buoy_str_ = params[0].as_string(); updateYamlParam("second_green_buoy_label", params[0].as_string());}
-    else if (params[0].get_name() == "frame_stack_size") { p_frame_stack_size_ = params[0].as_int(); updateYamlParam("frame_stack_size", params[0].as_int());}
+    else if (params[0].get_name() == "blue_buoy_label") { p_blue_buoy_str_ = params[0].as_string(); }
+    else if (params[0].get_name() == "second_blue_buoy_label") { p_second_blue_buoy_str_ = params[0].as_string(); }    else if (params[0].get_name() == "frame_stack_size") { p_frame_stack_size_ = params[0].as_int(); updateYamlParam("frame_stack_size", params[0].as_int());}
     else if (params[0].get_name() == "bbox_selection") { p_bbox_selection_ = params[0].as_string(); updateYamlParam("bbox_selection", params[0].as_string());}
->>>>>>> 76d223467b4b34b008793dff68b88e4fc63a7237
     else {
       result.successful = false;
       return result;
@@ -101,8 +78,8 @@ namespace comp_tasks
     Task::getParam<double>("finish_lon", p_finish_lon_, 0.0, "Finish longitude");
     Task::getParam<double>("recovery_lat", p_recovery_lat_, 0.0, "Recovery latitude");
     Task::getParam<double>("recovery_lon", p_recovery_lon_, 0.0, "Recovery longitude");
-    Task::getParam<double>("start_lat", p_start_lat_, 0.0, "Starting latitude");
-    Task::getParam<double>("start_lon", p_start_lon_, 0.0, "Starting longitude");
+    Task::getParam<double>("start_lat", p_start_lat_, 0.0, "Start latitude");
+    Task::getParam<double>("start_lon", p_start_lon_, 0.0, "Start longitude");
     Task::getStringParam("recovery_behaviour", p_recovery_behaviour_, "STOP", "Recovery behaviour");
     Task::getParam<double>("time_to_pause_search", p_time_to_pause_search_, 0.0, "Miliseconds to wait after finding a target before starting to search for new ones");
     Task::getParam<double>("time_between_recovery_actions", p_time_between_recovery_actions_, 0.0, "Miliseconds between executing a recovery action (like sending a waypoint)");
@@ -229,64 +206,42 @@ namespace comp_tasks
     status_logger_pub_->publish(msg);
   }
 
+  void Task::publishWP(geometry_msgs::msg::PoseStamped wp)
+  {
+    if (wp.pose.position.x != 0 && wp.pose.position.y != 0)
+    {
+      local_wp_pub_->publish(wp);
+      wp_cnt_++;
+    }
+    else{
+      RCLCPP_WARN(this->get_logger(), "Waypoint Empty - not publishing"); 
+    }
+  }
+
   //Returns 0, 0 if no valid detections
   geometry_msgs::msg::Point Task::publishWPTowardsGate(const yolov8_msgs::msg::DetectionArray& detections)
   {
-    geometry_msgs::msg::Point point;
-
+    geometry_msgs::msg::PoseStamped wp;
     if (activated_){
       wp_reached_ = false;
-      //publishSearchStatus("Found");
       double angle = bbox_calculations::getAngleBetween2DiffTargets(detections, p_bbox_selection_, p_red_buoy_str_, p_second_red_buoy_str_,p_green_buoy_str_, p_second_green_buoy_str_, p_camera_fov_, p_camera_res_x_, p_angle_from_target_);
-      geometry_msgs::msg::PoseStamped wp = task_lib::relativePolarToLocalCoords(p_distance_to_move_, angle, current_local_pose_);
-      if (wp.pose.position.x != 0 && wp.pose.position.y != 0)
-      {
-        local_wp_pub_->publish(wp);
-        wp_cnt_++;
-        std::string str_cnt = std::to_string(wp_cnt_);
-        //publishBehaviourStatus("Heading to WP " + str_cnt);
-
-        //Modify the attributes
-        point.x = wp.pose.position.x;
-        point.y = wp.pose.position.y;
-        point.z = 0;
-      }
-      else{
-        RCLCPP_WARN(this->get_logger(), "Waypoint Empty - not publishing"); 
-      }
-
-      if (p_time_to_pause_search_ != 0.0) // TODO move out of task node to derived class
-      {
-        setTimerDuration(p_time_to_pause_search_);
-      }
-      else
-      {
-        timer_expired_ = true;
-      }
-      
+      wp = task_lib::relativePolarToLocalCoords(p_distance_to_move_, angle, current_local_pose_);
+      publishWP(wp);
     }
-
-    return point;
+    return wp.pose.position;
   }
 
   // negative angle is to the left of the target, positive angle is to the right of target
-    void Task::publishWPTowardsLargestTarget(const yolov8_msgs::msg::DetectionArray& detections, std::string target_label, double offset_angle)
+  geometry_msgs::msg::PoseStamped Task::publishWPTowardsLargestTarget(const yolov8_msgs::msg::DetectionArray& detections, std::string target_label, double offset_angle)
   {
+    geometry_msgs::msg::PoseStamped wp;
     if (activated_){
       wp_reached_ = false;
 
-      geometry_msgs::msg::PoseStamped wp = getWPTowardsLargestTarget(detections, target_label, offset_angle, p_distance_to_move_);
-      if (wp.pose.position.x != 0 && wp.pose.position.y != 0)
-      {
-        local_wp_pub_->publish(wp);
-        wp_cnt_++;
-        std::string str_cnt = std::to_string(wp_cnt_);
-        //publishBehaviourStatus("Heading to WP " + str_cnt);
-      }
-      else{
-        RCLCPP_WARN(this->get_logger(), "Waypoint Empty - not publishing"); 
-      }
+      wp = getWPTowardsLargestTarget(detections, target_label, offset_angle, p_distance_to_move_);
+      publishWP(wp);
     }
+    return wp;
   }
 
   geometry_msgs::msg::PoseStamped Task::getWPTowardsLargestTarget(const yolov8_msgs::msg::DetectionArray& detections, std::string target_label, double offset_angle, double dist) //TODO move to lib

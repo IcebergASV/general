@@ -43,11 +43,12 @@ protected:
     void publishStartPoint();
     void publishBehaviourStatus(std::string str_msg);
     void publishSearchStatus(std::string str_msg);
-    void publishWPTowardsGate(const yolov8_msgs::msg::DetectionArray& detections);
-    void publishWPTowardsLargestTarget(const yolov8_msgs::msg::DetectionArray& detections, std::string target_label, double angle);
+    geometry_msgs::msg::Point publishWPTowardsGate(const yolov8_msgs::msg::DetectionArray& detections);
+    geometry_msgs::msg::PoseStamped publishWPTowardsLargestTarget(const yolov8_msgs::msg::DetectionArray& detections, std::string target_label, double angle);
     geometry_msgs::msg::PoseStamped getWPTowardsLargestTarget(const yolov8_msgs::msg::DetectionArray& detections, std::string target_label, double offset_angle, double dist);
     void publishGlobalWP(double lat, double lon);
     void publishLocalWP(double x, double y);
+    void publishWP(geometry_msgs::msg::PoseStamped wp);
     void setTimerDuration(double duration);
     void onTimerExpired();
     bool isActive();
