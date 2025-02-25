@@ -11,6 +11,8 @@
 #include <tf2/LinearMath/Quaternion.h>
 #include <tf2/LinearMath/Matrix3x3.h>
 #include "geometry_msgs/msg/point.hpp"
+#include <fstream>
+#include <vector>
 namespace task_lib
 {
     rclcpp::Logger logger = rclcpp::get_logger("task_lib_logger");
@@ -23,7 +25,7 @@ namespace task_lib
     geometry_msgs::msg::PoseStamped relativePolarToLocalCoords(double radius, double angle, geometry_msgs::msg::PoseStamped local_pose);
     double quaternionToHeading(const geometry_msgs::msg::Quaternion q);
     geometry_msgs::msg::PoseStamped rel_to_local_cord_converter(const geometry_msgs::msg::PoseStamped &rel_pose, const geometry_msgs::msg::PoseStamped &local_pose);
-
+    void writePointsToCSV(const std::vector<geometry_msgs::msg::Point>& points, const std::string& filename);
     geographic_msgs::msg::GeoPoseStamped getGlobalWPMsg(double lat, double lon);
     geometry_msgs::msg::PoseStamped getLocalWPMsg(double x, double y);
     geometry_msgs::msg::Point polarToCartesian(double radius, double angle);

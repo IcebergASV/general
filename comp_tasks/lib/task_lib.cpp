@@ -198,13 +198,18 @@ namespace task_lib
         
         std::vector<size_t> indices(circle_points.size());
         std::iota(indices.begin(), indices.end(), 0);
+
+        int offset= 1;
+        if (circle_points.size() % 4 != 0) {
+            offset = 0;
+        }
         
-        std::nth_element(indices.begin(), indices.begin() + indices.size() / 2, indices.end(),
+        std::nth_element(indices.begin(), indices.begin() + (indices.size() / 2)-offset, indices.end(),
             [&distances](size_t i1, size_t i2) {
                 return distances[i1] < distances[i2];
             });
         
-        std::unordered_set<size_t> remove_indices(indices.begin(), indices.begin() + indices.size() / 2);
+        std::unordered_set<size_t> remove_indices(indices.begin(), indices.begin() + (indices.size() / 2)-offset);
         
         std::vector<geometry_msgs::msg::Point> farther_points;
         for (size_t i = 0; i < circle_points.size(); ++i) {
@@ -246,5 +251,27 @@ namespace task_lib
         }
         
         return quarter_circle;
+    }
+    void writePointsToCSV(const std::vector<geometry_msgs::msg::Point>& points, const std::string& filename)
+    {
+        std::ofstream file(filename);
+    
+        if (!file.is_open())
+        {
+            std::cerr << "Failed to open file: " << filename << std::endl;
+            return;
+        }
+    
+        // Write the header
+        file << "X,Y\n";
+    
+        // Write the points
+        for (const auto& point : points)
+        {
+            file << point.x << "," << point.y << "\n";
+        }
+    
+        file.close();
+        std::cout << "Points written to " << filename << std::endl;
     }
 }
