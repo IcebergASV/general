@@ -173,6 +173,7 @@ namespace comp_tasks
             }
             else
             {
+              wp_cnt_ = 0;
               sendNextWP(calculated_route_);
               status_ = States::CALCULATED_ROUTE;
             }
@@ -211,9 +212,18 @@ namespace comp_tasks
           else if(timer_expired_)
           {
             if (isFarEnoughFromBay())
-            {
-              sendNextWP(return_route_);
-              status_ = States::RETURNING;
+            { 
+              if (return_route_.size() == 0)
+              {
+                RCLCPP_WARN(this->get_logger(), "Return route empty, finishing");
+                signalTaskFinish();
+              }
+              else
+              {
+                wp_cnt_ = 0;
+                sendNextWP(return_route_);
+                status_ = States::RETURNING;
+              }
             }
             else
             {
@@ -232,8 +242,17 @@ namespace comp_tasks
           }
           else if (isFarEnoughFromBay())
           {
-            sendNextWP(return_route_);
-            status_ = States::RETURNING;
+            if (return_route_.size() == 0)
+            {
+              RCLCPP_WARN(this->get_logger(), "Return route empty, finishing");
+              signalTaskFinish();
+            }
+            else
+            {
+              wp_cnt_ = 0;
+              sendNextWP(return_route_);
+              status_ = States::RETURNING;
+            }
           }
           break;
         }
