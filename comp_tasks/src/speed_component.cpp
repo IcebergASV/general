@@ -15,6 +15,7 @@ namespace comp_tasks
     Speed::getParam<double>("buoy_circling_radius", p_buoy_circling_radius_, 0.0, "Circling radius for buoy on calculated route");
     Speed::getParam<int>("num_pnts_on_semicircle", p_num_pnts_on_semicircle_, 0, "How many waypoints to send to turn around buoy on calculated route");
     Speed::getParam<double>("min_dist_from_bay_b4_return", p_min_dist_from_bay_b4_return_, 0.0, "Minimum distance to travel from bay before executing return route");
+    Speed::getParam<int>("use_start_point", p_use_start_point_, 0, "Use start point or wait to detect gate");
     on_set_parameters_callback_handle_ = this->add_on_set_parameters_callback(std::bind(&Speed::param_callback, this, std::placeholders::_1));
     status_ = States::SENDING_START_PNT;
     wp_cnt_ = 0;
