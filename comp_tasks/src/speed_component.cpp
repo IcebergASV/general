@@ -95,8 +95,9 @@ namespace comp_tasks
     double dist = task_lib::distBetween2Pnts(last_seen_bay_pose_.pose.position, last_seen_blue_buoy_pose_.pose.position);
     return dist;
   }
-  void Speed::sendNextWP(std::vector<geometry_msgs::msg::Point> route)
+  void Speed::sendNextWP(std::vector<geometry_msgs::msg::Point> route, std::string route_name)
   {
+    std::string behaviour = "Pub WP " + std::to_string(wp_cnt_ + 1) + "/" + std::to_string(route.size() + 1) + " of route from " + route_name;    publishBehaviourStatus(behaviour);
     publishLocalWP(route[wp_cnt_].x, route[wp_cnt_].y);
     wp_reached_ = false;
     wp_cnt_++;
@@ -104,6 +105,7 @@ namespace comp_tasks
 
   void Speed::handleGateDetections(const yolov8_msgs::msg::DetectionArray& detections)
   {
+    publishBehaviourStatus("Going towards gate");
     if (bbox_calculations::hasGate(detections, p_red_buoy_str_, p_second_red_buoy_str_, p_green_buoy_str_, p_second_green_buoy_str_))
     {
       last_seen_bay_pose_ = current_local_pose_;
@@ -115,6 +117,7 @@ namespace comp_tasks
 
   void Speed::handleBlueBuoyDetections(const yolov8_msgs::msg::DetectionArray& detections)
   {
+    publishBehaviourStatus("Going towards blue buoy");
     last_seen_blue_buoy_pose_ = current_local_pose_;
     publishWPTowardsLargestTarget(detections, p_blue_buoy_str_, p_buoy_offset_angle_);
     continue_past_buoys_pnt_ = getWPTowardsLargestTarget(detections, p_blue_buoy_str_, p_buoy_offset_angle_, p_min_dist_from_bay_b4_return_);
@@ -130,10 +133,11 @@ namespace comp_tasks
       {
         case States::SENDING_START_PNT:
         {
+          RCLCPP_DEBUG(this->get_logger(), "SENDING_START_PNT"); 
+          publishSearchStatus("");
           if (p_use_start_point_)
           {
-            RCLCPP_DEBUG(this->get_logger(), "SENDING_START_PNT"); 
-            publishBehaviourStatus("Sending start point");
+            publishBehaviourStatus("Going to start point");
             publishStartPoint();
           }
 
@@ -144,10 +148,8 @@ namespace comp_tasks
 
         case States::GOING_TO_BAY:
         {
-          
-          RCLCPP_DEBUG(this->get_logger(), "Going to start point"); 
-          publishBehaviourStatus("Going to start point");
-
+          RCLCPP_DEBUG(this->get_logger(), "GOING_TO_BAY"); 
+          publishSearchStatus("Searching for Gates");
           if (bbox_calculations::hasDesiredDetections(detections, {p_red_buoy_str_, p_green_buoy_str_, p_second_red_buoy_str_, p_second_green_buoy_str_}))
           {
             handleGateDetections(detections);
@@ -161,6 +163,8 @@ namespace comp_tasks
         }
         case States::MANEUVER_THRU_BAY: 
         {
+          RCLCPP_DEBUG(this->get_logger(), "MANEUVER_THRU_BAY"); 
+          publishSearchStatus("Searching for Gates");
           if (bbox_calculations::hasDesiredDetections(detections, {p_red_buoy_str_, p_green_buoy_str_, p_second_red_buoy_str_, p_second_green_buoy_str_}))
           {
             handleGateDetections(detections);
@@ -174,7 +178,7 @@ namespace comp_tasks
             else
             {
               wp_cnt_ = 0;
-              sendNextWP(calculated_route_);
+              sendNextWP(calculated_route_, "gate");
               status_ = States::CALCULATED_ROUTE;
             }
           }
@@ -182,6 +186,8 @@ namespace comp_tasks
         }
         case States::CALCULATED_ROUTE:
         {
+          RCLCPP_DEBUG(this->get_logger(), "CALCULATED_ROUTE"); 
+          publishSearchStatus("Searching for Blue Buoy");
           if (bbox_calculations::hasDesiredDetections(detections, {p_blue_buoy_str_}))
           {
             handleBlueBuoyDetections(detections);
@@ -193,11 +199,12 @@ namespace comp_tasks
             {
               if (wp_cnt_ >= static_cast<int>(calculated_route_.size())) // might need to update this to actually check if we are in same position as where we started
               {
+                RCLCPP_INFO(this->get_logger(), "Reached all WPs in calculated route, finishing");
                 signalTaskFinish();
               }
               else 
               {
-                sendNextWP(calculated_route_);
+                sendNextWP(calculated_route_, "gate");
               }
             }
           }
@@ -205,6 +212,8 @@ namespace comp_tasks
         }
         case States::PASSING_BUOY: 
         {
+          RCLCPP_DEBUG(this->get_logger(), "PASSING_BUOY"); 
+          publishSearchStatus("Searching for Blue Buoy");
           if (bbox_calculations::hasDesiredDetections(detections, {p_blue_buoy_str_}))
           {
             handleBlueBuoyDetections(detections);
@@ -221,7 +230,7 @@ namespace comp_tasks
               else
               {
                 wp_cnt_ = 0;
-                sendNextWP(return_route_);
+                sendNextWP(return_route_, "blue buoy");
                 status_ = States::RETURNING;
               }
             }
@@ -235,6 +244,9 @@ namespace comp_tasks
         }
         case States::CONTINUE_PASSING_BUOY: 
         {
+          RCLCPP_DEBUG(this->get_logger(), "CONTINUE_PASSING_BUOY"); 
+          publishBehaviourStatus("Going min distance needed to 'pass buoy'");
+          publishSearchStatus("Searching for Blue Buoy");
           if (bbox_calculations::hasDesiredDetections(detections, {p_blue_buoy_str_}))
           {
             handleBlueBuoyDetections(detections);
@@ -250,7 +262,7 @@ namespace comp_tasks
             else
             {
               wp_cnt_ = 0;
-              sendNextWP(return_route_);
+              sendNextWP(return_route_, "blue_buoy");
               status_ = States::RETURNING;
             }
           }
@@ -258,15 +270,18 @@ namespace comp_tasks
         }
         case States::RETURNING:
         {
+          RCLCPP_DEBUG(this->get_logger(), "RETURNING"); 
+          publishSearchStatus("");
           if (wp_reached_)
           {
             if (wp_cnt_ >= static_cast<int>(return_route_.size())) // might need to update this to actually check if we are in same position as where we started
             {
+              RCLCPP_INFO(this->get_logger(), "Reached all WPs in return route, finishing");
               signalTaskFinish();
             }
             else 
             {
-              sendNextWP(return_route_);
+              sendNextWP(return_route_, "buoy");
             }
           }
           break;
