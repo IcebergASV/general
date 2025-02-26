@@ -261,6 +261,37 @@ namespace task_lib
         
         return quarter_circle;
     }
+
+    std::vector<geometry_msgs::msg::Point> translateSemicircle(
+        const std::vector<geometry_msgs::msg::Point>& semicircle,
+        const geometry_msgs::msg::Point& reference_point,
+        bool align_to_end) 
+    {
+        if (semicircle.empty()) {
+            return semicircle;
+        }
+    
+        // Determine which point to align with the reference point
+        geometry_msgs::msg::Point target_point = align_to_end ? semicircle.back() : semicircle.front();
+    
+        // Compute translation offsets
+        double dx = reference_point.x - target_point.x;
+        double dy = reference_point.y - target_point.y;
+    
+        // Apply translation to all points
+        std::vector<geometry_msgs::msg::Point> translated_semicircle;
+        translated_semicircle.reserve(semicircle.size());
+    
+        for (const auto& point : semicircle) {
+            geometry_msgs::msg::Point translated_point;
+            translated_point.x = point.x + dx;
+            translated_point.y = point.y + dy;
+            translated_point.z = point.z; // Assuming Z remains unchanged
+            translated_semicircle.push_back(translated_point);
+        }
+    
+        return translated_semicircle;
+    }
     void writePointsToCSV(const std::vector<geometry_msgs::msg::Point>& points, const std::string& filename)
     {
         std::ofstream file(filename);

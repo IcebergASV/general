@@ -17,7 +17,7 @@ namespace comp_tasks
     Speed::getParam<double>("min_dist_from_bay_b4_return", p_min_dist_from_bay_b4_return_, 0.0, "Minimum distance to travel from bay before executing return route");
     Speed::getParam<int>("use_start_point", p_use_start_point_, 0, "Use start point or wait to detect gate");
     on_set_parameters_callback_handle_ = this->add_on_set_parameters_callback(std::bind(&Speed::param_callback, this, std::placeholders::_1));
-    status_ = States::SENDING_START_PNT;
+    status_ = States::PASSING_BUOY;
     wp_cnt_ = 0;
   }
 
@@ -60,23 +60,27 @@ namespace comp_tasks
     // add current position to the route so we can get back to the starting point
     route.push_back(current_local_pose_.pose.position);
 
+    task_lib::writePointsToCSV(route, "/home/gracepearcey/repos/iceberg/ros2_ws/src/general/comp_tasks/routes/speed_return_route.csv");
+    task_lib::writePointsToCSV(points, "/home/gracepearcey/repos/iceberg/ros2_ws/src/general/comp_tasks/routes/speed_circle.csv");
     return route;
   }
 
   std::vector<geometry_msgs::msg::Point> Speed::calculateReturnRoute(const yolov8_msgs::msg::DetectionArray& detections)
   {
-    std::vector<geometry_msgs::msg::Point> route;
+    std::vector<geometry_msgs::msg::Point> semi;
 
     // calculate points around current position
     std::vector<geometry_msgs::msg::Point> points = task_lib::generateCirclePoints(current_local_pose_.pose.position, p_buoy_circling_radius_, p_num_pnts_on_semicircle_*2);
-    route = task_lib::createSemicirce(points, last_seen_bay_pose_.pose.position);
-
+    semi = task_lib::createSemicirce(points, last_seen_bay_pose_.pose.position);
+    task_lib::writePointsToCSV(semi, "/home/gracepearcey/repos/iceberg/ros2_ws/src/general/comp_tasks/routes/bb_semi.csv");
     bool left = bbox_calculations::isLeft(detections, p_blue_buoy_str_, p_camera_fov_, p_camera_res_x_);
 
-    task_lib::createQuarterCircle(route, task_lib::quaternionToHeading(current_local_pose_.pose.orientation), left);
+    std::vector<geometry_msgs::msg::Point> route = task_lib::translateSemicircle(semi, current_local_pose_.pose.position, left);
 
     route.push_back(last_seen_bay_pose_.pose.position);
 
+    task_lib::writePointsToCSV(route, "/home/gracepearcey/repos/iceberg/ros2_ws/src/general/comp_tasks/routes/bb.csv");
+    RCLCPP_DEBUG(this->get_logger(), "Semi size %ld, Route size %ld", semi.size(), route.size());
     return route;
   }
 
@@ -88,7 +92,8 @@ namespace comp_tasks
   bool Speed::isFarEnoughFromBay()
   {
     double dist = task_lib::distBetween2Pnts(last_seen_bay_pose_.pose.position, current_local_pose_.pose.position);
-    return p_min_dist_from_bay_b4_return_ > dist;
+    RCLCPP_DEBUG(this->get_logger(), "Dist traveled from last seen gate %f, min dist from gate %f", dist, p_min_dist_from_bay_b4_return_); 
+    return dist > p_min_dist_from_bay_b4_return_;
   }
 
   double Speed::getDistFromBay()
@@ -283,7 +288,7 @@ namespace comp_tasks
             else
             {
               wp_cnt_ = 0;
-              sendNextWP(return_route_, "blue_buoy");
+              sendNextWP(return_route_, "blue_buoy"); // TODO translate semi circle from current position here!!!
               status_ = States::RETURNING;
             }
           }
