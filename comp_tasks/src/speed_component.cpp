@@ -34,7 +34,7 @@ namespace comp_tasks
     Speed::getParam<double>("remove_wp_within_dist", p_remove_wp_within_dist_, 0.0, "Remove WPs within this distance of current position from pre-calculated routes");
     
     on_set_parameters_callback_handle_ = this->add_on_set_parameters_callback(std::bind(&Speed::param_callback, this, std::placeholders::_1));
-    status_ = States::PASSING_BUOY;
+    status_ = States::SENDING_START_PNT;
     wp_cnt_ = 0;
   }
 
@@ -150,7 +150,7 @@ namespace comp_tasks
   }
   void Speed::sendNextWP(std::vector<geometry_msgs::msg::Point> route, std::string route_name)
   {
-    std::string behaviour = "Pub WP " + std::to_string(wp_cnt_ + 1) + "/" + std::to_string(route.size() + 1) + " of route from " + route_name;    publishBehaviourStatus(behaviour);
+    std::string behaviour = "Pub WP " + std::to_string(wp_cnt_ + 1) + "/" + std::to_string(route.size()) + " of route from " + route_name;    publishBehaviourStatus(behaviour);
     publishLocalWP(route[wp_cnt_].x, route[wp_cnt_].y);
     wp_reached_ = false;
     wp_cnt_++;
