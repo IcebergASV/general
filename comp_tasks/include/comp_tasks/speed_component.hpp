@@ -28,6 +28,7 @@ private:
     double getDistFromBay();
     void continuePastBuoy();
     bool isFarEnoughFromBay();
+    void updateReturnRoute(std::vector<geometry_msgs::msg::Point>& route);
     
     int p_use_start_point_;
     double p_time_to_find_bay_;
@@ -47,6 +48,7 @@ private:
     geometry_msgs::msg::PoseStamped last_seen_bay_pose_;
     geometry_msgs::msg::PoseStamped last_seen_blue_buoy_pose_;
     geometry_msgs::msg::PoseStamped continue_past_buoys_pnt_;
+    bool passed_buoy_left_;
 
 };
 

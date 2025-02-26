@@ -1,7 +1,22 @@
 #include "comp_tasks/speed_component.hpp"
 #include "comp_tasks/lib/bbox_calculations.hpp"
 #include "comp_tasks/lib/task_lib.hpp"
+bool isWithinDistance(const geometry_msgs::msg::Point& p1, const geometry_msgs::msg::Point& p2, double dist) {
+  double dx = p1.x - p2.x;
+  double dy = p1.y - p2.y;
+  double dz = p1.z - p2.z;
+  return (dx * dx + dy * dy + dz * dz) <= (dist * dist);
+}
 
+void removeClosePoints(std::vector<geometry_msgs::msg::Point>& points, 
+                     const geometry_msgs::msg::Point& reference_point, 
+                     double dist) {
+  points.erase(std::remove_if(points.begin(), points.end(),
+              [&](const geometry_msgs::msg::Point& p) {
+                  return isWithinDistance(p, reference_point, dist);
+              }),
+              points.end());
+}
 namespace comp_tasks
 {
   Speed::Speed(const rclcpp::NodeOptions & options)
@@ -60,8 +75,8 @@ namespace comp_tasks
     // add current position to the route so we can get back to the starting point
     route.push_back(current_local_pose_.pose.position);
 
-    task_lib::writePointsToCSV(route, "/home/gracepearcey/repos/iceberg/ros2_ws/src/general/comp_tasks/routes/speed_return_route.csv");
-    task_lib::writePointsToCSV(points, "/home/gracepearcey/repos/iceberg/ros2_ws/src/general/comp_tasks/routes/speed_circle.csv");
+    //task_lib::writePointsToCSV(route, "/home/gracepearcey/repos/iceberg/ros2_ws/src/general/comp_tasks/routes/speed_return_route.csv");
+    //task_lib::writePointsToCSV(points, "/home/gracepearcey/repos/iceberg/ros2_ws/src/general/comp_tasks/routes/speed_circle.csv");
     return route;
   }
 
@@ -73,15 +88,44 @@ namespace comp_tasks
     std::vector<geometry_msgs::msg::Point> points = task_lib::generateCirclePoints(current_local_pose_.pose.position, p_buoy_circling_radius_, p_num_pnts_on_semicircle_*2);
     semi = task_lib::createSemicirce(points, last_seen_bay_pose_.pose.position);
     task_lib::writePointsToCSV(semi, "/home/gracepearcey/repos/iceberg/ros2_ws/src/general/comp_tasks/routes/bb_semi.csv");
-    bool left = bbox_calculations::isLeft(detections, p_blue_buoy_str_, p_camera_fov_, p_camera_res_x_);
+    passed_buoy_left_ = bbox_calculations::isLeft(detections, p_blue_buoy_str_, p_camera_fov_, p_camera_res_x_);
 
-    std::vector<geometry_msgs::msg::Point> route = task_lib::translateSemicircle(semi, current_local_pose_.pose.position, left);
+    //std::vector<geometry_msgs::msg::Point> route = task_lib::translateSemicircle(semi, current_local_pose_.pose.position, left);
 
+    //route.push_back(last_seen_bay_pose_.pose.position);
+
+    //task_lib::writePointsToCSV(route, "/home/gracepearcey/repos/iceberg/ros2_ws/src/general/comp_tasks/routes/bb.csv");
+   // RCLCPP_DEBUG(this->get_logger(), "Semi size %ld, Route size %ld", semi.size(), route.size());
+    return semi;
+  }
+
+
+  void Speed::updateReturnRoute(std::vector<geometry_msgs::msg::Point>& route)
+  {
+    //std::vector<geometry_msgs::msg::Point> semi;
+
+    // calculate points around current position
+    //std::vector<geometry_msgs::msg::Point> points = task_lib::generateCirclePoints(current_local_pose_.pose.position, p_buoy_circling_radius_, p_num_pnts_on_semicircle_*2);
+    //semi = task_lib::createSemicirce(points, last_seen_bay_pose_.pose.position);
+    //task_lib::writePointsToCSV(semi, "/home/gracepearcey/repos/iceberg/ros2_ws/src/general/comp_tasks/routes/bb_semi.csv");
+    //bool left = bbox_calculations::isLeft(detections, p_blue_buoy_str_, p_camera_fov_, p_camera_res_x_);
+
+    route = task_lib::translateSemicircle(route, current_local_pose_.pose.position, passed_buoy_left_);
+
+    if (passed_buoy_left_)
+    {
+      std::reverse(route.begin(), route.end());
+    }
+
+    removeClosePoints(route, current_local_pose_.pose.position, 1.2);
+
+
+    // flip order if left. delete points too close. 
     route.push_back(last_seen_bay_pose_.pose.position);
 
     task_lib::writePointsToCSV(route, "/home/gracepearcey/repos/iceberg/ros2_ws/src/general/comp_tasks/routes/bb.csv");
-    RCLCPP_DEBUG(this->get_logger(), "Semi size %ld, Route size %ld", semi.size(), route.size());
-    return route;
+    //RCLCPP_DEBUG(this->get_logger(), "Semi size %ld, Route size %ld", semi.size(), route.size());
+    //return new_route;
   }
 
   void Speed::continuePastBuoy()
@@ -255,7 +299,8 @@ namespace comp_tasks
               else
               {
                 wp_cnt_ = 0;
-                sendNextWP(return_route_, "blue buoy");
+                updateReturnRoute(return_route_);
+                sendNextWP(return_route_, "buoy");
                 status_ = States::RETURNING;
               }
             }
@@ -288,7 +333,8 @@ namespace comp_tasks
             else
             {
               wp_cnt_ = 0;
-              sendNextWP(return_route_, "blue_buoy"); // TODO translate semi circle from current position here!!!
+              updateReturnRoute(return_route_);
+              sendNextWP(return_route_, "buoy"); // TODO translate semi circle from current position here!!!
               status_ = States::RETURNING;
             }
           }
@@ -299,6 +345,8 @@ namespace comp_tasks
           RCLCPP_DEBUG(this->get_logger(), "RETURNING"); 
           publishStateStatus("RETURNING");
           publishSearchStatus("");
+          std::string buoy_position = passed_buoy_left_ ? "left" : "right";
+          publishBehaviourStatus("Buoy is to the " + buoy_position);
           if (wp_reached_)
           {
             if (wp_cnt_ >= static_cast<int>(return_route_.size())) // might need to update this to actually check if we are in same position as where we started

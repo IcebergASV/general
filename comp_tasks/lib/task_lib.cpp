@@ -1,5 +1,59 @@
 #include "comp_tasks/lib/task_lib.hpp"
 #include "tf2_geometry_msgs/tf2_geometry_msgs.hpp"
+
+// Function to compute the centroid of a set of points
+geometry_msgs::msg::Point computeCentroid(const std::vector<geometry_msgs::msg::Point>& points) {
+    geometry_msgs::msg::Point centroid;
+    centroid.x = 0.0;
+    centroid.y = 0.0;
+    centroid.z = 0.0;
+
+    for (const auto& p : points) {
+        centroid.x += p.x;
+        centroid.y += p.y;
+    }
+
+    centroid.x /= points.size();
+    centroid.y /= points.size();
+
+    return centroid;
+}
+
+// Function to compute the relative angle of a point with respect to a reference direction
+double computeRelativeAngle(const geometry_msgs::msg::Point& point, 
+                            const geometry_msgs::msg::Point& reference_point, 
+                            const geometry_msgs::msg::Point& forward_point) {
+    // Compute the global angle from reference point to this point
+    double point_angle = std::atan2(point.y - reference_point.y, point.x - reference_point.x);
+
+    // Compute the angle of the forward direction (from reference point to centroid)
+    double forward_angle = std::atan2(forward_point.y - reference_point.y, forward_point.x - reference_point.x);
+
+    // Compute the relative angle
+    double relative_angle = point_angle - forward_angle;
+
+    // Normalize to range (-π, π]
+    while (relative_angle <= -M_PI) relative_angle += 2 * M_PI;
+    while (relative_angle > M_PI) relative_angle -= 2 * M_PI;
+
+    return relative_angle;
+}
+
+// Function to sort points right to left
+void orderPointsRightToLeft(std::vector<geometry_msgs::msg::Point>& points, 
+                            const geometry_msgs::msg::Point& reference_point) {
+    // Compute the centroid to get the forward direction
+    geometry_msgs::msg::Point centroid = computeCentroid(points);
+
+    // Sort based on the computed relative angles
+    std::sort(points.begin(), points.end(), 
+              [&](const geometry_msgs::msg::Point& p1, const geometry_msgs::msg::Point& p2) {
+                  double angle1 = computeRelativeAngle(p1, reference_point, centroid);
+                  double angle2 = computeRelativeAngle(p2, reference_point, centroid);
+
+                  return angle1 > angle2; // Right to left
+              });
+}
 namespace task_lib
 {
 
@@ -218,14 +272,15 @@ namespace task_lib
             }
         }
         std::vector<geometry_msgs::msg::Point> ordered_points = farther_points;
-        std::sort(ordered_points.begin(), ordered_points.end(),
-        [&reference_point](const geometry_msgs::msg::Point& p1, const geometry_msgs::msg::Point& p2) {
-            // Compute angles relative to the reference point
-            double angle1 = std::atan2(p1.y - reference_point.y, p1.x - reference_point.x);
-            double angle2 = std::atan2(p2.y - reference_point.y, p2.x - reference_point.x);
+        // std::sort(ordered_points.begin(), ordered_points.end(),
+        // [&reference_point](const geometry_msgs::msg::Point& p1, const geometry_msgs::msg::Point& p2) {
+        //     // Compute angles relative to the reference point
+        //     double angle1 = std::atan2(p1.y - reference_point.y, p1.x - reference_point.x);
+        //     double angle2 = std::atan2(p2.y - reference_point.y, p2.x - reference_point.x);
             
-            return angle1 > angle2;  // Sort in descending order (right to left)
-        });
+        //     return angle1 > angle2;  // Sort in descending order (right to left)
+        // });
+        orderPointsRightToLeft(ordered_points, reference_point);
 
         return ordered_points;
     }
