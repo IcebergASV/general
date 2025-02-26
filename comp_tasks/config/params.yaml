@@ -19,7 +19,7 @@
     max_consec_recoveries: 2
 /speed:
   ros__parameters:
-    distance_to_move: 30.0
+    distance_to_move: 10.000
     angle_from_target: 20.0
     camera_res_x: 640
     camera_fov: 70
@@ -42,7 +42,7 @@
     buoy_offset_angle: 0.0
     estimated_buoy_dist: 0.0
     buoy_circling_radius: 3.0
-    num_pnts_on_semicircle: 4
+    num_pnts_on_semicircle: 6
     min_dist_from_bay_b4_return: 0.0
 /task_controller:
   ros__parameters:
