@@ -7,15 +7,16 @@
 
 ros2 topic pub /yolo/detections yolov8_msgs/DetectionArray "{header: {stamp: {sec: 1728147972, nanosec: 302901855}, frame_id: 'camera_color_optical_frame'}, detections: [{class_id: 7, class_name: 'red_buoy', score: 0.6200227737426758, id: '', bbox: {center: {position: {x: 24.1787109375, y: 237.41123962402344}, theta: 0.0}, size: {x: 16.108551025390625, y: 18.4189453125}}, bbox3d: {center: {position: {x: 0.0, y: 0.0, z: 0.0}, orientation: {x: 0.0, y: 0.0, z: 0.0, w: 1.0}}, size: {x: 0.0, y: 0.0, z: 0.0}, frame_id: ''}, mask: {height: 0, width: 0, data: []}, keypoints: {data: []}, keypoints3d: {data: [], frame_id: ''}}]}"
 
-ros2 topic pub /yolo/detections yolov8_msgs/DetectionArray "{header: {stamp: {sec: 1728147972, nanosec: 302901855}, frame_id: 'camera_color_optical_frame'}, detections: [{class_id: 7, class_name: 'red_buoy', score: 0.6200227737426758, id: '', bbox: {center: {position: {x: 10.1787109375, y: 10.41123962402344}, theta: 0.0}, size: {x: 20.108551025390625, y: 20.4189453125}}, bbox3d: {center: {position: {x: 0.0, y: 0.0, z: 0.0}, orientation: {x: 0.0, y: 0.0, z: 0.0, w: 1.0}}, size: {x: 0.0, y: 0.0, z: 0.0}, frame_id: ''}, mask: {height: 0, width: 0, data: []}, keypoints: {data: []}, keypoints3d: {data: [], frame_id: ''}},
+ros2 topic pub /yolo/detections yolov8_msgs/DetectionArray "{header: {stamp: {sec: 1728147972, nanosec: 302901855}, frame_id: 'camera_color_optical_frame'}, detections: [{class_id: 7, class_name: 'red_buoy', score: 0.6200227737426758, id: '', bbox: {center: {position: {x: 100.1787109375, y: 100.23962402344}, theta: 0.0}, size: {x: 20.108551025390625, y: 20.4189453125}}, bbox3d: {center: {position: {x: 0.0, y: 0.0, z: 0.0}, orientation: {x: 0.0, y: 0.0, z: 0.0, w: 1.0}}, size: {x: 0.0, y: 0.0, z: 0.0}, frame_id: ''}, mask: {height: 0, width: 0, data: []}, keypoints: {data: []}, keypoints3d: {data: [], frame_id: ''}},
 
- {class_id: 7, class_name: 'green_buoy', score: 0.6200227737426758, id: '', bbox: {center: {position: {x: 50.1787109375, y: 50.41123962402344}, theta: 0.0}, size: {x: 32.108551025390625, y: 32.4189453125}}, bbox3d: {center: {position: {x: 0.0, y: 0.0, z: 0.0}, orientation: {x: 0.0, y: 0.0, z: 0.0, w: 1.0}}, size: {x: 0.0, y: 0.0, z: 0.0}, frame_id: ''}, mask: {height: 0, width: 0, data: []}, keypoints: {data: []}, keypoints3d: {data: [], frame_id: ''}},
-
- {class_id: 7, class_name: 'red_buoy', score: 0.6200227737426758, id: '', bbox: {center: {position: {x: 440.1787109375, y: 440.41123962402344}, theta: 0.0}, size: {x: 65.108551025390625, y: 20.4189453125}}, bbox3d: {center: {position: {x: 0.0, y: 0.0, z: 0.0}, orientation: {x: 0.0, y: 0.0, z: 0.0, w: 1.0}}, size: {x: 0.0, y: 0.0, z: 0.0}, frame_id: ''}, mask: {height: 0, width: 0, data: []}, keypoints: {data: []}, keypoints3d: {data: [], frame_id: ''}},
- 
-  {class_id: 7, class_name: 'green_buoy', score: 0.6200227737426758, id: '', bbox: {center: {position: {x: 530.1787109375, y: 530.41123962402344}, theta: 0.0}, size: {x: 52.108551025390625, y: 52.4189453125}}, bbox3d: {center: {position: {x: 0.0, y: 0.0, z: 0.0}, orientation: {x: 0.0, y: 0.0, z: 0.0, w: 1.0}}, size: {x: 0.0, y: 0.0, z: 0.0}, frame_id: ''}, mask: {height: 0, width: 0, data: []}, keypoints: {data: []}, keypoints3d: {data: [], frame_id: ''}}]}"
+  {class_id: 7, class_name: 'green_buoy', score: 0.6200227737426758, id: '', bbox: {center: {position: {x: 540.1787109375, y: 120.41123962402344}, theta: 0.0}, size: {x: 20.108551025390625, y: 20.4189453125}}, bbox3d: {center: {position: {x: 0.0, y: 0.0, z: 0.0}, orientation: {x: 0.0, y: 0.0, z: 0.0, w: 1.0}}, size: {x: 0.0, y: 0.0, z: 0.0}, frame_id: ''}, mask: {height: 0, width: 0, data: []}, keypoints: {data: []}, keypoints3d: {data: [], frame_id: ''}}]}"
 
 ros2 topic pub /yolo/detections yolov8_msgs/DetectionArray "{header: {stamp: {sec: 1728147972, nanosec: 302901855}, frame_id: 'camera_color_optical_frame'}, detections: []}"
+
+ros2 topic pub /yolo/detections yolov8_msgs/DetectionArray "{header: {stamp: {sec: 1728147972, nanosec: 302901855}, frame_id: 'camera_color_optical_frame'}, detections: [{class_id: 7, class_name: 'blue_buoy', score: 0.6200227737426758, id: '', bbox: {center: {position: {x: 340.1787109375, y: 237.41123962402344}, theta: 0.0}, size: {x: 16.108551025390625, y: 18.4189453125}}, bbox3d: {center: {position: {x: 0.0, y: 0.0, z: 0.0}, orientation: {x: 0.0, y: 0.0, z: 0.0, w: 1.0}}, size: {x: 0.0, y: 0.0, z: 0.0}, frame_id: ''}, mask: {height: 0, width: 0, data: []}, keypoints: {data: []}, keypoints3d: {data: [], frame_id: ''}}]}"
+
+ros2 topic pub /yolo/detections yolov8_msgs/DetectionArray "{header: {stamp: {sec: 1728147972, nanosec: 302901855}, frame_id: 'camera_color_optical_frame'}, detections: [{class_id: 7, class_name: 'red_buoy', score: 0.6200227737426758, id: '', bbox: {center: {position: {x: 100.1787109375, y: 237.41123962402344}, theta: 0.0}, size: {x: 16.108551025390625, y: 18.4189453125}}, bbox3d: {center: {position: {x: 0.0, y: 0.0, z: 0.0}, orientation: {x: 0.0, y: 0.0, z: 0.0, w: 1.0}}, size: {x: 0.0, y: 0.0, z: 0.0}, frame_id: ''}, mask: {height: 0, width: 0, data: []}, keypoints: {data: []}, keypoints3d: {data: [], frame_id: ''}}]}"
+
 
 ## Velocity SP
 `ros2 topic pub /mavros/setpoint_velocity/cmd_vel_unstamped geometry_msgs/msg/Twist "{linear: {x: 1.0, y: 0.0, z: 0.0}, angular: {x: 0.0, y: 0.0, z: 0.0}}" -r 10`
@@ -36,17 +37,19 @@ ros2 topic pub /mavros/setpoint_attitude/thrust std_msgs/msg/Float32 '{data: 0.5
 
 ## Global WPs
 
-ros2 topic pub /mavros/setpoint_position/global sensor_msgs/msg/NavSatFix '{latitude: 63.4412662, longitude: 10.4242176, altitude: 500.0}'
+ros2 topic pub /mavros/setpoint_position/global sensor_msgs/msg/NavSatFix '{latitude: 28.607209, longitude: -81.202884, altitude: 500.0}'
 
 ros2 topic pub /mavros/setpoint_position/global sensor_msgs/msg/NavSatFix '{latitude: 47.397742, longitude: 8.545593, altitude: 500.0}'
 
 ros2 topic pub /mavros/setpoint_position/global sensor_msgs/msg/NavSatFix '{latitude: 47.397742, longitude: 8.545593, altitude: 500.0}'
 
 ros2 topic pub /mavros/setpoint_position/global sensor_msgs/msg/NavSatFix '{latitude: 47.397742, longitude: 8.545593, altitude: 500.0}'
-
+    start_lat:  -35.363301
+    start_lon:  149.165278
+ros2 topic pub /mavros/setpoint_position/global sensor_msgs/msg/NavSatFix '{latitude: -35.363301, longitude: 149.165278, altitude: 500.0}'
 ## Local WPs
 
-ros2 topic pub /mavros/setpoint_position/local geometry_msgs/msg/PoseStamped '{header: {stamp: {sec: 0, nanosec: 0}, frame_id: "map"}, pose: {position: {x: 47.397742, y: 8.545593, z: 0.0}, orientation: {x: 0.0, y: 0.0, z: 0.0, w: 1.0}}}'
+ros2 topic pub /mavros/setpoint_position/local geometry_msgs/msg/PoseStamped '{header: {stamp: {sec: 0, nanosec: 0}, frame_id: "map"}, pose: {position: {x: 10.397742, y: 8.545593, z: 0.0}, orientation: {x: 0.0, y: 0.0, z: 0.0, w: 1.0}}}'
 
 
 ## mavros state
