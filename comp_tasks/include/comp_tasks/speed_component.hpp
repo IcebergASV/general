@@ -39,6 +39,7 @@ private:
     double p_buoy_circling_radius_;
     int p_num_pnts_on_semicircle_;
     double p_min_dist_from_bay_b4_return_;
+    double p_remove_wp_within_dist_;
 
     enum States {SENDING_START_PNT, GOING_TO_BAY, MANEUVER_THRU_BAY, CALCULATED_ROUTE, PASSING_BUOY, CONTINUE_PASSING_BUOY, RETURNING }; 
     States status_;

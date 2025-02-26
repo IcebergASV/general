@@ -31,6 +31,8 @@ namespace comp_tasks
     Speed::getParam<int>("num_pnts_on_semicircle", p_num_pnts_on_semicircle_, 0, "How many waypoints to send to turn around buoy on calculated route");
     Speed::getParam<double>("min_dist_from_bay_b4_return", p_min_dist_from_bay_b4_return_, 0.0, "Minimum distance to travel from bay before executing return route");
     Speed::getParam<int>("use_start_point", p_use_start_point_, 0, "Use start point or wait to detect gate");
+    Speed::getParam<double>("remove_wp_within_dist", p_remove_wp_within_dist_, 0.0, "Remove WPs within this distance of current position from pre-calculated routes");
+    
     on_set_parameters_callback_handle_ = this->add_on_set_parameters_callback(std::bind(&Speed::param_callback, this, std::placeholders::_1));
     status_ = States::PASSING_BUOY;
     wp_cnt_ = 0;
@@ -50,6 +52,7 @@ namespace comp_tasks
     else if (params[0].get_name() == "buoy_circling_radius") { p_buoy_circling_radius_ = params[0].as_double(); updateYamlParam("buoy_circling_radius", params[0].as_double());}
     else if (params[0].get_name() == "num_pnts_on_semicircle") { p_num_pnts_on_semicircle_ = params[0].as_int(); updateYamlParam("num_pnts_on_semicircle", params[0].as_int());}
     else if (params[0].get_name() == "min_dist_from_bay_b4_return") { p_min_dist_from_bay_b4_return_ = params[0].as_double(); updateYamlParam("min_dist_from_bay_b4_return", params[0].as_double());}
+    else if (params[0].get_name() == "remove_wp_within_dist") { p_remove_wp_within_dist_ = params[0].as_double(); updateYamlParam("remove_wp_within_dist", params[0].as_double());}
     else {
       RCLCPP_ERROR(this->get_logger(), "Invalid Param speed: %s", params[0].get_name().c_str());
       result.successful = false;
@@ -117,7 +120,7 @@ namespace comp_tasks
       std::reverse(route.begin(), route.end());
     }
 
-    removeClosePoints(route, current_local_pose_.pose.position, 1.2);
+    removeClosePoints(route, current_local_pose_.pose.position, p_remove_wp_within_dist_);
 
 
     // flip order if left. delete points too close. 
