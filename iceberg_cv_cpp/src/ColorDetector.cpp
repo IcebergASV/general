@@ -107,10 +107,10 @@ private:
         for (const auto& contour : contours) {
             if (cv::contourArea(contour) > min_area_) {
                 cv::Rect rect = cv::boundingRect(contour);
+
+                cv::rectangle(filtered, rect, cv::Scalar(0, 255, 0), 2);
                 RCLCPP_INFO(this->get_logger(), "Detected object at (%d,%d) with size %d, %d",
                             rect.x, rect.y, rect.width, rect.height);
-                cv::rectangle(filtered, rect, cv::Scalar(0, 255, 0), 2);
-
                 yolov8_msgs::msg::BoundingBox2D bbox;
                 bbox.center.position.x = rect.x + rect.width / 2.0;  // Center X
                 bbox.center.position.x = rect.y + rect.height / 2.0; // Center Y
