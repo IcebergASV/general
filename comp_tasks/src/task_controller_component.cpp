@@ -40,6 +40,7 @@ namespace comp_tasks
     {
       change_state(lifecycle_msgs::msg::Transition::TRANSITION_DEACTIVATE);
       change_state(lifecycle_msgs::msg::Transition::TRANSITION_CLEANUP);
+      change_state(lifecycle_msgs::msg::Transition::TRANSITION_UNCONFIGURED_SHUTDOWN);
       if (setNextNodeName())
       {
         configureNextTask();

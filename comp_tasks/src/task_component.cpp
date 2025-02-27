@@ -122,6 +122,11 @@ namespace comp_tasks
   rclcpp_lifecycle::node_interfaces::LifecycleNodeInterface::CallbackReturn Task::on_cleanup(const rclcpp_lifecycle::State &)
   {
     RCLCPP_DEBUG(this->get_logger(), "on_cleanup callback");
+    return rclcpp_lifecycle::node_interfaces::LifecycleNodeInterface::CallbackReturn::SUCCESS;
+  }
+  rclcpp_lifecycle::node_interfaces::LifecycleNodeInterface::CallbackReturn Task::on_shutdown(const rclcpp_lifecycle::State &)
+  {
+    RCLCPP_DEBUG(this->get_logger(), "on_shutdown callback");
     global_pose_sub_.reset();
     local_pose_sub_.reset();
     bbox_sub_.reset();
