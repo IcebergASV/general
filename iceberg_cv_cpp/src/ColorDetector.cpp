@@ -113,7 +113,7 @@ private:
                             rect.x, rect.y, rect.width, rect.height);
                 yolov8_msgs::msg::BoundingBox2D bbox;
                 bbox.center.position.x = rect.x + rect.width / 2.0;  // Center X
-                bbox.center.position.x = rect.y + rect.height / 2.0; // Center Y
+                bbox.center.position.y = rect.y + rect.height / 2.0; // Center Y
                 bbox.size.x = rect.width;  // Width of the bounding box
                 bbox.size.y = rect.height; // Height of the bounding box
 
