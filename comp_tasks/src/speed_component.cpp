@@ -69,14 +69,17 @@ namespace comp_tasks
   {
     if (str_state == "SENDING_START_PNT")
     {
+      setTimerDuration(p_time_to_find_bay_);
       state_ = States::SENDING_START_PNT;
     }
     else if (str_state == "GOING_TO_BAY")
     {
+      setTimerDuration(p_max_time_between_bay_detections_);
       state_ = States::GOING_TO_BAY;
     }
     else if (str_state == "MANEUVER_THRU_BAY")
     {
+      setTimerDuration(p_max_time_between_bay_detections_);
       state_ = States::MANEUVER_THRU_BAY;
     }
     else if (str_state == "RETURNING")
@@ -93,6 +96,7 @@ namespace comp_tasks
     }
     else if (str_state == "PASSING_BUOY")
     {
+      setTimerDuration(p_max_time_between_buoy_detections_);
       state_ = States::PASSING_BUOY;
     }
     else
