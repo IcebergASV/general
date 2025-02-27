@@ -55,7 +55,7 @@ namespace comp_tasks
     rmw_qos_profile_t qos_profile = rmw_qos_profile_sensor_data;
     auto qos = rclcpp::QoS(rclcpp::QoSInitialization(qos_profile.history, 5), qos_profile);
 
-    bbox_sub_ = this->create_subscription<yolov8_msgs::msg::DetectionArray>("/yolo/detections", 10, std::bind(&Task::bboxCallback, this, _1));
+    bbox_sub_ = this->create_subscription<yolov8_msgs::msg::DetectionArray>("/icebergcv/detections", 10, std::bind(&Task::bboxCallback, this, _1));
     wp_reached_sub_ = this->create_subscription<mavros_msgs::msg::WaypointReached>("/mavros/mission/reached", 10, std::bind(&Task::wpReachedCallback, this, _1));
     global_pose_sub_ = this->create_subscription<sensor_msgs::msg::NavSatFix>("/mavros/global_position/global", qos, std::bind(&Task::globalPoseCallback, this, _1));
     local_pose_sub_ = this->create_subscription<geometry_msgs::msg::PoseStamped>("/mavros/local_position/pose", qos, std::bind(&Task::localPoseCallback, this, _1));
