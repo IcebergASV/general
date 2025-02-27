@@ -36,7 +36,7 @@ class ConfigurableColorFilter(Node):
         
         #Get parameter values
         self.input_topic = self.get_parameter('input_img_topic').value
-        self.output_topic = self.get_parameter('output_img_topic').value
+        self.output_img_topic = self.get_parameter('output_img_topic').value
         self.output_detections_topic = self.get_parameter('output_det_topic').value
         self.class_name = self.get_parameter('output_class_name').value
         self.min_area = self.get_parameter('min_area').value
@@ -53,7 +53,7 @@ class ConfigurableColorFilter(Node):
         
         self.get_logger().info(f"""Color filter initialized with:
             Input topic: {self.input_topic}
-            Output topic: {self.output_topic}
+            Output topic: {self.output_img_topic}
             HSV Range: {self.lower_hsv} to {self.upper_hsv}
         """)
 
