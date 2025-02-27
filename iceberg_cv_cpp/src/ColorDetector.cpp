@@ -107,7 +107,7 @@ private:
         for (const auto& contour : contours) {
             if (cv::contourArea(contour) > min_area_) {
                 cv::Rect rect = cv::boundingRect(contour);
-                RCLCPP_INFO(this->get_logger(), "Detected object at (%d,%d) with size %f, %f",
+                RCLCPP_INFO(this->get_logger(), "Detected object at (%d,%d) with size %d, %d",
                             rect.x, rect.y, rect.width, rect.height);
                 cv::rectangle(filtered, rect, cv::Scalar(0, 255, 0), 2);
 
