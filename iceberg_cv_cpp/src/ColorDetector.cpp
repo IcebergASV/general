@@ -15,7 +15,7 @@ public:
         this->declare_parameter("input_img_topic", "/camera/camera/color/image_raw");
         this->declare_parameter("output_img_topic", "/icebergcv/filtered_image");
         this->declare_parameter("output_det_topic", "/icebergcv/detections");
-        this->declare_parameter("output_class_name", "color_object");
+        this->declare_parameter("output_class_name", "red");
         this->declare_parameter("min_area", 75);
         this->declare_parameter("lower_hsv_list", std::vector<int64_t>{0, 100, 100, 160, 100, 100}); // Default for red
         this->declare_parameter("upper_hsv_list", std::vector<int64_t>{10, 255, 255, 180, 255, 255});
@@ -107,6 +107,8 @@ private:
         for (const auto& contour : contours) {
             if (cv::contourArea(contour) > min_area_) {
                 cv::Rect rect = cv::boundingRect(contour);
+                RCLCPP_INFO(this->get_logger(), "Detected object at (%d,%d) with size %f, %f",
+                            rect.x, rect.y, rect.width, rect.height);
                 cv::rectangle(filtered, rect, cv::Scalar(0, 255, 0), 2);
 
                 yolov8_msgs::msg::BoundingBox2D bbox;
