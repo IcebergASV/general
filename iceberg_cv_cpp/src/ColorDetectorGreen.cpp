@@ -10,7 +10,7 @@ using std::placeholders::_1;
 
 class ColorDetector : public rclcpp::Node {
 public:
-    ColorDetector() : Node("configurable_color_filter") {
+    ColorDetector() : Node("configurable_color_filter_green") {
         // Declare parameters
         this->declare_parameter("input_img_topic", "/camera/camera/color/image_raw");
         this->declare_parameter("output_img_topic", "/icebergcv/filtered_image");

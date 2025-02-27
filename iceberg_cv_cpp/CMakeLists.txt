@@ -33,7 +33,7 @@ ament_target_dependencies(ColorDetector
 install(TARGETS ColorDetector
   DESTINATION lib/${PROJECT_NAME})
 
-  add_executable(ColorDetector src/ColorDetectorGreen.cpp)
+  add_executable(ColorDetectorGreen src/ColorDetectorGreen.cpp)
 target_include_directories(ColorDetectorGreen PUBLIC
   $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>
   $<INSTALL_INTERFACE:include>)
