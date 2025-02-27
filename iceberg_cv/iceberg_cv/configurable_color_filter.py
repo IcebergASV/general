@@ -49,7 +49,7 @@ class ConfigurableColorFilter(Node):
         self.sub = self.create_subscription(Image, self.input_topic, self.image_callback, 10)
         
         self.imgpub = self.create_publisher(Image, self.output_img_topic, 10)
-        self.detpub = self.create_publisher(Image, self.output_detections_topic, 10)
+        self.detpub = self.create_publisher(IcebergDetectionArray, self.output_detections_topic, 10)
         
         self.get_logger().info(f"""Color filter initialized with:
             Input topic: {self.input_topic}
@@ -102,12 +102,12 @@ class ConfigurableColorFilter(Node):
                 detection_list.append(det)
 
         #Add the detections to the list
-        detection_list.icebergdetections = detection_list
+        det_array.icebergdetections = detection_list
 
         #Attempt to publish the required topics
         try:
             self.imgpub.publish(self.bridge.cv2_to_imgmsg(filtered, 'bgr8'))
-            self.detpub.publish(detection_list)
+            self.detpub.publish(det_array)
         except Exception as e:
             self.get_logger().error(f'Publishing failed: {str(e)}')
 
