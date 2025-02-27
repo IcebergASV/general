@@ -32,9 +32,10 @@ namespace comp_tasks
     Speed::getParam<double>("min_dist_from_bay_b4_return", p_min_dist_from_bay_b4_return_, 0.0, "Minimum distance to travel from bay before executing return route");
     Speed::getParam<int>("use_start_point", p_use_start_point_, 0, "Use start point or wait to detect gate");
     Speed::getParam<double>("remove_wp_within_dist", p_remove_wp_within_dist_, 0.0, "Remove WPs within this distance of current position from pre-calculated routes");
+    Speed::getStringParam("state", p_state_, "SENDING_START_PNT", "State machine state");
 
     on_set_parameters_callback_handle_ = this->add_on_set_parameters_callback(std::bind(&Speed::param_callback, this, std::placeholders::_1));
-    state_ = States::SENDING_START_PNT;
+    setState(p_state_);
     wp_cnt_ = 0;
   }
 
@@ -53,6 +54,7 @@ namespace comp_tasks
     else if (params[0].get_name() == "num_pnts_on_semicircle") { p_num_pnts_on_semicircle_ = params[0].as_int(); updateYamlParam("num_pnts_on_semicircle", params[0].as_int());}
     else if (params[0].get_name() == "min_dist_from_bay_b4_return") { p_min_dist_from_bay_b4_return_ = params[0].as_double(); updateYamlParam("min_dist_from_bay_b4_return", params[0].as_double());}
     else if (params[0].get_name() == "remove_wp_within_dist") { p_remove_wp_within_dist_ = params[0].as_double(); updateYamlParam("remove_wp_within_dist", params[0].as_double());}
+    else if (params[0].get_name() == "state") { setState(params[0].as_string()); updateYamlParam("state", params[0].as_string());}
     else {
       RCLCPP_ERROR(this->get_logger(), "Invalid Param speed: %s", params[0].get_name().c_str());
       result.successful = false;
@@ -61,6 +63,42 @@ namespace comp_tasks
 
     result.successful = true;
     return result;
+  }
+
+  void Speed::setState(std::string str_state)
+  {
+    if (str_state == "SENDING_START_PNT")
+    {
+      state_ = States::SENDING_START_PNT;
+    }
+    else if (str_state == "GOING_TO_BAY")
+    {
+      state_ = States::GOING_TO_BAY;
+    }
+    else if (str_state == "MANEUVER_THRU_BAY")
+    {
+      state_ = States::MANEUVER_THRU_BAY;
+    }
+    else if (str_state == "RETURNING")
+    {
+      state_ = States::RETURNING;
+    }
+    else if (str_state == "CALCULATED_ROUTE")
+    {
+      state_ = States::CALCULATED_ROUTE;
+    }
+    else if (str_state == "CONTINUE_PASSING_BUOY")
+    {
+      state_ = States::CONTINUE_PASSING_BUOY;
+    }
+    else if (str_state == "PASSING_BUOY")
+    {
+      state_ = States::PASSING_BUOY;
+    }
+    else
+    {
+      RCLCPP_ERROR(this->get_logger(), "Invalid State: %s", str_state.c_str());
+    }
   }
 
   std::vector<geometry_msgs::msg::Point> Speed::calculateRouteFromGates(const yolov8_msgs::msg::DetectionArray& detections)

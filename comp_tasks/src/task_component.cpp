@@ -127,7 +127,6 @@ namespace comp_tasks
   void Task::globalPoseCallback(const sensor_msgs::msg::NavSatFix::SharedPtr msg)
   {
     current_global_pose_ = *msg;
-    RCLCPP_DEBUG(this->get_logger(), "Latitude: %f, Longitude: %f", current_global_pose_.latitude, current_global_pose_.longitude);
   }
 
   bool Task::isActive() {
@@ -141,7 +140,6 @@ namespace comp_tasks
   void Task::localPoseCallback(const geometry_msgs::msg::PoseStamped::SharedPtr msg)
   {
     current_local_pose_ = *msg;
-    RCLCPP_DEBUG(this->get_logger(), "Local Pose: x: %f, y: %f", msg->pose.position.x, msg->pose.position.y);
   }
 
   void Task::stateCallback(const mavros_msgs::msg::State::SharedPtr msg)

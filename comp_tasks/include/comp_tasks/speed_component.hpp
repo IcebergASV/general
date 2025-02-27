@@ -18,6 +18,7 @@ public:
 
 private:
     rcl_interfaces::msg::SetParametersResult param_callback(const std::vector<rclcpp::Parameter> &params) override;
+    void setState(std::string str_state);
     void taskLogic(const yolov8_msgs::msg::DetectionArray& detections) override;
     rclcpp::node_interfaces::OnSetParametersCallbackHandle::SharedPtr on_set_parameters_callback_handle_;
     void sendNextWP(std::vector<geometry_msgs::msg::Point> route, std::string route_name);
@@ -40,6 +41,7 @@ private:
     int p_num_pnts_on_semicircle_;
     double p_min_dist_from_bay_b4_return_;
     double p_remove_wp_within_dist_;
+    std::string p_state_;
 
     enum States {SENDING_START_PNT, GOING_TO_BAY, MANEUVER_THRU_BAY, CALCULATED_ROUTE, PASSING_BUOY, CONTINUE_PASSING_BUOY, RETURNING }; 
     States state_;
