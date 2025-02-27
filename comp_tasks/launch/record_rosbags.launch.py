@@ -12,9 +12,7 @@ def generate_launch_description():
         '/mavros/local_position/pose',
         '/mavros/local_position/odom',
         '/mavros/mission/reached',
-        '/mavros/state',
-        '/yolo/detections',
-        '/scan'
+        '/mavros/state'
     ]
 
     robot_logic_topics = [
@@ -29,16 +27,22 @@ def generate_launch_description():
         '/mavros/setpoint_position/local',
         '/mavros/state',
         '/yolo/detections',
-        '/yolov8_ros/dbg_image',
-        '/comp_tasks/maneuvering/status',
-        '/comp_tasks/task_completion_status',
-        '/comp_tasks/task_to_execute',
-        '/scan',
-        '/rosout'
+        '/yolo/dbg_image'
+        '/rosout',
+        '/maneuvering/transition_event',
+        '/speed/transition_event',
+        '/comp_tasks/task/status',
+        '/comp_tasks/task/complete',
+        '/parameter_events'
+    ]
+
+    yolo_topics = [
+        '/yolo/detections',
+        '/yolo/dbg_image'
     ]
 
     now = datetime.now()
-    month_day_folder = now.strftime('02_26_rosbags')
+    month_day_folder = now.strftime('02_27_rosbags')
     datetime_folder = now.strftime('%Y-%m-%d_%H-%M-%S')
 
     home_directory = os.path.expanduser('~')
@@ -49,9 +53,11 @@ def generate_launch_description():
 
     sensors_bag_name = os.path.join(date_time_dir, f"rosbag_sensors_{now.strftime('%Y-%m-%d_%H-%M-%S')}.bag")
     logic_bag_name = os.path.join(date_time_dir, f"rosbag_logic_{now.strftime('%Y-%m-%d_%H-%M-%S')}.bag")
+    yolo_bag_name = os.path.join(date_time_dir, f"rosbag_yolo_{now.strftime('%Y-%m-%d_%H-%M-%S')}.bag")
 
     rosbag_sensors_command = ['ros2', 'bag', 'record'] + sensor_topics + ['-o', sensors_bag_name]
     rosbag_logic_command = ['ros2', 'bag', 'record'] + robot_logic_topics + ['-o', logic_bag_name]
+    rosbag_yolo_command = ['ros2', 'bag', 'record'] + yolo_topics + ['-o', yolo_bag_name]
 
     return LaunchDescription([
         ExecuteProcess(
@@ -60,6 +66,10 @@ def generate_launch_description():
         ),
         ExecuteProcess(
             cmd=rosbag_logic_command,
+            output='screen'
+        ),
+        ExecuteProcess(
+            cmd=rosbag_yolo_command,
             output='screen'
         ),
     ])
