@@ -35,4 +35,22 @@ maneuvering:
     max_consec_recoveries: 2
 task_controller:
   ros__parameters:
-    tasks: "ms"
+    tasks: "ds"
+
+docking:
+  ros__parameters:
+    # Distances
+    approach_distance: 3.0  # meters, distance to maintain while approaching
+    dock_depth: 2.0        # meters, how far to go into dock
+    reverse_distance: 3.0  # meters, how far to reverse after docking
+    
+    # Target selection
+    target_dock: "center"  # left, center, or right
+    
+    # Debug parameters
+    debug_level: 2         # 0=minimal, 1=normal, 2=verbose
+    
+    # LIDAR processing parameters
+    min_wall_points: 5     # minimum points needed to confirm a wall
+    wall_distance_tolerance: 0.3  # meters, tolerance for parallel wall check
+    alignment_threshold: 0.1      # radians, how precise alignment needs to be

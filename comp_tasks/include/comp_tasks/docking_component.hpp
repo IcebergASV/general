@@ -2,42 +2,75 @@
 #define docking_HPP
 
 #include <rclcpp/rclcpp.hpp>
-#include <std_msgs/msg/int32.hpp>
-#include <std_msgs/msg/float64.hpp>
-
-using std::placeholders::_1;
+#include <comp_tasks/task_component.hpp>
+#include "sensor_msgs/msg/laser_scan.hpp"
+#include "std_msgs/msg/string.hpp"
+#include "visualization_msgs/msg/marker_array.hpp"
+#include "visualization_msgs/msg/marker.hpp"
 
 namespace comp_tasks
 {
 
-class Docking : public rclcpp::Node
+// Forward declare the structure
+struct DockGap {
+    size_t start_idx;
+    size_t end_idx;
+    double width;
+    double center_angle;
+};
+
+struct DockStructure {
+    DockGap gap;
+    bool has_left_wall;
+    bool has_right_wall;
+    double left_wall_distance;
+    double right_wall_distance;
+};
+
+class Docking : public comp_tasks::Task
 {
 public:
     explicit Docking(const rclcpp::NodeOptions & options);
 
 private:
-    void callback(const std_msgs::msg::Int32::SharedPtr msg);
-    rcl_interfaces::msg::SetParametersResult param_callback(const std::vector<rclcpp::Parameter> &params);
+    void taskLogic(const yolov8_msgs::msg::DetectionArray& detections) override;
+    void lidarCallback(const sensor_msgs::msg::LaserScan::SharedPtr msg);
+    void dockLocationCallback(const std_msgs::msg::String::SharedPtr msg);
+    rcl_interfaces::msg::SetParametersResult param_callback(const std::vector<rclcpp::Parameter> &params) override;
+    
+    // Subscribers
+    rclcpp::Subscription<sensor_msgs::msg::LaserScan>::SharedPtr lidar_sub_;
+    rclcpp::Subscription<std_msgs::msg::String>::SharedPtr dock_location_sub_;
+    
+    // Parameters
+    double p_approach_distance_;     // Distance to maintain while approaching
+    double p_dock_depth_;           // How far to go into dock
+    double p_reverse_distance_;     // How far to reverse after docking
+    std::string p_target_dock_;     // Left, Center, Right
+    
+    // State machine
+    enum class DockingStates {
+        APPROACHING,    // Moving toward dock entrance
+        ALIGNING,      // Aligning with specific dock
+        ENTERING,      // Moving into dock
+        DOCKED,        // Successfully in dock
+        REVERSING,     // Backing out
+        COMPLETED      // Task done
+    };
+    DockingStates status_;
+    
+    // Lidar data processing
+    std::vector<float> current_lidar_data_;
+    std::vector<DockStructure> current_dock_structures_;
+    bool analyzeLidarData();
+    bool isDockDetected();
+    geometry_msgs::msg::PoseStamped calculateDockingWaypoint();
 
-    rclcpp::Subscription<std_msgs::msg::Int32>::SharedPtr example_sub_;
-    rclcpp::Publisher<std_msgs::msg::Float64>::SharedPtr example_pub_;
-    rclcpp::node_interfaces::OnSetParametersCallbackHandle::SharedPtr on_set_parameters_callback_handle_;
-
-    int p_multiplier_;
-    double p_adder_;
-
-    template <typename T>
-    void getParam(std::string param_name, T& param, T default_value, std::string desc)
-    {
-      auto param_desc = rcl_interfaces::msg::ParameterDescriptor{};
-      param_desc.description = desc;
-      this->declare_parameter<T>(param_name, default_value, param_desc);
-      this->get_parameter(param_name, param);
-      std::string param_log_output = param_name + ": " + std::to_string(param);
-      RCLCPP_INFO(this->get_logger(), param_log_output.c_str()); 
-
-      return;
-    }
+    // Add publisher
+    rclcpp::Publisher<visualization_msgs::msg::MarkerArray>::SharedPtr viz_pub_;
+    
+    // Add helper function
+    void publishDebugMarkers();
 };
 
 } // namespace comp_tasks
