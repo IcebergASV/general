@@ -36,13 +36,23 @@ ros2 topic pub /mavros/setpoint_attitude/thrust std_msgs/msg/Float32 '{data: 0.5
 
 ## Global WPs
 
-ros2 topic pub /mavros/setpoint_position/global sensor_msgs/msg/NavSatFix '{latitude: 63.4412662, longitude: 10.4242176, altitude: 500.0}'
+ros2 topic pub /mavros/setpoint_position/global geographic_msgs/msg/GeoPoseStamped '
+header:
+  stamp:
+    sec: 0
+    nanosec: 0
+  frame_id: "map"
+pose:
+  position:
+    latitude: 28.5581
+    longitude: -81.229037
+    altitude: 500.0
+  orientation:
+    x: 0.0
+    y: 0.0
+    z: 0.0
+    w: 1.0'
 
-ros2 topic pub /mavros/setpoint_position/global sensor_msgs/msg/NavSatFix '{latitude: 47.397742, longitude: 8.545593, altitude: 500.0}'
-
-ros2 topic pub /mavros/setpoint_position/global sensor_msgs/msg/NavSatFix '{latitude: 47.397742, longitude: 8.545593, altitude: 500.0}'
-
-ros2 topic pub /mavros/setpoint_position/global sensor_msgs/msg/NavSatFix '{latitude: 47.397742, longitude: 8.545593, altitude: 500.0}'
 
 ## Local WPs
 
