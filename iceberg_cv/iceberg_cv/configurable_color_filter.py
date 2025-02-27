@@ -28,9 +28,9 @@ class ConfigurableColorFilter(Node):
                 ('output_img_topic', '/icebergcv/filtered_image'),
                 ('output_det_topic', '/icebergcv/detections'),
                 ('output_class_name', 'green'),
-                ('min_area', 50),
-                ('lower_hsv', [35, 50, 50]),  #H, S, V
-                ('upper_hsv', [85, 255, 255])
+                ('min_area', 75),
+                ('lower_hsv', [241, 105, 59]),  #H, S, V
+                ('upper_hsv', [250, 196, 199])
             ]
         )
         
