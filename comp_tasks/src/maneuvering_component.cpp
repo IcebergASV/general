@@ -1,6 +1,8 @@
 #include "comp_tasks/maneuvering_component.hpp"
 #include "comp_tasks/lib/bbox_calculations.hpp"
 
+using namespace std::chrono_literals;
+
 namespace comp_tasks
 {
   Maneuvering::Maneuvering(const rclcpp::NodeOptions & options)
@@ -16,7 +18,7 @@ namespace comp_tasks
     rcl_interfaces::msg::SetParametersResult result;
 
     if (Task::param_callback(params).successful) {}
-    else if (params[0].get_name() == "max_consec_recoveries") { p_max_consec_recoveries_ = params[0].as_int();}
+    else if (params[0].get_name() == "max_consec_recoveries") { p_max_consec_recoveries_ = params[0].as_int(); updateYamlParam("max_consec_recoveries", params[0].as_int());}
     else {
       RCLCPP_ERROR(this->get_logger(), "Invalid Param manuevering: %s", params[0].get_name().c_str());
       result.successful = false;
@@ -38,6 +40,42 @@ namespace comp_tasks
     }
   }
 
+  void Maneuvering::executeRecoveryBehaviour() //Overwritten recovery behaviour function
+  {
+    if (p_recovery_behaviour_ == "STOP")
+    {
+      // Do Nothing
+    }
+    else if (p_recovery_behaviour_ == "RECOVERY_PNT")
+    {
+      publishGlobalWP(p_recovery_lat_, p_recovery_lon_);
+      RCLCPP_INFO(this->get_logger(), "Sent recovery waypoint");
+    }
+    else if (p_recovery_behaviour_ == "RECOVERY_GATE") {  //Added Gate recovery behaviour
+      publishLocalWP(gate_x_, gate_y_);
+      RCLCPP_INFO(this->get_logger(), "Sent recovery waypoint for last gate");
+    }
+
+    else 
+    {
+      RCLCPP_WARN(this->get_logger(), "Invalid Recovery Behavior: %s", p_recovery_behaviour_.c_str());
+    }
+    return;
+  }
+
+  void Maneuvering::handleDetections(const yolov8_msgs::msg::DetectionArray& detections)
+  {
+    geometry_msgs::msg::Point p = publishWPTowardsDetections(detections);
+
+    if (bbox_calculations::hasGate(detections, p_red_buoy_str_, p_second_red_buoy_str_, p_green_buoy_str_, p_second_green_buoy_str_))
+    {
+      gate_x_ = p.x;
+      gate_y_ = p.y;
+    }
+
+    publishSearchStatus("Found");
+  }
+
   void Maneuvering::taskLogic(const yolov8_msgs::msg::DetectionArray& detections)
   {
     if (in_guided_)
@@ -52,8 +90,7 @@ namespace comp_tasks
 
           if (bbox_calculations::hasDesiredDetections(detections, target_class_names_))
           {
-            publishWPTowardsDetections(detections);
-            publishSearchStatus("Found");
+            handleDetections(detections);
             status_ = States::HEADING_TO_TARGET;
           }
           else if(timer_expired_)
@@ -72,8 +109,7 @@ namespace comp_tasks
           publishBehaviourStatus("Recovering with " + p_recovery_behaviour_);
           if (bbox_calculations::hasDesiredDetections(detections, target_class_names_))
           {
-            publishWPTowardsDetections(detections);
-            publishSearchStatus("Found");
+            handleDetections(detections);
             status_ = States::HEADING_TO_TARGET;
           }
           else if(timer_expired_)
@@ -93,11 +129,13 @@ namespace comp_tasks
           if (timer_expired_)
           {
             publishSearchStatus("Searching");
+
+
             if (bbox_calculations::hasDesiredDetections(detections, target_class_names_))
             {
-              publishWPTowardsDetections(detections);
-              RCLCPP_DEBUG(this->get_logger(), "Has desired detections"); 
+              handleDetections(detections);
             }
+            
             else if (p_time_to_stop_before_recovery_ == 0)
             {
               RCLCPP_DEBUG(this->get_logger(), "Going straight to recovery"); 
@@ -138,6 +176,7 @@ namespace comp_tasks
       }
     }
   }
+
 }
 #include "rclcpp_components/register_node_macro.hpp"
 

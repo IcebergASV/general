@@ -8,6 +8,7 @@
 #include "comp_tasks_interfaces/msg/start_task.hpp"
 #include "geographic_msgs/msg/geo_pose_stamped.hpp"
 #include "geometry_msgs/msg/pose_stamped.hpp"
+#include "geometry_msgs/msg/point.hpp"
 #include "yolov8_msgs/msg/detection_array.hpp"
 #include <string>
 #include <chrono>
@@ -15,6 +16,10 @@
 #include "sensor_msgs/msg/nav_sat_fix.hpp"
 #include "mavros_msgs/msg/state.hpp"
 #include "rclcpp_lifecycle/lifecycle_node.hpp"
+#include <fstream>
+#include <yaml-cpp/yaml.h>
+#include <filesystem>
+#include <lifecycle_msgs/msg/state.hpp>
 
 using std::placeholders::_1;
 using namespace std::chrono_literals;
@@ -37,11 +42,13 @@ protected:
     void publishFinishPnt();
     void publishBehaviourStatus(std::string str_msg);
     void publishSearchStatus(std::string str_msg);
-    void publishWPTowardsDetections(const yolov8_msgs::msg::DetectionArray& detections);
+    geometry_msgs::msg::Point publishWPTowardsDetections(const yolov8_msgs::msg::DetectionArray& detections);
     void publishGlobalWP(double lat, double lon);
+    void publishLocalWP(double x, double y);
     void setTimerDuration(double duration);
     void onTimerExpired();
-    void executeRecoveryBehaviour();
+    bool isActive();
+    virtual void executeRecoveryBehaviour();
     void signalTaskFinish(); // TODO
     virtual void taskLogic(const yolov8_msgs::msg::DetectionArray& detections) = 0;
     rclcpp_lifecycle::node_interfaces::LifecycleNodeInterface::CallbackReturn on_configure(const rclcpp_lifecycle::State &);
@@ -61,7 +68,6 @@ protected:
     rclcpp::Publisher<std_msgs::msg::Bool>::SharedPtr task_complete_pub_;
 
     rclcpp::TimerBase::SharedPtr timer_;
-
 
     double p_distance_to_move_;
     double p_angle_from_target_;
@@ -118,6 +124,56 @@ protected:
       std::string param_log_output = param_name + ": " + param;
       RCLCPP_INFO(this->get_logger(), param_log_output.c_str()); 
       return;
+    }
+
+    template <typename T>
+    void updateYamlParam(const std::string &paramName, T newValue) {
+      if (isActive()){
+        try {
+            std::string nodeName = "/" + std::string(this->get_name());
+            std::filesystem::path current_file(__FILE__); 
+            std::filesystem::path package_path = current_file.parent_path().parent_path().parent_path();
+
+            std::string file_path = package_path.string() + "/config/params.yaml";
+
+            // Load the YAML file
+            YAML::Node config = YAML::LoadFile(file_path);
+      
+            // Check if the node and parameter exist
+            if (!config[nodeName]) {
+                std::cerr << "Error: Node " << nodeName << " not found in YAML file." << std::endl;
+                return;
+            }
+
+            // Check if the node and parameter exist
+            if (!config[nodeName] || !config[nodeName]["ros__parameters"] || !config[nodeName]["ros__parameters"][paramName]) {
+                std::cerr << "Error: Parameter " << paramName << " not found in YAML file." << std::endl;
+                return;
+            }
+      
+              // Update the parameter value
+            if constexpr (std::is_same_v<T, double>) {
+                std::ostringstream oss;
+                oss << std::fixed << std::setprecision(3) << newValue;
+                config[nodeName]["ros__parameters"][paramName] = oss.str();
+            } else {
+                config[nodeName]["ros__parameters"][paramName] = newValue;
+            }
+      
+            // Write back to file
+            std::ofstream outFile(file_path);
+            if (!outFile) {
+                std::cerr << "Error: Unable to open file for writing." << std::endl;
+                return;
+            }
+            outFile << config;
+            outFile.close();
+      
+            std::cout << "Successfully updated " << paramName << " to "<< newValue << std::endl;
+        } catch (const std::exception &e) {
+            std::cerr << "Exception: " << e.what() << std::endl;
+        }
+      }
     }
 
 };
