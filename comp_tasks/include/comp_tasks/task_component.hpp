@@ -92,9 +92,6 @@ protected:
     std::string p_second_blue_buoy_str_;
     std::string p_second_red_buoy_str_;
     std::string p_second_green_buoy_str_;
-    double p_time_to_stop_before_recovery_;
-    double p_time_to_pause_search_;
-    double p_time_between_recovery_actions_;
     int p_frame_stack_size_;
 
     std::vector<std::reference_wrapper<std::string>> target_class_names_;

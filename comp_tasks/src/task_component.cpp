@@ -32,9 +32,6 @@ namespace comp_tasks
     else if (params[0].get_name() == "start_lon") { p_start_lon_ = params[0].as_double(); updateYamlParam("start_lon", params[0].as_double());}
     else if (params[0].get_name() == "red_buoy_label") { p_red_buoy_str_ = params[0].as_string(); updateYamlParam("red_buoy_label", params[0].as_string());}
     else if (params[0].get_name() == "recovery_behaviour") { p_recovery_behaviour_ = params[0].as_string(); updateYamlParam("recovery_behaviour", params[0].as_string());}
-    else if (params[0].get_name() == "time_to_pause_search") { p_time_to_pause_search_ = params[0].as_double(); updateYamlParam("time_to_pause_search", params[0].as_double());}
-    else if (params[0].get_name() == "time_between_recovery_actions") { p_time_between_recovery_actions_ = params[0].as_double(); updateYamlParam("time_between_recovery_actions", params[0].as_double());}
-    else if (params[0].get_name() == "time_to_stop_before_recovery") { p_time_to_stop_before_recovery_ = params[0].as_double(); updateYamlParam("time_to_stop_before_recovery", params[0].as_double());}
     else if (params[0].get_name() == "green_buoy_label") { p_green_buoy_str_ = params[0].as_string(); updateYamlParam("green_buoy_label", params[0].as_string());}
     else if (params[0].get_name() == "second_red_buoy_label") { p_second_red_buoy_str_ = params[0].as_string(); updateYamlParam("second_red_buoy_label", params[0].as_string());}
     else if (params[0].get_name() == "second_green_buoy_label") { p_second_green_buoy_str_ = params[0].as_string(); updateYamlParam("second_green_buoy_label", params[0].as_string());}
@@ -82,9 +79,6 @@ namespace comp_tasks
     Task::getParam<double>("start_lat", p_start_lat_, 0.0, "Start latitude");
     Task::getParam<double>("start_lon", p_start_lon_, 0.0, "Start longitude");
     Task::getStringParam("recovery_behaviour", p_recovery_behaviour_, "STOP", "Recovery behaviour");
-    Task::getParam<double>("time_to_pause_search", p_time_to_pause_search_, 0.0, "Miliseconds to wait after finding a target before starting to search for new ones");
-    Task::getParam<double>("time_between_recovery_actions", p_time_between_recovery_actions_, 0.0, "Miliseconds between executing a recovery action (like sending a waypoint)");
-    Task::getParam<double>("time_to_stop_before_recovery", p_time_to_stop_before_recovery_, 0.0, "Miliseconds to stop robot before switching to recovery state if no targets found");
     Task::getStringParam("red_buoy_label", p_red_buoy_str_, "red_buoy", "Red buoy label");
     Task::getStringParam("green_buoy_label", p_green_buoy_str_, "green_buoy", "Green buoy label");
     Task::getStringParam("second_red_buoy_label", p_second_red_buoy_str_, "red_buoy", "Additional red buoy label");
@@ -95,15 +89,6 @@ namespace comp_tasks
     Task::getStringParam("bbox_selection", p_bbox_selection_, "LARGEST", "Selectes either largest or innermost bounding boxes");
 
     on_set_parameters_callback_handle_ = this->add_on_set_parameters_callback(std::bind(&Task::param_callback, this, std::placeholders::_1));
-
-    if (p_time_to_stop_before_recovery_ == 0.0)
-    {
-      timer_expired_ = true;
-    }
-    else 
-    {
-      setTimerDuration(p_time_to_stop_before_recovery_);
-    }
 
     return rclcpp_lifecycle::node_interfaces::LifecycleNodeInterface::CallbackReturn::SUCCESS;
   }
