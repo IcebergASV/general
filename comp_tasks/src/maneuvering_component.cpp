@@ -49,14 +49,17 @@ namespace comp_tasks
   {
     if (str_state == "STOPPED")
     {
+      setTimerDuration(p_time_to_stop_before_recovery_);
       state_ = States::STOPPED;
     }
     else if (str_state == "RECOVERING")
     {
+      setTimerDuration(p_time_between_recovery_actions_);
       state_ = States::RECOVERING;
     }
     else if (str_state == "HEADING_TO_TARGET")
     {
+      setTimerDuration(p_time_to_pause_search_);
       state_ = States::HEADING_TO_TARGET;
     }
     else
