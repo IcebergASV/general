@@ -30,7 +30,7 @@ private:
     double p_time_to_pause_search_;
     double p_time_between_recovery_actions_;
     enum States {STOPPED, RECOVERING, HEADING_TO_TARGET }; 
-    States status_;
+    States state_;
     double gate_x_;
     double gate_y_;
 };

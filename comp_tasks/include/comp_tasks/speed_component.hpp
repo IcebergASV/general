@@ -42,7 +42,7 @@ private:
     double p_remove_wp_within_dist_;
 
     enum States {SENDING_START_PNT, GOING_TO_BAY, MANEUVER_THRU_BAY, CALCULATED_ROUTE, PASSING_BUOY, CONTINUE_PASSING_BUOY, RETURNING }; 
-    States status_;
+    States state_;
 
     std::vector<geometry_msgs::msg::Point> calculated_route_;
     std::vector<geometry_msgs::msg::Point> return_route_;

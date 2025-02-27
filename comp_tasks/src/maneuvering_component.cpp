@@ -13,7 +13,7 @@ namespace comp_tasks
     Maneuvering::getParam<double>("time_between_recovery_actions", p_time_between_recovery_actions_, 0.0, "Miliseconds between executing a recovery action (like sending a waypoint)");
     Maneuvering::getParam<double>("time_to_stop_before_recovery", p_time_to_stop_before_recovery_, 0.0, "Miliseconds to stop robot before switching to recovery state if no targets found");    
     on_set_parameters_callback_handle_ = this->add_on_set_parameters_callback(std::bind(&Maneuvering::param_callback, this, std::placeholders::_1));
-    status_ = States::STOPPED;
+    state_ = States::STOPPED;
     if (p_time_to_stop_before_recovery_ == 0.0)
     {
       timer_expired_ = true;
@@ -103,7 +103,7 @@ namespace comp_tasks
   {
     if (in_guided_)
     {
-      switch (status_)
+      switch (state_)
       {
         case States::STOPPED: // parameterize - don't go to this state at all in 0 secs
         {
@@ -114,13 +114,13 @@ namespace comp_tasks
           if (bbox_calculations::hasDesiredDetections(detections, target_class_names_))
           {
             handleDetections(detections);
-            status_ = States::HEADING_TO_TARGET;
+            state_ = States::HEADING_TO_TARGET;
           }
           else if(timer_expired_)
           {
             executeRecoveryBehaviour();
             setTimerDuration(p_time_between_recovery_actions_);
-            status_ = States::RECOVERING;
+            state_ = States::RECOVERING;
           }
           break;
         }
@@ -133,7 +133,7 @@ namespace comp_tasks
           if (bbox_calculations::hasDesiredDetections(detections, target_class_names_))
           {
             handleDetections(detections);
-            status_ = States::HEADING_TO_TARGET;
+            state_ = States::HEADING_TO_TARGET;
           }
           else if(timer_expired_)
           {
@@ -162,13 +162,13 @@ namespace comp_tasks
             {
               executeRecoveryBehaviour();
               setTimerDuration(p_time_between_recovery_actions_);
-              status_ = States::RECOVERING;
+              state_ = States::RECOVERING;
             }
             else
             {
               RCLCPP_DEBUG(this->get_logger(), "No targets found, stopping"); 
               setTimerDuration(p_time_to_stop_before_recovery_);
-              status_ = States::STOPPED;
+              state_ = States::STOPPED;
             }
           }
           else if (wp_reached_)
@@ -180,12 +180,12 @@ namespace comp_tasks
             {
               executeRecoveryBehaviour();
               setTimerDuration(p_time_between_recovery_actions_);
-              status_ = States::RECOVERING;
+              state_ = States::RECOVERING;
             }
             else
             {
               setTimerDuration(p_time_to_stop_before_recovery_);
-              status_ = States::STOPPED;
+              state_ = States::STOPPED;
             }
           }
           else

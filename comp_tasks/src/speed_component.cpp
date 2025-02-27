@@ -32,9 +32,9 @@ namespace comp_tasks
     Speed::getParam<double>("min_dist_from_bay_b4_return", p_min_dist_from_bay_b4_return_, 0.0, "Minimum distance to travel from bay before executing return route");
     Speed::getParam<int>("use_start_point", p_use_start_point_, 0, "Use start point or wait to detect gate");
     Speed::getParam<double>("remove_wp_within_dist", p_remove_wp_within_dist_, 0.0, "Remove WPs within this distance of current position from pre-calculated routes");
-    
+
     on_set_parameters_callback_handle_ = this->add_on_set_parameters_callback(std::bind(&Speed::param_callback, this, std::placeholders::_1));
-    status_ = States::SENDING_START_PNT;
+    state_ = States::SENDING_START_PNT;
     wp_cnt_ = 0;
   }
 
@@ -191,7 +191,7 @@ namespace comp_tasks
   {
     if (in_guided_)
     {
-      switch (status_)
+      switch (state_)
       {
         case States::SENDING_START_PNT:
         {
@@ -205,7 +205,7 @@ namespace comp_tasks
           }
 
           setTimerDuration(p_time_to_find_bay_);
-          status_ = States::GOING_TO_BAY;
+          state_ = States::GOING_TO_BAY;
           break;
         }
 
@@ -217,7 +217,7 @@ namespace comp_tasks
           if (bbox_calculations::hasDesiredDetections(detections, {p_red_buoy_str_, p_green_buoy_str_, p_second_red_buoy_str_, p_second_green_buoy_str_}))
           {
             handleGateDetections(detections);
-            status_ = States::MANEUVER_THRU_BAY;
+            state_ = States::MANEUVER_THRU_BAY;
           }
           else if(timer_expired_) // Failed to find bay
           {
@@ -233,7 +233,7 @@ namespace comp_tasks
           if(bbox_calculations::hasDesiredDetections(detections, {p_blue_buoy_str_}))
           {
             handleBlueBuoyDetections(detections);
-            status_ = States::PASSING_BUOY;
+            state_ = States::PASSING_BUOY;
           }
           else if (bbox_calculations::hasDesiredDetections(detections, {p_red_buoy_str_, p_green_buoy_str_, p_second_red_buoy_str_, p_second_green_buoy_str_}))
           {
@@ -249,7 +249,7 @@ namespace comp_tasks
             {
               wp_cnt_ = 0;
               sendNextWP(calculated_route_, "gate");
-              status_ = States::CALCULATED_ROUTE;
+              state_ = States::CALCULATED_ROUTE;
             }
           }
           break;
@@ -262,7 +262,7 @@ namespace comp_tasks
           if (bbox_calculations::hasDesiredDetections(detections, {p_blue_buoy_str_}))
           {
             handleBlueBuoyDetections(detections);
-            status_ = States::PASSING_BUOY;
+            state_ = States::PASSING_BUOY;
           }
           else
           {
@@ -304,13 +304,13 @@ namespace comp_tasks
                 wp_cnt_ = 0;
                 updateReturnRoute(return_route_);
                 sendNextWP(return_route_, "buoy");
-                status_ = States::RETURNING;
+                state_ = States::RETURNING;
               }
             }
             else
             {
               continuePastBuoy();
-              status_ = States::CONTINUE_PASSING_BUOY;
+              state_ = States::CONTINUE_PASSING_BUOY;
             }
           }
           break;
@@ -324,7 +324,7 @@ namespace comp_tasks
           if (bbox_calculations::hasDesiredDetections(detections, {p_blue_buoy_str_}))
           {
             handleBlueBuoyDetections(detections);
-            status_ = States::PASSING_BUOY;
+            state_ = States::PASSING_BUOY;
           }
           else if (isFarEnoughFromBay())
           {
@@ -338,7 +338,7 @@ namespace comp_tasks
               wp_cnt_ = 0;
               updateReturnRoute(return_route_);
               sendNextWP(return_route_, "buoy"); // TODO translate semi circle from current position here!!!
-              status_ = States::RETURNING;
+              state_ = States::RETURNING;
             }
           }
           break;
