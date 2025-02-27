@@ -12,8 +12,9 @@ namespace comp_tasks
     Maneuvering::getParam<double>("time_to_pause_search", p_time_to_pause_search_, 0.0, "Miliseconds to wait after finding a target before starting to search for new ones");
     Maneuvering::getParam<double>("time_between_recovery_actions", p_time_between_recovery_actions_, 0.0, "Miliseconds between executing a recovery action (like sending a waypoint)");
     Maneuvering::getParam<double>("time_to_stop_before_recovery", p_time_to_stop_before_recovery_, 0.0, "Miliseconds to stop robot before switching to recovery state if no targets found");    
+    Maneuvering::getStringParam("state", p_state_, "STOPPED", "State machine state");
     on_set_parameters_callback_handle_ = this->add_on_set_parameters_callback(std::bind(&Maneuvering::param_callback, this, std::placeholders::_1));
-    state_ = States::STOPPED;
+    setState(p_state_);
     if (p_time_to_stop_before_recovery_ == 0.0)
     {
       timer_expired_ = true;
@@ -33,6 +34,7 @@ namespace comp_tasks
     else if (params[0].get_name() == "time_to_pause_search") { p_time_to_pause_search_ = params[0].as_double(); updateYamlParam("time_to_pause_search", params[0].as_double());}
     else if (params[0].get_name() == "time_between_recovery_actions") { p_time_between_recovery_actions_ = params[0].as_double(); updateYamlParam("time_between_recovery_actions", params[0].as_double());}
     else if (params[0].get_name() == "time_to_stop_before_recovery") { p_time_to_stop_before_recovery_ = params[0].as_double(); updateYamlParam("time_to_stop_before_recovery", params[0].as_double());}
+    else if (params[0].get_name() == "state") { setState(params[0].as_string()); updateYamlParam("state", params[0].as_string());}
     else {
       RCLCPP_ERROR(this->get_logger(), "Invalid Param manuevering: %s", params[0].get_name().c_str());
       result.successful = false;
@@ -41,6 +43,26 @@ namespace comp_tasks
 
     result.successful = true;
     return result;
+  }
+
+  void Maneuvering::setState(std::string str_state)
+  {
+    if (str_state == "STOPPED")
+    {
+      state_ = States::STOPPED;
+    }
+    else if (str_state == "RECOVERING")
+    {
+      state_ = States::RECOVERING;
+    }
+    else if (str_state == "HEADING_TO_TARGET")
+    {
+      state_ = States::HEADING_TO_TARGET;
+    }
+    else
+    {
+      RCLCPP_ERROR(this->get_logger(), "Invalid State: %s", str_state.c_str());
+    }
   }
 
   void Maneuvering::checkIfFinished()
@@ -107,7 +129,7 @@ namespace comp_tasks
       {
         case States::STOPPED: // parameterize - don't go to this state at all in 0 secs
         {
-          RCLCPP_DEBUG(this->get_logger(), "Stopped"); 
+          RCLCPP_DEBUG(this->get_logger(), "STOPPED"); 
           publishSearchStatus("Searching");
           publishBehaviourStatus("Stopped");
 
@@ -127,7 +149,7 @@ namespace comp_tasks
 
         case States::RECOVERING: // parameterize recovery behaviour & whether it does a recovery
         {
-          RCLCPP_DEBUG(this->get_logger(), "Recovering"); 
+          RCLCPP_DEBUG(this->get_logger(), "RECOVERING"); 
           publishSearchStatus("Searching");
           publishBehaviourStatus("Recovering with " + p_recovery_behaviour_);
           if (bbox_calculations::hasDesiredDetections(detections, target_class_names_))
@@ -148,7 +170,7 @@ namespace comp_tasks
         {
           std::string str_cnt = std::to_string(wp_cnt_);
           publishBehaviourStatus("Heading to WP " + str_cnt);
-          RCLCPP_DEBUG(this->get_logger(), "Heading to Target"); 
+          RCLCPP_DEBUG(this->get_logger(), "HEADING_TO_TARGET"); 
           if (timer_expired_)
           {
             publishSearchStatus("Searching");
