@@ -1,6 +1,6 @@
 #include <memory>
 
-#include "comp_tasks/mavros_repub_component.hpp"
+#include "comp_tasks/buoy_counter_component.hpp"
 #include "rclcpp/rclcpp.hpp"
 
 int main(int argc, char *argv[]) 
@@ -12,9 +12,9 @@ int main(int argc, char *argv[])
   rclcpp::executors::SingleThreadedExecutor exec;
   rclcpp::NodeOptions options;
 
-  auto mavros_repub = std::make_shared<comp_tasks::MavROSRepublisher>(options);
+  auto buoy_counter = std::make_shared<comp_tasks::BuoyCounter>(options);
   
-  exec.add_node(mavros_repub);
+  exec.add_node(buoy_counter);
   exec.spin();
 
   rclcpp::shutdown();

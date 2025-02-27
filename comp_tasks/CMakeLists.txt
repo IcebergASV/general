@@ -134,6 +134,7 @@ ament_target_dependencies(mavros_repub_component
   "rclcpp_components"
   "std_msgs"
   "mavros_msgs"
+  "geometry_msgs"
   "geographic_msgs"
   "comp_tasks_interfaces"
   "yolov8_msgs"
@@ -215,4 +216,39 @@ ament_target_dependencies(task_controller_composition
   rclcpp)
 install(TARGETS
   task_controller_composition
+  DESTINATION lib/${PROJECT_NAME})
+
+add_library(buoy_counter_component SHARED src/buoy_counter_component.cpp)
+target_include_directories(buoy_counter_component
+  PUBLIC
+    $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>
+    $<INSTALL_INTERFACE:include>
+    ${yolov8_msgs_INCLUDE_DIRS}  # <<< Add this
+)
+target_compile_definitions(buoy_counter_component PRIVATE "COMPOSITION_BUILDING_DLL")
+ament_target_dependencies(buoy_counter_component
+  "rclcpp"
+  "rclcpp_components"
+  "yolov8_msgs"
+  "sensor_msgs"
+  "mavros_msgs"
+  "geometry_msgs"
+  "std_msgs")
+rclcpp_components_register_nodes(buoy_counter_component "comp_tasks::BuoyCounter")
+set(node_plugins "comp_tasks::BuoyCounter;$<TARGET_FILE:buoy_counter_component>\n")
+install(TARGETS
+  buoy_counter_component
+  ARCHIVE DESTINATION lib
+  LIBRARY DESTINATION lib
+  RUNTIME DESTINATION bin)
+
+# Add executable for buoy_counter
+add_executable(buoy_counter_composition
+  src/buoy_counter_composition.cpp)
+target_link_libraries(buoy_counter_composition
+buoy_counter_component)
+ament_target_dependencies(buoy_counter_composition
+  rclcpp)
+install(TARGETS
+  buoy_counter_composition
   DESTINATION lib/${PROJECT_NAME})
