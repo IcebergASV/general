@@ -9,7 +9,7 @@
     recovery_behaviour: STOP
     time_to_pause_search: 3.0
     time_between_recovery_actions: 2.0
-    time_to_stop_before_recovery: 20.0
+    time_to_stop_before_recovery: 100.0
     red_buoy_label: red_buoy
     green_buoy_label: green_buoy
     second_red_buoy_label: red_marker
@@ -26,13 +26,13 @@
     time_to_pause_search: 3.0
     time_between_recovery_actions: 2.0
     time_to_stop_before_recovery: 100.0
-    red_buoy_label: red_buoy
-    green_buoy_label: green_buoy
-    second_red_buoy_label: red_marker
-    second_green_buoy_label: green_marker
-    frame_stack_size: 4
+    red_buoy_label: red
+    green_buoy_label: green
+    second_red_buoy_label: black_buoy
+    second_green_buoy_label: yellow_buoy
+    frame_stack_size: 10
     bbox_selection: INNERMOST
-    max_consec_recoveries: 2
+    max_consec_recoveries: 100
 /task_controller:
   ros__parameters:
     tasks: ms
