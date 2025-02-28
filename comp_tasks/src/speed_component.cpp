@@ -117,16 +117,57 @@ namespace comp_tasks
     geometry_msgs::msg::PoseStamped wp = task_lib::relativePolarToLocalCoords(p_estimated_buoy_dist_, angle, current_local_pose_);
 
     // calculate points around center
+    geometry_msgs::msg::Point reference_point = wp.pose.position;
     std::vector<geometry_msgs::msg::Point> points = task_lib::generateCirclePoints(wp.pose.position, p_buoy_circling_radius_, p_num_pnts_on_semicircle_*2);
-
+    task_lib::writePointsToCSV(points, "/home/gracepearcey/repos/iceberg/ros2_ws/src/general/comp_tasks/routes/1.csv");
     // create a semicircle around the estimated buoy position by cutting out the part of the circle closest to our current position
     std::vector<geometry_msgs::msg::Point> route = task_lib::createSemicirce(points, current_local_pose_.pose.position);
 
-    // add current position to the route so we can get back to the starting point
-    route.push_back(current_local_pose_.pose.position);
+    // std::vector<double> distances;
+    // distances.reserve(points.size());
+    
+    // for (const auto& point : points) {
+    //     distances.push_back(std::hypot(point.x - reference_point.x, point.y - reference_point.y));
+    // }
+    
+    // std::vector<size_t> indices(points.size());
+    // std::iota(indices.begin(), indices.end(), 0);
 
-    task_lib::writePointsToCSV(route, "/home/gracepearcey/repos/iceberg/ros2_ws/src/general/comp_tasks/routes/speed_return_route.csv");
-    task_lib::writePointsToCSV(points, "/home/gracepearcey/repos/iceberg/ros2_ws/src/general/comp_tasks/routes/speed_circle.csv");
+    // int offset= 1;
+    // if (points.size() % 4 != 0) {
+    //     offset = 0;
+    // }
+    
+    // std::nth_element(indices.begin(), indices.begin() + (indices.size() / 2)-offset, indices.end(),
+    //     [&distances](size_t i1, size_t i2) {
+    //         return distances[i1] < distances[i2];
+    //     });
+    
+    // std::unordered_set<size_t> remove_indices(indices.begin(), indices.begin() + (indices.size() / 2)-offset);
+    
+    // std::vector<geometry_msgs::msg::Point> farther_points;
+    // for (size_t i = 0; i < points.size(); ++i) {
+    //     if (remove_indices.find(i) == remove_indices.end()) {
+    //         farther_points.push_back(points[i]);
+    //     }
+    // }
+    task_lib::writePointsToCSV(route, "/home/gracepearcey/repos/iceberg/ros2_ws/src/general/comp_tasks/routes/2.csv");
+    //std::vector<geometry_msgs::msg::Point> route = farther_points;
+    // std::sort(ordered_points.begin(), ordered_points.end(),
+    // [&reference_point](const geometry_msgs::msg::Point& p1, const geometry_msgs::msg::Point& p2) {
+    //     // Compute angles relative to the reference point
+    //     double angle1 = std::atan2(p1.y - reference_point.y, p1.x - reference_point.x);
+    //     double angle2 = std::atan2(p2.y - reference_point.y, p2.x - reference_point.x);
+        
+    //     return angle1 > angle2;  // Sort in descending order (right to left)
+    // });
+    //task_lib::orderPointsRightToLeft(route, reference_point);
+
+    // add current position to the route so we can get back to the starting point
+    task_lib::writePointsToCSV(route, "/home/gracepearcey/repos/iceberg/ros2_ws/src/general/comp_tasks/routes/3.csv");
+   // route.push_back(last_seen_bay_pose_.pose.position);
+
+  //  task_lib::writePointsToCSV(route, "/home/gracepearcey/repos/iceberg/ros2_ws/src/general/comp_tasks/routes/4.csv");
     return route;
   }
 
@@ -174,6 +215,34 @@ namespace comp_tasks
     route.push_back(last_seen_bay_pose_.pose.position);
 
     task_lib::writePointsToCSV(route, "/home/gracepearcey/repos/iceberg/ros2_ws/src/general/comp_tasks/routes/bb.csv");
+    //RCLCPP_DEBUG(this->get_logger(), "Semi size %ld, Route size %ld", semi.size(), route.size());
+    //return new_route;
+  }
+
+  void Speed::updateGateRoute(std::vector<geometry_msgs::msg::Point>& route)
+  {
+    //std::vector<geometry_msgs::msg::Point> semi;
+
+    // calculate points around current position
+    //std::vector<geometry_msgs::msg::Point> points = task_lib::generateCirclePoints(current_local_pose_.pose.position, p_buoy_circling_radius_, p_num_pnts_on_semicircle_*2);
+    //semi = task_lib::createSemicirce(points, last_seen_bay_pose_.pose.position);
+    //task_lib::writePointsToCSV(semi, "/home/gracepearcey/repos/iceberg/ros2_ws/src/general/comp_tasks/routes/bb_semi.csv");
+    //bool left = bbox_calculations::isLeft(detections, p_blue_buoy_str_, p_camera_fov_, p_camera_res_x_);
+
+    //route = task_lib::translateSemicircle(route, current_local_pose_.pose.position, passed_buoy_left_);
+
+    // if (passed_buoy_left_)
+    // {
+    //   std::reverse(route.begin(), route.end());
+    // }
+
+    removeClosePoints(route, current_local_pose_.pose.position, p_remove_wp_within_dist_);
+
+
+    // flip order if left. delete points too close. 
+    route.push_back(last_seen_bay_pose_.pose.position);
+
+    task_lib::writePointsToCSV(route, "/home/gracepearcey/repos/iceberg/ros2_ws/src/general/comp_tasks/routes/final_gate.csv");
     //RCLCPP_DEBUG(this->get_logger(), "Semi size %ld, Route size %ld", semi.size(), route.size());
     //return new_route;
   }
@@ -278,6 +347,7 @@ namespace comp_tasks
             else
             {
               wp_cnt_ = 0;
+              updateGateRoute(calculated_route_);
               sendNextWP(calculated_route_, "gate");
               state_ = States::CALCULATED_ROUTE;
             }

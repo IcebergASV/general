@@ -31,6 +31,7 @@ private:
     void continuePastBuoy();
     bool isFarEnoughFromBay();
     void updateReturnRoute(std::vector<geometry_msgs::msg::Point>& route);
+    void updateGateRoute(std::vector<geometry_msgs::msg::Point>& route);
     
     int p_use_start_point_;
     double p_time_to_find_bay_;
