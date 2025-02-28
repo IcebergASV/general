@@ -20,6 +20,7 @@
 #include <yaml-cpp/yaml.h>
 #include <filesystem>
 #include <lifecycle_msgs/msg/state.hpp>
+#include "comp_tasks_interfaces/msg/label_int.hpp"
 
 using std::placeholders::_1;
 using namespace std::chrono_literals;
@@ -40,22 +41,27 @@ protected:
     void bboxCallback(const yolov8_msgs::msg::DetectionArray::SharedPtr msg);
     void wpReachedCallback(const mavros_msgs::msg::WaypointReached msg);
     void publishFinishPnt();
+    void publishStartPoint();
     void publishBehaviourStatus(std::string str_msg);
     void publishSearchStatus(std::string str_msg);
-    geometry_msgs::msg::Point publishWPTowardsDetections(const yolov8_msgs::msg::DetectionArray& detections);
+    void publishStateStatus(std::string str_msg);
+    geometry_msgs::msg::Point publishWPTowardsGate(const yolov8_msgs::msg::DetectionArray& detections);
+    geometry_msgs::msg::PoseStamped publishWPTowardsLargestTarget(const yolov8_msgs::msg::DetectionArray& detections, std::string target_label, double angle);
+    geometry_msgs::msg::PoseStamped getWPTowardsLargestTarget(const yolov8_msgs::msg::DetectionArray& detections, std::string target_label, double offset_angle, double dist);
     void publishGlobalWP(double lat, double lon);
     void publishLocalWP(double x, double y);
-    void setTimerDuration(double duration);
+    void publishWP(geometry_msgs::msg::PoseStamped wp);
+    void setTimerDuration(double duration, std::string timer_name);
     void onTimerExpired();
     bool isActive();
     virtual void executeRecoveryBehaviour();
     void signalTaskFinish(); // TODO
     virtual void taskLogic(const yolov8_msgs::msg::DetectionArray& detections) = 0;
-    rclcpp_lifecycle::node_interfaces::LifecycleNodeInterface::CallbackReturn on_configure(const rclcpp_lifecycle::State &);
+    virtual rclcpp_lifecycle::node_interfaces::LifecycleNodeInterface::CallbackReturn on_configure(const rclcpp_lifecycle::State &);
     rclcpp_lifecycle::node_interfaces::LifecycleNodeInterface::CallbackReturn on_activate(const rclcpp_lifecycle::State &);
     rclcpp_lifecycle::node_interfaces::LifecycleNodeInterface::CallbackReturn on_deactivate(const rclcpp_lifecycle::State &);
     rclcpp_lifecycle::node_interfaces::LifecycleNodeInterface::CallbackReturn on_cleanup(const rclcpp_lifecycle::State &);
-
+    rclcpp_lifecycle::node_interfaces::LifecycleNodeInterface::CallbackReturn on_shutdown(const rclcpp_lifecycle::State &);
     rclcpp::node_interfaces::OnSetParametersCallbackHandle::SharedPtr on_set_parameters_callback_handle_;
     rclcpp::Subscription<sensor_msgs::msg::NavSatFix>::SharedPtr global_pose_sub_;
     rclcpp::Subscription<geometry_msgs::msg::PoseStamped>::SharedPtr local_pose_sub_;
@@ -66,8 +72,10 @@ protected:
     rclcpp::Publisher<std_msgs::msg::String>::SharedPtr status_logger_pub_;
     rclcpp::Subscription<mavros_msgs::msg::State>::SharedPtr state_sub_;
     rclcpp::Publisher<std_msgs::msg::Bool>::SharedPtr task_complete_pub_;
+    rclcpp::Publisher<comp_tasks_interfaces::msg::LabelInt>::SharedPtr timer_cntdwn_pub_;
 
     rclcpp::TimerBase::SharedPtr timer_;
+    rclcpp::TimerBase::SharedPtr countdown_timer_;
 
     double p_distance_to_move_;
     double p_angle_from_target_;
@@ -77,15 +85,16 @@ protected:
     double p_finish_lon_;
     double p_recovery_lat_;
     double p_recovery_lon_;
+    double p_start_lat_;
+    double p_start_lon_; 
     std::string p_recovery_behaviour_;
     std::string p_bbox_selection_;
     std::string p_red_buoy_str_;
     std::string p_green_buoy_str_;
+    std::string p_blue_buoy_str_;
+    std::string p_second_blue_buoy_str_;
     std::string p_second_red_buoy_str_;
     std::string p_second_green_buoy_str_;
-    double p_time_to_stop_before_recovery_;
-    double p_time_to_pause_search_;
-    double p_time_between_recovery_actions_;
     int p_frame_stack_size_;
 
     std::vector<std::reference_wrapper<std::string>> target_class_names_;
@@ -100,7 +109,11 @@ protected:
     int wp_cnt_;
     int detection_frame_cnt_;
     bool in_guided_;
+    bool in_hold_;
     bool activated_;
+    std::string timer_name_;
+
+    int remaining_time_;
 
     template <typename T>
     void getParam(std::string param_name, T& param, T default_value, std::string desc)

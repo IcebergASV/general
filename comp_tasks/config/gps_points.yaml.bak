@@ -1,7 +1,7 @@
-nav_channel:
+speed:
   ros__parameters:
-    start_lat:  -35.3635664
-    start_lon:  149.1649064
+    start_lat:  -35.363301
+    start_lon:  149.165278
     finish_lat:  -35.3635664
     finish_lon:  149.1649064
     recovery_lat:  -35.3635661
@@ -10,8 +10,8 @@ docking:
   ros__parameters:
     start_lat:  -35.3635664
     start_lon:  149.1649065
-    finish_lat:  -35.3633031
-    finish_lon:  149.1652753
+    finish_lat:  -35.3635664
+    finish_lon:  149.1649064
     recovery_lat:  -35.3635661
     recovery_lon:  149.1649066
 maneuvering:

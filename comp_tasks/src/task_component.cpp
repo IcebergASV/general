@@ -28,14 +28,15 @@ namespace comp_tasks
     else if (params[0].get_name() == "finish_lon") { p_finish_lon_ = params[0].as_double(); updateYamlParam("finish_lon", params[0].as_double());}
     else if (params[0].get_name() == "recovery_lat") { p_recovery_lat_ = params[0].as_double(); updateYamlParam("recovery_lat", params[0].as_double());}
     else if (params[0].get_name() == "recovery_lon") { p_recovery_lon_ = params[0].as_double(); updateYamlParam("recovery_lon", params[0].as_double());}
+    else if (params[0].get_name() == "start_lat") { p_start_lat_ = params[0].as_double(); updateYamlParam("start_lat", params[0].as_double());}
+    else if (params[0].get_name() == "start_lon") { p_start_lon_ = params[0].as_double(); updateYamlParam("start_lon", params[0].as_double());}
     else if (params[0].get_name() == "red_buoy_label") { p_red_buoy_str_ = params[0].as_string(); updateYamlParam("red_buoy_label", params[0].as_string());}
-    else if (params[0].get_name() == "recovery_behaviour") { p_recovery_behaviour_ = params[0].as_string(); updateYamlParam("as_string", params[0].as_string());}
-    else if (params[0].get_name() == "time_to_pause_search") { p_time_to_pause_search_ = params[0].as_double(); updateYamlParam("time_to_pause_search", params[0].as_double());}
-    else if (params[0].get_name() == "time_between_recovery_actions") { p_time_between_recovery_actions_ = params[0].as_double(); updateYamlParam("recovery_lat", params[0].as_double());}
-    else if (params[0].get_name() == "time_to_stop_before_recovery") { p_time_to_stop_before_recovery_ = params[0].as_double(); updateYamlParam("time_to_stop_before_recovery", params[0].as_double());}
+    else if (params[0].get_name() == "recovery_behaviour") { p_recovery_behaviour_ = params[0].as_string(); updateYamlParam("recovery_behaviour", params[0].as_string());}
     else if (params[0].get_name() == "green_buoy_label") { p_green_buoy_str_ = params[0].as_string(); updateYamlParam("green_buoy_label", params[0].as_string());}
     else if (params[0].get_name() == "second_red_buoy_label") { p_second_red_buoy_str_ = params[0].as_string(); updateYamlParam("second_red_buoy_label", params[0].as_string());}
     else if (params[0].get_name() == "second_green_buoy_label") { p_second_green_buoy_str_ = params[0].as_string(); updateYamlParam("second_green_buoy_label", params[0].as_string());}
+    else if (params[0].get_name() == "blue_buoy_label") { p_blue_buoy_str_ = params[0].as_string(); updateYamlParam("blue_buoy_label", params[0].as_string());}
+    else if (params[0].get_name() == "second_blue_buoy_label") { p_second_blue_buoy_str_ = params[0].as_string(); updateYamlParam("second_blue_buoy_label", params[0].as_string());}    
     else if (params[0].get_name() == "frame_stack_size") { p_frame_stack_size_ = params[0].as_int(); updateYamlParam("frame_stack_size", params[0].as_int());}
     else if (params[0].get_name() == "bbox_selection") { p_bbox_selection_ = params[0].as_string(); updateYamlParam("bbox_selection", params[0].as_string());}
     else {
@@ -64,6 +65,7 @@ namespace comp_tasks
     local_wp_pub_ = this->create_publisher<geometry_msgs::msg::PoseStamped>("mavros/setpoint_position/local", 10);
     status_logger_pub_ = this->create_publisher<std_msgs::msg::String>("/comp_tasks/task/status", 10);
     task_complete_pub_ = this->create_publisher<std_msgs::msg::Bool>("/comp_tasks/task/complete", 10);
+    timer_cntdwn_pub_ = this->create_publisher<comp_tasks_interfaces::msg::LabelInt>("/comp_tasks/task/timer", 10);
 
     //timer_ = this->create_wall_timer(50ms, std::bind(&Task::timerCallback, this));
 
@@ -75,27 +77,19 @@ namespace comp_tasks
     Task::getParam<double>("finish_lon", p_finish_lon_, 0.0, "Finish longitude");
     Task::getParam<double>("recovery_lat", p_recovery_lat_, 0.0, "Recovery latitude");
     Task::getParam<double>("recovery_lon", p_recovery_lon_, 0.0, "Recovery longitude");
+    Task::getParam<double>("start_lat", p_start_lat_, 0.0, "Start latitude");
+    Task::getParam<double>("start_lon", p_start_lon_, 0.0, "Start longitude");
     Task::getStringParam("recovery_behaviour", p_recovery_behaviour_, "STOP", "Recovery behaviour");
-    Task::getParam<double>("time_to_pause_search", p_time_to_pause_search_, 0.0, "Miliseconds to wait after finding a target before starting to search for new ones");
-    Task::getParam<double>("time_between_recovery_actions", p_time_between_recovery_actions_, 0.0, "Miliseconds between executing a recovery action (like sending a waypoint)");
-    Task::getParam<double>("time_to_stop_before_recovery", p_time_to_stop_before_recovery_, 0.0, "Miliseconds to stop robot before switching to recovery state if no targets found");
     Task::getStringParam("red_buoy_label", p_red_buoy_str_, "red_buoy", "Red buoy label");
     Task::getStringParam("green_buoy_label", p_green_buoy_str_, "green_buoy", "Green buoy label");
     Task::getStringParam("second_red_buoy_label", p_second_red_buoy_str_, "red_buoy", "Additional red buoy label");
+    Task::getStringParam("blue_buoy_label", p_blue_buoy_str_, "blue_buoy", "Blue buoy label");
+    Task::getStringParam("second_blue_buoy_label", p_second_blue_buoy_str_, "blue_buoy", "Additional blue buoy label");
     Task::getStringParam("second_green_buoy_label", p_second_green_buoy_str_, "green_buoy", "Additional green buoy label");
     Task::getParam<int>("frame_stack_size", p_frame_stack_size_, 0, "Number of frames to stack before calculating angle");
     Task::getStringParam("bbox_selection", p_bbox_selection_, "LARGEST", "Selectes either largest or innermost bounding boxes");
 
     on_set_parameters_callback_handle_ = this->add_on_set_parameters_callback(std::bind(&Task::param_callback, this, std::placeholders::_1));
-
-    if (p_time_to_stop_before_recovery_ == 0.0)
-    {
-      timer_expired_ = true;
-    }
-    else 
-    {
-      setTimerDuration(p_time_to_stop_before_recovery_);
-    }
 
     return rclcpp_lifecycle::node_interfaces::LifecycleNodeInterface::CallbackReturn::SUCCESS;
   }
@@ -114,6 +108,11 @@ namespace comp_tasks
   rclcpp_lifecycle::node_interfaces::LifecycleNodeInterface::CallbackReturn Task::on_cleanup(const rclcpp_lifecycle::State &)
   {
     RCLCPP_DEBUG(this->get_logger(), "on_cleanup callback");
+    return rclcpp_lifecycle::node_interfaces::LifecycleNodeInterface::CallbackReturn::SUCCESS;
+  }
+  rclcpp_lifecycle::node_interfaces::LifecycleNodeInterface::CallbackReturn Task::on_shutdown(const rclcpp_lifecycle::State &)
+  {
+    RCLCPP_DEBUG(this->get_logger(), "on_shutdown callback");
     global_pose_sub_.reset();
     local_pose_sub_.reset();
     bbox_sub_.reset();
@@ -129,7 +128,6 @@ namespace comp_tasks
   void Task::globalPoseCallback(const sensor_msgs::msg::NavSatFix::SharedPtr msg)
   {
     current_global_pose_ = *msg;
-    RCLCPP_DEBUG(this->get_logger(), "Latitude: %f, Longitude: %f", current_global_pose_.latitude, current_global_pose_.longitude);
   }
 
   bool Task::isActive() {
@@ -143,7 +141,6 @@ namespace comp_tasks
   void Task::localPoseCallback(const geometry_msgs::msg::PoseStamped::SharedPtr msg)
   {
     current_local_pose_ = *msg;
-    RCLCPP_DEBUG(this->get_logger(), "Local Pose: x: %f, y: %f", msg->pose.position.x, msg->pose.position.y);
   }
 
   void Task::stateCallback(const mavros_msgs::msg::State::SharedPtr msg)
@@ -151,6 +148,7 @@ namespace comp_tasks
     mavros_msgs::msg::State current_state = *msg;
     bool prev_guided = in_guided_;
     in_guided_ = task_lib::inGuided(current_state);
+    in_hold_ = task_lib::inHold(current_state);
     if (task_lib::inManual(current_state) && prev_guided){
       wp_cnt_ = 0;
     }
@@ -179,6 +177,7 @@ namespace comp_tasks
     detection_frame_cnt_++;
     if (detection_frame_cnt_ >= p_frame_stack_size_)
     {
+      RCLCPP_DEBUG(this->get_logger(), "Frame stack");
       this->taskLogic(stacked_detections_);
       detection_frame_cnt_ = 0;
       stacked_detections_.detections.clear();
@@ -197,45 +196,62 @@ namespace comp_tasks
     msg.data = "BEHAVIOUR STATUS: " + str_msg;
     status_logger_pub_->publish(msg);
   }
-
-  //CAUTION: Returns 0, 0 if not activated
-  geometry_msgs::msg::Point Task::publishWPTowardsDetections(const yolov8_msgs::msg::DetectionArray& detections)
+  void Task::publishStateStatus(std::string str_msg)
   {
-    geometry_msgs::msg::Point point;
+    std_msgs::msg::String msg;
+    msg.data = "STATE: " + str_msg;
+    status_logger_pub_->publish(msg);
+  }
 
+  void Task::publishWP(geometry_msgs::msg::PoseStamped wp)
+  {
+    if (wp.pose.position.x != 0 && wp.pose.position.y != 0)
+    {
+      local_wp_pub_->publish(wp);
+      wp_cnt_++;
+    }
+    else{
+      RCLCPP_WARN(this->get_logger(), "Waypoint Empty - not publishing"); 
+    }
+  }
+
+  //Returns 0, 0 if no valid detections
+  geometry_msgs::msg::Point Task::publishWPTowardsGate(const yolov8_msgs::msg::DetectionArray& detections)
+  {
+    geometry_msgs::msg::PoseStamped wp;
     if (activated_){
       wp_reached_ = false;
-      //publishSearchStatus("Found");
       double angle = bbox_calculations::getAngleBetween2DiffTargets(detections, p_bbox_selection_, p_red_buoy_str_, p_second_red_buoy_str_,p_green_buoy_str_, p_second_green_buoy_str_, p_camera_fov_, p_camera_res_x_, p_angle_from_target_);
-      geometry_msgs::msg::PoseStamped wp = task_lib::relativePolarToLocalCoords(p_distance_to_move_, angle, current_local_pose_);
-      if (wp.pose.position.x != 0 && wp.pose.position.y != 0)
-      {
-        local_wp_pub_->publish(wp);
-        wp_cnt_++;
-        std::string str_cnt = std::to_string(wp_cnt_);
-        //publishBehaviourStatus("Heading to WP " + str_cnt);
-
-        //Modify the attributes
-        point.x = wp.pose.position.x;
-        point.y = wp.pose.position.y;
-        point.z = 0;
-      }
-      else{
-        RCLCPP_WARN(this->get_logger(), "Waypoint Empty - not publishing"); 
-      }
-
-      if (p_time_to_pause_search_ != 0.0) 
-      {
-        setTimerDuration(p_time_to_pause_search_);
-      }
-      else
-      {
-        timer_expired_ = true;
-      }
-      
+      wp = task_lib::relativePolarToLocalCoords(p_distance_to_move_, angle, current_local_pose_);
+      publishWP(wp);
     }
+    return wp.pose.position;
+  }
 
-    return point;
+  // negative angle is to the left of the target, positive angle is to the right of target
+  geometry_msgs::msg::PoseStamped Task::publishWPTowardsLargestTarget(const yolov8_msgs::msg::DetectionArray& detections, std::string target_label, double offset_angle)
+  {
+    geometry_msgs::msg::PoseStamped wp;
+    if (activated_){
+      wp_reached_ = false;
+
+      wp = getWPTowardsLargestTarget(detections, target_label, offset_angle, p_distance_to_move_);
+      publishWP(wp);
+    }
+    return wp;
+  }
+
+  geometry_msgs::msg::PoseStamped Task::getWPTowardsLargestTarget(const yolov8_msgs::msg::DetectionArray& detections, std::string target_label, double offset_angle, double dist) //TODO move to lib
+  {
+    double angle = bbox_calculations::getAngleToLargestTarget(detections, target_label, p_camera_fov_, p_camera_res_x_);
+    angle += offset_angle*M_PI/180;
+    geometry_msgs::msg::PoseStamped wp = task_lib::relativePolarToLocalCoords(dist, angle, current_local_pose_);
+    return wp;
+  }
+
+  void Task::publishStartPoint()
+  {
+    publishGlobalWP(p_start_lat_, p_start_lon_);
   }
 
   void Task::publishGlobalWP(double lat, double lon)
@@ -276,15 +292,43 @@ namespace comp_tasks
     return;
   }
 
-  void Task::setTimerDuration(double duration)
+  void Task::setTimerDuration(double duration, std::string timer_name)
   {
     timer_expired_ = false;
+    timer_name_ = timer_name;
 
     std::chrono::milliseconds ms = std::chrono::duration_cast<std::chrono::milliseconds>(std::chrono::duration<double, std::milli>(duration * 1000));
     timer_ = this->create_wall_timer(
         ms, std::bind(&Task::onTimerExpired, this));
     RCLCPP_DEBUG(this->get_logger(), "Timer set to %f ms", duration); 
+
+    remaining_time_ = static_cast<int>(duration); // Store remaining time as integer seconds
+    // // Publish initial countdown value
+     auto msg = comp_tasks_interfaces::msg::LabelInt();
+    msg.value = remaining_time_;
+    msg.label = timer_name_;
+    timer_cntdwn_pub_->publish(msg);
+
+    // Countdown timer that updates every second
+    countdown_timer_ = this->create_wall_timer(
+      std::chrono::seconds(1),
+      [this]() {
+          if (remaining_time_ > 0) {
+              remaining_time_--;
+
+              auto msg = comp_tasks_interfaces::msg::LabelInt();
+              msg.value = remaining_time_;
+              msg.label = timer_name_;
+              timer_cntdwn_pub_->publish(msg);
+
+              if (remaining_time_ == 0) {
+                  countdown_timer_->cancel(); // Stop publishing when countdown reaches zero
+              }
+          }
+      });
+
   }
+  
   void Task::onTimerExpired()
   {
       RCLCPP_DEBUG(this->get_logger(), "Times up"); 

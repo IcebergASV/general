@@ -26,7 +26,7 @@ update_yaml() {
     elif [[ "$NODE_NAME" == "d" ]]; then
         FULL_NODE_NAME="docking"
     elif [[ "$NODE_NAME" == "s" ]]; then
-        FULL_NODE_NAME="speed_challenge"
+        FULL_NODE_NAME="speed"
     else
         echo "Invalid node name. Use 'm' (maneuvering), 'n' (nav channel), 'd' (docking), or 's' (speed challenge)"
         exit 1
@@ -75,7 +75,7 @@ update_yaml() {
     fi
     
     # Print a success message
-    echo "Updated $IDENTIFIER coordinates for $NODE_NAME in $YAML_FILE."
+    echo "Updated $IDENTIFIER coordinates for $FULL_NODE_NAME in $YAML_FILE."
 }
 
 # Main Script

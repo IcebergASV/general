@@ -18,17 +18,22 @@ public:
     explicit Maneuvering(const rclcpp::NodeOptions & options);
 
 private:
+    rclcpp_lifecycle::node_interfaces::LifecycleNodeInterface::CallbackReturn on_configure(const rclcpp_lifecycle::State &) override;
     rcl_interfaces::msg::SetParametersResult param_callback(const std::vector<rclcpp::Parameter> &params) override;
     void executeRecoveryBehaviour() override;
     void taskLogic(const yolov8_msgs::msg::DetectionArray& detections) override;
     void checkIfFinished();
     void handleDetections(const yolov8_msgs::msg::DetectionArray& detections);
     rclcpp::node_interfaces::OnSetParametersCallbackHandle::SharedPtr on_set_parameters_callback_handle_;
+    void setState(std::string str_state);
     
     int p_max_consec_recoveries_;
-
+    double p_time_to_stop_before_recovery_;
+    double p_time_to_pause_search_;
+    double p_time_between_recovery_actions_;
+    std::string p_state_;
     enum States {STOPPED, RECOVERING, HEADING_TO_TARGET }; 
-    States status_;
+    States state_;
     double gate_x_;
     double gate_y_;
 };

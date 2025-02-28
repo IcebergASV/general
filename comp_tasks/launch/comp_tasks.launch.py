@@ -34,6 +34,14 @@ def generate_launch_description():
         ),
         Node(
             package='comp_tasks',
+            executable='speed_composition',
+            namespace='',
+            output='screen',
+            parameters=[config, gps_points],
+            arguments=['--ros-args', '--log-level', LaunchConfiguration('log_level')]
+        ),
+        Node(
+            package='comp_tasks',
             executable='task_controller_composition',
             namespace='',
             output='screen',

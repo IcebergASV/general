@@ -1,11 +1,75 @@
 #include "comp_tasks/lib/task_lib.hpp"
 #include "tf2_geometry_msgs/tf2_geometry_msgs.hpp"
+
+
 namespace task_lib
 {
+// Function to compute the centroid of a set of points
+geometry_msgs::msg::Point computeCentroid(const std::vector<geometry_msgs::msg::Point>& points) {
+    geometry_msgs::msg::Point centroid;
+    centroid.x = 0.0;
+    centroid.y = 0.0;
+    centroid.z = 0.0;
+
+    for (const auto& p : points) {
+        centroid.x += p.x;
+        centroid.y += p.y;
+    }
+
+    centroid.x /= points.size();
+    centroid.y /= points.size();
+
+    return centroid;
+}
+
+// Function to compute the relative angle of a point with respect to a reference direction
+double computeRelativeAngle(const geometry_msgs::msg::Point& point, 
+                            const geometry_msgs::msg::Point& reference_point, 
+                            const geometry_msgs::msg::Point& forward_point) {
+    // Compute the global angle from reference point to this point
+    double point_angle = std::atan2(point.y - reference_point.y, point.x - reference_point.x);
+
+    // Compute the angle of the forward direction (from reference point to centroid)
+    double forward_angle = std::atan2(forward_point.y - reference_point.y, forward_point.x - reference_point.x);
+
+    // Compute the relative angle
+    double relative_angle = point_angle - forward_angle;
+
+    // Normalize to range (-π, π]
+    while (relative_angle <= -M_PI) relative_angle += 2 * M_PI;
+    while (relative_angle > M_PI) relative_angle -= 2 * M_PI;
+
+    return relative_angle;
+}
+
+// Function to sort points right to left
+void orderPointsRightToLeft(std::vector<geometry_msgs::msg::Point>& points, 
+                            const geometry_msgs::msg::Point& reference_point) {
+    // Compute the centroid to get the forward direction
+    geometry_msgs::msg::Point centroid = computeCentroid(points);
+
+    // Sort based on the computed relative angles
+    std::sort(points.begin(), points.end(), 
+              [&](const geometry_msgs::msg::Point& p1, const geometry_msgs::msg::Point& p2) {
+                  double angle1 = computeRelativeAngle(p1, reference_point, centroid);
+                  double angle2 = computeRelativeAngle(p2, reference_point, centroid);
+
+                  return angle1 > angle2; // Right to left
+              });
+}
 
     bool inGuided(const mavros_msgs::msg::State& state)
     {
         if (state.mode == "GUIDED")
+        {
+            return true;
+        }
+
+        return false;
+    }
+    bool inHold(const mavros_msgs::msg::State& state)
+    {
+        if (state.mode == "HOLD")
         {
             return true;
         }
@@ -149,5 +213,161 @@ namespace task_lib
         cartesian.x = x;
         cartesian.y = y;
         return cartesian;
+    }
+
+    double distBetween2Pnts(geometry_msgs::msg::Point p1, geometry_msgs::msg::Point p2)
+    {
+        return std::sqrt(std::pow((p2.x - p1.x), 2) + std::pow((p2.y - p1.y), 2));
+    }
+
+    std::vector<geometry_msgs::msg::Point> generateCirclePoints(
+        const geometry_msgs::msg::Point& center, double radius, int num_points) {
+        
+        std::vector<geometry_msgs::msg::Point> circle_points;
+        circle_points.reserve(num_points);
+        
+        const double angle_increment = 2.0 * M_PI / num_points;
+        
+        for (int i = 0; i < num_points; ++i) {
+            double angle = i * angle_increment;
+            geometry_msgs::msg::Point point;
+            point.x = center.x + radius * std::cos(angle);
+            point.y = center.y + radius * std::sin(angle);
+            point.z = center.z; // Keeping the original z value from center
+            circle_points.push_back(point);
+        }
+        
+        return circle_points;
+    }
+
+    std::vector<geometry_msgs::msg::Point> createSemicirce(
+        const std::vector<geometry_msgs::msg::Point>& circle_points,
+        const geometry_msgs::msg::Point& reference_point) {
+        
+        std::vector<double> distances;
+        distances.reserve(circle_points.size());
+        
+        for (const auto& point : circle_points) {
+            distances.push_back(std::hypot(point.x - reference_point.x, point.y - reference_point.y));
+        }
+        
+        std::vector<size_t> indices(circle_points.size());
+        std::iota(indices.begin(), indices.end(), 0);
+
+        int offset= 1;
+        if (circle_points.size() % 4 != 0) {
+            offset = 0;
+        }
+        
+        std::nth_element(indices.begin(), indices.begin() + (indices.size() / 2)-offset, indices.end(),
+            [&distances](size_t i1, size_t i2) {
+                return distances[i1] < distances[i2];
+            });
+        
+        std::unordered_set<size_t> remove_indices(indices.begin(), indices.begin() + (indices.size() / 2)-offset);
+        
+        std::vector<geometry_msgs::msg::Point> farther_points;
+        for (size_t i = 0; i < circle_points.size(); ++i) {
+            if (remove_indices.find(i) == remove_indices.end()) {
+                farther_points.push_back(circle_points[i]);
+            }
+        }
+        std::vector<geometry_msgs::msg::Point> ordered_points = farther_points;
+        // std::sort(ordered_points.begin(), ordered_points.end(),
+        // [&reference_point](const geometry_msgs::msg::Point& p1, const geometry_msgs::msg::Point& p2) {
+        //     // Compute angles relative to the reference point
+        //     double angle1 = std::atan2(p1.y - reference_point.y, p1.x - reference_point.x);
+        //     double angle2 = std::atan2(p2.y - reference_point.y, p2.x - reference_point.x);
+            
+        //     return angle1 > angle2;  // Sort in descending order (right to left)
+        // });
+        orderPointsRightToLeft(ordered_points, reference_point);
+
+        return ordered_points;
+    }
+
+    std::vector<geometry_msgs::msg::Point> createQuarterCircle(
+        const std::vector<geometry_msgs::msg::Point>& semicircle,
+        double heading,
+        bool left)
+    {
+        std::vector<geometry_msgs::msg::Point> quarter_circle;
+        
+        // Normalize the heading to the range [-pi, pi]
+        heading = std::atan2(std::sin(heading), std::cos(heading));
+        
+        for (const auto& point : semicircle)
+        {
+            // Compute the angle of the point relative to the origin
+            double point_angle = std::atan2(point.y, point.x);
+            
+            // Normalize the point angle to the range [-pi, pi]
+            point_angle = std::atan2(std::sin(point_angle), std::cos(point_angle));
+            
+            // Compute the relative angle difference
+            double angle_diff = point_angle - heading;
+            angle_diff = std::atan2(std::sin(angle_diff), std::cos(angle_diff));
+            
+            // If left, keep points on the left (angle_diff > 0); otherwise, keep right (angle_diff < 0)
+            if ((left && angle_diff > 0) || (!left && angle_diff < 0))
+            {
+                quarter_circle.push_back(point);
+            }
+        }
+        
+        return quarter_circle;
+    }
+
+    std::vector<geometry_msgs::msg::Point> translateSemicircle(
+        const std::vector<geometry_msgs::msg::Point>& semicircle,
+        const geometry_msgs::msg::Point& reference_point,
+        bool align_to_end) 
+    {
+        if (semicircle.empty()) {
+            return semicircle;
+        }
+    
+        // Determine which point to align with the reference point
+        geometry_msgs::msg::Point target_point = align_to_end ? semicircle.back() : semicircle.front();
+    
+        // Compute translation offsets
+        double dx = reference_point.x - target_point.x;
+        double dy = reference_point.y - target_point.y;
+    
+        // Apply translation to all points
+        std::vector<geometry_msgs::msg::Point> translated_semicircle;
+        translated_semicircle.reserve(semicircle.size());
+    
+        for (const auto& point : semicircle) {
+            geometry_msgs::msg::Point translated_point;
+            translated_point.x = point.x + dx;
+            translated_point.y = point.y + dy;
+            translated_point.z = point.z; // Assuming Z remains unchanged
+            translated_semicircle.push_back(translated_point);
+        }
+    
+        return translated_semicircle;
+    }
+    void writePointsToCSV(const std::vector<geometry_msgs::msg::Point>& points, const std::string& filename)
+    {
+        std::ofstream file(filename);
+    
+        if (!file.is_open())
+        {
+            std::cerr << "Failed to open file: " << filename << std::endl;
+            return;
+        }
+    
+        // Write the header
+        file << "X,Y\n";
+    
+        // Write the points
+        for (const auto& point : points)
+        {
+            file << point.x << "," << point.y << "\n";
+        }
+    
+        file.close();
+        std::cout << "Points written to " << filename << std::endl;
     }
 }
