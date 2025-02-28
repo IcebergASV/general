@@ -177,6 +177,7 @@ namespace comp_tasks
     detection_frame_cnt_++;
     if (detection_frame_cnt_ >= p_frame_stack_size_)
     {
+      RCLCPP_DEBUG(this->get_logger(), "Frame stack");
       this->taskLogic(stacked_detections_);
       detection_frame_cnt_ = 0;
       stacked_detections_.detections.clear();

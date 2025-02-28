@@ -125,8 +125,8 @@ namespace comp_tasks
     // add current position to the route so we can get back to the starting point
     route.push_back(current_local_pose_.pose.position);
 
-    //task_lib::writePointsToCSV(route, "/home/gracepearcey/repos/iceberg/ros2_ws/src/general/comp_tasks/routes/speed_return_route.csv");
-    //task_lib::writePointsToCSV(points, "/home/gracepearcey/repos/iceberg/ros2_ws/src/general/comp_tasks/routes/speed_circle.csv");
+    task_lib::writePointsToCSV(route, "/home/gracepearcey/repos/iceberg/ros2_ws/src/general/comp_tasks/routes/speed_return_route.csv");
+    task_lib::writePointsToCSV(points, "/home/gracepearcey/repos/iceberg/ros2_ws/src/general/comp_tasks/routes/speed_circle.csv");
     return route;
   }
 
@@ -270,6 +270,7 @@ namespace comp_tasks
           }
           else if(timer_expired_)
           {
+            RCLCPP_WARN(this->get_logger(), "Did not find gate to calculate route"); 
             if (calculated_route_.size() == 0)
             {
               signalTaskFinish();
@@ -325,7 +326,7 @@ namespace comp_tasks
             { 
               if (return_route_.size() == 0)
               {
-                RCLCPP_WARN(this->get_logger(), "Return route empty, finishing");
+                RCLCPP_WARN(this->get_logger(), "Did not find blue buoy to calculate return route, finishing");
                 signalTaskFinish();
               }
               else

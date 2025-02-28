@@ -25,9 +25,9 @@
     camera_res_x: 640
     camera_fov: 70
     recovery_behaviour: STOP
-    red_buoy_label: red_buoy
-    green_buoy_label: green_buoy
-    blue_buoy_label: blue_buoy
+    red_buoy_label: red
+    green_buoy_label: green
+    blue_buoy_label: blue
     second_blue_buoy_label: blue_buoy
     second_red_buoy_label: black_buoy
     second_green_buoy_label: yellow_buoy
@@ -43,7 +43,7 @@
     num_pnts_on_semicircle: 6
     min_dist_from_bay_b4_return: 0.0
     remove_wp_within_dist: 1.2
-    state: SENDING_START_PNT
+    state: MANEUVER_THRU_BAY
 /task_controller:
   ros__parameters:
     tasks: s
