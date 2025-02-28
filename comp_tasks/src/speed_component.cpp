@@ -170,6 +170,7 @@ namespace comp_tasks
   {
     double dist = task_lib::distBetween2Pnts(last_seen_bay_pose_.pose.position, current_local_pose_.pose.position);
     RCLCPP_DEBUG(this->get_logger(), "Dist traveled from last seen gate %f, min dist from gate %f", dist, p_min_dist_from_bay_b4_return_); 
+    publishBehaviourStatus("Traveled " + task_lib::toStringWithTwoDecimals(dist) + " of min " + task_lib::toStringWithTwoDecimals(p_min_dist_from_bay_b4_return_) + " from bay");
     return dist > p_min_dist_from_bay_b4_return_;
   }
 
