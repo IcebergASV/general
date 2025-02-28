@@ -30,7 +30,7 @@ def generate_launch_description():
             ),
             launch_arguments={
                 'input_image_topic': '/camera/camera/color/image_raw',
-                'model': '/home/icebergasv/ros2_ws/src/general/yolov8_ros/weights/marine_markers_v3.pt'
+                'model': '/home/icebergasv/ros2_ws/src/general/yolov8_ros/weights/new_hp.pt'
             }.items()
     )
     return LaunchDescription(
