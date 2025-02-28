@@ -29,7 +29,7 @@ namespace comp_tasks
     }
     else 
     {
-      setTimerDuration(p_time_to_stop_before_recovery_);
+      setTimerDuration(p_time_to_stop_before_recovery_, "time to stop before recovery");
     }
 
     return rclcpp_lifecycle::node_interfaces::LifecycleNodeInterface::CallbackReturn::SUCCESS;
@@ -59,17 +59,17 @@ namespace comp_tasks
   {
     if (str_state == "STOPPED")
     {
-      setTimerDuration(p_time_to_stop_before_recovery_);
+      setTimerDuration(p_time_to_stop_before_recovery_, "time to stop before recovery");
       state_ = States::STOPPED;
     }
     else if (str_state == "RECOVERING")
     {
-      setTimerDuration(p_time_between_recovery_actions_);
+      setTimerDuration(p_time_between_recovery_actions_, "time between recovery actions");
       state_ = States::RECOVERING;
     }
     else if (str_state == "HEADING_TO_TARGET")
     {
-      setTimerDuration(p_time_to_pause_search_);
+      setTimerDuration(p_time_to_pause_search_, "time to pause search");
       state_ = States::HEADING_TO_TARGET;
     }
     else
@@ -118,7 +118,7 @@ namespace comp_tasks
 
     if (p_time_to_pause_search_ != 0.0)
     {
-      setTimerDuration(p_time_to_pause_search_);
+      setTimerDuration(p_time_to_pause_search_, "time to pause search");
     }
     else
     {
@@ -154,7 +154,7 @@ namespace comp_tasks
           else if(timer_expired_)
           {
             executeRecoveryBehaviour();
-            setTimerDuration(p_time_between_recovery_actions_);
+            setTimerDuration(p_time_between_recovery_actions_, "time between recovery actions");
             state_ = States::RECOVERING;
           }
           break;
@@ -175,7 +175,7 @@ namespace comp_tasks
           {
             checkIfFinished();
             executeRecoveryBehaviour();
-            setTimerDuration(p_time_between_recovery_actions_);
+            setTimerDuration(p_time_between_recovery_actions_, "time between recovery actions");
           }
           break;
         }
@@ -198,13 +198,13 @@ namespace comp_tasks
             else if (p_time_to_stop_before_recovery_ == 0)
             {
               executeRecoveryBehaviour();
-              setTimerDuration(p_time_between_recovery_actions_);
+              setTimerDuration(p_time_between_recovery_actions_, "time between recovery actions");
               state_ = States::RECOVERING;
             }
             else
             {
               RCLCPP_DEBUG(this->get_logger(), "No targets found, stopping"); 
-              setTimerDuration(p_time_to_stop_before_recovery_);
+              setTimerDuration(p_time_to_stop_before_recovery_, "time to stop before recovery");
               state_ = States::STOPPED;
             }
           }
@@ -216,12 +216,12 @@ namespace comp_tasks
             if (p_time_to_stop_before_recovery_ == 0)
             {
               executeRecoveryBehaviour();
-              setTimerDuration(p_time_between_recovery_actions_);
+              setTimerDuration(p_time_between_recovery_actions_, "time between recovery actions");
               state_ = States::RECOVERING;
             }
             else
             {
-              setTimerDuration(p_time_to_stop_before_recovery_);
+              setTimerDuration(p_time_to_stop_before_recovery_, "time to stop before recovery");
               state_ = States::STOPPED;
             }
           }

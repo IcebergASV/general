@@ -20,6 +20,7 @@
 #include <yaml-cpp/yaml.h>
 #include <filesystem>
 #include <lifecycle_msgs/msg/state.hpp>
+#include "comp_tasks_interfaces/msg/label_int.hpp"
 
 using std::placeholders::_1;
 using namespace std::chrono_literals;
@@ -50,7 +51,7 @@ protected:
     void publishGlobalWP(double lat, double lon);
     void publishLocalWP(double x, double y);
     void publishWP(geometry_msgs::msg::PoseStamped wp);
-    void setTimerDuration(double duration);
+    void setTimerDuration(double duration, std::string timer_name);
     void onTimerExpired();
     bool isActive();
     virtual void executeRecoveryBehaviour();
@@ -71,7 +72,7 @@ protected:
     rclcpp::Publisher<std_msgs::msg::String>::SharedPtr status_logger_pub_;
     rclcpp::Subscription<mavros_msgs::msg::State>::SharedPtr state_sub_;
     rclcpp::Publisher<std_msgs::msg::Bool>::SharedPtr task_complete_pub_;
-    rclcpp::Publisher<std_msgs::msg::Int32>::SharedPtr timer_cntdwn_pub_;
+    rclcpp::Publisher<comp_tasks_interfaces::msg::LabelInt>::SharedPtr timer_cntdwn_pub_;
 
     rclcpp::TimerBase::SharedPtr timer_;
     rclcpp::TimerBase::SharedPtr countdown_timer_;
@@ -110,6 +111,7 @@ protected:
     bool in_guided_;
     bool in_hold_;
     bool activated_;
+    std::string timer_name_;
 
     int remaining_time_;
 

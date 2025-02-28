@@ -12,6 +12,7 @@ find_package(geographic_msgs REQUIRED)
 find_package(rosidl_default_generators REQUIRED)
 
 set(files
+  "msg/LabelInt.msg"
   "msg/Task.msg"
   "action/TaskSignal.action"
   "msg/StartTask.msg"

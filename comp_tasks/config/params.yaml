@@ -46,4 +46,4 @@
     state: SENDING_START_PNT
 /task_controller:
   ros__parameters:
-    tasks: ms
+    tasks: s
