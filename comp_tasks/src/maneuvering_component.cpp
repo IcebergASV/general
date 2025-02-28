@@ -8,6 +8,14 @@ namespace comp_tasks
   Maneuvering::Maneuvering(const rclcpp::NodeOptions & options)
   : Task(options, "maneuvering")
   {
+  }
+
+  rclcpp_lifecycle::node_interfaces::LifecycleNodeInterface::CallbackReturn Maneuvering::on_configure(const rclcpp_lifecycle::State &)
+  {
+    RCLCPP_DEBUG(this->get_logger(), "on_configure maneuvering callback");
+
+    Task::on_configure(rclcpp_lifecycle::State());
+  
     Maneuvering::getParam<int>("max_consec_recoveries", p_max_consec_recoveries_, 0, "Maxmimum consecutive recovery attempts before task completes");
     Maneuvering::getParam<double>("time_to_pause_search", p_time_to_pause_search_, 0.0, "Miliseconds to wait after finding a target before starting to search for new ones");
     Maneuvering::getParam<double>("time_between_recovery_actions", p_time_between_recovery_actions_, 0.0, "Miliseconds between executing a recovery action (like sending a waypoint)");
@@ -23,6 +31,8 @@ namespace comp_tasks
     {
       setTimerDuration(p_time_to_stop_before_recovery_);
     }
+
+    return rclcpp_lifecycle::node_interfaces::LifecycleNodeInterface::CallbackReturn::SUCCESS;
   }
 
   rcl_interfaces::msg::SetParametersResult Maneuvering::param_callback(const std::vector<rclcpp::Parameter> &params)

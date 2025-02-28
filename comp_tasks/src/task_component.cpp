@@ -301,27 +301,27 @@ namespace comp_tasks
     RCLCPP_DEBUG(this->get_logger(), "Timer set to %f ms", duration); 
 
     remaining_time_ = static_cast<int>(duration); // Store remaining time as integer seconds
-    // Publish initial countdown value
-    auto msg = std_msgs::msg::Int32();
+    // // Publish initial countdown value
+     auto msg = std_msgs::msg::Int32();
     msg.data = remaining_time_;
     timer_cntdwn_pub_->publish(msg);
 
-    // // Countdown timer that updates every second
-    // countdown_timer_ = this->create_wall_timer(
-    //   std::chrono::seconds(1),
-    //   [this]() {
-    //       if (remaining_time_ > 0) {
-    //           remaining_time_--;
+    // Countdown timer that updates every second
+    countdown_timer_ = this->create_wall_timer(
+      std::chrono::seconds(1),
+      [this]() {
+          if (remaining_time_ > 0) {
+              remaining_time_--;
 
-    //           auto msg = std_msgs::msg::Int32();
-    //           msg.data = remaining_time_;
-    //           timer_cntdwn_pub_->publish(msg);
+              auto msg = std_msgs::msg::Int32();
+              msg.data = remaining_time_;
+              timer_cntdwn_pub_->publish(msg);
 
-    //           if (remaining_time_ == 0) {
-    //               countdown_timer_->cancel(); // Stop publishing when countdown reaches zero
-    //           }
-    //       }
-    //   });
+              if (remaining_time_ == 0) {
+                  countdown_timer_->cancel(); // Stop publishing when countdown reaches zero
+              }
+          }
+      });
 
   }
   
