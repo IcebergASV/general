@@ -1,8 +1,8 @@
 /red:
   ros__parameters:
     class_name: red
-    upper_hsv_list: [0, 100, 100, 160, 100, 100]
-    lower_hsv_list: [10, 255, 255, 180, 255, 255]
+    upper_hsv_list: [10, 255, 255, 180, 255, 255]
+    lower_hsv_list: [0, 100, 100, 160, 100, 100]
     min_area: 75
 /blue:
   ros__parameters:
@@ -13,6 +13,6 @@
 /green:
   ros__parameters:
     class_name: green
-    upper_hsv_list: [35, 50, 50]
-    lower_hsv_list: [85, 255, 255]
+    upper_hsv_list: [85, 255, 255]
+    lower_hsv_list: [35, 50, 50]
     min_area: 75
