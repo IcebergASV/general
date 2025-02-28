@@ -17,6 +17,7 @@ public:
     explicit Speed(const rclcpp::NodeOptions & options);
 
 private:
+    rclcpp_lifecycle::node_interfaces::LifecycleNodeInterface::CallbackReturn on_configure(const rclcpp_lifecycle::State &);
     rcl_interfaces::msg::SetParametersResult param_callback(const std::vector<rclcpp::Parameter> &params) override;
     void setState(std::string str_state);
     void taskLogic(const yolov8_msgs::msg::DetectionArray& detections) override;

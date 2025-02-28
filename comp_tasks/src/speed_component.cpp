@@ -22,6 +22,14 @@ namespace comp_tasks
   Speed::Speed(const rclcpp::NodeOptions & options)
   : Task(options, "speed")
   {
+  }
+
+  rclcpp_lifecycle::node_interfaces::LifecycleNodeInterface::CallbackReturn Speed::on_configure(const rclcpp_lifecycle::State &)
+  {
+    RCLCPP_DEBUG(this->get_logger(), "on_configure speed callback");
+
+    Task::on_configure(rclcpp_lifecycle::State());
+  
     Speed::getParam<double>("time_to_find_bay", p_time_to_find_bay_, 0.0, "Max time to find first detection with bay before timing out");
     Speed::getParam<double>("max_time_between_bay_detections", p_max_time_between_bay_detections_, 0.0, "Max time to search for bay before moving on");
     Speed::getParam<double>("max_time_between_buoy_detections", p_max_time_between_buoy_detections_, 0.0, "Max time to search for blue buoy before turning around");
@@ -37,6 +45,8 @@ namespace comp_tasks
     on_set_parameters_callback_handle_ = this->add_on_set_parameters_callback(std::bind(&Speed::param_callback, this, std::placeholders::_1));
     setState(p_state_);
     wp_cnt_ = 0;
+
+    return rclcpp_lifecycle::node_interfaces::LifecycleNodeInterface::CallbackReturn::SUCCESS;
   }
 
   rcl_interfaces::msg::SetParametersResult Speed::param_callback(const std::vector<rclcpp::Parameter> &params)
@@ -69,12 +79,12 @@ namespace comp_tasks
   {
     if (str_state == "SENDING_START_PNT")
     {
-      setTimerDuration(p_time_to_find_bay_);
+      setTimerDuration(p_time_to_find_bay_, "time to find bay");
       state_ = States::SENDING_START_PNT;
     }
     else if (str_state == "MANEUVER_THRU_BAY")
     {
-      setTimerDuration(p_max_time_between_bay_detections_);
+      setTimerDuration(p_max_time_between_bay_detections_, "max time between bay detections");
       state_ = States::MANEUVER_THRU_BAY;
     }
     else if (str_state == "RETURNING")
@@ -91,7 +101,7 @@ namespace comp_tasks
     }
     else if (str_state == "PASSING_BUOY")
     {
-      setTimerDuration(p_max_time_between_buoy_detections_);
+      setTimerDuration(p_max_time_between_buoy_detections_, "max time between buoy detections");
       state_ = States::PASSING_BUOY;
     }
     else
@@ -210,7 +220,7 @@ namespace comp_tasks
       publishSearchStatus("Found " + p_green_buoy_str_);
     }
     publishWPTowardsGate(detections);
-    setTimerDuration(p_max_time_between_bay_detections_);
+    setTimerDuration(p_max_time_between_bay_detections_, "max time between bay detections");
   }
 
   void Speed::handleBlueBuoyDetections(const yolov8_msgs::msg::DetectionArray& detections)
@@ -220,7 +230,7 @@ namespace comp_tasks
     last_seen_blue_buoy_pose_ = current_local_pose_;
     publishWPTowardsLargestTarget(detections, p_blue_buoy_str_, p_buoy_offset_angle_);
     continue_past_buoys_pnt_ = getWPTowardsLargestTarget(detections, p_blue_buoy_str_, p_buoy_offset_angle_, p_min_dist_from_bay_b4_return_);
-    setTimerDuration(p_max_time_between_buoy_detections_);
+    setTimerDuration(p_max_time_between_buoy_detections_, "max time between buoy detections");
     return_route_ = calculateReturnRoute(detections);
   }
 
@@ -240,7 +250,7 @@ namespace comp_tasks
             publishBehaviourStatus("Going to start point");
             publishStartPoint();
           }
-          setTimerDuration(p_time_to_find_bay_);
+          setTimerDuration(p_time_to_find_bay_, "time to find bay");
           state_ = States::MANEUVER_THRU_BAY;
           break;
         }
