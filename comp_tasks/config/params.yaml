@@ -1,6 +1,6 @@
 /task:
   ros__parameters:
-    distance_to_move: 30.0
+    distance_to_move: 20.0
     angle_from_target: 20.0
     camera_res_x: 640
     camera_fov: 70
@@ -12,13 +12,13 @@
     time_to_stop_before_recovery: 100.0
     red_buoy_label: red_buoy
     green_buoy_label: green_buoy
-    second_red_buoy_label: black_buoy
-    second_green_buoy_label: yellow_buoy
+    second_red_buoy_label: red_marker
+    second_green_buoy_label: green_marker
     frame_stack_size: 4
     bbox_selection: INNERMOST
 /maneuvering:
   ros__parameters:
-    distance_to_move: 30.0
+    distance_to_move: 20.0
     angle_from_target: 20.0
     camera_res_x: 640
     camera_fov: 70

@@ -4,7 +4,7 @@
 namespace comp_tasks
 {
 
-MavROSRepublisher::MavROSRepublisher(const rclcpp::NodeOptions & options) : Task(options, "mavros_republisher") {
+MavROSRepublisher::MavROSRepublisher(const rclcpp::NodeOptions & options) : Node("mavros_republisher", options) {
   //Create publishers for component statuses
   mavros_state_subscriber = this->create_subscription<mavros_msgs::msg::State>("/mavros/state", 10, std::bind(&MavROSRepublisher::republishMAVROSStatus, this, std::placeholders::_1));
   mavros_state_publisher = this->create_publisher<std_msgs::msg::Bool>("/guided_status", 10);
@@ -19,11 +19,6 @@ void MavROSRepublisher::republishMAVROSStatus(const mavros_msgs::msg::State::Sha
         
   mavros_state_publisher->publish(bool_msg);
   RCLCPP_DEBUG(this->get_logger(), "Guided Status: %s", bool_msg.data ? "true" : "false");
-}
-
-void MavROSRepublisher::taskLogic(const yolov8_msgs::msg::DetectionArray& detections) {
-  //Needed because inherits from pure virtual
-  return;
 }
 
 } // namespace comp_tasks
