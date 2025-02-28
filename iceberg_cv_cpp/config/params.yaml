@@ -7,8 +7,8 @@
 /blue:
   ros__parameters:
     class_name: blue
-    upper_hsv_list: [0, 100, 100]
-    lower_hsv_list: [10, 255, 255]
+    upper_hsv_list: [130, 255, 255]
+    lower_hsv_list: [100, 50, 50]
     min_area: 75
 /green:
   ros__parameters:
