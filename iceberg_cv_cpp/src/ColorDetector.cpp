@@ -15,8 +15,18 @@ public:
         
         ColorDetector::getStringParam("class_name", p_class_name_, "", "Class name");
         ColorDetector::getIntParam("min_area", p_min_area_, 1, "Minimum pixel area");
-        ColorDetector::getIntArrayParam("lower_hsv_list", p_lower_hsv_list_, {}, "Lower HSV");
-        ColorDetector::getIntArrayParam("upper_hsv_list", p_upper_hsv_list_, {}, "Upper HSV");
+        ColorDetector::getIntParam("lower_hsv1", p_lower_hsv1_, -1, "Lower HSV 1");
+        ColorDetector::getIntParam("lower_hsv2", p_lower_hsv2_, -1, "Lower HSV 2");
+        ColorDetector::getIntParam("lower_hsv3", p_lower_hsv3_, -1, "Lower HSV 3");
+        ColorDetector::getIntParam("lower_hsv4", p_lower_hsv4_, -1, "Lower HSV 4");
+        ColorDetector::getIntParam("lower_hsv5", p_lower_hsv5_, -1, "Lower HSV 5");
+        ColorDetector::getIntParam("lower_hsv6", p_lower_hsv6_, -1, "Lower HSV 6");
+        ColorDetector::getIntParam("upper_hsv1", p_upper_hsv1_, -1, "Upper HSV 1");
+        ColorDetector::getIntParam("upper_hsv2", p_upper_hsv2_, -1, "Upper HSV 2");
+        ColorDetector::getIntParam("upper_hsv3", p_upper_hsv3_, -1, "Upper HSV 3");
+        ColorDetector::getIntParam("upper_hsv4", p_upper_hsv4_, -1, "Upper HSV 4");
+        ColorDetector::getIntParam("upper_hsv5", p_upper_hsv5_, -1, "Upper HSV 5");
+        ColorDetector::getIntParam("upper_hsv6", p_upper_hsv6_, -1, "Upper HSV 6");
         on_set_parameters_callback_handle_ = this->add_on_set_parameters_callback(std::bind(&ColorDetector::param_callback, this, std::placeholders::_1));
         // Get parameters
         input_topic_ = "/camera/camera/color/image_raw";
@@ -47,9 +57,21 @@ public:
   
       if (params[0].get_name() == "class_name") { p_class_name_ = params[0].as_string(); } 
       else if (params[0].get_name() == "min_area") { p_min_area_ = params[0].as_int(); }
-      else if (params[0].get_name() == "lower_hsv_list") { p_lower_hsv_list_ = params[0].as_integer_array();setHSV(); }  
-      else if (params[0].get_name() == "upper_hsv_list") { p_upper_hsv_list_ = params[0].as_integer_array();setHSV(); }  
+      else if (params[0].get_name() == "upper_hsv1") {p_upper_hsv1_ = params[0].as_int(); setHSV();}
+      else if (params[0].get_name() == "upper_hsv2") {p_upper_hsv2_ = params[0].as_int(); setHSV();}
+      else if (params[0].get_name() == "upper_hsv3") {p_upper_hsv3_ = params[0].as_int(); setHSV();}
+      else if (params[0].get_name() == "upper_hsv4") {p_upper_hsv4_ = params[0].as_int(); setHSV();}
+      else if (params[0].get_name() == "upper_hsv5") {p_upper_hsv5_ = params[0].as_int(); setHSV();}
+      else if (params[0].get_name() == "upper_hsv6") {p_upper_hsv6_ = params[0].as_int(); setHSV();}
+      else if (params[0].get_name() == "lower_hsv1") {p_lower_hsv1_ = params[0].as_int(); setHSV();}
+      else if (params[0].get_name() == "lower_hsv2") {p_lower_hsv2_ = params[0].as_int(); setHSV();}
+      else if (params[0].get_name() == "lower_hsv3") {p_lower_hsv3_ = params[0].as_int(); setHSV();}
+      else if (params[0].get_name() == "lower_hsv4") {p_lower_hsv4_ = params[0].as_int(); setHSV();}
+      else if (params[0].get_name() == "lower_hsv5") {p_lower_hsv5_ = params[0].as_int(); setHSV();}
+      else if (params[0].get_name() == "lower_hsv6") {p_lower_hsv6_ = params[0].as_int(); setHSV();}
       else {
+
+
         RCLCPP_ERROR(this->get_logger(), "Invalid Param");
         result.successful = false;
         return result;
@@ -61,7 +83,7 @@ public:
 
 
 private:
-    void getIntParam(std::string param_name, int param, int default_value, std::string desc)
+    void getIntParam(std::string param_name, int& param, int default_value, std::string desc)
     {
         auto param_desc = rcl_interfaces::msg::ParameterDescriptor{};
         param_desc.description = desc;
@@ -99,25 +121,76 @@ private:
         return;
     }
 
+    void populateLists()
+    {
+        // Clear the lists before populating them
+        lower_hsv_list_.clear();
+        upper_hsv_list_.clear();
+
+        // Helper lambda function to add valid values
+        auto add_if_valid = [](std::vector<int> &list, int value) {
+            if (value >= 0) {
+                list.emplace_back(value);
+            }
+        };
+
+        // Populate the lower_hsv_list_
+        add_if_valid(lower_hsv_list_, p_lower_hsv1_);
+        add_if_valid(lower_hsv_list_, p_lower_hsv2_);
+        add_if_valid(lower_hsv_list_, p_lower_hsv3_);
+        add_if_valid(lower_hsv_list_, p_lower_hsv4_);
+        add_if_valid(lower_hsv_list_, p_lower_hsv5_);
+        add_if_valid(lower_hsv_list_, p_lower_hsv6_);
+
+        // Populate the upper_hsv_list_
+        add_if_valid(upper_hsv_list_, p_upper_hsv1_);
+        add_if_valid(upper_hsv_list_, p_upper_hsv2_);
+        add_if_valid(upper_hsv_list_, p_upper_hsv3_);
+        add_if_valid(upper_hsv_list_, p_upper_hsv4_);
+        add_if_valid(upper_hsv_list_, p_upper_hsv5_);
+        add_if_valid(upper_hsv_list_, p_upper_hsv6_);
+
+        RCLCPP_DEBUG(this->get_logger(), "upper size %ld", upper_hsv_list_.size());
+        RCLCPP_DEBUG(this->get_logger(), "lower size %ld", lower_hsv_list_.size());
+        for (size_t i = 0; i < upper_hsv_list_.size(); ++i) {
+            RCLCPP_DEBUG(this->get_logger(), "upper_hsv_list_[%zu]: %d", i, upper_hsv_list_[i]);
+        }
+        for (size_t i = 0; i < lower_hsv_list_.size(); ++i) {
+            RCLCPP_DEBUG(this->get_logger(), "upper_hsv_list_[%zu]: %d", i, lower_hsv_list_[i]);
+        }
+    }
     void setHSV()
     {
+        populateLists();
+        RCLCPP_DEBUG(this->get_logger(), "setHSV");
         // Validate parameters
-        if (p_lower_hsv_list_.size() % 3 != 0 || p_upper_hsv_list_.size() % 3 != 0) {
+
+        RCLCPP_DEBUG(this->get_logger(), "lower size %ld", lower_hsv_list_.size());
+        RCLCPP_DEBUG(this->get_logger(), "upper size %ld", upper_hsv_list_.size());
+        if (lower_hsv_list_.size() % 3 != 0 || upper_hsv_list_.size() % 3 != 0) {
             RCLCPP_ERROR(this->get_logger(), "HSV lists must contain triplets (H,S,V)");
             rclcpp::shutdown();
             return;
         }
-        if (p_lower_hsv_list_.size() != p_upper_hsv_list_.size()) {
+        if (lower_hsv_list_.size() != upper_hsv_list_.size()) {
             RCLCPP_ERROR(this->get_logger(), "Lower and upper HSV lists must have equal number of elements");
             rclcpp::shutdown();
             return;
         }
-
+        hsv_ranges_.clear();
         // Create HSV ranges
-        for (size_t i = 0; i < p_lower_hsv_list_.size(); i += 3) {
-            cv::Vec3b lower(p_lower_hsv_list_[i], p_lower_hsv_list_[i+1], p_lower_hsv_list_[i+2]);
-            cv::Vec3b upper(p_upper_hsv_list_[i], p_upper_hsv_list_[i+1], p_upper_hsv_list_[i+2]);
+        for (size_t i = 0; i < lower_hsv_list_.size(); i += 3) {
+            cv::Vec3b lower(lower_hsv_list_[i], lower_hsv_list_[i+1], lower_hsv_list_[i+2]);
+            cv::Vec3b upper(upper_hsv_list_[i], upper_hsv_list_[i+1], upper_hsv_list_[i+2]);
             hsv_ranges_.emplace_back(lower, upper);
+        }
+
+        RCLCPP_DEBUG(this->get_logger(), "ranges size %ld", hsv_ranges_.size());
+
+        for (size_t i=0; i < hsv_ranges_.size(); i++) {
+            RCLCPP_INFO(this->get_logger(), "HSV Range %zu: [%d,%d,%d] to [%d,%d,%d]", i,
+                        hsv_ranges_[i].first[0], hsv_ranges_[i].first[1], hsv_ranges_[i].first[2],
+                        hsv_ranges_[i].second[0], hsv_ranges_[i].second[1], hsv_ranges_[i].second[2]);
         }
     }
     void image_callback(const sensor_msgs::msg::Image::SharedPtr msg) {
@@ -201,8 +274,22 @@ private:
     std::string output_det_topic_;
     int p_min_area_;
     std::string p_class_name_;
-    std::vector<int64_t> p_lower_hsv_list_;
-    std::vector<int64_t> p_upper_hsv_list_;
+    std::vector<int> lower_hsv_list_;
+    std::vector<int> upper_hsv_list_;
+    int p_lower_hsv1_;
+    int p_lower_hsv2_;
+    int p_lower_hsv3_;
+    int p_lower_hsv4_;
+    int p_lower_hsv5_;
+    int p_lower_hsv6_;
+    int p_upper_hsv1_;
+    int p_upper_hsv2_;
+    int p_upper_hsv3_;
+    int p_upper_hsv4_;
+    int p_upper_hsv5_;
+    int p_upper_hsv6_;
+
+
 
     rclcpp::node_interfaces::OnSetParametersCallbackHandle::SharedPtr on_set_parameters_callback_handle_;
 };
