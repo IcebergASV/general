@@ -99,6 +99,7 @@ namespace comp_tasks
 
     return rclcpp_lifecycle::node_interfaces::LifecycleNodeInterface::CallbackReturn::SUCCESS;
   }
+  
   rclcpp_lifecycle::node_interfaces::LifecycleNodeInterface::CallbackReturn Task::on_activate(const rclcpp_lifecycle::State & )
   {
     RCLCPP_DEBUG(this->get_logger(), "on_activate callback");
