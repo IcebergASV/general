@@ -6,20 +6,10 @@ from launch.actions import DeclareLaunchArgument
 from launch.substitutions import LaunchConfiguration
 
 def generate_launch_description():
-    red_config = os.path.join(
-        get_package_share_directory('comp_tasks'),
+    config = os.path.join(
+        get_package_share_directory('iceberg_cv_cpp'),
         'config',
-        'red_params.yaml'
-        )
-    blue_config = os.path.join(
-        get_package_share_directory('comp_tasks'),
-        'config',
-        'green_params.yaml'
-        )
-    green_config = os.path.join(
-        get_package_share_directory('comp_tasks'),
-        'config',
-        'blue_params.yaml'
+        'params.yaml'
         )
 
     log_level_launch_arg = DeclareLaunchArgument(
@@ -34,7 +24,7 @@ def generate_launch_description():
             executable='ColorDetector',
             namespace='',
             output='screen',
-            parameters=[red_config],
+            parameters=[config],
             name='red',
             arguments=['--ros-args', '--log-level', LaunchConfiguration('log_level')]
         ),
@@ -42,18 +32,18 @@ def generate_launch_description():
             package='iceberg_cv_cpp',
             executable='ColorDetector',
             namespace='',
-            name='blue',
             output='screen',
-            parameters=[blue_config],
+            parameters=[config],
+            name='blue',
             arguments=['--ros-args', '--log-level', LaunchConfiguration('log_level')]
         ),
         Node(
             package='iceberg_cv_cpp',
             executable='ColorDetector',
             namespace='',
-            name='green',
             output='screen',
-            parameters=[green_config],
+            parameters=[config],
+            name='green',
             arguments=['--ros-args', '--log-level', LaunchConfiguration('log_level')]
         ),
     ])

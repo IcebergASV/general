@@ -12,12 +12,12 @@ using std::placeholders::_1;
 class ColorDetector : public rclcpp::Node {
 public:
     ColorDetector() : Node("configurable_color_filter") {
-        on_set_parameters_callback_handle_ = this->add_on_set_parameters_callback(std::bind(&ColorDetector::param_callback, this, std::placeholders::_1));
+        
         ColorDetector::getStringParam("class_name", p_class_name_, "", "Class name");
         ColorDetector::getIntParam("min_area", p_min_area_, 1, "Minimum pixel area");
         ColorDetector::getIntArrayParam("lower_hsv_list", p_lower_hsv_list_, {}, "Lower HSV");
         ColorDetector::getIntArrayParam("upper_hsv_list", p_upper_hsv_list_, {}, "Upper HSV");
-        
+        on_set_parameters_callback_handle_ = this->add_on_set_parameters_callback(std::bind(&ColorDetector::param_callback, this, std::placeholders::_1));
         // Get parameters
         input_topic_ = "/camera/camera/color/image_raw";
         output_img_topic_ = "/icebergcv/filtered_image";
