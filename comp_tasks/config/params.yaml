@@ -1,6 +1,6 @@
 /maneuvering:
   ros__parameters:
-    distance_to_move: 30.0
+    distance_to_move: 20.0
     angle_from_target: 20.0
     camera_res_x: 640
     camera_fov: 70
@@ -20,7 +20,7 @@
     state: RECOVERING
 /speed:
   ros__parameters:
-    distance_to_move: 10.000
+    distance_to_move: 20.0
     angle_from_target: 20.0
     camera_res_x: 640
     camera_fov: 70
