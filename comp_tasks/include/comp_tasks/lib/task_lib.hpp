@@ -16,7 +16,7 @@
 namespace task_lib
 {
     rclcpp::Logger logger = rclcpp::get_logger("task_lib_logger");
-
+    std::string toStringWithTwoDecimals(double value);
     bool inGuided(const mavros_msgs::msg::State& state);
     bool inHold(const mavros_msgs::msg::State& state);
     bool inManual(const mavros_msgs::msg::State& state);

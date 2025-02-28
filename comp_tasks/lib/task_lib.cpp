@@ -4,6 +4,11 @@
 
 namespace task_lib
 {
+std::string toStringWithTwoDecimals(double value) {
+    std::ostringstream stream;
+    stream << std::fixed << std::setprecision(2) << value;
+    return stream.str();
+}
 // Function to compute the centroid of a set of points
 geometry_msgs::msg::Point computeCentroid(const std::vector<geometry_msgs::msg::Point>& points) {
     geometry_msgs::msg::Point centroid;
