@@ -17,12 +17,12 @@
 /blue:
   ros__parameters:
     class_name: blue
-    upper_hsv1: 130
-    upper_hsv2: 255
-    upper_hsv3: 255
-    lower_hsv1: 100
-    lower_hsv2: 50
-    lower_hsv3: 50
+    upper_hsv1: 140
+    upper_hsv2: 200
+    upper_hsv3: 200
+    lower_hsv1: 125
+    lower_hsv2: 70
+    lower_hsv3: 70
     min_area: 75
 /green:
   ros__parameters:
