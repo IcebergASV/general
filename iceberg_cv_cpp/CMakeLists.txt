@@ -16,7 +16,16 @@ find_package(OpenCV REQUIRED)
 # uncomment the following section in order to fill in
 # further dependencies manually.
 # find_package(<dependency> REQUIRED)
+# Install launch files.
+install(DIRECTORY
+  launch
+  DESTINATION share/${PROJECT_NAME}
+)
 
+install(DIRECTORY
+  config
+  DESTINATION share/${PROJECT_NAME}
+)
 add_executable(ColorDetector src/ColorDetector.cpp)
 target_include_directories(ColorDetector PUBLIC
   $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>

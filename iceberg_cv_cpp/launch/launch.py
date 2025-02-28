@@ -35,12 +35,14 @@ def generate_launch_description():
             namespace='',
             output='screen',
             parameters=[red_config],
+            name='red',
             arguments=['--ros-args', '--log-level', LaunchConfiguration('log_level')]
         ),
         Node(
             package='iceberg_cv_cpp',
             executable='ColorDetector',
             namespace='',
+            name='blue',
             output='screen',
             parameters=[blue_config],
             arguments=['--ros-args', '--log-level', LaunchConfiguration('log_level')]
@@ -49,6 +51,7 @@ def generate_launch_description():
             package='iceberg_cv_cpp',
             executable='ColorDetector',
             namespace='',
+            name='green',
             output='screen',
             parameters=[green_config],
             arguments=['--ros-args', '--log-level', LaunchConfiguration('log_level')]

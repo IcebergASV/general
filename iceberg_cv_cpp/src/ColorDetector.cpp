@@ -5,49 +5,25 @@
 #include <yolov8_msgs/msg/detection.hpp>
 #include <yolov8_msgs/msg/detection_array.hpp>
 #include <yolov8_msgs/msg/bounding_box2_d.hpp>
+#include <vector>
 
 using std::placeholders::_1;
 
 class ColorDetector : public rclcpp::Node {
 public:
     ColorDetector() : Node("configurable_color_filter") {
-        // Declare parameters
-        this->declare_parameter("input_img_topic", "/camera/camera/color/image_raw");
-        this->declare_parameter("output_img_topic", "/icebergcv/filtered_image");
-        this->declare_parameter("output_det_topic", "/icebergcv/detections");
-        this->declare_parameter("output_class_name", "red");
-        this->declare_parameter("min_area", 75);
-        this->declare_parameter("lower_hsv_list", std::vector<int64_t>{0, 100, 100, 160, 100, 100}); // Default for red
-        this->declare_parameter("upper_hsv_list", std::vector<int64_t>{10, 255, 255, 180, 255, 255});
-
+        on_set_parameters_callback_handle_ = this->add_on_set_parameters_callback(std::bind(&ColorDetector::param_callback, this, std::placeholders::_1));
+        ColorDetector::getStringParam("class_name", p_class_name_, "", "Class name");
+        ColorDetector::getIntParam("min_area", p_min_area_, 1, "Minimum pixel area");
+        ColorDetector::getIntArrayParam("lower_hsv_list", p_lower_hsv_list_, {}, "Lower HSV");
+        ColorDetector::getIntArrayParam("upper_hsv_list", p_upper_hsv_list_, {}, "Upper HSV");
+        
         // Get parameters
-        input_topic_ = this->get_parameter("input_img_topic").as_string();
-        output_img_topic_ = this->get_parameter("output_img_topic").as_string();
-        output_det_topic_ = this->get_parameter("output_det_topic").as_string();
-        class_name_ = this->get_parameter("output_class_name").as_string();
-        min_area_ = this->get_parameter("min_area").as_int();
+        input_topic_ = "/camera/camera/color/image_raw";
+        output_img_topic_ = "/icebergcv/filtered_image";
+        output_det_topic_ = "/icebergcv/detections";
 
-        auto lower_hsv = this->get_parameter("lower_hsv_list").as_integer_array();
-        auto upper_hsv = this->get_parameter("upper_hsv_list").as_integer_array();
-
-        // Validate parameters
-        if (lower_hsv.size() % 3 != 0 || upper_hsv.size() % 3 != 0) {
-            RCLCPP_ERROR(this->get_logger(), "HSV lists must contain triplets (H,S,V)");
-            rclcpp::shutdown();
-            return;
-        }
-        if (lower_hsv.size() != upper_hsv.size()) {
-            RCLCPP_ERROR(this->get_logger(), "Lower and upper HSV lists must have equal number of elements");
-            rclcpp::shutdown();
-            return;
-        }
-
-        // Create HSV ranges
-        for (size_t i = 0; i < lower_hsv.size(); i += 3) {
-            cv::Vec3b lower(lower_hsv[i], lower_hsv[i+1], lower_hsv[i+2]);
-            cv::Vec3b upper(upper_hsv[i], upper_hsv[i+1], upper_hsv[i+2]);
-            hsv_ranges_.emplace_back(lower, upper);
-        }
+        setHSV();
 
         // Create subscriber and publishers
         sub_ = this->create_subscription<sensor_msgs::msg::Image>(
@@ -65,8 +41,85 @@ public:
                         hsv_ranges_[i].second[0], hsv_ranges_[i].second[1], hsv_ranges_[i].second[2]);
         }
     }
+    rcl_interfaces::msg::SetParametersResult param_callback(const std::vector<rclcpp::Parameter> &params)
+    {
+      rcl_interfaces::msg::SetParametersResult result;
+  
+      if (params[0].get_name() == "class_name") { p_class_name_ = params[0].as_string(); } 
+      else if (params[0].get_name() == "min_area") { p_min_area_ = params[0].as_int(); }
+      else if (params[0].get_name() == "lower_hsv_list") { p_lower_hsv_list_ = params[0].as_integer_array();setHSV(); }  
+      else if (params[0].get_name() == "upper_hsv_list") { p_upper_hsv_list_ = params[0].as_integer_array();setHSV(); }  
+      else {
+        RCLCPP_ERROR(this->get_logger(), "Invalid Param");
+        result.successful = false;
+        return result;
+      }
+  
+      result.successful = true;
+      return result;
+    }
+
 
 private:
+    void getIntParam(std::string param_name, int param, int default_value, std::string desc)
+    {
+        auto param_desc = rcl_interfaces::msg::ParameterDescriptor{};
+        param_desc.description = desc;
+        this->declare_parameter<int>(param_name, default_value, param_desc);
+        this->get_parameter(param_name, param);
+        std::string param_log_output = param_name + ": " + std::to_string(param);
+        RCLCPP_INFO(this->get_logger(), param_log_output.c_str()); 
+
+        return;
+    }
+    void getStringParam(std::string param_name, std::string& param, std::string default_value, std::string desc)
+    {
+        auto param_desc = rcl_interfaces::msg::ParameterDescriptor{};
+        param_desc.description = desc;
+        this->declare_parameter<std::string>(param_name, default_value, param_desc);
+        this->get_parameter(param_name, param);
+        std::string param_log_output = param_name + ": " + param;
+        RCLCPP_INFO(this->get_logger(), param_log_output.c_str()); 
+        return;
+    }
+    void getIntArrayParam(std::string param_name,  std::vector<long int> param, std::vector<long int> default_value, std::string desc)
+    {
+        auto param_desc = rcl_interfaces::msg::ParameterDescriptor{};
+        param_desc.description = desc;
+        this->declare_parameter<std::vector<long int>>(param_name, default_value, param_desc);
+        this->get_parameter(param_name, param);
+        std::string param_log_output = param_name + ": [";
+        for (const auto &val : param) {
+            param_log_output += std::to_string(val) + ",";
+        }
+        param_log_output.pop_back(); // Remove the trailing comma
+        param_log_output += "]";
+        RCLCPP_INFO(this->get_logger(), param_log_output.c_str());
+   
+        return;
+    }
+
+    void setHSV()
+    {
+        // Validate parameters
+        if (p_lower_hsv_list_.size() % 3 != 0 || p_upper_hsv_list_.size() % 3 != 0) {
+            RCLCPP_ERROR(this->get_logger(), "HSV lists must contain triplets (H,S,V)");
+            rclcpp::shutdown();
+            return;
+        }
+        if (p_lower_hsv_list_.size() != p_upper_hsv_list_.size()) {
+            RCLCPP_ERROR(this->get_logger(), "Lower and upper HSV lists must have equal number of elements");
+            rclcpp::shutdown();
+            return;
+        }
+
+        // Create HSV ranges
+        for (size_t i = 0; i < p_lower_hsv_list_.size(); i += 3) {
+            cv::Vec3b lower(p_lower_hsv_list_[i], p_lower_hsv_list_[i+1], p_lower_hsv_list_[i+2]);
+            cv::Vec3b upper(p_upper_hsv_list_[i], p_upper_hsv_list_[i+1], p_upper_hsv_list_[i+2]);
+            hsv_ranges_.emplace_back(lower, upper);
+        }
+    }
     void image_callback(const sensor_msgs::msg::Image::SharedPtr msg) {
         cv_bridge::CvImagePtr cv_ptr;
         try {
@@ -105,7 +158,7 @@ private:
         det_array.header = msg->header;
 
         for (const auto& contour : contours) {
-            if (cv::contourArea(contour) > min_area_) {
+            if (cv::contourArea(contour) > p_min_area_) {
                 cv::Rect rect = cv::boundingRect(contour);
 
                 cv::rectangle(filtered, rect, cv::Scalar(0, 255, 0), 2);
@@ -119,7 +172,7 @@ private:
 
                 yolov8_msgs::msg::Detection det;
                 det.class_id = 100;
-                det.class_name = class_name_;
+                det.class_name = p_class_name_;
                 det.score = 1.0;
                 det.bbox = bbox;
 
@@ -146,8 +199,12 @@ private:
     std::string input_topic_;
     std::string output_img_topic_;
     std::string output_det_topic_;
-    std::string class_name_;
-    int min_area_;
+    int p_min_area_;
+    std::string p_class_name_;
+    std::vector<int64_t> p_lower_hsv_list_;
+    std::vector<int64_t> p_upper_hsv_list_;
+
+    rclcpp::node_interfaces::OnSetParametersCallbackHandle::SharedPtr on_set_parameters_callback_handle_;
 };
 
 int main(int argc, char** argv) {
