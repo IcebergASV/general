@@ -1,6 +1,9 @@
 #include "comp_tasks/lib/task_lib.hpp"
 #include "tf2_geometry_msgs/tf2_geometry_msgs.hpp"
 
+
+namespace task_lib
+{
 // Function to compute the centroid of a set of points
 geometry_msgs::msg::Point computeCentroid(const std::vector<geometry_msgs::msg::Point>& points) {
     geometry_msgs::msg::Point centroid;
@@ -54,8 +57,6 @@ void orderPointsRightToLeft(std::vector<geometry_msgs::msg::Point>& points,
                   return angle1 > angle2; // Right to left
               });
 }
-namespace task_lib
-{
 
     bool inGuided(const mavros_msgs::msg::State& state)
     {

@@ -34,5 +34,8 @@ namespace task_lib
     std::vector<geometry_msgs::msg::Point> createSemicirce(const std::vector<geometry_msgs::msg::Point>& circle_points, const geometry_msgs::msg::Point& reference_point);
     std::vector<geometry_msgs::msg::Point> createQuarterCircle(const std::vector<geometry_msgs::msg::Point>& semicircle, double heading, bool left);
     std::vector<geometry_msgs::msg::Point> translateSemicircle(const std::vector<geometry_msgs::msg::Point>& semicircle, const geometry_msgs::msg::Point& reference_point, bool align_to_end);
+    geometry_msgs::msg::Point computeCentroid(const std::vector<geometry_msgs::msg::Point>& points);
+    double computeRelativeAngle(const geometry_msgs::msg::Point& point, const geometry_msgs::msg::Point& reference_point, const geometry_msgs::msg::Point& forward_point);
+    void orderPointsRightToLeft(std::vector<geometry_msgs::msg::Point>& points, const geometry_msgs::msg::Point& reference_point);
 }
 #endif // TASKLIB_HPP
