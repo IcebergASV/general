@@ -65,6 +65,7 @@ namespace comp_tasks
     local_wp_pub_ = this->create_publisher<geometry_msgs::msg::PoseStamped>("mavros/setpoint_position/local", 10);
     status_logger_pub_ = this->create_publisher<std_msgs::msg::String>("/comp_tasks/task/status", 10);
     task_complete_pub_ = this->create_publisher<std_msgs::msg::Bool>("/comp_tasks/task/complete", 10);
+    timer_cntdwn_pub_ = this->create_publisher<std_msgs::msg::Int32>("/comp_tasks/task/timer", 10);
 
     //timer_ = this->create_wall_timer(50ms, std::bind(&Task::timerCallback, this));
 
@@ -298,7 +299,32 @@ namespace comp_tasks
     timer_ = this->create_wall_timer(
         ms, std::bind(&Task::onTimerExpired, this));
     RCLCPP_DEBUG(this->get_logger(), "Timer set to %f ms", duration); 
+
+    remaining_time_ = static_cast<int>(duration); // Store remaining time as integer seconds
+    // Publish initial countdown value
+    auto msg = std_msgs::msg::Int32();
+    msg.data = remaining_time_;
+    timer_cntdwn_pub_->publish(msg);
+
+    // // Countdown timer that updates every second
+    // countdown_timer_ = this->create_wall_timer(
+    //   std::chrono::seconds(1),
+    //   [this]() {
+    //       if (remaining_time_ > 0) {
+    //           remaining_time_--;
+
+    //           auto msg = std_msgs::msg::Int32();
+    //           msg.data = remaining_time_;
+    //           timer_cntdwn_pub_->publish(msg);
+
+    //           if (remaining_time_ == 0) {
+    //               countdown_timer_->cancel(); // Stop publishing when countdown reaches zero
+    //           }
+    //       }
+    //   });
+
   }
+  
   void Task::onTimerExpired()
   {
       RCLCPP_DEBUG(this->get_logger(), "Times up"); 

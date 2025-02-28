@@ -71,8 +71,10 @@ protected:
     rclcpp::Publisher<std_msgs::msg::String>::SharedPtr status_logger_pub_;
     rclcpp::Subscription<mavros_msgs::msg::State>::SharedPtr state_sub_;
     rclcpp::Publisher<std_msgs::msg::Bool>::SharedPtr task_complete_pub_;
+    rclcpp::Publisher<std_msgs::msg::Int32>::SharedPtr timer_cntdwn_pub_;
 
     rclcpp::TimerBase::SharedPtr timer_;
+    rclcpp::TimerBase::SharedPtr countdown_timer_;
 
     double p_distance_to_move_;
     double p_angle_from_target_;
@@ -108,6 +110,8 @@ protected:
     bool in_guided_;
     bool in_hold_;
     bool activated_;
+
+    int remaining_time_;
 
     template <typename T>
     void getParam(std::string param_name, T& param, T default_value, std::string desc)

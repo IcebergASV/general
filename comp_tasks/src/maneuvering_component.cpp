@@ -135,7 +135,7 @@ namespace comp_tasks
           RCLCPP_DEBUG(this->get_logger(), "STOPPED"); 
           publishSearchStatus("Searching");
           publishBehaviourStatus("Stopped");
-
+          publishStateStatus("STOPPED");
           if (bbox_calculations::hasDesiredDetections(detections, target_class_names_))
           {
             handleDetections(detections);
@@ -155,6 +155,7 @@ namespace comp_tasks
           RCLCPP_DEBUG(this->get_logger(), "RECOVERING"); 
           publishSearchStatus("Searching");
           publishBehaviourStatus("Recovering with " + p_recovery_behaviour_);
+          publishStateStatus("RECOVERING");
           if (bbox_calculations::hasDesiredDetections(detections, target_class_names_))
           {
             handleDetections(detections);
@@ -174,6 +175,7 @@ namespace comp_tasks
           std::string str_cnt = std::to_string(wp_cnt_);
           publishBehaviourStatus("Heading to WP " + str_cnt);
           RCLCPP_DEBUG(this->get_logger(), "HEADING_TO_TARGET"); 
+          publishStateStatus("HEADING_TO_TARGET");
           if (timer_expired_)
           {
             publishSearchStatus("Searching");

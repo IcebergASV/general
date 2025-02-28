@@ -72,11 +72,6 @@ namespace comp_tasks
       setTimerDuration(p_time_to_find_bay_);
       state_ = States::SENDING_START_PNT;
     }
-    else if (str_state == "GOING_TO_BAY")
-    {
-      setTimerDuration(p_max_time_between_bay_detections_);
-      state_ = States::GOING_TO_BAY;
-    }
     else if (str_state == "MANEUVER_THRU_BAY")
     {
       setTimerDuration(p_max_time_between_bay_detections_);
@@ -245,26 +240,8 @@ namespace comp_tasks
             publishBehaviourStatus("Going to start point");
             publishStartPoint();
           }
-
           setTimerDuration(p_time_to_find_bay_);
-          state_ = States::GOING_TO_BAY;
-          break;
-        }
-
-        case States::GOING_TO_BAY:
-        {
-          RCLCPP_DEBUG(this->get_logger(), "GOING_TO_BAY"); 
-          publishStateStatus("GOING_TO_BAY");
-          publishSearchStatus("Searching for Gates");
-          if (bbox_calculations::hasDesiredDetections(detections, {p_red_buoy_str_, p_green_buoy_str_, p_second_red_buoy_str_, p_second_green_buoy_str_}))
-          {
-            handleGateDetections(detections);
-            state_ = States::MANEUVER_THRU_BAY;
-          }
-          else if(timer_expired_) // Failed to find bay
-          {
-            signalTaskFinish();
-          }
+          state_ = States::MANEUVER_THRU_BAY;
           break;
         }
         case States::MANEUVER_THRU_BAY: 
