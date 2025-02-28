@@ -1,0 +1,6 @@
+/ColorDetector:
+  ros__parameters:
+    class_name: green
+    upper_hsv_list: [35, 50, 50]
+    lower_hsv_list: [85, 255, 255]
+    min_area: 75
