@@ -42,7 +42,7 @@ def generate_launch_description():
     ]
 
     now = datetime.now()
-    month_day_folder = now.strftime('02_27_rosbags')
+    month_day_folder = now.strftime('03_01_rosbags')
     datetime_folder = now.strftime('%Y-%m-%d_%H-%M-%S')
 
     home_directory = os.path.expanduser('~')

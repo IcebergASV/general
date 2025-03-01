@@ -22,6 +22,17 @@ find_package(rclcpp_lifecycle REQUIRED)
 find_package(lifecycle_msgs REQUIRED)
 find_package(yaml-cpp REQUIRED)
 
+set(CMAKE_MODULE_PATH "${CMAKE_MODULE_PATH};/usr/share/cmake/geographiclib")
+find_package(GeographicLib REQUIRED)
+# Check if the package is found and print some useful information
+if(GeographicLib_FOUND)
+  message(STATUS "GeographicLib found!")
+  message(STATUS "GeographicLib include path: ${GeographicLib_INCLUDE_DIRS}")
+  message(STATUS "GeographicLib library path: ${GeographicLib_LIBRARIES}")
+else()
+  message(FATAL_ERROR "GeographicLib not found!")
+endif()
+
 include_directories(
     include
     ${tf2_INCLUDE_DIRS}
@@ -38,8 +49,6 @@ if(BUILD_TESTING)
   set(ament_cmake_cpplint_FOUND TRUE)
   ament_lint_auto_find_test_dependencies()
 endif()
-
-include_directories(include)
 
 # Install launch files.
 install(DIRECTORY
@@ -261,3 +270,12 @@ ament_target_dependencies(task_controller_composition
 install(TARGETS
   task_controller_composition
   DESTINATION lib/${PROJECT_NAME})
+
+add_executable(global_to_local src/global_to_local.cpp)
+# target_link_libraries(global_to_local /usr/lib/x86_64-linux-gnu/libGeographic.so)
+target_link_libraries(global_to_local /usr/lib/aarch64-linux-gnu/libGeographic.so)
+ament_target_dependencies(global_to_local rclcpp sensor_msgs geographic_msgs geometry_msgs)
+install(TARGETS
+global_to_local
+  DESTINATION lib/${PROJECT_NAME}
+)
