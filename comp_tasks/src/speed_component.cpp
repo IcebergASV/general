@@ -204,6 +204,10 @@ namespace comp_tasks
       publishSearchStatus("Found " + p_green_buoy_str_);
     }
     publishWPTowardsGate(detections);
+    if (p_time_to_pause_search_ != 0)
+    {
+      std::this_thread::sleep_for(std::chrono::seconds(static_cast<int>(p_time_to_pause_search_)));
+    }
     setTimerDuration(p_max_time_between_bay_detections_, "max time between bay detections");
   }
 
@@ -214,8 +218,12 @@ namespace comp_tasks
     last_seen_blue_buoy_pose_ = current_local_pose_;
     publishWPTowardsLargestTarget(detections, p_blue_buoy_str_, p_buoy_offset_angle_);
     continue_past_buoys_pnt_ = getWPTowardsLargestTarget(detections, p_blue_buoy_str_, p_buoy_offset_angle_, p_min_dist_from_bay_b4_return_);
-    setTimerDuration(p_max_time_between_buoy_detections_, "max time between buoy detections");
     return_route_ = calculateReturnRoute(detections);
+    if (p_time_to_pause_search_ != 0)
+    {
+      std::this_thread::sleep_for(std::chrono::seconds(static_cast<int>(p_time_to_pause_search_)));
+    }
+    setTimerDuration(p_max_time_between_buoy_detections_, "max time between buoy detections");
   }
 
   void Speed::taskLogic(const yolov8_msgs::msg::DetectionArray& detections)
