@@ -64,8 +64,8 @@ namespace comp_tasks
   bool TaskController::setNextNodeName()
   {
     if (p_tasks_.empty()) {
-        return "No tasks remaining";
-        return false;
+      RCLCPP_INFO(this->get_logger(), "No remaining tasks");
+      return false;
     }
 
     char first_letter = p_tasks_[0]; // Get the first letter
