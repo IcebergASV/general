@@ -273,7 +273,7 @@ install(TARGETS
 
 add_executable(global_to_local src/global_to_local.cpp)
 target_link_libraries(global_to_local /usr/lib/x86_64-linux-gnu/libGeographic.so)
-ament_target_dependencies(global_to_local rclcpp sensor_msgs geographic_msgs)
+ament_target_dependencies(global_to_local rclcpp sensor_msgs geographic_msgs geometry_msgs)
 install(TARGETS
 global_to_local
   DESTINATION lib/${PROJECT_NAME}
