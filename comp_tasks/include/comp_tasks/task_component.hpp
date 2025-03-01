@@ -50,7 +50,6 @@ protected:
     geometry_msgs::msg::PoseStamped getWPTowardsLargestTarget(const yolov8_msgs::msg::DetectionArray& detections, std::string target_label, double offset_angle, double dist);
     void publishGlobalWP(double lat, double lon);
     void publishLocalWP(double x, double y);
-    void publishWP(geometry_msgs::msg::PoseStamped wp);
     void setTimerDuration(double duration, std::string timer_name);
     void onTimerExpired();
     bool isActive();

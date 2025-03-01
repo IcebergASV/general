@@ -203,18 +203,6 @@ namespace comp_tasks
     status_logger_pub_->publish(msg);
   }
 
-  void Task::publishWP(geometry_msgs::msg::PoseStamped wp)
-  {
-    if (wp.pose.position.x != 0 && wp.pose.position.y != 0)
-    {
-      local_wp_pub_->publish(wp);
-      wp_cnt_++;
-    }
-    else{
-      RCLCPP_WARN(this->get_logger(), "Waypoint Empty - not publishing"); 
-    }
-  }
-
   //Returns 0, 0 if no valid detections
   geometry_msgs::msg::Point Task::publishWPTowardsGate(const yolov8_msgs::msg::DetectionArray& detections)
   {
@@ -223,7 +211,7 @@ namespace comp_tasks
       wp_reached_ = false;
       double angle = bbox_calculations::getAngleBetween2DiffTargets(detections, p_bbox_selection_, p_red_buoy_str_, p_second_red_buoy_str_,p_green_buoy_str_, p_second_green_buoy_str_, p_camera_fov_, p_camera_res_x_, p_angle_from_target_);
       wp = task_lib::relativePolarToLocalCoords(p_distance_to_move_, angle, current_local_pose_);
-      publishWP(wp);
+      publishLocalWP(wp.pose.position.x, wp.pose.position.y);
     }
     return wp.pose.position;
   }
@@ -236,7 +224,7 @@ namespace comp_tasks
       wp_reached_ = false;
 
       wp = getWPTowardsLargestTarget(detections, target_label, offset_angle, p_distance_to_move_);
-      publishWP(wp);
+      publishLocalWP(wp.pose.position.x, wp.pose.position.y);
     }
     return wp;
   }
@@ -268,9 +256,16 @@ namespace comp_tasks
   {
     if (activated_)
     {
-      geometry_msgs::msg::PoseStamped wp = task_lib::getLocalWPMsg(x, y);
-      local_wp_pub_->publish(wp);
-      RCLCPP_DEBUG(this->get_logger(), "Local WP: x=%f, y=%f", wp.pose.position.x, wp.pose.position.y);
+      if (x != 0 && y != 0)
+      {
+        geometry_msgs::msg::PoseStamped wp = task_lib::getLocalWPMsg(x, y);
+        local_wp_pub_->publish(wp);
+        RCLCPP_DEBUG(this->get_logger(), "Local WP: x=%f, y=%f", wp.pose.position.x, wp.pose.position.y);
+        wp_cnt_++;
+      }
+      else{
+        RCLCPP_WARN(this->get_logger(), "Waypoint Empty - not publishing"); 
+      }
     }
   }
 
