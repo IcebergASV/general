@@ -67,8 +67,6 @@ namespace comp_tasks
     task_complete_pub_ = this->create_publisher<std_msgs::msg::Bool>("/comp_tasks/task/complete", 10);
     timer_cntdwn_pub_ = this->create_publisher<comp_tasks_interfaces::msg::LabelInt>("/comp_tasks/task/timer", 10);
 
-    //timer_ = this->create_wall_timer(50ms, std::bind(&Task::timerCallback, this));
-
     Task::getParam<double>("distance_to_move", p_distance_to_move_, 0.0, "Sets a wp this far away");
     Task::getParam<double>("angle_from_target", p_angle_from_target_, 0.0, "Angles the wp this far from a target buoy");
     Task::getParam<int>("camera_res_x", p_camera_res_x_, 0, "Resolution width of camera");
@@ -89,8 +87,6 @@ namespace comp_tasks
     Task::getParam<int>("frame_stack_size", p_frame_stack_size_, 0, "Number of frames to stack before calculating angle");
     Task::getStringParam("bbox_selection", p_bbox_selection_, "LARGEST", "Selectes either largest or innermost bounding boxes");
 
-    on_set_parameters_callback_handle_ = this->add_on_set_parameters_callback(std::bind(&Task::param_callback, this, std::placeholders::_1));
-
     return rclcpp_lifecycle::node_interfaces::LifecycleNodeInterface::CallbackReturn::SUCCESS;
   }
   rclcpp_lifecycle::node_interfaces::LifecycleNodeInterface::CallbackReturn Task::on_activate(const rclcpp_lifecycle::State & )
@@ -108,11 +104,6 @@ namespace comp_tasks
   rclcpp_lifecycle::node_interfaces::LifecycleNodeInterface::CallbackReturn Task::on_cleanup(const rclcpp_lifecycle::State &)
   {
     RCLCPP_DEBUG(this->get_logger(), "on_cleanup callback");
-    return rclcpp_lifecycle::node_interfaces::LifecycleNodeInterface::CallbackReturn::SUCCESS;
-  }
-  rclcpp_lifecycle::node_interfaces::LifecycleNodeInterface::CallbackReturn Task::on_shutdown(const rclcpp_lifecycle::State &)
-  {
-    RCLCPP_DEBUG(this->get_logger(), "on_shutdown callback");
     global_pose_sub_.reset();
     local_pose_sub_.reset();
     bbox_sub_.reset();
@@ -121,7 +112,16 @@ namespace comp_tasks
     wp_reached_sub_.reset();
     status_logger_pub_.reset();
     state_sub_.reset();
+    task_complete_pub_.reset();
+    timer_cntdwn_pub_.reset();
     timer_.reset();
+    countdown_timer_.reset();
+    on_set_parameters_callback_handle_.reset();
+    return rclcpp_lifecycle::node_interfaces::LifecycleNodeInterface::CallbackReturn::SUCCESS;
+  }
+  rclcpp_lifecycle::node_interfaces::LifecycleNodeInterface::CallbackReturn Task::on_shutdown(const rclcpp_lifecycle::State &)
+  {
+    RCLCPP_DEBUG(this->get_logger(), "on_shutdown callback");
     return rclcpp_lifecycle::node_interfaces::LifecycleNodeInterface::CallbackReturn::SUCCESS;
   }
 

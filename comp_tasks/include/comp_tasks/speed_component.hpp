@@ -21,7 +21,6 @@ private:
     rcl_interfaces::msg::SetParametersResult param_callback(const std::vector<rclcpp::Parameter> &params) override;
     void setState(std::string str_state);
     void taskLogic(const yolov8_msgs::msg::DetectionArray& detections) override;
-    rclcpp::node_interfaces::OnSetParametersCallbackHandle::SharedPtr on_set_parameters_callback_handle_;
     void sendNextWP(std::vector<geometry_msgs::msg::Point> route, std::string route_name);
     std::vector<geometry_msgs::msg::Point> calculateReturnRoute(const yolov8_msgs::msg::DetectionArray& detections);
     std::vector<geometry_msgs::msg::Point> calculateRouteFromGates(const yolov8_msgs::msg::DetectionArray& detections);

@@ -115,7 +115,7 @@ namespace bbox_calculations
     }
     
     double largest_area = largest_bbox[0].bbox.size.x * largest_bbox[0].bbox.size.y;
-    RCLCPP_INFO(logger, "Largest %s buoy area: %f", largest_bbox[0].class_name.c_str(), largest_area);
+    RCLCPP_DEBUG(logger, "Largest %s buoy area: %f", largest_bbox[0].class_name.c_str(), largest_area);
     return largest_bbox;
   }
 
