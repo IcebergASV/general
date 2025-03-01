@@ -271,6 +271,24 @@ namespace comp_tasks
     }
   }
 
+  void Task::publishDynamicWPInfo(double x, double y)
+  {
+    std::string = this->get_name();
+    if (activated_)
+    {
+      if (x != 0 && y != 0)
+      {
+        geometry_msgs::msg::PoseStamped wp = task_lib::getLocalWPMsg(x, y);
+        local_wp_pub_->publish(wp);
+        RCLCPP_DEBUG(this->get_logger(), "Local WP: x=%f, y=%f", wp.pose.position.x, wp.pose.position.y);
+        wp_cnt_++;
+      }
+      else{
+        RCLCPP_WARN(this->get_logger(), "Waypoint Empty - not publishing"); 
+      }
+    }
+  }
+
   void Task::executeRecoveryBehaviour()
   {
     if (p_recovery_behaviour_ == "STOP")
