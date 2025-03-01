@@ -34,6 +34,7 @@
     frame_stack_size: 4
     bbox_selection: INNERMOST
     use_start_point: 0
+    time_to_pause_search: 0.000
     time_to_find_bay: 10.0
     max_time_between_bay_detections: 10.000
     max_time_between_buoy_detections: 10.0

@@ -39,6 +39,7 @@ namespace comp_tasks
     else if (params[0].get_name() == "second_blue_buoy_label") { p_second_blue_buoy_str_ = params[0].as_string(); updateYamlParam("second_blue_buoy_label", params[0].as_string());}    
     else if (params[0].get_name() == "frame_stack_size") { p_frame_stack_size_ = params[0].as_int(); updateYamlParam("frame_stack_size", params[0].as_int());}
     else if (params[0].get_name() == "bbox_selection") { p_bbox_selection_ = params[0].as_string(); updateYamlParam("bbox_selection", params[0].as_string());}
+    else if (params[0].get_name() == "time_to_pause_search") { p_time_to_pause_search_ = params[0].as_double(); updateYamlParam("time_to_pause_search", params[0].as_double());}
     else {
       result.successful = false;
       return result;
@@ -86,6 +87,7 @@ namespace comp_tasks
     Task::getStringParam("second_green_buoy_label", p_second_green_buoy_str_, "green_buoy", "Additional green buoy label");
     Task::getParam<int>("frame_stack_size", p_frame_stack_size_, 0, "Number of frames to stack before calculating angle");
     Task::getStringParam("bbox_selection", p_bbox_selection_, "LARGEST", "Selectes either largest or innermost bounding boxes");
+    Task::getParam<double>("time_to_pause_search", p_time_to_pause_search_, 0.0, "Miliseconds to wait after finding a target before starting to search for new ones");
 
     return rclcpp_lifecycle::node_interfaces::LifecycleNodeInterface::CallbackReturn::SUCCESS;
   }

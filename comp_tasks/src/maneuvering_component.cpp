@@ -17,7 +17,6 @@ namespace comp_tasks
     Task::on_configure(rclcpp_lifecycle::State());
   
     Maneuvering::getParam<int>("max_consec_recoveries", p_max_consec_recoveries_, 0, "Maxmimum consecutive recovery attempts before task completes");
-    Maneuvering::getParam<double>("time_to_pause_search", p_time_to_pause_search_, 0.0, "Miliseconds to wait after finding a target before starting to search for new ones");
     Maneuvering::getParam<double>("time_between_recovery_actions", p_time_between_recovery_actions_, 0.0, "Miliseconds between executing a recovery action (like sending a waypoint)");
     Maneuvering::getParam<double>("time_to_stop_before_recovery", p_time_to_stop_before_recovery_, 0.0, "Miliseconds to stop robot before switching to recovery state if no targets found");    
     Maneuvering::getStringParam("state", p_state_, "STOPPED", "State machine state");
@@ -41,7 +40,6 @@ namespace comp_tasks
 
     if (Task::param_callback(params).successful) {}
     else if (params[0].get_name() == "max_consec_recoveries") { p_max_consec_recoveries_ = params[0].as_int(); updateYamlParam("max_consec_recoveries", params[0].as_int());}
-    else if (params[0].get_name() == "time_to_pause_search") { p_time_to_pause_search_ = params[0].as_double(); updateYamlParam("time_to_pause_search", params[0].as_double());}
     else if (params[0].get_name() == "time_between_recovery_actions") { p_time_between_recovery_actions_ = params[0].as_double(); updateYamlParam("time_between_recovery_actions", params[0].as_double());}
     else if (params[0].get_name() == "time_to_stop_before_recovery") { p_time_to_stop_before_recovery_ = params[0].as_double(); updateYamlParam("time_to_stop_before_recovery", params[0].as_double());}
     else if (params[0].get_name() == "state") { setState(params[0].as_string()); updateYamlParam("state", params[0].as_string());}
