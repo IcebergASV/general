@@ -1,0 +1,9 @@
+std_msgs/Header header
+geometry_msgs/Point wp
+geometry_msgs/Pose current_pose_local
+sensor_msgs/NavSatFix current_pose_global
+yolov8_msgs/DetectionArray detection_stack
+string mavros_mode
+string task_node
+string node_state
+

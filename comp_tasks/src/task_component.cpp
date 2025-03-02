@@ -66,6 +66,7 @@ namespace comp_tasks
     status_logger_pub_ = this->create_publisher<std_msgs::msg::String>("/comp_tasks/task/status", 10);
     task_complete_pub_ = this->create_publisher<std_msgs::msg::Bool>("/comp_tasks/task/complete", 10);
     timer_cntdwn_pub_ = this->create_publisher<comp_tasks_interfaces::msg::LabelInt>("/comp_tasks/task/timer", 10);
+    wp_info_pub_ = this->create_publisher<comp_tasks_interfaces::msg::WpInfo>("/comp_tasks/wp_info", 10);
 
     Task::getParam<double>("distance_to_move", p_distance_to_move_, 0.0, "Sets a wp this far away");
     Task::getParam<double>("angle_from_target", p_angle_from_target_, 0.0, "Angles the wp this far from a target buoy");
@@ -150,7 +151,8 @@ namespace comp_tasks
     bool prev_guided = in_guided_;
     in_guided_ = task_lib::inGuided(current_state);
     in_hold_ = task_lib::inHold(current_state);
-    if (task_lib::inManual(current_state) && prev_guided){
+    in_manual_ = task_lib::inManual(current_state);
+    if (in_manual_ && prev_guided){
       wp_cnt_ = 0;
     }
     if (in_guided_ && !prev_guided)
@@ -263,6 +265,7 @@ namespace comp_tasks
         local_wp_pub_->publish(wp);
         RCLCPP_DEBUG(this->get_logger(), "Local WP: x=%f, y=%f", wp.pose.position.x, wp.pose.position.y);
         wp_cnt_++;
+        publishDynamicWPInfo(x, y, stacked_detections_);
       }
       else{
         RCLCPP_WARN(this->get_logger(), "Waypoint Empty - not publishing"); 
@@ -270,22 +273,41 @@ namespace comp_tasks
     }
   }
 
-  void Task::publishDynamicWPInfo(double x, double y)
+  void Task::publishDynamicWPInfo(double x, double y, const yolov8_msgs::msg::DetectionArray& detections)
   {
-    std::string = this->get_name();
-    if (activated_)
+    comp_tasks_interfaces::msg::WpInfo wp_info;
+
+    auto header = std_msgs::msg::Header();
+    header.stamp = this->get_clock()->now();  // Set the timestamp
+    header.frame_id = "map";  // Set the frame_id
+    wp_info.header = header;
+
+    geometry_msgs::msg::PoseStamped wp = task_lib::getLocalWPMsg(x, y);
+    wp_info.wp = wp.pose.position;
+    wp_info.current_pose_local = current_local_pose_.pose;
+    wp_info.current_pose_global = current_global_pose_;
+    wp_info.detection_stack = detections;
+
+    if (in_guided_)
     {
-      if (x != 0 && y != 0)
-      {
-        geometry_msgs::msg::PoseStamped wp = task_lib::getLocalWPMsg(x, y);
-        local_wp_pub_->publish(wp);
-        RCLCPP_DEBUG(this->get_logger(), "Local WP: x=%f, y=%f", wp.pose.position.x, wp.pose.position.y);
-        wp_cnt_++;
-      }
-      else{
-        RCLCPP_WARN(this->get_logger(), "Waypoint Empty - not publishing"); 
-      }
+      wp_info.mavros_mode = "guided";
     }
+    else if (in_manual_)
+    {
+      wp_info.mavros_mode = "manual";
+    }
+    else if (in_hold_)
+    {
+      wp_info.mavros_mode = "hold";
+    }
+    else{
+      wp_info.mavros_mode = "unknown";
+    }
+    wp_info.task_node = this->get_name();
+    wp_info.node_state = node_state_;
+
+    wp_info_pub_->publish(wp_info);   
+
   }
 
   void Task::executeRecoveryBehaviour()

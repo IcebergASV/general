@@ -21,6 +21,7 @@
 #include <filesystem>
 #include <lifecycle_msgs/msg/state.hpp>
 #include "comp_tasks_interfaces/msg/label_int.hpp"
+#include "comp_tasks_interfaces/msg/wp_info.hpp"
 
 using std::placeholders::_1;
 using namespace std::chrono_literals;
@@ -61,6 +62,7 @@ protected:
     rclcpp_lifecycle::node_interfaces::LifecycleNodeInterface::CallbackReturn on_deactivate(const rclcpp_lifecycle::State &);
     rclcpp_lifecycle::node_interfaces::LifecycleNodeInterface::CallbackReturn on_cleanup(const rclcpp_lifecycle::State &);
     rclcpp_lifecycle::node_interfaces::LifecycleNodeInterface::CallbackReturn on_shutdown(const rclcpp_lifecycle::State &);
+    void publishDynamicWPInfo(double x, double y, const yolov8_msgs::msg::DetectionArray& detections);
     rclcpp::node_interfaces::OnSetParametersCallbackHandle::SharedPtr on_set_parameters_callback_handle_;
     rclcpp::Subscription<sensor_msgs::msg::NavSatFix>::SharedPtr global_pose_sub_;
     rclcpp::Subscription<geometry_msgs::msg::PoseStamped>::SharedPtr local_pose_sub_;
@@ -72,6 +74,7 @@ protected:
     rclcpp::Subscription<mavros_msgs::msg::State>::SharedPtr state_sub_;
     rclcpp::Publisher<std_msgs::msg::Bool>::SharedPtr task_complete_pub_;
     rclcpp::Publisher<comp_tasks_interfaces::msg::LabelInt>::SharedPtr timer_cntdwn_pub_;
+    rclcpp::Publisher<comp_tasks_interfaces::msg::WpInfo>::SharedPtr wp_info_pub_;
 
     rclcpp::TimerBase::SharedPtr timer_;
     rclcpp::TimerBase::SharedPtr countdown_timer_;
@@ -110,8 +113,10 @@ protected:
     int detection_frame_cnt_;
     bool in_guided_;
     bool in_hold_;
+    bool in_manual_;
     bool activated_;
     std::string timer_name_;
+    std::string node_state_;
 
     int remaining_time_;
 

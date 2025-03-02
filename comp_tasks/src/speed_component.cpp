@@ -45,6 +45,7 @@ namespace comp_tasks
     on_set_parameters_callback_handle_ = this->add_on_set_parameters_callback(std::bind(&Speed::param_callback, this, std::placeholders::_1));
     setState(p_state_);
     wp_cnt_ = 0;
+    node_state_ = "SENDING_START_PNT";
 
     return rclcpp_lifecycle::node_interfaces::LifecycleNodeInterface::CallbackReturn::SUCCESS;
   }
@@ -79,28 +80,34 @@ namespace comp_tasks
   {
     if (str_state == "SENDING_START_PNT")
     {
+      node_state_ = "SENDING_START_PNT";
       setTimerDuration(p_time_to_find_bay_, "time to find bay");
       state_ = States::SENDING_START_PNT;
     }
     else if (str_state == "MANEUVER_THRU_BAY")
     {
+      node_state_ = "MANEUVER_THRU_BAY";
       setTimerDuration(p_max_time_between_bay_detections_, "max time between bay detections");
       state_ = States::MANEUVER_THRU_BAY;
     }
     else if (str_state == "RETURNING")
     {
+      node_state_ = "RETURNING";
       state_ = States::RETURNING;
     }
     else if (str_state == "CALCULATED_ROUTE")
     {
+      node_state_ = "CALCULATED_ROUTE";
       state_ = States::CALCULATED_ROUTE;
     }
     else if (str_state == "CONTINUE_PASSING_BUOY")
     {
+      node_state_ = "CONTINUE_PASSING_BUOY";
       state_ = States::CONTINUE_PASSING_BUOY;
     }
     else if (str_state == "PASSING_BUOY")
     {
+      node_state_ = "PASSING_BUOY";
       setTimerDuration(p_max_time_between_buoy_detections_, "max time between buoy detections");
       state_ = States::PASSING_BUOY;
     }
@@ -246,6 +253,7 @@ namespace comp_tasks
             publishStartPoint();
           }
           setTimerDuration(p_time_to_find_bay_, "time to find bay");
+          node_state_ = "MANEUVER_THRU_BAY";
           state_ = States::MANEUVER_THRU_BAY;
           break;
         }
@@ -257,6 +265,7 @@ namespace comp_tasks
           if(bbox_calculations::hasDesiredDetections(detections, {p_blue_buoy_str_}))
           {
             handleBlueBuoyDetections(detections);
+            node_state_ = "PASSING_BUOY";
             state_ = States::PASSING_BUOY;
           }
           else if (bbox_calculations::hasDesiredDetections(detections, {p_red_buoy_str_, p_green_buoy_str_, p_second_red_buoy_str_, p_second_green_buoy_str_}))
@@ -275,6 +284,7 @@ namespace comp_tasks
               wp_cnt_ = 0;
               updateGateRoute(calculated_route_);
               sendNextWP(calculated_route_, "gate");
+              node_state_ = "CALCULATED_ROUTE";
               state_ = States::CALCULATED_ROUTE;
             }
           }
@@ -288,6 +298,7 @@ namespace comp_tasks
           if (bbox_calculations::hasDesiredDetections(detections, {p_blue_buoy_str_}))
           {
             handleBlueBuoyDetections(detections);
+            node_state_ = "PASSING_BUOY";
             state_ = States::PASSING_BUOY;
           }
           else
@@ -332,6 +343,7 @@ namespace comp_tasks
                 sendNextWP(return_route_, "buoy");
                 std::string buoy_position = passed_buoy_left_ ? "left" : "right";
                 publishBehaviourStatus("Buoy is to the " + buoy_position);
+                node_state_ = "RETURNING";
                 state_ = States::RETURNING;
               }
             }
@@ -352,6 +364,7 @@ namespace comp_tasks
           if (bbox_calculations::hasDesiredDetections(detections, {p_blue_buoy_str_}))
           {
             handleBlueBuoyDetections(detections);
+            node_state_ = "PASSING_BUOY";
             state_ = States::PASSING_BUOY;
           }
           else if (isFarEnoughFromBay())
@@ -368,6 +381,7 @@ namespace comp_tasks
               sendNextWP(return_route_, "buoy");
               std::string buoy_position = passed_buoy_left_ ? "left" : "right";
               publishBehaviourStatus("Buoy is to the " + buoy_position);
+              node_state_ = "RETURNING";
               state_ = States::RETURNING;
             }
           }

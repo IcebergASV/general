@@ -30,6 +30,7 @@ namespace comp_tasks
     {
       setTimerDuration(p_time_to_stop_before_recovery_, "time to stop before recovery");
     }
+    node_state_ = "STOPPED";
 
     return rclcpp_lifecycle::node_interfaces::LifecycleNodeInterface::CallbackReturn::SUCCESS;
   }
@@ -57,16 +58,19 @@ namespace comp_tasks
   {
     if (str_state == "STOPPED")
     {
+      node_state_ = "STOPPED";
       setTimerDuration(p_time_to_stop_before_recovery_, "time to stop before recovery");
       state_ = States::STOPPED;
     }
     else if (str_state == "RECOVERING")
     {
+      node_state_ = "RECOVERING";
       setTimerDuration(p_time_between_recovery_actions_, "time between recovery actions");
       state_ = States::RECOVERING;
     }
     else if (str_state == "HEADING_TO_TARGET")
     {
+      node_state_ = "HEADING_TO_TARGET";
       setTimerDuration(p_time_to_pause_search_, "time to pause search");
       state_ = States::HEADING_TO_TARGET;
     }
@@ -147,12 +151,14 @@ namespace comp_tasks
           if (bbox_calculations::hasDesiredDetections(detections, target_class_names_))
           {
             handleDetections(detections);
+            node_state_= "HEADING_TO_TARGET";
             state_ = States::HEADING_TO_TARGET;
           }
           else if(timer_expired_)
           {
             executeRecoveryBehaviour();
             setTimerDuration(p_time_between_recovery_actions_, "time between recovery actions");
+            node_state_ = "RECOVERING";
             state_ = States::RECOVERING;
           }
           break;
@@ -167,6 +173,7 @@ namespace comp_tasks
           if (bbox_calculations::hasDesiredDetections(detections, target_class_names_))
           {
             handleDetections(detections);
+            node_state_ = "HEADING_TO_TARGET";
             state_ = States::HEADING_TO_TARGET;
           }
           else if(timer_expired_)
@@ -197,12 +204,14 @@ namespace comp_tasks
             {
               executeRecoveryBehaviour();
               setTimerDuration(p_time_between_recovery_actions_, "time between recovery actions");
+              node_state_ = "RECOVERING";
               state_ = States::RECOVERING;
             }
             else
             {
               RCLCPP_DEBUG(this->get_logger(), "No targets found, stopping"); 
               setTimerDuration(p_time_to_stop_before_recovery_, "time to stop before recovery");
+              node_state_ = "STOPPED";
               state_ = States::STOPPED;
             }
           }
@@ -215,11 +224,13 @@ namespace comp_tasks
             {
               executeRecoveryBehaviour();
               setTimerDuration(p_time_between_recovery_actions_, "time between recovery actions");
+              node_state_ = "RECOVERING";
               state_ = States::RECOVERING;
             }
             else
             {
               setTimerDuration(p_time_to_stop_before_recovery_, "time to stop before recovery");
+              node_state_ = "STOPPED";
               state_ = States::STOPPED;
             }
           }
