@@ -18,7 +18,7 @@ def generate_launch_description():
                     [
                         FindPackageShare("mavros"),
                         "launch",
-                        "apm.launch.py",
+                        "apm.launch",
                     ]
                 ),
             ]
