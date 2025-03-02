@@ -4,7 +4,8 @@
 #include <GeographicLib/LocalCartesian.hpp>
 #include <comp_tasks_interfaces/msg/wp_group_info.hpp>
 #include <fstream>
-
+#include <filesystem>
+namespace fs = std::filesystem;
 class LocalToGlobalConverter : public rclcpp::Node {
 public:
     LocalToGlobalConverter() : Node("local_to_global_converter") {
@@ -39,7 +40,17 @@ public:
 private:
     void wpGroupCallback(const comp_tasks_interfaces::msg::WpGroupInfo::SharedPtr msg) {
         // Generate CSV file name using wp group name and timestamp
-        std::string filename = msg->group_name + "_" + std::to_string(msg->header.stamp.sec) + ".csv";
+        std::filesystem::path current_file(__FILE__); 
+        std::filesystem::path package_path = current_file.parent_path().parent_path();
+
+        std::string routes_dir = package_path.string() + "/routes";
+
+        // Create the routes directory if it doesn't exist
+        if (!fs::exists(routes_dir)) {
+            fs::create_directories(routes_dir);
+            RCLCPP_INFO(this->get_logger(), "Created routes directory at: %s", routes_dir.c_str());
+        }
+        std::string filename = routes_dir + "/" + msg->group_name + "_" + std::to_string(msg->header.stamp.sec) + ".csv";
         std::replace(filename.begin(), filename.end(), ' ', '_');
         std::ofstream csv_file(filename);
         
@@ -49,7 +60,7 @@ private:
         }
         
         // Write CSV header
-        csv_file << "latitude,longitude" << std::endl;  
+        csv_file << "latitude,longitude,name" << std::endl;  
         double x_local = msg->current_pose_local.position.x;
         double y_local = msg->current_pose_local.position.y;
         double z_local = msg->current_pose_local.position.z;
