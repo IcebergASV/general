@@ -64,15 +64,15 @@ public:
       else if (params[0].get_name() == "hue_max0") {p_hue_max0_ = params[0].as_int(); setHSV(); updateYamlParam("hue_max0", params[0].as_int());}
       else if (params[0].get_name() == "sat_max0") {p_sat_max0_ = params[0].as_int(); setHSV(); updateYamlParam("sat_max0", params[0].as_int());}
       else if (params[0].get_name() == "val_max0") {p_val_max0_ = params[0].as_int(); setHSV(); updateYamlParam("val_max0", params[0].as_int());}
-      else if (params[0].get_name() == "hue_max1") {p_hue_max1_ = params[0].as_int(); setHSV(); updateYamlParam("hue_max1", params[0].as_int());}
-      else if (params[0].get_name() == "sat_max1") {p_sat_max1_ = params[0].as_int(); setHSV(); updateYamlParam("sat_max1", params[0].as_int());}
-      else if (params[0].get_name() == "val_max1") {p_val_max1_ = params[0].as_int(); setHSV(); updateYamlParam("val_max1", params[0].as_int());}
+      else if (params[0].get_name() == "hue_max1" && p_class_name_ == "red") {p_hue_max1_ = params[0].as_int(); setHSV(); updateYamlParam("hue_max1", params[0].as_int());}
+      else if (params[0].get_name() == "sat_max1" && p_class_name_ == "red") {p_sat_max1_ = params[0].as_int(); setHSV(); updateYamlParam("sat_max1", params[0].as_int());}
+      else if (params[0].get_name() == "val_max1" && p_class_name_ == "red") {p_val_max1_ = params[0].as_int(); setHSV(); updateYamlParam("val_max1", params[0].as_int());}
       else if (params[0].get_name() == "hue_min0") {p_hue_min0_ = params[0].as_int(); setHSV(); updateYamlParam("hue_min0", params[0].as_int());}
       else if (params[0].get_name() == "sat_min0") {p_sat_min0_ = params[0].as_int(); setHSV(); updateYamlParam("sat_min0", params[0].as_int());}
       else if (params[0].get_name() == "val_min0") {p_val_min0_ = params[0].as_int(); setHSV(); updateYamlParam("val_min0", params[0].as_int());}
-      else if (params[0].get_name() == "hue_min1") {p_hue_min1_ = params[0].as_int(); setHSV(); updateYamlParam("hue_min1", params[0].as_int());}
-      else if (params[0].get_name() == "sat_min1") {p_sat_min1_ = params[0].as_int(); setHSV(); updateYamlParam("sat_min1", params[0].as_int());}
-      else if (params[0].get_name() == "val_min1") {p_val_min1_ = params[0].as_int(); setHSV(); updateYamlParam("val_min1", params[0].as_int());}
+      else if (params[0].get_name() == "hue_min1" && p_class_name_ == "red") {p_hue_min1_ = params[0].as_int(); setHSV(); updateYamlParam("hue_min1", params[0].as_int());}
+      else if (params[0].get_name() == "sat_min1" && p_class_name_ == "red") {p_sat_min1_ = params[0].as_int(); setHSV(); updateYamlParam("sat_min1", params[0].as_int());}
+      else if (params[0].get_name() == "val_min1" && p_class_name_ == "red") {p_val_min1_ = params[0].as_int(); setHSV(); updateYamlParam("val_min1", params[0].as_int());}
       else {
 
 
