@@ -58,7 +58,7 @@ private:
             RCLCPP_ERROR(this->get_logger(), "Failed to open file: %s", filename.c_str());
             return;
         }
-        
+
         // Write CSV header
         csv_file << "latitude,longitude,name" << std::endl;  
         double x_local = msg->current_pose_local.position.x;
@@ -95,6 +95,36 @@ private:
         }
 
         csv_file.close();
+        RCLCPP_INFO(this->get_logger(), "Saved global waypoints to %s", filename.c_str());
+
+        // Generate Local CSV
+        
+        std::string filename_local = routes_dir + "/" + msg->group_name + "_" + std::to_string(msg->header.stamp.sec) + "local.csv";
+        std::replace(filename_local.begin(), filename_local.end(), ' ', '_');
+        std::ofstream csv_file2(filename_local);
+        
+        if (!csv_file2.is_open()) {
+            RCLCPP_ERROR(this->get_logger(), "Failed to open file: %s", filename.c_str());
+            return;
+        }
+
+        // Write CSV header
+        csv_file2 << "X,Y,name" << std::endl;  
+        x_local = msg->current_pose_local.position.x;
+        y_local = msg->current_pose_local.position.y;
+ 
+        csv_file2 << std::fixed << std::setprecision(6) << x_local << "," << y_local << "," << "pose_when_sent" << std::endl;  
+        for (const auto& wp : msg->wps) {
+            double x_local = wp.wp.x;
+            double y_local = wp.wp.y;
+
+            RCLCPP_DEBUG(
+                this->get_logger(), "Local ENU (X: %.2f, Y: %.2f, Z: %.2f) -> Global (Lat: %.6f, Lon: %.6f, Alt: %.2f)",
+                x_local, y_local, z_local, lat, lon, alt
+            );
+            csv_file2 << std::fixed << std::setprecision(6) << x_local << "," << y_local << "," << wp.wp_name << std::endl;  
+        }
+        csv_file2.close();
         RCLCPP_INFO(this->get_logger(), "Saved global waypoints to %s", filename.c_str());
     
     }
