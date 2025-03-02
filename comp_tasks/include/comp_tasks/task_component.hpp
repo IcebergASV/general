@@ -23,6 +23,7 @@
 #include "comp_tasks_interfaces/msg/label_int.hpp"
 #include "comp_tasks_interfaces/msg/wp_info.hpp"
 #include "comp_tasks_interfaces/msg/global_wp_info.hpp"
+#include "comp_tasks_interfaces/msg/wp_group_info.hpp"
 
 using std::placeholders::_1;
 using namespace std::chrono_literals;

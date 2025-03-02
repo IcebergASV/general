@@ -24,6 +24,8 @@ set(files
   "msg/SimplifiedDetectionArray.msg"
   "msg/WpInfo.msg"
   "msg/GlobalWpInfo.msg"
+  "msg/WpGroupInfo.msg"
+  "msg/NamedLocalWp.msg"
 )
 rosidl_generate_interfaces(${PROJECT_NAME}
   ${files}
