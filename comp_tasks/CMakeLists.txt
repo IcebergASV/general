@@ -288,3 +288,21 @@ install(TARGETS
 global_to_local
   DESTINATION lib/${PROJECT_NAME}
 )
+
+add_executable(local_to_global src/local_to_global.cpp)
+# Check the system architecture
+if(CMAKE_SYSTEM_PROCESSOR STREQUAL "x86_64")
+    # For x86_64 architecture
+    target_link_libraries(local_to_global /usr/lib/x86_64-linux-gnu/libGeographic.so)
+elseif(CMAKE_SYSTEM_PROCESSOR STREQUAL "aarch64")
+    # For ARM architecture
+    target_link_libraries(local_to_global /usr/lib/aarch64-linux-gnu/libGeographic.so)
+else()
+    message(FATAL_ERROR "Unsupported architecture: ${CMAKE_SYSTEM_PROCESSOR}")
+endif()
+
+ament_target_dependencies(local_to_global rclcpp sensor_msgs geographic_msgs geometry_msgs comp_tasks_interfaces)
+install(TARGETS
+local_to_global
+  DESTINATION lib/${PROJECT_NAME}
+)
