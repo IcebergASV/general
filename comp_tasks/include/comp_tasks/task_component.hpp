@@ -67,7 +67,6 @@ protected:
     rclcpp_lifecycle::node_interfaces::LifecycleNodeInterface::CallbackReturn on_shutdown(const rclcpp_lifecycle::State &);
     void publishDynamicWPInfo(double x, double y, const yolov8_msgs::msg::DetectionArray& detections);
     void publishGlobalWPInfo(double lat, double lon, std::string wp_type);
-    void publishWpGroupInfo(std::vector<geometry_msgs::msg::Point> wps);
     void publishWpGroupInfo(std::vector<geometry_msgs::msg::Point> wps,const yolov8_msgs::msg::DetectionArray& detections, std::string group_name);
     rclcpp::node_interfaces::OnSetParametersCallbackHandle::SharedPtr on_set_parameters_callback_handle_;
     rclcpp::Subscription<sensor_msgs::msg::NavSatFix>::SharedPtr global_pose_sub_;
