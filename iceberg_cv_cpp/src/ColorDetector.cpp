@@ -15,18 +15,18 @@ public:
         
         ColorDetector::getStringParam("class_name", p_class_name_, "", "Class name");
         ColorDetector::getIntParam("min_area", p_min_area_, 1, "Minimum pixel area");
-        ColorDetector::getIntParam("lower_hsv1", p_lower_hsv1_, -1, "Lower HSV 1");
-        ColorDetector::getIntParam("lower_hsv2", p_lower_hsv2_, -1, "Lower HSV 2");
-        ColorDetector::getIntParam("lower_hsv3", p_lower_hsv3_, -1, "Lower HSV 3");
-        ColorDetector::getIntParam("lower_hsv4", p_lower_hsv4_, -1, "Lower HSV 4");
-        ColorDetector::getIntParam("lower_hsv5", p_lower_hsv5_, -1, "Lower HSV 5");
-        ColorDetector::getIntParam("lower_hsv6", p_lower_hsv6_, -1, "Lower HSV 6");
-        ColorDetector::getIntParam("upper_hsv1", p_upper_hsv1_, -1, "Upper HSV 1");
-        ColorDetector::getIntParam("upper_hsv2", p_upper_hsv2_, -1, "Upper HSV 2");
-        ColorDetector::getIntParam("upper_hsv3", p_upper_hsv3_, -1, "Upper HSV 3");
-        ColorDetector::getIntParam("upper_hsv4", p_upper_hsv4_, -1, "Upper HSV 4");
-        ColorDetector::getIntParam("upper_hsv5", p_upper_hsv5_, -1, "Upper HSV 5");
-        ColorDetector::getIntParam("upper_hsv6", p_upper_hsv6_, -1, "Upper HSV 6");
+        ColorDetector::getIntParam("hue_min0", p_hue_min0_, -1, "Lower HSV 1");
+        ColorDetector::getIntParam("sat_min0", p_sat_min0_, -1, "Lower HSV 2");
+        ColorDetector::getIntParam("val_min0", p_val_min0_, -1, "Lower HSV 3");
+        ColorDetector::getIntParam("hue_min1", p_hue_min1_, -1, "Lower HSV 4");
+        ColorDetector::getIntParam("sat_min1", p_sat_min1_, -1, "Lower HSV 5");
+        ColorDetector::getIntParam("val_min1", p_val_min1_, -1, "Lower HSV 6");
+        ColorDetector::getIntParam("hue_max0", p_hue_max0_, -1, "Upper HSV 1");
+        ColorDetector::getIntParam("sat_max0", p_sat_max0_, -1, "Upper HSV 2");
+        ColorDetector::getIntParam("val_max0", p_val_max0_, -1, "Upper HSV 3");
+        ColorDetector::getIntParam("hue_max1", p_hue_max1_, -1, "Upper HSV 4");
+        ColorDetector::getIntParam("sat_max1", p_sat_max1_, -1, "Upper HSV 5");
+        ColorDetector::getIntParam("val_max1", p_val_max1_, -1, "Upper HSV 6");
         on_set_parameters_callback_handle_ = this->add_on_set_parameters_callback(std::bind(&ColorDetector::param_callback, this, std::placeholders::_1));
         // Get parameters
         input_topic_ = "/camera/camera/color/image_raw";
@@ -57,18 +57,18 @@ public:
   
       if (params[0].get_name() == "class_name") { p_class_name_ = params[0].as_string(); } 
       else if (params[0].get_name() == "min_area") { p_min_area_ = params[0].as_int(); }
-      else if (params[0].get_name() == "upper_hsv1") {p_upper_hsv1_ = params[0].as_int(); setHSV();}
-      else if (params[0].get_name() == "upper_hsv2") {p_upper_hsv2_ = params[0].as_int(); setHSV();}
-      else if (params[0].get_name() == "upper_hsv3") {p_upper_hsv3_ = params[0].as_int(); setHSV();}
-      else if (params[0].get_name() == "upper_hsv4") {p_upper_hsv4_ = params[0].as_int(); setHSV();}
-      else if (params[0].get_name() == "upper_hsv5") {p_upper_hsv5_ = params[0].as_int(); setHSV();}
-      else if (params[0].get_name() == "upper_hsv6") {p_upper_hsv6_ = params[0].as_int(); setHSV();}
-      else if (params[0].get_name() == "lower_hsv1") {p_lower_hsv1_ = params[0].as_int(); setHSV();}
-      else if (params[0].get_name() == "lower_hsv2") {p_lower_hsv2_ = params[0].as_int(); setHSV();}
-      else if (params[0].get_name() == "lower_hsv3") {p_lower_hsv3_ = params[0].as_int(); setHSV();}
-      else if (params[0].get_name() == "lower_hsv4") {p_lower_hsv4_ = params[0].as_int(); setHSV();}
-      else if (params[0].get_name() == "lower_hsv5") {p_lower_hsv5_ = params[0].as_int(); setHSV();}
-      else if (params[0].get_name() == "lower_hsv6") {p_lower_hsv6_ = params[0].as_int(); setHSV();}
+      else if (params[0].get_name() == "hue_max0") {p_hue_max0_ = params[0].as_int(); setHSV();}
+      else if (params[0].get_name() == "sat_max0") {p_sat_max0_ = params[0].as_int(); setHSV();}
+      else if (params[0].get_name() == "val_max0") {p_val_max0_ = params[0].as_int(); setHSV();}
+      else if (params[0].get_name() == "hue_max1") {p_hue_max1_ = params[0].as_int(); setHSV();}
+      else if (params[0].get_name() == "sat_max1") {p_sat_max1_ = params[0].as_int(); setHSV();}
+      else if (params[0].get_name() == "val_max1") {p_val_max1_ = params[0].as_int(); setHSV();}
+      else if (params[0].get_name() == "hue_min0") {p_hue_min0_ = params[0].as_int(); setHSV();}
+      else if (params[0].get_name() == "sat_min0") {p_sat_min0_ = params[0].as_int(); setHSV();}
+      else if (params[0].get_name() == "val_min0") {p_val_min0_ = params[0].as_int(); setHSV();}
+      else if (params[0].get_name() == "hue_min1") {p_hue_min1_ = params[0].as_int(); setHSV();}
+      else if (params[0].get_name() == "sat_min1") {p_sat_min1_ = params[0].as_int(); setHSV();}
+      else if (params[0].get_name() == "val_min1") {p_val_min1_ = params[0].as_int(); setHSV();}
       else {
 
 
@@ -135,20 +135,20 @@ private:
         };
 
         // Populate the lower_hsv_list_
-        add_if_valid(lower_hsv_list_, p_lower_hsv1_);
-        add_if_valid(lower_hsv_list_, p_lower_hsv2_);
-        add_if_valid(lower_hsv_list_, p_lower_hsv3_);
-        add_if_valid(lower_hsv_list_, p_lower_hsv4_);
-        add_if_valid(lower_hsv_list_, p_lower_hsv5_);
-        add_if_valid(lower_hsv_list_, p_lower_hsv6_);
+        add_if_valid(lower_hsv_list_, p_hue_min0_);
+        add_if_valid(lower_hsv_list_, p_sat_min0_);
+        add_if_valid(lower_hsv_list_, p_val_min0_);
+        add_if_valid(lower_hsv_list_, p_hue_min1_);
+        add_if_valid(lower_hsv_list_, p_sat_min1_);
+        add_if_valid(lower_hsv_list_, p_val_min1_);
 
         // Populate the upper_hsv_list_
-        add_if_valid(upper_hsv_list_, p_upper_hsv1_);
-        add_if_valid(upper_hsv_list_, p_upper_hsv2_);
-        add_if_valid(upper_hsv_list_, p_upper_hsv3_);
-        add_if_valid(upper_hsv_list_, p_upper_hsv4_);
-        add_if_valid(upper_hsv_list_, p_upper_hsv5_);
-        add_if_valid(upper_hsv_list_, p_upper_hsv6_);
+        add_if_valid(upper_hsv_list_, p_hue_max0_);
+        add_if_valid(upper_hsv_list_, p_sat_max0_);
+        add_if_valid(upper_hsv_list_, p_val_max0_);
+        add_if_valid(upper_hsv_list_, p_hue_max1_);
+        add_if_valid(upper_hsv_list_, p_sat_max1_);
+        add_if_valid(upper_hsv_list_, p_val_max1_);
 
         RCLCPP_DEBUG(this->get_logger(), "upper size %ld", upper_hsv_list_.size());
         RCLCPP_DEBUG(this->get_logger(), "lower size %ld", lower_hsv_list_.size());
@@ -276,18 +276,18 @@ private:
     std::string p_class_name_;
     std::vector<int> lower_hsv_list_;
     std::vector<int> upper_hsv_list_;
-    int p_lower_hsv1_;
-    int p_lower_hsv2_;
-    int p_lower_hsv3_;
-    int p_lower_hsv4_;
-    int p_lower_hsv5_;
-    int p_lower_hsv6_;
-    int p_upper_hsv1_;
-    int p_upper_hsv2_;
-    int p_upper_hsv3_;
-    int p_upper_hsv4_;
-    int p_upper_hsv5_;
-    int p_upper_hsv6_;
+    int p_hue_min0_;
+    int p_sat_min0_;
+    int p_val_min0_;
+    int p_hue_min1_;
+    int p_sat_min1_;
+    int p_val_min1_;
+    int p_hue_max0_;
+    int p_sat_max0_;
+    int p_val_max0_;
+    int p_hue_max1_;
+    int p_sat_max1_;
+    int p_val_max1_;
 
 
 

@@ -1,36 +1,36 @@
 /red:
   ros__parameters:
     class_name: red
-    upper_hsv1: 10
-    upper_hsv2: 255
-    upper_hsv3: 255
-    upper_hsv4: 180
-    upper_hsv5: 255
-    upper_hsv6: 255
-    lower_hsv1: 0
-    lower_hsv2: 100
-    lower_hsv3: 100
-    lower_hsv4: 160
-    lower_hsv5: 100
-    lower_hsv6: 100
+    hue_min0: 0
+    hue_max0: 10
+    hue_min1: 160
+    hue_max1: 180
+    sat_min0: 100
+    sat_max0: 255
+    sat_min1: 100
+    sat_max1: 255
+    val_min0: 100
+    val_max0: 255
+    val_min1: 100
+    val_max1: 255
     min_area: 75
 /blue:
   ros__parameters:
     class_name: blue
-    upper_hsv1: 140
-    upper_hsv2: 200
-    upper_hsv3: 200
-    lower_hsv1: 125
-    lower_hsv2: 70
-    lower_hsv3: 70
+    hue_min0: 125
+    hue_max0: 140
+    sat_min0: 70
+    sat_max0: 200
+    val_min0: 70
+    val_max0: 200
     min_area: 75
 /green:
   ros__parameters:
     class_name: green
-    upper_hsv1: 85
-    upper_hsv2: 255
-    upper_hsv3: 255
-    lower_hsv1: 35
-    lower_hsv2: 50
-    lower_hsv3: 50
+    hue_min0: 35
+    hue_max0: 85
+    sat_min0: 50
+    sat_max0: 255
+    val_min0: 50
+    val_max0: 255
     min_area: 75
