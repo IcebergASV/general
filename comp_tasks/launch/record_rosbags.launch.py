@@ -37,7 +37,10 @@ def generate_launch_description():
         '/comp_tasks/task/complete',
         '/parameter_events',
         '/comp_tasks/converted_global_to_local_wps',
-        '/comp_tasks/task/timer'
+        '/comp_tasks/task/timer',
+        '/comp_tasks/wp_info',
+        '/comp_tasks/global_wp_info',
+        '/comp_tasks/wp_group_info'
     ]
 
     cv_topics = [

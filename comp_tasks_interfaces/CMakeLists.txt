@@ -10,6 +10,10 @@ find_package(ament_cmake REQUIRED)
 find_package(geometry_msgs REQUIRED)
 find_package(geographic_msgs REQUIRED)
 find_package(rosidl_default_generators REQUIRED)
+find_package(std_msgs REQUIRED)
+find_package(yolov8_msgs REQUIRED)
+find_package(sensor_msgs REQUIRED)
+
 
 set(files
   "msg/LabelInt.msg"
@@ -18,11 +22,14 @@ set(files
   "msg/StartTask.msg"
   "msg/SimplifiedDetection.msg"
   "msg/SimplifiedDetectionArray.msg"
+  "msg/WpInfo.msg"
+  "msg/GlobalWpInfo.msg"
+  "msg/WpGroupInfo.msg"
+  "msg/NamedLocalWp.msg"
 )
-
 rosidl_generate_interfaces(${PROJECT_NAME}
   ${files}
-  DEPENDENCIES std_msgs geometry_msgs geographic_msgs
+  DEPENDENCIES std_msgs geometry_msgs geographic_msgs yolov8_msgs sensor_msgs
 )
 
 ament_export_dependencies(rosidl_default_runtime)

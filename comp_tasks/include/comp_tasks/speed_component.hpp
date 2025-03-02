@@ -53,6 +53,8 @@ private:
     geometry_msgs::msg::PoseStamped last_seen_blue_buoy_pose_;
     geometry_msgs::msg::PoseStamped continue_past_buoys_pnt_;
     bool passed_buoy_left_;
+    yolov8_msgs::msg::DetectionArray return_route_detections_;
+    yolov8_msgs::msg::DetectionArray calculated_route_detections_;
 
 };
 
