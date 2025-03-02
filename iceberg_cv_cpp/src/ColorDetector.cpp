@@ -56,19 +56,19 @@ public:
       rcl_interfaces::msg::SetParametersResult result;
   
       if (params[0].get_name() == "class_name") { p_class_name_ = params[0].as_string(); } 
-      else if (params[0].get_name() == "min_area") { p_min_area_ = params[0].as_int(); }
-      else if (params[0].get_name() == "hue_max0") {p_hue_max0_ = params[0].as_int(); setHSV();}
-      else if (params[0].get_name() == "sat_max0") {p_sat_max0_ = params[0].as_int(); setHSV();}
-      else if (params[0].get_name() == "val_max0") {p_val_max0_ = params[0].as_int(); setHSV();}
-      else if (params[0].get_name() == "hue_max1") {p_hue_max1_ = params[0].as_int(); setHSV();}
-      else if (params[0].get_name() == "sat_max1") {p_sat_max1_ = params[0].as_int(); setHSV();}
-      else if (params[0].get_name() == "val_max1") {p_val_max1_ = params[0].as_int(); setHSV();}
-      else if (params[0].get_name() == "hue_min0") {p_hue_min0_ = params[0].as_int(); setHSV();}
-      else if (params[0].get_name() == "sat_min0") {p_sat_min0_ = params[0].as_int(); setHSV();}
-      else if (params[0].get_name() == "val_min0") {p_val_min0_ = params[0].as_int(); setHSV();}
-      else if (params[0].get_name() == "hue_min1") {p_hue_min1_ = params[0].as_int(); setHSV();}
-      else if (params[0].get_name() == "sat_min1") {p_sat_min1_ = params[0].as_int(); setHSV();}
-      else if (params[0].get_name() == "val_min1") {p_val_min1_ = params[0].as_int(); setHSV();}
+      else if (params[0].get_name() == "min_area") { p_min_area_ = params[0].as_int(); updateYamlParam("min_area", params[0].as_int());}
+      else if (params[0].get_name() == "hue_max0") {p_hue_max0_ = params[0].as_int(); setHSV(); updateYamlParam("p_hue_max0_", params[0].as_int());}
+      else if (params[0].get_name() == "sat_max0") {p_sat_max0_ = params[0].as_int(); setHSV(); updateYamlParam("p_sat_max0_", params[0].as_int());}
+      else if (params[0].get_name() == "val_max0") {p_val_max0_ = params[0].as_int(); setHSV(); updateYamlParam("p_val_max0_", params[0].as_int());}
+      else if (params[0].get_name() == "hue_max1") {p_hue_max1_ = params[0].as_int(); setHSV(); updateYamlParam("p_hue_max1_", params[0].as_int());}
+      else if (params[0].get_name() == "sat_max1") {p_sat_max1_ = params[0].as_int(); setHSV(); updateYamlParam("p_sat_max1_", params[0].as_int());}
+      else if (params[0].get_name() == "val_max1") {p_val_max1_ = params[0].as_int(); setHSV(); updateYamlParam("p_val_max1_", params[0].as_int());}
+      else if (params[0].get_name() == "hue_min0") {p_hue_min0_ = params[0].as_int(); setHSV(); updateYamlParam("p_hue_min0_", params[0].as_int());}
+      else if (params[0].get_name() == "sat_min0") {p_sat_min0_ = params[0].as_int(); setHSV(); updateYamlParam("p_sat_min0_", params[0].as_int());}
+      else if (params[0].get_name() == "val_min0") {p_val_min0_ = params[0].as_int(); setHSV(); updateYamlParam("p_val_min0_", params[0].as_int());}
+      else if (params[0].get_name() == "hue_min1") {p_hue_min1_ = params[0].as_int(); setHSV(); updateYamlParam("p_hue_min1_", params[0].as_int());}
+      else if (params[0].get_name() == "sat_min1") {p_sat_min1_ = params[0].as_int(); setHSV(); updateYamlParam("p_sat_min1_", params[0].as_int());}
+      else if (params[0].get_name() == "val_min1") {p_val_min1_ = params[0].as_int(); setHSV(); updateYamlParam("p_val_min1_", params[0].as_int());}
       else {
 
 
@@ -83,6 +83,53 @@ public:
 
 
 private:
+
+    void updateYamlParam(const std::string &paramName, int newValue) {
+        try {
+            std::string nodeName = "/" + std::string(this->get_name());
+            std::filesystem::path current_file(__FILE__); 
+            std::filesystem::path package_path = current_file.parent_path().parent_path().parent_path();
+
+            std::string file_path = package_path.string() + "/config/params.yaml";//TODO Pass in from launch file
+
+            // Load the YAML file
+            YAML::Node config = YAML::LoadFile(file_path);
+    
+            // Check if the node and parameter exist
+            if (!config[nodeName]) {
+                std::cerr << "Error: Node " << nodeName << " not found in YAML file." << std::endl;
+                return;
+            }
+
+            // Check if the node and parameter exist
+            if (!config[nodeName] || !config[nodeName]["ros__parameters"] || !config[nodeName]["ros__parameters"][paramName]) {
+                std::cerr << "Error: Parameter " << paramName << " not found in YAML file." << std::endl;
+                return;
+            }
+    
+            // Update the parameter value
+            if constexpr (std::is_same_v<T, double>) {
+                std::ostringstream oss;
+                oss << std::fixed << std::setprecision(3) << newValue;
+                config[nodeName]["ros__parameters"][paramName] = oss.str();
+            } else {
+                config[nodeName]["ros__parameters"][paramName] = newValue;
+            }
+    
+            // Write back to file
+            std::ofstream outFile(file_path);
+            if (!outFile) {
+                std::cerr << "Error: Unable to open file for writing." << std::endl;
+                return;
+            }
+            outFile << config;
+            outFile.close();
+    
+            std::cout << "Successfully updated " << paramName << " to "<< newValue << std::endl;
+        } catch (const std::exception &e) {
+            std::cerr << "Exception: " << e.what() << std::endl;
+        }
+    }
     void getIntParam(std::string param_name, int& param, int default_value, std::string desc)
     {
         auto param_desc = rcl_interfaces::msg::ParameterDescriptor{};
