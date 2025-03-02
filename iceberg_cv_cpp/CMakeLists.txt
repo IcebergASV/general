@@ -12,6 +12,7 @@ find_package(sensor_msgs REQUIRED)
 find_package(cv_bridge REQUIRED)
 find_package(yolov8_msgs REQUIRED)
 find_package(OpenCV REQUIRED)
+find_package(yaml-cpp REQUIRED)
 
 # uncomment the following section in order to fill in
 # further dependencies manually.
@@ -37,10 +38,15 @@ ament_target_dependencies(ColorDetector
   cv_bridge
   yolov8_msgs
   OpenCV
+  yaml-cpp
 )
 
 install(TARGETS ColorDetector
   DESTINATION lib/${PROJECT_NAME})
+target_link_libraries(ColorDetector
+  ${YAML_CPP_LIBRARIES}
+  yaml-cpp
+)
 
 if(BUILD_TESTING)
   find_package(ament_lint_auto REQUIRED)
