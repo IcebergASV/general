@@ -11,19 +11,7 @@ from launch_ros.substitutions import FindPackageShare
 
 def generate_launch_description():
 
-    mavros = IncludeLaunchDescription(
-        PythonLaunchDescriptionSource(
-            [
-                PathJoinSubstitution(
-                    [
-                        FindPackageShare("mavros"),
-                        "launch",
-                        "apm.launch",
-                    ]
-                ),
-            ]
-        )
-    )
+    PythonLaunchDescriptionSource("/opt/ros/humble/share/mavros/launch/apm.launch")
 
     realsense = IncludeLaunchDescription(
         PythonLaunchDescriptionSource(
