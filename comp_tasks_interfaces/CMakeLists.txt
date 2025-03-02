@@ -23,8 +23,8 @@ set(files
   "msg/SimplifiedDetection.msg"
   "msg/SimplifiedDetectionArray.msg"
   "msg/WpInfo.msg"
+  "msg/GlobalWpInfo.msg"
 )
-
 rosidl_generate_interfaces(${PROJECT_NAME}
   ${files}
   DEPENDENCIES std_msgs geometry_msgs geographic_msgs yolov8_msgs sensor_msgs

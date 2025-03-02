@@ -67,6 +67,7 @@ namespace comp_tasks
     task_complete_pub_ = this->create_publisher<std_msgs::msg::Bool>("/comp_tasks/task/complete", 10);
     timer_cntdwn_pub_ = this->create_publisher<comp_tasks_interfaces::msg::LabelInt>("/comp_tasks/task/timer", 10);
     wp_info_pub_ = this->create_publisher<comp_tasks_interfaces::msg::WpInfo>("/comp_tasks/wp_info", 10);
+    global_wp_info_pub_ = this->create_publisher<comp_tasks_interfaces::msg::GlobalWpInfo>("/comp_tasks/global_wp_info", 10);
 
     Task::getParam<double>("distance_to_move", p_distance_to_move_, 0.0, "Sets a wp this far away");
     Task::getParam<double>("angle_from_target", p_angle_from_target_, 0.0, "Angles the wp this far from a target buoy");
@@ -242,16 +243,17 @@ namespace comp_tasks
 
   void Task::publishStartPoint()
   {
-    publishGlobalWP(p_start_lat_, p_start_lon_);
+    publishGlobalWP(p_start_lat_, p_start_lon_, "start_pnt");
   }
 
-  void Task::publishGlobalWP(double lat, double lon)
+  void Task::publishGlobalWP(double lat, double lon, std::string type)
   {
     if (activated_)
     {
       geographic_msgs::msg::GeoPoseStamped wp = task_lib::getGlobalWPMsg(lat, lon);
       global_wp_pub_->publish(wp);
       RCLCPP_DEBUG(this->get_logger(), "Global WP: lat=%f, lon=%f", wp.pose.position.latitude, wp.pose.position.longitude);
+      publishGlobalWPInfo(p_start_lat_, p_start_lon_, type);
     }
   }
 
@@ -310,6 +312,43 @@ namespace comp_tasks
 
   }
 
+  void Task::publishGlobalWPInfo(double lat, double lon, std::string wp_type)
+  {
+    comp_tasks_interfaces::msg::GlobalWpInfo wp_info;
+
+    auto header = std_msgs::msg::Header();
+    header.stamp = this->get_clock()->now();  // Set the timestamp
+    header.frame_id = "map";  // Set the frame_id
+    wp_info.header = header;
+    wp_info.global_wp_type = wp_type;
+
+    geographic_msgs::msg::GeoPoseStamped wp = task_lib::getGlobalWPMsg(lat, lon);
+    wp_info.global_wp = wp.pose;
+    wp_info.current_pose_local = current_local_pose_.pose;
+    wp_info.current_pose_global = current_global_pose_;
+
+    if (in_guided_)
+    {
+      wp_info.mavros_mode = "guided";
+    }
+    else if (in_manual_)
+    {
+      wp_info.mavros_mode = "manual";
+    }
+    else if (in_hold_)
+    {
+      wp_info.mavros_mode = "hold";
+    }
+    else{
+      wp_info.mavros_mode = "unknown";
+    }
+    wp_info.task_node = this->get_name();
+    wp_info.node_state = node_state_;
+
+    global_wp_info_pub_->publish(wp_info);   
+
+  }
+
   void Task::executeRecoveryBehaviour()
   {
     if (p_recovery_behaviour_ == "STOP")
@@ -318,7 +357,7 @@ namespace comp_tasks
     }
     else if (p_recovery_behaviour_ == "RECOVERY_PNT")
     {
-      publishGlobalWP(p_recovery_lat_, p_recovery_lon_);
+      publishGlobalWP(p_recovery_lat_, p_recovery_lon_, "recovery_pnt");
       RCLCPP_INFO(this->get_logger(), "Sent recovery waypoint");
     }
     else 

@@ -1,0 +1,9 @@
+std_msgs/Header header
+geographic_msgs/GeoPose global_wp
+string global_wp_type
+geometry_msgs/Pose current_pose_local
+sensor_msgs/NavSatFix current_pose_global
+string mavros_mode
+string task_node
+string node_state
+
