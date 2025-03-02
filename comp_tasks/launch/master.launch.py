@@ -1,4 +1,3 @@
-import os
 from ament_index_python.packages import get_package_share_directory
 
 from launch import LaunchDescription
@@ -8,12 +7,12 @@ from launch.substitutions import PathJoinSubstitution
 
 from launch_ros.actions import Node
 from launch_ros.substitutions import FindPackageShare
-from launch.launch_description_sources import LaunchDescriptionSource
+from launch_xml.launch_description_sources import XMLLaunchDescriptionSource
 
 def generate_launch_description():
 
     mavros = IncludeLaunchDescription(
-        LaunchDescriptionSource(
+        XMLLaunchDescriptionSource(
             PathJoinSubstitution(
                 [
                     FindPackageShare("mavros"),
