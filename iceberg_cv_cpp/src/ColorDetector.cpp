@@ -6,13 +6,17 @@
 #include <yolov8_msgs/msg/detection_array.hpp>
 #include <yolov8_msgs/msg/bounding_box2_d.hpp>
 #include <vector>
+#include <yaml-cpp/yaml.h>
+#include <filesystem>
+#include <fstream>
 
 using std::placeholders::_1;
 
 class ColorDetector : public rclcpp::Node {
 public:
     ColorDetector() : Node("configurable_color_filter") {
-        
+        ColorDetector::getStringParam("lighting", config_file_name_, "", "params file name");
+        RCLCPP_INFO(this->get_logger(), "Lighting params set to: %s", config_file_name_.c_str());
         ColorDetector::getStringParam("class_name", p_class_name_, "", "Class name");
         ColorDetector::getIntParam("min_area", p_min_area_, 1, "Minimum pixel area");
         ColorDetector::getIntParam("hue_min0", p_hue_min0_, -1, "Lower HSV 1");
@@ -57,18 +61,18 @@ public:
   
       if (params[0].get_name() == "class_name") { p_class_name_ = params[0].as_string(); } 
       else if (params[0].get_name() == "min_area") { p_min_area_ = params[0].as_int(); updateYamlParam("min_area", params[0].as_int());}
-      else if (params[0].get_name() == "hue_max0") {p_hue_max0_ = params[0].as_int(); setHSV(); updateYamlParam("p_hue_max0_", params[0].as_int());}
-      else if (params[0].get_name() == "sat_max0") {p_sat_max0_ = params[0].as_int(); setHSV(); updateYamlParam("p_sat_max0_", params[0].as_int());}
-      else if (params[0].get_name() == "val_max0") {p_val_max0_ = params[0].as_int(); setHSV(); updateYamlParam("p_val_max0_", params[0].as_int());}
-      else if (params[0].get_name() == "hue_max1") {p_hue_max1_ = params[0].as_int(); setHSV(); updateYamlParam("p_hue_max1_", params[0].as_int());}
-      else if (params[0].get_name() == "sat_max1") {p_sat_max1_ = params[0].as_int(); setHSV(); updateYamlParam("p_sat_max1_", params[0].as_int());}
-      else if (params[0].get_name() == "val_max1") {p_val_max1_ = params[0].as_int(); setHSV(); updateYamlParam("p_val_max1_", params[0].as_int());}
-      else if (params[0].get_name() == "hue_min0") {p_hue_min0_ = params[0].as_int(); setHSV(); updateYamlParam("p_hue_min0_", params[0].as_int());}
-      else if (params[0].get_name() == "sat_min0") {p_sat_min0_ = params[0].as_int(); setHSV(); updateYamlParam("p_sat_min0_", params[0].as_int());}
-      else if (params[0].get_name() == "val_min0") {p_val_min0_ = params[0].as_int(); setHSV(); updateYamlParam("p_val_min0_", params[0].as_int());}
-      else if (params[0].get_name() == "hue_min1") {p_hue_min1_ = params[0].as_int(); setHSV(); updateYamlParam("p_hue_min1_", params[0].as_int());}
-      else if (params[0].get_name() == "sat_min1") {p_sat_min1_ = params[0].as_int(); setHSV(); updateYamlParam("p_sat_min1_", params[0].as_int());}
-      else if (params[0].get_name() == "val_min1") {p_val_min1_ = params[0].as_int(); setHSV(); updateYamlParam("p_val_min1_", params[0].as_int());}
+      else if (params[0].get_name() == "hue_max0") {p_hue_max0_ = params[0].as_int(); setHSV(); updateYamlParam("hue_max0", params[0].as_int());}
+      else if (params[0].get_name() == "sat_max0") {p_sat_max0_ = params[0].as_int(); setHSV(); updateYamlParam("sat_max0", params[0].as_int());}
+      else if (params[0].get_name() == "val_max0") {p_val_max0_ = params[0].as_int(); setHSV(); updateYamlParam("val_max0", params[0].as_int());}
+      else if (params[0].get_name() == "hue_max1") {p_hue_max1_ = params[0].as_int(); setHSV(); updateYamlParam("hue_max1", params[0].as_int());}
+      else if (params[0].get_name() == "sat_max1") {p_sat_max1_ = params[0].as_int(); setHSV(); updateYamlParam("sat_max1", params[0].as_int());}
+      else if (params[0].get_name() == "val_max1") {p_val_max1_ = params[0].as_int(); setHSV(); updateYamlParam("val_max1", params[0].as_int());}
+      else if (params[0].get_name() == "hue_min0") {p_hue_min0_ = params[0].as_int(); setHSV(); updateYamlParam("hue_min0", params[0].as_int());}
+      else if (params[0].get_name() == "sat_min0") {p_sat_min0_ = params[0].as_int(); setHSV(); updateYamlParam("sat_min0", params[0].as_int());}
+      else if (params[0].get_name() == "val_min0") {p_val_min0_ = params[0].as_int(); setHSV(); updateYamlParam("val_min0", params[0].as_int());}
+      else if (params[0].get_name() == "hue_min1") {p_hue_min1_ = params[0].as_int(); setHSV(); updateYamlParam("hue_min1", params[0].as_int());}
+      else if (params[0].get_name() == "sat_min1") {p_sat_min1_ = params[0].as_int(); setHSV(); updateYamlParam("sat_min1", params[0].as_int());}
+      else if (params[0].get_name() == "val_min1") {p_val_min1_ = params[0].as_int(); setHSV(); updateYamlParam("val_min1", params[0].as_int());}
       else {
 
 
@@ -88,9 +92,9 @@ private:
         try {
             std::string nodeName = "/" + std::string(this->get_name());
             std::filesystem::path current_file(__FILE__); 
-            std::filesystem::path package_path = current_file.parent_path().parent_path().parent_path();
+            std::filesystem::path package_path = current_file.parent_path().parent_path();
 
-            std::string file_path = package_path.string() + "/config/params.yaml";//TODO Pass in from launch file
+            std::string file_path = package_path.string() + "/config/" + config_file_name_;
 
             // Load the YAML file
             YAML::Node config = YAML::LoadFile(file_path);
@@ -107,14 +111,7 @@ private:
                 return;
             }
     
-            // Update the parameter value
-            if constexpr (std::is_same_v<T, double>) {
-                std::ostringstream oss;
-                oss << std::fixed << std::setprecision(3) << newValue;
-                config[nodeName]["ros__parameters"][paramName] = oss.str();
-            } else {
-                config[nodeName]["ros__parameters"][paramName] = newValue;
-            }
+            config[nodeName]["ros__parameters"][paramName] = newValue;
     
             // Write back to file
             std::ofstream outFile(file_path);
@@ -319,6 +316,7 @@ private:
     std::string input_topic_;
     std::string output_img_topic_;
     std::string output_det_topic_;
+    std::string config_file_name_;
     int p_min_area_;
     std::string p_class_name_;
     std::vector<int> lower_hsv_list_;
@@ -335,8 +333,6 @@ private:
     int p_hue_max1_;
     int p_sat_max1_;
     int p_val_max1_;
-
-
 
     rclcpp::node_interfaces::OnSetParametersCallbackHandle::SharedPtr on_set_parameters_callback_handle_;
 };
