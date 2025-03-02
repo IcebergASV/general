@@ -1,5 +1,6 @@
 std_msgs/Header header
 comp_tasks_interfaces/NamedLocalWp[] wps
+string group_name
 geometry_msgs/Pose current_pose_local
 sensor_msgs/NavSatFix current_pose_global
 yolov8_msgs/DetectionArray detection_stack

@@ -68,6 +68,7 @@ namespace comp_tasks
     timer_cntdwn_pub_ = this->create_publisher<comp_tasks_interfaces::msg::LabelInt>("/comp_tasks/task/timer", 10);
     wp_info_pub_ = this->create_publisher<comp_tasks_interfaces::msg::WpInfo>("/comp_tasks/wp_info", 10);
     global_wp_info_pub_ = this->create_publisher<comp_tasks_interfaces::msg::GlobalWpInfo>("/comp_tasks/global_wp_info", 10);
+    wp_group_info_pub_ = this->create_publisher<comp_tasks_interfaces::msg::WpGroupInfo>("/comp_tasks/wp_group_info", 10);
 
     Task::getParam<double>("distance_to_move", p_distance_to_move_, 0.0, "Sets a wp this far away");
     Task::getParam<double>("angle_from_target", p_angle_from_target_, 0.0, "Angles the wp this far from a target buoy");
@@ -346,6 +347,56 @@ namespace comp_tasks
     wp_info.node_state = node_state_;
 
     global_wp_info_pub_->publish(wp_info);   
+
+  }
+
+  void Task::publishWpGroupInfo(std::vector<geometry_msgs::msg::Point> wps,const yolov8_msgs::msg::DetectionArray& detections, std::string group_name)
+  {
+    RCLCPP_INFO(this->get_logger(),"Publishing WP Group Info");
+
+    std::vector<comp_tasks_interfaces::msg::NamedLocalWp> named_wps;
+    
+    for (size_t i = 0; i < wps.size(); i++)
+    {
+      comp_tasks_interfaces::msg::NamedLocalWp wp;
+      wp.wp = wps[i];
+      wp.wp_name = std::to_string(i);
+      named_wps.push_back(wp);
+    }
+
+    comp_tasks_interfaces::msg::WpGroupInfo wp_group_info;
+
+    auto header = std_msgs::msg::Header();
+    header.stamp = this->get_clock()->now();  // Set the timestamp
+    header.frame_id = "map";  // Set the frame_id
+    wp_group_info.header = header;
+
+    wp_group_info.wps = named_wps;
+    wp_group_info.group_name = group_name;
+
+    wp_group_info.current_pose_local = current_local_pose_.pose;
+    wp_group_info.current_pose_global = current_global_pose_;
+    wp_group_info.detection_stack = detections;
+
+    if (in_guided_)
+    {
+      wp_group_info.mavros_mode = "guided";
+    }
+    else if (in_manual_)
+    {
+      wp_group_info.mavros_mode = "manual";
+    }
+    else if (in_hold_)
+    {
+      wp_group_info.mavros_mode = "hold";
+    }
+    else{
+      wp_group_info.mavros_mode = "unknown";
+    }
+    wp_group_info.task_node = this->get_name();
+    wp_group_info.node_state = node_state_;
+
+    wp_group_info_pub_->publish(wp_group_info);  
 
   }
 

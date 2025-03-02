@@ -130,17 +130,20 @@ namespace comp_tasks
     std::vector<geometry_msgs::msg::Point> route = task_lib::createSemicirce(points, current_local_pose_.pose.position);
     //task_lib::writePointsToCSV(route, "/home/gracepearcey/repos/iceberg/ros2_ws/src/general/comp_tasks/routes/3.csv");
 
+    calculated_route_detections_ = detections;
+
     return route;
   }
 
   std::vector<geometry_msgs::msg::Point> Speed::calculateReturnRoute(const yolov8_msgs::msg::DetectionArray& detections)
   {
     std::vector<geometry_msgs::msg::Point> semi;
-
+    
     std::vector<geometry_msgs::msg::Point> points = task_lib::generateCirclePoints(current_local_pose_.pose.position, p_buoy_circling_radius_, p_num_pnts_on_semicircle_*2);
     semi = task_lib::createSemicirce(points, last_seen_bay_pose_.pose.position);
     //task_lib::writePointsToCSV(semi, "/home/gracepearcey/repos/iceberg/ros2_ws/src/general/comp_tasks/routes/bb_semi.csv");
     passed_buoy_left_ = bbox_calculations::isLeft(detections, p_blue_buoy_str_, p_camera_fov_, p_camera_res_x_);
+    return_route_detections_ = detections;
     return semi;
   }
 
@@ -284,6 +287,7 @@ namespace comp_tasks
               wp_cnt_ = 0;
               updateGateRoute(calculated_route_);
               sendNextWP(calculated_route_, "gate");
+              publishWpGroupInfo(calculated_route_, calculated_route_detections_, "calculated route");
               node_state_ = "CALCULATED_ROUTE";
               state_ = States::CALCULATED_ROUTE;
             }
@@ -343,6 +347,7 @@ namespace comp_tasks
                 sendNextWP(return_route_, "buoy");
                 std::string buoy_position = passed_buoy_left_ ? "left" : "right";
                 publishBehaviourStatus("Buoy is to the " + buoy_position);
+                publishWpGroupInfo(return_route_, return_route_detections_, "return route");
                 node_state_ = "RETURNING";
                 state_ = States::RETURNING;
               }
@@ -381,6 +386,7 @@ namespace comp_tasks
               sendNextWP(return_route_, "buoy");
               std::string buoy_position = passed_buoy_left_ ? "left" : "right";
               publishBehaviourStatus("Buoy is to the " + buoy_position);
+              publishWpGroupInfo(return_route_, return_route_detections_, "return route");
               node_state_ = "RETURNING";
               state_ = States::RETURNING;
             }

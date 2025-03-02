@@ -24,6 +24,7 @@
 #include "comp_tasks_interfaces/msg/wp_info.hpp"
 #include "comp_tasks_interfaces/msg/global_wp_info.hpp"
 #include "comp_tasks_interfaces/msg/wp_group_info.hpp"
+#include "comp_tasks_interfaces/msg/named_local_wp.hpp"
 
 using std::placeholders::_1;
 using namespace std::chrono_literals;
@@ -66,6 +67,8 @@ protected:
     rclcpp_lifecycle::node_interfaces::LifecycleNodeInterface::CallbackReturn on_shutdown(const rclcpp_lifecycle::State &);
     void publishDynamicWPInfo(double x, double y, const yolov8_msgs::msg::DetectionArray& detections);
     void publishGlobalWPInfo(double lat, double lon, std::string wp_type);
+    void publishWpGroupInfo(std::vector<geometry_msgs::msg::Point> wps);
+    void publishWpGroupInfo(std::vector<geometry_msgs::msg::Point> wps,const yolov8_msgs::msg::DetectionArray& detections, std::string group_name);
     rclcpp::node_interfaces::OnSetParametersCallbackHandle::SharedPtr on_set_parameters_callback_handle_;
     rclcpp::Subscription<sensor_msgs::msg::NavSatFix>::SharedPtr global_pose_sub_;
     rclcpp::Subscription<geometry_msgs::msg::PoseStamped>::SharedPtr local_pose_sub_;
@@ -79,7 +82,8 @@ protected:
     rclcpp::Publisher<comp_tasks_interfaces::msg::LabelInt>::SharedPtr timer_cntdwn_pub_;
     rclcpp::Publisher<comp_tasks_interfaces::msg::WpInfo>::SharedPtr wp_info_pub_;
     rclcpp::Publisher<comp_tasks_interfaces::msg::GlobalWpInfo>::SharedPtr global_wp_info_pub_;
-
+    rclcpp::Publisher<comp_tasks_interfaces::msg::WpGroupInfo>::SharedPtr wp_group_info_pub_;
+  
     rclcpp::TimerBase::SharedPtr timer_;
     rclcpp::TimerBase::SharedPtr countdown_timer_;
 
