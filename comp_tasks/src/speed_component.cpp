@@ -215,10 +215,13 @@ namespace comp_tasks
   {
     publishBehaviourStatus("Going towards blue buoy");
     publishSearchStatus("Found " + p_blue_buoy_str_);
-    last_seen_blue_buoy_pose_ = current_local_pose_;
-    publishWPTowardsLargestTarget(detections, p_blue_buoy_str_, p_buoy_offset_angle_);
-    continue_past_buoys_pnt_ = getWPTowardsLargestTarget(detections, p_blue_buoy_str_, p_buoy_offset_angle_, p_min_dist_from_bay_b4_return_);
+    double offset_angle_corrected;
     return_route_ = calculateReturnRoute(detections);
+    passed_buoy_left_ ? offset_angle_corrected = p_buoy_offset_angle_ : offset_angle_corrected = -p_buoy_offset_angle_;
+    last_seen_blue_buoy_pose_ = current_local_pose_;
+    RCLCPP_DEBUG(this->get_logger(), "buoy_offset angle %f", offset_angle_corrected);
+    publishWPTowardsLargestTarget(detections, p_blue_buoy_str_, offset_angle_corrected);
+    continue_past_buoys_pnt_ = getWPTowardsLargestTarget(detections, p_blue_buoy_str_, offset_angle_corrected, p_min_dist_from_bay_b4_return_);
     if (p_time_to_pause_search_ != 0)
     {
       std::this_thread::sleep_for(std::chrono::seconds(static_cast<int>(p_time_to_pause_search_)));

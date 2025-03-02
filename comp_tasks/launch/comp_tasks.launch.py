@@ -48,4 +48,11 @@ def generate_launch_description():
             parameters=[config, gps_points],
             arguments=['--ros-args', '--log-level', LaunchConfiguration('log_level')]
         ),
+        Node(
+            package='comp_tasks',
+            executable='global_to_local',
+            namespace='',
+            output='screen',
+            arguments=['--ros-args', '--log-level', LaunchConfiguration('log_level')]
+        ),
     ])

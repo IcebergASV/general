@@ -1,7 +1,6 @@
 #include "comp_tasks/task_component.hpp"
 #include "comp_tasks/lib/bbox_calculations.hpp"
 #include "comp_tasks/lib/task_lib.hpp"
-#include <yaml-cpp/yaml.h>
 
 namespace comp_tasks
 {
