@@ -8,6 +8,7 @@ def generate_launch_description():
         '/camera/camera/color/image_raw',
         '/mavros/global_position/compass_hdg',
         '/mavros/global_position/global',
+        '/mavros/global_position/gp_origin',
         '/mavros/global_position/local',
         '/mavros/local_position/pose',
         '/mavros/local_position/odom',
@@ -24,25 +25,28 @@ def generate_launch_description():
         '/mavros/local_position/odom',
         '/mavros/mission/reached',
         '/mavros/setpoint_position/global',
+        '/mavros/global_position/gp_origin',
         '/mavros/setpoint_position/local',
         '/mavros/state',
-        '/yolo/detections',
-        '/yolo/dbg_image'
+        '/icebergcv/detections',
+        '/icebergcv/filtered_image',
         '/rosout',
         '/maneuvering/transition_event',
         '/speed/transition_event',
         '/comp_tasks/task/status',
         '/comp_tasks/task/complete',
-        '/parameter_events'
+        '/parameter_events',
+        '/comp_tasks/converted_global_to_local_wps',
+        '/comp_tasks/task/timer'
     ]
 
-    yolo_topics = [
-        '/yolo/detections',
-        '/yolo/dbg_image'
+    cv_topics = [
+        '/icebergcv/detections',
+        '/icebergcv/filtered_image'
     ]
 
     now = datetime.now()
-    month_day_folder = now.strftime('03_01_rosbags')
+    month_day_folder = now.strftime('03_02_rosbags')
     datetime_folder = now.strftime('%Y-%m-%d_%H-%M-%S')
 
     home_directory = os.path.expanduser('~')
@@ -53,11 +57,11 @@ def generate_launch_description():
 
     sensors_bag_name = os.path.join(date_time_dir, f"rosbag_sensors_{now.strftime('%Y-%m-%d_%H-%M-%S')}.bag")
     logic_bag_name = os.path.join(date_time_dir, f"rosbag_logic_{now.strftime('%Y-%m-%d_%H-%M-%S')}.bag")
-    yolo_bag_name = os.path.join(date_time_dir, f"rosbag_yolo_{now.strftime('%Y-%m-%d_%H-%M-%S')}.bag")
+    cv_bag_name = os.path.join(date_time_dir, f"rosbag_cv_{now.strftime('%Y-%m-%d_%H-%M-%S')}.bag")
 
     rosbag_sensors_command = ['ros2', 'bag', 'record'] + sensor_topics + ['-o', sensors_bag_name]
     rosbag_logic_command = ['ros2', 'bag', 'record'] + robot_logic_topics + ['-o', logic_bag_name]
-    rosbag_yolo_command = ['ros2', 'bag', 'record'] + yolo_topics + ['-o', yolo_bag_name]
+    rosbag_cv_command = ['ros2', 'bag', 'record'] + cv_topics + ['-o', cv_bag_name]
 
     return LaunchDescription([
         ExecuteProcess(
@@ -69,7 +73,7 @@ def generate_launch_description():
             output='screen'
         ),
         ExecuteProcess(
-            cmd=rosbag_yolo_command,
+            cmd=rosbag_cv_command,
             output='screen'
         ),
     ])
