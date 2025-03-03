@@ -95,10 +95,10 @@ namespace comp_tasks
       node_state_ = "RETURNING";
       state_ = States::RETURNING;
     }
-    else if (str_state == "CALCULATED_ROUTE")
+    else if (str_state == "GOING_STRAIGHT")
     {
-      node_state_ = "CALCULATED_ROUTE";
-      state_ = States::CALCULATED_ROUTE;
+      node_state_ = "GOING_STRAIGHT";
+      state_ = States::GOING_STRAIGHT;
     }
     else if (str_state == "CONTINUE_PASSING_BUOY")
     {
@@ -123,12 +123,10 @@ namespace comp_tasks
     double angle = bbox_calculations::getAngleBetween2DiffTargets(detections, p_bbox_selection_, p_red_buoy_str_, p_second_red_buoy_str_,p_green_buoy_str_, p_second_green_buoy_str_, p_camera_fov_, p_camera_res_x_, 0);
     geometry_msgs::msg::PoseStamped wp = task_lib::relativePolarToLocalCoords(p_estimated_buoy_dist_, angle, current_local_pose_);
 
-    // calculate points around center
-    std::vector<geometry_msgs::msg::Point> points = task_lib::generateCirclePoints(wp.pose.position, p_buoy_circling_radius_, p_num_pnts_on_semicircle_*2);
-    //task_lib::writePointsToCSV(points, "/home/gracepearcey/repos/iceberg/ros2_ws/src/general/comp_tasks/routes/1.csv");
-    // create a semicircle around the estimated buoy position by cutting out the part of the circle closest to our current position
-    std::vector<geometry_msgs::msg::Point> route = task_lib::createSemicirce(points, current_local_pose_.pose.position);
-    //task_lib::writePointsToCSV(route, "/home/gracepearcey/repos/iceberg/ros2_ws/src/general/comp_tasks/routes/3.csv");
+    std::vector<geometry_msgs::msg::Point> route;
+    route.push_back(wp);
+    route.push_back(last_seen_bay_pose_.pose.position);
+    route.push_back(first_seen_bay_pose_.pose.position);
 
     calculated_route_detections_ = detections;
 
@@ -162,13 +160,6 @@ namespace comp_tasks
     route.push_back(last_seen_bay_pose_.pose.position);
 
     //task_lib::writePointsToCSV(route, "/home/gracepearcey/repos/iceberg/ros2_ws/src/general/comp_tasks/routes/bb.csv");
-  }
-
-  void Speed::updateGateRoute(std::vector<geometry_msgs::msg::Point>& route)
-  {
-    removeClosePoints(route, current_local_pose_.pose.position, p_remove_wp_within_dist_);
-    route.push_back(last_seen_bay_pose_.pose.position);
-    //task_lib::writePointsToCSV(route, "/home/gracepearcey/repos/iceberg/ros2_ws/src/general/comp_tasks/routes/final_gate.csv");
   }
 
   void Speed::continuePastBuoy()
@@ -283,21 +274,20 @@ namespace comp_tasks
               signalTaskFinish();
             }
             else
-            {
-              wp_cnt_ = 0;
-              updateGateRoute(calculated_route_);
-              sendNextWP(calculated_route_, "gate");
-              publishWpGroupInfo(calculated_route_, calculated_route_detections_, "calculated route");
-              node_state_ = "CALCULATED_ROUTE";
-              state_ = States::CALCULATED_ROUTE;
+          {
+            wp_cnt_ = 0;
+            sendNextWP(calculated_route_, "gate");
+            publishWpGroupInfo(calculated_route_, calculated_route_detections_, "calculated route");
+            node_state_ = "GOING_STRAIGHT";
+            state_ = States::GOING_STRAIGHT;
             }
           }
           break;
         }
-        case States::CALCULATED_ROUTE:
+        case States::GOING_STRAIGHT:
         {
-          RCLCPP_DEBUG(this->get_logger(), "CALCULATED_ROUTE"); 
-          publishStateStatus("CALCULATED_ROUTE");
+          RCLCPP_DEBUG(this->get_logger(), "GOING_STRAIGHT"); 
+          publishStateStatus("GOING_STRAIGHT");
           publishSearchStatus("Searching for Blue Buoy");
           if (bbox_calculations::hasDesiredDetections(detections, {p_blue_buoy_str_}))
           {
