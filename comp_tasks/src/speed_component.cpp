@@ -160,6 +160,7 @@ namespace comp_tasks
     removeClosePoints(route, current_local_pose_.pose.position, p_remove_wp_within_dist_);
 
     route.push_back(last_seen_bay_pose_.pose.position);
+    route.push_back(first_seen_bay_pose_.pose.position);
 
     //task_lib::writePointsToCSV(route, "/home/gracepearcey/repos/iceberg/ros2_ws/src/general/comp_tasks/routes/bb.csv");
   }
