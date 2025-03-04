@@ -56,6 +56,12 @@ namespace comp_tasks
 
   void Maneuvering::setState(std::string str_state)
   {
+    bboxes_updated_ = false;
+    wp_reached_ = false;
+    activated_ = false;
+    wp_cnt_ = 0;
+    detection_frame_cnt_ = 0;
+
     if (str_state == "STOPPED")
     {
       node_state_ = "STOPPED";
@@ -71,7 +77,7 @@ namespace comp_tasks
     else if (str_state == "HEADING_TO_TARGET")
     {
       node_state_ = "HEADING_TO_TARGET";
-      setTimerDuration(p_time_to_pause_search_, "time to pause search");
+      timer_expired_ = true;
       state_ = States::HEADING_TO_TARGET;
     }
     else
