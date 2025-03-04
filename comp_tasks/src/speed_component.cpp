@@ -141,7 +141,6 @@ namespace comp_tasks
     
     std::vector<geometry_msgs::msg::Point> points = task_lib::generateCirclePoints(current_local_pose_.pose.position, p_buoy_circling_radius_, p_num_pnts_on_semicircle_*2);
     semi = task_lib::createSemicirce(points, last_seen_bay_pose_.pose.position);
-    //task_lib::writePointsToCSV(semi, "/home/gracepearcey/repos/iceberg/ros2_ws/src/general/comp_tasks/routes/bb_semi.csv");
     passed_buoy_left_ = bbox_calculations::isLeft(detections, p_blue_buoy_str_, p_camera_fov_, p_camera_res_x_);
     return_route_detections_ = detections;
     return semi;
@@ -161,8 +160,6 @@ namespace comp_tasks
 
     route.push_back(last_seen_bay_pose_.pose.position);
     route.push_back(first_seen_bay_pose_.pose.position);
-
-    //task_lib::writePointsToCSV(route, "/home/gracepearcey/repos/iceberg/ros2_ws/src/general/comp_tasks/routes/bb.csv");
   }
 
   void Speed::continuePastBuoy()
