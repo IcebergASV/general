@@ -44,13 +44,14 @@ private:
     double p_remove_wp_within_dist_;
     std::string p_state_;
 
-    enum States {SENDING_START_PNT, MANEUVER_THRU_BAY, CALCULATED_ROUTE, PASSING_BUOY, CONTINUE_PASSING_BUOY, RETURNING }; 
+    enum States {SENDING_START_PNT, MANEUVER_THRU_BAY, GOING_STRAIGHT, PASSING_BUOY, CONTINUE_PASSING_BUOY, RETURNING }; 
     States state_;
 
     std::vector<geometry_msgs::msg::Point> calculated_route_;
     std::vector<geometry_msgs::msg::Point> return_route_;
     geometry_msgs::msg::PoseStamped last_seen_bay_pose_;
     geometry_msgs::msg::PoseStamped last_seen_blue_buoy_pose_;
+    geometry_msgs::msg::PoseStamped first_seen_bay_pose_;
     geometry_msgs::msg::PoseStamped continue_past_buoys_pnt_;
     bool passed_buoy_left_;
     yolov8_msgs::msg::DetectionArray return_route_detections_;
