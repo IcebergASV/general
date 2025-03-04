@@ -228,6 +228,7 @@ namespace comp_tasks
     passed_buoy_left_ ? offset_angle_corrected = p_buoy_offset_angle_ : offset_angle_corrected = -p_buoy_offset_angle_;
     last_seen_blue_buoy_pose_ = current_local_pose_;
     RCLCPP_DEBUG(this->get_logger(), "buoy_offset angle %f", offset_angle_corrected);
+    RCLCPP_INFO(this->get_logger(), "Detected blue buoy - heading towards it with offset of %f", offset_angle_corrected);
     publishWPTowardsLargestTarget(detections, p_blue_buoy_str_, offset_angle_corrected);
     continue_past_buoys_pnt_ = getWPTowardsLargestTarget(detections, p_blue_buoy_str_, offset_angle_corrected, p_min_dist_from_bay_b4_return_);
     if (p_time_to_pause_search_ != 0)
