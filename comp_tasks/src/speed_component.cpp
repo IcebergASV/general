@@ -46,6 +46,8 @@ namespace comp_tasks
     setState(p_state_);
     wp_cnt_ = 0;
     node_state_ = "SENDING_START_PNT";
+    first_seen_bay_pose_.pose.position.x = 0;
+    first_seen_bay_pose_.pose.position.y = 0;
 
     return rclcpp_lifecycle::node_interfaces::LifecycleNodeInterface::CallbackReturn::SUCCESS;
   }
@@ -124,7 +126,7 @@ namespace comp_tasks
     geometry_msgs::msg::PoseStamped wp = task_lib::relativePolarToLocalCoords(p_estimated_buoy_dist_, angle, current_local_pose_);
 
     std::vector<geometry_msgs::msg::Point> route;
-    route.push_back(wp);
+    route.push_back(wp.pose.position);
     route.push_back(last_seen_bay_pose_.pose.position);
     route.push_back(first_seen_bay_pose_.pose.position);
 
@@ -182,10 +184,10 @@ namespace comp_tasks
   }
   void Speed::sendNextWP(std::vector<geometry_msgs::msg::Point> route, std::string route_name)
   {
-    std::string behaviour = "Pub WP " + std::to_string(wp_cnt_ + 1) + "/" + std::to_string(route.size()) + " of route from " + route_name;    publishBehaviourStatus(behaviour);
+    std::string behaviour = "Pub WP " + std::to_string(wp_cnt_ + 1) + "/" + std::to_string(route.size()) + " of route from " + route_name;    
+    publishBehaviourStatus(behaviour);
     publishLocalWP(route[wp_cnt_].x, route[wp_cnt_].y);
     wp_reached_ = false;
-    wp_cnt_++;
   }
 
   void Speed::handleGateDetections(const yolov8_msgs::msg::DetectionArray& detections)
@@ -194,6 +196,10 @@ namespace comp_tasks
     if (bbox_calculations::hasGate(detections, p_red_buoy_str_, p_second_red_buoy_str_, p_green_buoy_str_, p_second_green_buoy_str_))
     {
       last_seen_bay_pose_ = current_local_pose_;
+      if (first_seen_bay_pose_.pose.position.x == 0 && first_seen_bay_pose_.pose.position.y == 0)
+      {
+        first_seen_bay_pose_ = current_local_pose_;
+      }
       calculated_route_ = calculateRouteFromGates(detections);
       publishSearchStatus("Found gate");
     }
@@ -299,6 +305,7 @@ namespace comp_tasks
           {
             if (wp_reached_)
             {
+              RCLCPP_INFO(this->get_logger(), "WP count: %d, route length: %ld", wp_cnt_, calculated_route_.size());
               if (wp_cnt_ >= static_cast<int>(calculated_route_.size())) // might need to update this to actually check if we are in same position as where we started
               {
                 RCLCPP_INFO(this->get_logger(), "Reached all WPs in calculated route, finishing");
