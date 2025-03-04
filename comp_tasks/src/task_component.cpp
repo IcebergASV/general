@@ -213,10 +213,14 @@ namespace comp_tasks
   {
     geometry_msgs::msg::PoseStamped wp;
     if (activated_){
+      RCLCPP_DEBUG(this->get_logger(), "Publishing waypoint towards gate");
       wp_reached_ = false;
       double angle = bbox_calculations::getAngleBetween2DiffTargets(detections, p_bbox_selection_, p_red_buoy_str_, p_second_red_buoy_str_,p_green_buoy_str_, p_second_green_buoy_str_, p_camera_fov_, p_camera_res_x_, p_angle_from_target_);
       wp = task_lib::relativePolarToLocalCoords(p_distance_to_move_, angle, current_local_pose_);
       publishLocalWP(wp.pose.position.x, wp.pose.position.y);
+    }
+    else{
+      RCLCPP_WARN(this->get_logger(), "Task not activated - not publishing waypoint towards gate");
     }
     return wp.pose.position;
   }
