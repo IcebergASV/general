@@ -1,0 +1,39 @@
+/red:
+  ros__parameters:
+    class_name: red
+    hue_min0: 0
+    hue_max0: 6
+    hue_min1: 172
+    hue_max1: 180
+    sat_min0: 100
+    sat_max0: 255
+    sat_min1: 55
+    sat_max1: 255
+    val_min0: 100
+    val_max0: 255
+    val_min1: 55
+    val_max1: 255
+    min_area: 50
+    max_area: 500
+/blue:
+  ros__parameters:
+    class_name: blue
+    hue_min0: 102
+    hue_max0: 120
+    sat_min0: 95
+    sat_max0: 200
+    val_min0: 125
+    val_max0: 255
+    min_area: 50
+    max_area: 500
+/green:
+  ros__parameters:
+    class_name: green
+    hue_min0: 50
+    hue_max0: 85
+    sat_min0: 55
+    sat_max0: 255
+    val_min0: 50
+    val_max0: 255
+    min_area: 50
+    max_area: 500
