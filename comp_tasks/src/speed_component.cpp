@@ -80,6 +80,10 @@ namespace comp_tasks
 
   void Speed::setState(std::string str_state)
   {
+    bboxes_updated_ = false;
+    wp_reached_ = false;
+    wp_cnt_ = 0;
+    detection_frame_cnt_ = 0;
     if (str_state == "SENDING_START_PNT")
     {
       node_state_ = "SENDING_START_PNT";
@@ -237,7 +241,14 @@ namespace comp_tasks
 
   void Speed::taskLogic(const yolov8_msgs::msg::DetectionArray& detections)
   {
-    if (in_guided_)
+    if (!in_guided && bbox_calculations::hasDesiredDetections(detections, {p_red_buoy_str_, p_green_buoy_str_, p_second_red_buoy_str_, p_second_green_buoy_str_}))
+    {
+      if (bbox_calculations::hasGate(detections, p_red_buoy_str_, p_second_red_buoy_str_, p_green_buoy_str_, p_second_green_buoy_str_))
+      {
+        last_seen_bay_pose_ = current_local_pose_;
+      }
+    }
+    else if (in_guided_)
     {
       switch (state_)
       {
