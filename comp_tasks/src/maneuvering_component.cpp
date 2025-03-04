@@ -58,7 +58,6 @@ namespace comp_tasks
   {
     bboxes_updated_ = false;
     wp_reached_ = false;
-    activated_ = false;
     wp_cnt_ = 0;
     detection_frame_cnt_ = 0;
 
