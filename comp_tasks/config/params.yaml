@@ -40,9 +40,9 @@
     max_time_between_buoy_detections: 10.0
     buoy_offset_angle: 0.0
     estimated_buoy_dist: 20.0
-    buoy_circling_radius: 3.0
-    num_pnts_on_semicircle: 6
-    min_dist_from_bay_b4_return: 50.000
+    buoy_circling_radius: 4.000
+    num_pnts_on_semicircle: 2
+    min_dist_from_bay_b4_return: 10.0
     remove_wp_within_dist: 1.2
     state: SENDING_START_PNT
 /task_controller:

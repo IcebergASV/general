@@ -46,6 +46,8 @@ namespace comp_tasks
     setState(p_state_);
     wp_cnt_ = 0;
     node_state_ = "SENDING_START_PNT";
+    first_seen_bay_pose_.pose.position.x = 0;
+    first_seen_bay_pose_.pose.position.y = 0;
 
     return rclcpp_lifecycle::node_interfaces::LifecycleNodeInterface::CallbackReturn::SUCCESS;
   }
@@ -95,10 +97,10 @@ namespace comp_tasks
       node_state_ = "RETURNING";
       state_ = States::RETURNING;
     }
-    else if (str_state == "CALCULATED_ROUTE")
+    else if (str_state == "GOING_STRAIGHT")
     {
-      node_state_ = "CALCULATED_ROUTE";
-      state_ = States::CALCULATED_ROUTE;
+      node_state_ = "GOING_STRAIGHT";
+      state_ = States::GOING_STRAIGHT;
     }
     else if (str_state == "CONTINUE_PASSING_BUOY")
     {
@@ -123,12 +125,10 @@ namespace comp_tasks
     double angle = bbox_calculations::getAngleBetween2DiffTargets(detections, p_bbox_selection_, p_red_buoy_str_, p_second_red_buoy_str_,p_green_buoy_str_, p_second_green_buoy_str_, p_camera_fov_, p_camera_res_x_, 0);
     geometry_msgs::msg::PoseStamped wp = task_lib::relativePolarToLocalCoords(p_estimated_buoy_dist_, angle, current_local_pose_);
 
-    // calculate points around center
-    std::vector<geometry_msgs::msg::Point> points = task_lib::generateCirclePoints(wp.pose.position, p_buoy_circling_radius_, p_num_pnts_on_semicircle_*2);
-    //task_lib::writePointsToCSV(points, "/home/gracepearcey/repos/iceberg/ros2_ws/src/general/comp_tasks/routes/1.csv");
-    // create a semicircle around the estimated buoy position by cutting out the part of the circle closest to our current position
-    std::vector<geometry_msgs::msg::Point> route = task_lib::createSemicirce(points, current_local_pose_.pose.position);
-    //task_lib::writePointsToCSV(route, "/home/gracepearcey/repos/iceberg/ros2_ws/src/general/comp_tasks/routes/3.csv");
+    std::vector<geometry_msgs::msg::Point> route;
+    route.push_back(wp.pose.position);
+    route.push_back(last_seen_bay_pose_.pose.position);
+    route.push_back(first_seen_bay_pose_.pose.position);
 
     calculated_route_detections_ = detections;
 
@@ -141,7 +141,6 @@ namespace comp_tasks
     
     std::vector<geometry_msgs::msg::Point> points = task_lib::generateCirclePoints(current_local_pose_.pose.position, p_buoy_circling_radius_, p_num_pnts_on_semicircle_*2);
     semi = task_lib::createSemicirce(points, last_seen_bay_pose_.pose.position);
-    //task_lib::writePointsToCSV(semi, "/home/gracepearcey/repos/iceberg/ros2_ws/src/general/comp_tasks/routes/bb_semi.csv");
     passed_buoy_left_ = bbox_calculations::isLeft(detections, p_blue_buoy_str_, p_camera_fov_, p_camera_res_x_);
     return_route_detections_ = detections;
     return semi;
@@ -160,15 +159,7 @@ namespace comp_tasks
     removeClosePoints(route, current_local_pose_.pose.position, p_remove_wp_within_dist_);
 
     route.push_back(last_seen_bay_pose_.pose.position);
-
-    //task_lib::writePointsToCSV(route, "/home/gracepearcey/repos/iceberg/ros2_ws/src/general/comp_tasks/routes/bb.csv");
-  }
-
-  void Speed::updateGateRoute(std::vector<geometry_msgs::msg::Point>& route)
-  {
-    removeClosePoints(route, current_local_pose_.pose.position, p_remove_wp_within_dist_);
-    route.push_back(last_seen_bay_pose_.pose.position);
-    //task_lib::writePointsToCSV(route, "/home/gracepearcey/repos/iceberg/ros2_ws/src/general/comp_tasks/routes/final_gate.csv");
+    route.push_back(first_seen_bay_pose_.pose.position);
   }
 
   void Speed::continuePastBuoy()
@@ -191,10 +182,10 @@ namespace comp_tasks
   }
   void Speed::sendNextWP(std::vector<geometry_msgs::msg::Point> route, std::string route_name)
   {
-    std::string behaviour = "Pub WP " + std::to_string(wp_cnt_ + 1) + "/" + std::to_string(route.size()) + " of route from " + route_name;    publishBehaviourStatus(behaviour);
+    std::string behaviour = "Pub WP " + std::to_string(wp_cnt_ + 1) + "/" + std::to_string(route.size()) + " of route from " + route_name;    
+    publishBehaviourStatus(behaviour);
     publishLocalWP(route[wp_cnt_].x, route[wp_cnt_].y);
     wp_reached_ = false;
-    wp_cnt_++;
   }
 
   void Speed::handleGateDetections(const yolov8_msgs::msg::DetectionArray& detections)
@@ -203,6 +194,10 @@ namespace comp_tasks
     if (bbox_calculations::hasGate(detections, p_red_buoy_str_, p_second_red_buoy_str_, p_green_buoy_str_, p_second_green_buoy_str_))
     {
       last_seen_bay_pose_ = current_local_pose_;
+      if (first_seen_bay_pose_.pose.position.x == 0 && first_seen_bay_pose_.pose.position.y == 0)
+      {
+        first_seen_bay_pose_ = current_local_pose_;
+      }
       calculated_route_ = calculateRouteFromGates(detections);
       publishSearchStatus("Found gate");
     }
@@ -230,6 +225,7 @@ namespace comp_tasks
     passed_buoy_left_ ? offset_angle_corrected = p_buoy_offset_angle_ : offset_angle_corrected = -p_buoy_offset_angle_;
     last_seen_blue_buoy_pose_ = current_local_pose_;
     RCLCPP_DEBUG(this->get_logger(), "buoy_offset angle %f", offset_angle_corrected);
+    RCLCPP_INFO(this->get_logger(), "Detected blue buoy - heading towards it with offset of %f", offset_angle_corrected);
     publishWPTowardsLargestTarget(detections, p_blue_buoy_str_, offset_angle_corrected);
     continue_past_buoys_pnt_ = getWPTowardsLargestTarget(detections, p_blue_buoy_str_, offset_angle_corrected, p_min_dist_from_bay_b4_return_);
     if (p_time_to_pause_search_ != 0)
@@ -283,21 +279,20 @@ namespace comp_tasks
               signalTaskFinish();
             }
             else
-            {
-              wp_cnt_ = 0;
-              updateGateRoute(calculated_route_);
-              sendNextWP(calculated_route_, "gate");
-              publishWpGroupInfo(calculated_route_, calculated_route_detections_, "calculated route");
-              node_state_ = "CALCULATED_ROUTE";
-              state_ = States::CALCULATED_ROUTE;
+          {
+            wp_cnt_ = 0;
+            sendNextWP(calculated_route_, "gate");
+            publishWpGroupInfo(calculated_route_, calculated_route_detections_, "calculated route");
+            node_state_ = "GOING_STRAIGHT";
+            state_ = States::GOING_STRAIGHT;
             }
           }
           break;
         }
-        case States::CALCULATED_ROUTE:
+        case States::GOING_STRAIGHT:
         {
-          RCLCPP_DEBUG(this->get_logger(), "CALCULATED_ROUTE"); 
-          publishStateStatus("CALCULATED_ROUTE");
+          RCLCPP_DEBUG(this->get_logger(), "GOING_STRAIGHT"); 
+          publishStateStatus("GOING_STRAIGHT");
           publishSearchStatus("Searching for Blue Buoy");
           if (bbox_calculations::hasDesiredDetections(detections, {p_blue_buoy_str_}))
           {
@@ -309,6 +304,7 @@ namespace comp_tasks
           {
             if (wp_reached_)
             {
+              RCLCPP_INFO(this->get_logger(), "WP count: %d, route length: %ld", wp_cnt_, calculated_route_.size());
               if (wp_cnt_ >= static_cast<int>(calculated_route_.size())) // might need to update this to actually check if we are in same position as where we started
               {
                 RCLCPP_INFO(this->get_logger(), "Reached all WPs in calculated route, finishing");
