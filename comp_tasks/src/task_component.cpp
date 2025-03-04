@@ -248,7 +248,14 @@ namespace comp_tasks
 
   void Task::publishStartPoint()
   {
+    RCLCPP_INFO(this->get_logger(), "Publishing start point");
     publishGlobalWP(p_start_lat_, p_start_lon_, "start_pnt");
+  }
+
+  void Task::publishFinishPoint()
+  {
+    RCLCPP_INFO(this->get_logger(), "Publishing finish point");
+    publishGlobalWP(p_finish_lat_, p_finish_lon_, "start_pnt");
   }
 
   void Task::publishGlobalWP(double lat, double lon, std::string type)
