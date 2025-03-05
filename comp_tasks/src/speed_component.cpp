@@ -49,6 +49,8 @@ namespace comp_tasks
     node_state_ = "SENDING_START_PNT";
     first_seen_bay_pose_.pose.position.x = 0;
     first_seen_bay_pose_.pose.position.y = 0;
+    last_seen_bay_pose_.pose.position.x = 0;
+    last_seen_bay_pose_.pose.position.y = 0;
 
     return rclcpp_lifecycle::node_interfaces::LifecycleNodeInterface::CallbackReturn::SUCCESS;
   }
@@ -100,12 +102,15 @@ namespace comp_tasks
     }
     else if (str_state == "RETURNING")
     {
+      RCLCPP_DEBUG(this->get_logger(), "Switching to state returning, return route size: %ld", return_route_.size());
       node_state_ = "RETURNING";
+      wp_reached_ = true;
       state_ = States::RETURNING;
     }
     else if (str_state == "GOING_STRAIGHT")
     {
       node_state_ = "GOING_STRAIGHT";
+      wp_reached_ = true;
       state_ = States::GOING_STRAIGHT;
     }
     else if (str_state == "CONTINUE_PASSING_BUOY")
@@ -133,7 +138,13 @@ namespace comp_tasks
 
     std::vector<geometry_msgs::msg::Point> route;
     route.push_back(wp.pose.position);
-    route.push_back(last_seen_bay_pose_.pose.position);
+    if (last_seen_bay_pose_.pose.position.x != 0 && last_seen_bay_pose_.pose.position.y != 0)
+    {
+      route.push_back(last_seen_bay_pose_.pose.position);
+    }
+    else{
+      RCLCPP_WARN(this->get_logger(), "No last seen bay pose");
+    }
     if (first_seen_bay_pose_.pose.position.x != 0 && first_seen_bay_pose_.pose.position.y != 0)
     {
       route.push_back(first_seen_bay_pose_.pose.position);
@@ -158,6 +169,7 @@ namespace comp_tasks
 
   void Speed::updateReturnRoute(std::vector<geometry_msgs::msg::Point>& route)
   {
+    RCLCPP_DEBUG(this->get_logger(), "Update Return Route");
     route = task_lib::translateSemicircle(route, current_local_pose_.pose.position, passed_buoy_left_);
 
     if (passed_buoy_left_)
@@ -167,7 +179,13 @@ namespace comp_tasks
 
     removeClosePoints(route, current_local_pose_.pose.position, p_remove_wp_within_dist_);
 
-    route.push_back(last_seen_bay_pose_.pose.position);
+    if (last_seen_bay_pose_.pose.position.x != 0 && last_seen_bay_pose_.pose.position.y != 0)
+    {
+      route.push_back(last_seen_bay_pose_.pose.position);
+    }
+    else{
+      RCLCPP_WARN(this->get_logger(), "No last seen bay pose");
+    }
     if (first_seen_bay_pose_.pose.position.x != 0 && first_seen_bay_pose_.pose.position.y != 0)
     {
       route.push_back(first_seen_bay_pose_.pose.position);
@@ -249,12 +267,28 @@ namespace comp_tasks
 
   void Speed::taskLogic(const yolov8_msgs::msg::DetectionArray& detections)
   {
-    if (!in_guided_ && bbox_calculations::hasDesiredDetections(detections, {p_red_buoy_str_, p_green_buoy_str_, p_second_red_buoy_str_, p_second_green_buoy_str_}))
+    if (!in_guided_)
     {
-      if (bbox_calculations::hasGate(detections, p_red_buoy_str_, p_second_red_buoy_str_, p_green_buoy_str_, p_second_green_buoy_str_))
+      if (bbox_calculations::hasDesiredDetections(detections, {p_red_buoy_str_, p_green_buoy_str_, p_second_red_buoy_str_, p_second_green_buoy_str_}))
       {
-        last_seen_bay_pose_ = current_local_pose_;
+        RCLCPP_DEBUG(this->get_logger(), "detected gate but not in guided");
+        if (bbox_calculations::hasGate(detections, p_red_buoy_str_, p_second_red_buoy_str_, p_green_buoy_str_, p_second_green_buoy_str_))
+        {
+          last_seen_bay_pose_ = current_local_pose_;
+          RCLCPP_DEBUG(this->get_logger(), "detected gate but not in guided");
+        }
       }
+      else if (bbox_calculations::hasDesiredDetections(detections, {p_blue_buoy_str_}))
+      {
+        double offset_angle_corrected;
+        return_route_ = calculateReturnRoute(detections);
+        passed_buoy_left_ ? offset_angle_corrected = p_buoy_offset_angle_ : offset_angle_corrected = -p_buoy_offset_angle_;
+        last_seen_blue_buoy_pose_ = current_local_pose_;
+        RCLCPP_DEBUG(this->get_logger(), "buoy_offset angle %f", offset_angle_corrected);
+        RCLCPP_INFO(this->get_logger(), "Detected blue buoy but not in guided");
+        continue_past_buoys_pnt_ = getWPTowardsLargestTarget(detections, p_blue_buoy_str_, offset_angle_corrected, p_min_dist_from_bay_b4_return_);
+      }
+
     }
     else if (in_guided_)
     {
