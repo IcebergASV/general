@@ -14,7 +14,7 @@ void MavROSRepublisher::republishMAVROSStatus(const mavros_msgs::msg::State::Sha
   auto bool_msg = std_msgs::msg::Bool();
         
   //Check flight mode (adjust "GUIDED" for your autopilot)
-  bool_msg.data = (msg->mode == "GUIDED");  // ArduPilot
+  bool_msg.data = (msg->mode == "GUIDED" || msg->mode == "AUTO");  // ArduPilot
   //bool_msg.data = (msg->mode == "OFFBOARD");  // PX4
         
   mavros_state_publisher->publish(bool_msg);
