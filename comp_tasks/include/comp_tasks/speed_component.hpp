@@ -33,6 +33,7 @@ private:
     void updateGateRoute(std::vector<geometry_msgs::msg::Point>& route);
     
     int p_use_start_point_;
+    int p_use_finish_point_;
     double p_time_to_find_bay_;
     double p_max_time_between_bay_detections_;
     double p_max_time_between_buoy_detections_;

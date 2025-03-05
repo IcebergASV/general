@@ -39,6 +39,7 @@ namespace comp_tasks
     Speed::getParam<int>("num_pnts_on_semicircle", p_num_pnts_on_semicircle_, 0, "How many waypoints to send to turn around buoy on calculated route");
     Speed::getParam<double>("min_dist_from_bay_b4_return", p_min_dist_from_bay_b4_return_, 0.0, "Minimum distance to travel from bay before executing return route");
     Speed::getParam<int>("use_start_point", p_use_start_point_, 0, "Use start point or wait to detect gate");
+    Speed::getParam<int>("use_finish_point", p_use_finish_point_, 0, "Use start point or wait to detect gate");
     Speed::getParam<double>("remove_wp_within_dist", p_remove_wp_within_dist_, 0.0, "Remove WPs within this distance of current position from pre-calculated routes");
     Speed::getStringParam("state", p_state_, "SENDING_START_PNT", "State machine state");
 
@@ -48,6 +49,8 @@ namespace comp_tasks
     node_state_ = "SENDING_START_PNT";
     first_seen_bay_pose_.pose.position.x = 0;
     first_seen_bay_pose_.pose.position.y = 0;
+    last_seen_bay_pose_.pose.position.x = 0;
+    last_seen_bay_pose_.pose.position.y = 0;
 
     return rclcpp_lifecycle::node_interfaces::LifecycleNodeInterface::CallbackReturn::SUCCESS;
   }
@@ -58,6 +61,7 @@ namespace comp_tasks
 
     if (Task::param_callback(params).successful) {}
     else if (params[0].get_name() == "use_start_point") { p_use_start_point_ = params[0].as_int(); updateYamlParam("use_start_point", params[0].as_int());}
+    else if (params[0].get_name() == "use_finish_point") { p_use_finish_point_ = params[0].as_int(); updateYamlParam("use_finish_point", params[0].as_int());}
     else if (params[0].get_name() == "time_to_find_bay") { p_time_to_find_bay_ = params[0].as_double(); updateYamlParam("time_to_find_bay", params[0].as_double());}
     else if (params[0].get_name() == "max_time_between_bay_detections") { p_max_time_between_bay_detections_ = params[0].as_double(); updateYamlParam("max_time_between_bay_detections", params[0].as_double());}
     else if (params[0].get_name() == "max_time_between_buoy_detections") { p_max_time_between_buoy_detections_ = params[0].as_double(); updateYamlParam("max_time_between_buoy_detections", params[0].as_double());} 
@@ -80,6 +84,10 @@ namespace comp_tasks
 
   void Speed::setState(std::string str_state)
   {
+    bboxes_updated_ = false;
+    wp_reached_ = false;
+    wp_cnt_ = 0;
+    detection_frame_cnt_ = 0;
     if (str_state == "SENDING_START_PNT")
     {
       node_state_ = "SENDING_START_PNT";
@@ -94,12 +102,15 @@ namespace comp_tasks
     }
     else if (str_state == "RETURNING")
     {
+      RCLCPP_DEBUG(this->get_logger(), "Switching to state returning, return route size: %ld", return_route_.size());
       node_state_ = "RETURNING";
+      wp_reached_ = true;
       state_ = States::RETURNING;
     }
     else if (str_state == "GOING_STRAIGHT")
     {
       node_state_ = "GOING_STRAIGHT";
+      wp_reached_ = true;
       state_ = States::GOING_STRAIGHT;
     }
     else if (str_state == "CONTINUE_PASSING_BUOY")
@@ -127,8 +138,17 @@ namespace comp_tasks
 
     std::vector<geometry_msgs::msg::Point> route;
     route.push_back(wp.pose.position);
-    route.push_back(last_seen_bay_pose_.pose.position);
-    route.push_back(first_seen_bay_pose_.pose.position);
+    if (last_seen_bay_pose_.pose.position.x != 0 && last_seen_bay_pose_.pose.position.y != 0)
+    {
+      route.push_back(last_seen_bay_pose_.pose.position);
+    }
+    else{
+      RCLCPP_WARN(this->get_logger(), "No last seen bay pose");
+    }
+    if (first_seen_bay_pose_.pose.position.x != 0 && first_seen_bay_pose_.pose.position.y != 0)
+    {
+      route.push_back(first_seen_bay_pose_.pose.position);
+    }
 
     calculated_route_detections_ = detections;
 
@@ -149,6 +169,7 @@ namespace comp_tasks
 
   void Speed::updateReturnRoute(std::vector<geometry_msgs::msg::Point>& route)
   {
+    RCLCPP_DEBUG(this->get_logger(), "Update Return Route");
     route = task_lib::translateSemicircle(route, current_local_pose_.pose.position, passed_buoy_left_);
 
     if (passed_buoy_left_)
@@ -158,8 +179,17 @@ namespace comp_tasks
 
     removeClosePoints(route, current_local_pose_.pose.position, p_remove_wp_within_dist_);
 
-    route.push_back(last_seen_bay_pose_.pose.position);
-    route.push_back(first_seen_bay_pose_.pose.position);
+    if (last_seen_bay_pose_.pose.position.x != 0 && last_seen_bay_pose_.pose.position.y != 0)
+    {
+      route.push_back(last_seen_bay_pose_.pose.position);
+    }
+    else{
+      RCLCPP_WARN(this->get_logger(), "No last seen bay pose");
+    }
+    if (first_seen_bay_pose_.pose.position.x != 0 && first_seen_bay_pose_.pose.position.y != 0)
+    {
+      route.push_back(first_seen_bay_pose_.pose.position);
+    }
   }
 
   void Speed::continuePastBuoy()
@@ -237,7 +267,30 @@ namespace comp_tasks
 
   void Speed::taskLogic(const yolov8_msgs::msg::DetectionArray& detections)
   {
-    if (in_guided_)
+    if (!in_guided_)
+    {
+      if (bbox_calculations::hasDesiredDetections(detections, {p_red_buoy_str_, p_green_buoy_str_, p_second_red_buoy_str_, p_second_green_buoy_str_}))
+      {
+        RCLCPP_DEBUG(this->get_logger(), "detected gate but not in guided");
+        if (bbox_calculations::hasGate(detections, p_red_buoy_str_, p_second_red_buoy_str_, p_green_buoy_str_, p_second_green_buoy_str_))
+        {
+          last_seen_bay_pose_ = current_local_pose_;
+          RCLCPP_DEBUG(this->get_logger(), "detected gate but not in guided");
+        }
+      }
+      else if (bbox_calculations::hasDesiredDetections(detections, {p_blue_buoy_str_}))
+      {
+        double offset_angle_corrected;
+        return_route_ = calculateReturnRoute(detections);
+        passed_buoy_left_ ? offset_angle_corrected = p_buoy_offset_angle_ : offset_angle_corrected = -p_buoy_offset_angle_;
+        last_seen_blue_buoy_pose_ = current_local_pose_;
+        RCLCPP_DEBUG(this->get_logger(), "buoy_offset angle %f", offset_angle_corrected);
+        RCLCPP_INFO(this->get_logger(), "Detected blue buoy but not in guided");
+        continue_past_buoys_pnt_ = getWPTowardsLargestTarget(detections, p_blue_buoy_str_, offset_angle_corrected, p_min_dist_from_bay_b4_return_);
+      }
+
+    }
+    else if (in_guided_)
     {
       switch (state_)
       {
@@ -276,6 +329,10 @@ namespace comp_tasks
             if (calculated_route_.size() == 0)
             {
               RCLCPP_WARN(this->get_logger(), "Did not find gate to calculate route"); 
+              if (p_use_finish_point_)
+              {
+                publishFinishPoint();
+              }
               signalTaskFinish();
             }
             else
@@ -308,6 +365,10 @@ namespace comp_tasks
               if (wp_cnt_ >= static_cast<int>(calculated_route_.size())) // might need to update this to actually check if we are in same position as where we started
               {
                 RCLCPP_INFO(this->get_logger(), "Reached all WPs in calculated route, finishing");
+                if (p_use_finish_point_)
+                {
+                  publishFinishPoint();
+                }
                 signalTaskFinish();
               }
               else 
@@ -334,6 +395,10 @@ namespace comp_tasks
               if (return_route_.size() == 0)
               {
                 RCLCPP_WARN(this->get_logger(), "Did not find blue buoy to calculate return route, finishing");
+                if (p_use_finish_point_)
+                {
+                  publishFinishPoint();
+                }
                 signalTaskFinish();
               }
               else
@@ -372,6 +437,10 @@ namespace comp_tasks
           {
             if (return_route_.size() == 0)
             {
+              if (p_use_finish_point_)
+              {
+                publishFinishPoint();
+              }
               RCLCPP_WARN(this->get_logger(), "Return route empty, finishing");
               signalTaskFinish();
             }
@@ -399,6 +468,10 @@ namespace comp_tasks
             if (wp_cnt_ >= static_cast<int>(return_route_.size())) // might need to update this to actually check if we are in same position as where we started
             {
               RCLCPP_INFO(this->get_logger(), "Reached all WPs in return route, finishing");
+              if (p_use_finish_point_)
+              {
+                publishFinishPoint();
+              }
               signalTaskFinish();
             }
             else 
