@@ -34,6 +34,7 @@
     frame_stack_size: 10
     bbox_selection: LARGEST
     use_start_point: 1
+    use_finish_point: 1
     time_to_pause_search: 1.000
     time_to_find_bay: 1000.0
     max_time_between_bay_detections: 10.000
