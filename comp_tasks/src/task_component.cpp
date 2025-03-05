@@ -248,7 +248,7 @@ namespace comp_tasks
 
   void Task::publishStartPoint()
   {
-    RCLCPP_INFO(this->get_logger(), "Publishing start point");
+    RCLCPP_INFO(this->get_logger(), "Publishing start point %f, %f", p_start_lat_, p_start_lon_);
     publishGlobalWP(p_start_lat_, p_start_lon_, "start_pnt");
   }
 
