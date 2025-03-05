@@ -19,6 +19,7 @@ public:
         RCLCPP_INFO(this->get_logger(), "Lighting params set to: %s", config_file_name_.c_str());
         ColorDetector::getStringParam("class_name", p_class_name_, "", "Class name");
         ColorDetector::getIntParam("min_area", p_min_area_, 1, "Minimum pixel area");
+        ColorDetector::getIntParam("max_area", p_max_area_, 1, "Maximum pixel area");
         ColorDetector::getIntParam("hue_min0", p_hue_min0_, -1, "Lower HSV 1");
         ColorDetector::getIntParam("sat_min0", p_sat_min0_, -1, "Lower HSV 2");
         ColorDetector::getIntParam("val_min0", p_val_min0_, -1, "Lower HSV 3");
@@ -59,8 +60,9 @@ public:
     {
       rcl_interfaces::msg::SetParametersResult result;
   
-      if (params[0].get_name() == "class_name") { p_class_name_ = params[0].as_string(); } 
+      if (params[0].get_name() == "class_name") { p_class_name_ = params[0].as_string();}
       else if (params[0].get_name() == "min_area") { p_min_area_ = params[0].as_int(); updateYamlParam("min_area", params[0].as_int());}
+      else if (params[0].get_name() == "max_area") { p_max_area_ = params[0].as_int(); updateYamlParam("max_area", params[0].as_int());}
       else if (params[0].get_name() == "hue_max0") {p_hue_max0_ = params[0].as_int(); setHSV(); updateYamlParam("hue_max0", params[0].as_int());}
       else if (params[0].get_name() == "sat_max0") {p_sat_max0_ = params[0].as_int(); setHSV(); updateYamlParam("sat_max0", params[0].as_int());}
       else if (params[0].get_name() == "val_max0") {p_val_max0_ = params[0].as_int(); setHSV(); updateYamlParam("val_max0", params[0].as_int());}
@@ -275,10 +277,17 @@ private:
         det_array.header = msg->header;
 
         for (const auto& contour : contours) {
-            if (cv::contourArea(contour) > p_min_area_) {
+            //Added check for maximum area as well
+            if (cv::contourArea(contour) > p_min_area_ && cv::contourArea(contour) < p_max_area_) {
                 cv::Rect rect = cv::boundingRect(contour);
 
                 cv::rectangle(filtered, rect, cv::Scalar(0, 255, 0), 2);
+
+                //Skip detection if rectangles horizonal len is greater than twice the vertical len
+                if (rect.width > rect.height * 2) {
+                    continue;
+                }
+
                 RCLCPP_DEBUG(this->get_logger(), "Detected object at (%d,%d) with size %d, %d",
                             rect.x, rect.y, rect.width, rect.height);
                 yolov8_msgs::msg::BoundingBox2D bbox;
@@ -318,6 +327,7 @@ private:
     std::string output_det_topic_;
     std::string config_file_name_;
     int p_min_area_;
+    int p_max_area_;
     std::string p_class_name_;
     std::vector<int> lower_hsv_list_;
     std::vector<int> upper_hsv_list_;
