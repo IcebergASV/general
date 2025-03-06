@@ -9,7 +9,7 @@
     recovery_behaviour: RECOVERY_PNT
     time_to_pause_search: 1.00
     time_between_recovery_actions: 2.0
-    time_to_stop_before_recovery: 10.0
+    time_to_stop_before_recovery: 100.0
     red_buoy_label: red
     green_buoy_label: green
     second_red_buoy_label: black_buoy
