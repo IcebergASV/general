@@ -20,15 +20,17 @@ update_yaml() {
     LON=$4
 
     if [[ "$NODE_NAME" == "m" ]]; then
-        FULL_NODE_NAME="maneuvering"
+        FULL_NODE_NAME="/maneuvering"
     elif [[ "$NODE_NAME" == "n" ]]; then
-        FULL_NODE_NAME="nav_channel"
+        FULL_NODE_NAME="/nav_channel"
     elif [[ "$NODE_NAME" == "d" ]]; then
-        FULL_NODE_NAME="docking"
+        FULL_NODE_NAME="/docking"
     elif [[ "$NODE_NAME" == "s" ]]; then
-        FULL_NODE_NAME="speed"
+        FULL_NODE_NAME="/speed"
+    elif [[ "$NODE_NAME" == "h" ]]; then
+        FULL_NODE_NAME="/home"
     else
-        echo "Invalid node name. Use 'm' (maneuvering), 'n' (nav channel), 'd' (docking), or 's' (speed challenge)"
+        echo "Invalid node name. Use 'm' (maneuvering), 'n' (nav channel), 'd' (docking), or 's' (speed challenge), 'h' (home)"
         exit 1
     fi
 
