@@ -70,6 +70,8 @@ public:
       else if (params[0].get_name() == "max_area") { p_max_area_ = params[0].as_int(); updateYamlParam("max_area", params[0].as_int());}
       else if (params[0].get_name() == "wh_ratio") { p_wh_ratio_ = params[0].as_double(); updateYamlParam("wh_ratio", params[0].as_double());}
       else if (params[0].get_name() == "hw_ratio") { p_black_hw_ratio_ = params[0].as_double(); updateYamlParam("hw_ratio", params[0].as_double());}
+      else if (params[0].get_name() == "upper_limit_bounary") {p_upper_boundary_ = params[0].as_double(); setHSV(); updateYamlParam("upper_limit_boundary", params[0].as_double());}
+      else if (params[0].get_name() == "lower_limit_boundary") {p_lower_boundary_ = params[0].as_double(); setHSV(); updateYamlParam("lower_limit_boundary", params[0].as_double());}
       else if (params[0].get_name() == "hue_max0") {p_hue_max0_ = params[0].as_int(); setHSV(); updateYamlParam("hue_max0", params[0].as_int());}
       else if (params[0].get_name() == "sat_max0") {p_sat_max0_ = params[0].as_int(); setHSV(); updateYamlParam("sat_max0", params[0].as_int());}
       else if (params[0].get_name() == "val_max0") {p_val_max0_ = params[0].as_int(); setHSV(); updateYamlParam("val_max0", params[0].as_int());}
