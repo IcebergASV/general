@@ -52,6 +52,15 @@ def generate_launch_description():
             namespace='',
             output='screen',
             parameters=[config_path, {'lighting': config_file}],
+            name='black',
+            arguments=['--ros-args', '--log-level', LaunchConfiguration('log_level')]
+        ),
+        Node(
+            package='iceberg_cv_cpp',
+            executable='ColorDetector',
+            namespace='',
+            output='screen',
+            parameters=[config_path, {'lighting': config_file}],
             name='green',
             arguments=['--ros-args', '--log-level', LaunchConfiguration('log_level')]
         ),
