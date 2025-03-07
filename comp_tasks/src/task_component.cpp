@@ -149,6 +149,58 @@ namespace comp_tasks
     current_local_pose_ = *msg;
   }
 
+  void Task::updateYamlParamForDiffNode(const std::string &paramName, double newValue, std::string node_name, std::string filename) {
+    if (isActive()){
+      try {
+          std::string nodeName = "/" + node_name;
+          std::filesystem::path current_file(__FILE__); 
+          std::filesystem::path package_path = current_file.parent_path().parent_path();
+
+          std::string file_path = package_path.string() + "/config/" + filename;
+
+          // Load the YAML file
+          YAML::Node config = YAML::LoadFile(file_path);
+    
+          // Check if the node and parameter exist
+          if (!config[nodeName]) {
+              std::cerr << "Error: Node " << nodeName << " not found in YAML file." << std::endl;
+              return;
+          }
+
+          // Check if the node and parameter exist
+          if (!config[nodeName] || !config[nodeName]["ros__parameters"] || !config[nodeName]["ros__parameters"][paramName]) {
+              std::cerr << "Error: Parameter " << paramName << " not found in YAML file." << std::endl;
+              return;
+          }
+    
+            // Update the parameter value
+          std::ostringstream oss;
+          oss << std::fixed << std::setprecision(10) << newValue;
+          config[nodeName]["ros__parameters"][paramName] = oss.str();
+
+    
+          // Write back to file
+          std::ofstream outFile(file_path);
+          if (!outFile) {
+              std::cerr << "Error: Unable to open file for writing." << std::endl;
+              return;
+          }
+          outFile << config;
+          outFile.close();
+    
+          std::cout << "Successfully updated " << paramName << " to "<< newValue << std::endl;
+      } catch (const std::exception &e) {
+          std::cerr << "Exception: " << e.what() << std::endl;
+      }
+    }
+  }
+
+  void Task::setReturnToHomePnt()
+  {
+    updateYamlParamForDiffNode("recovery_lat", this->current_global_pose_.latitude, "home", "gps_points.yaml");
+    updateYamlParamForDiffNode("recovery_lon", this->current_global_pose_.longitude, "home", "gps_points.yaml");
+  }
+
   void Task::stateCallback(const mavros_msgs::msg::State::SharedPtr msg)
   {
     mavros_msgs::msg::State current_state = *msg;
@@ -162,6 +214,9 @@ namespace comp_tasks
     if (in_guided_ && !prev_guided)
     {
       RCLCPP_INFO(this->get_logger(), "In GUIDED");
+      if(this->get_name() == std::string("maneuvering")){
+        setReturnToHomePnt();
+      }
     }
     else if (!in_guided_)
     {

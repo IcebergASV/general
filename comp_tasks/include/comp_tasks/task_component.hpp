@@ -60,6 +60,9 @@ protected:
     bool isActive();
     virtual void executeRecoveryBehaviour();
     void signalTaskFinish(); // TODO
+    void setReturnToHomePnt();
+
+    void updateYamlParamForDiffNode(const std::string &paramName, double newValue, std::string node_name, std::string filename);
     virtual void taskLogic(const yolov8_msgs::msg::DetectionArray& detections) = 0;
     virtual rclcpp_lifecycle::node_interfaces::LifecycleNodeInterface::CallbackReturn on_configure(const rclcpp_lifecycle::State &);
     rclcpp_lifecycle::node_interfaces::LifecycleNodeInterface::CallbackReturn on_activate(const rclcpp_lifecycle::State &);
