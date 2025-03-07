@@ -18,6 +18,11 @@ public:
         ColorDetector::getStringParam("lighting", config_file_name_, "", "params file name");
         RCLCPP_INFO(this->get_logger(), "Lighting params set to: %s", config_file_name_.c_str());
         ColorDetector::getStringParam("class_name", p_class_name_, "", "Class name");
+        ColorDetector::getDoubleParam("wh_ratio", p_wh_ratio_, 1.4, "Width to height ratio");
+        ColorDetector::getDoubleParam("hw_ratio", p_black_hw_ratio_, 1.5, "Black height to width ratio");
+        ColorDetector::getDoubleParam("upper_limit_boundary", p_upper_boundary_, 0.33, "The top boundary line");
+        ColorDetector::getDoubleParam("lower_limit_boundary", p_lower_boundary_, 0.66, "The bottom bounday line");
+
         ColorDetector::getIntParam("min_area", p_min_area_, 1, "Minimum pixel area");
         ColorDetector::getIntParam("max_area", p_max_area_, 1, "Maximum pixel area");
         ColorDetector::getIntParam("hue_min0", p_hue_min0_, -1, "Lower HSV 1");
@@ -63,6 +68,10 @@ public:
       if (params[0].get_name() == "class_name") { p_class_name_ = params[0].as_string();}
       else if (params[0].get_name() == "min_area") { p_min_area_ = params[0].as_int(); updateYamlParam("min_area", params[0].as_int());}
       else if (params[0].get_name() == "max_area") { p_max_area_ = params[0].as_int(); updateYamlParam("max_area", params[0].as_int());}
+      else if (params[0].get_name() == "wh_ratio") { p_wh_ratio_ = params[0].as_double(); updateYamlParam("wh_ratio", params[0].as_double());}
+      else if (params[0].get_name() == "hw_ratio") { p_black_hw_ratio_ = params[0].as_double(); updateYamlParam("hw_ratio", params[0].as_double());}
+      else if (params[0].get_name() == "upper_limit_boundary") {p_upper_boundary_ = params[0].as_double(); setHSV(); updateDoubleYamlParam("upper_limit_boundary", params[0].as_double());}
+      else if (params[0].get_name() == "lower_limit_boundary") {p_lower_boundary_ = params[0].as_double(); setHSV(); updateDoubleYamlParam("lower_limit_boundary", params[0].as_double());}
       else if (params[0].get_name() == "hue_max0") {p_hue_max0_ = params[0].as_int(); setHSV(); updateYamlParam("hue_max0", params[0].as_int());}
       else if (params[0].get_name() == "sat_max0") {p_sat_max0_ = params[0].as_int(); setHSV(); updateYamlParam("sat_max0", params[0].as_int());}
       else if (params[0].get_name() == "val_max0") {p_val_max0_ = params[0].as_int(); setHSV(); updateYamlParam("val_max0", params[0].as_int());}
@@ -129,6 +138,47 @@ private:
             std::cerr << "Exception: " << e.what() << std::endl;
         }
     }
+
+    void updateDoubleYamlParam(const std::string &paramName, double newValue) {
+        try {
+            std::string nodeName = "/" + std::string(this->get_name());
+            std::filesystem::path current_file(__FILE__); 
+            std::filesystem::path package_path = current_file.parent_path().parent_path();
+
+            std::string file_path = package_path.string() + "/config/" + config_file_name_;
+
+            // Load the YAML file
+            YAML::Node config = YAML::LoadFile(file_path);
+    
+            // Check if the node and parameter exist
+            if (!config[nodeName]) {
+                std::cerr << "Error: Node " << nodeName << " not found in YAML file." << std::endl;
+                return;
+            }
+
+            // Check if the node and parameter exist
+            if (!config[nodeName] || !config[nodeName]["ros__parameters"] || !config[nodeName]["ros__parameters"][paramName]) {
+                std::cerr << "Error: Parameter " << paramName << " not found in YAML file." << std::endl;
+                return;
+            }
+    
+            config[nodeName]["ros__parameters"][paramName] = newValue;
+    
+            // Write back to file
+            std::ofstream outFile(file_path);
+            if (!outFile) {
+                std::cerr << "Error: Unable to open file for writing." << std::endl;
+                return;
+            }
+            outFile << config;
+            outFile.close();
+    
+            std::cout << "Successfully updated " << paramName << " to "<< newValue << std::endl;
+        } catch (const std::exception &e) {
+            std::cerr << "Exception: " << e.what() << std::endl;
+        }
+    }
+
     void getIntParam(std::string param_name, int& param, int default_value, std::string desc)
     {
         auto param_desc = rcl_interfaces::msg::ParameterDescriptor{};
@@ -165,6 +215,18 @@ private:
         RCLCPP_INFO(this->get_logger(), param_log_output.c_str());
    
         return;
+    }
+
+    void getDoubleParam(std::string param_name, double& param, double default_value, std::string desc)
+    {
+      auto param_desc = rcl_interfaces::msg::ParameterDescriptor{};
+      param_desc.description = desc;
+      this->declare_parameter<double>(param_name, default_value, param_desc);
+      this->get_parameter(param_name, param);
+      std::string param_log_output = param_name + ": " + std::to_string(param);
+      RCLCPP_INFO(this->get_logger(), param_log_output.c_str()); 
+
+      return;
     }
 
     void populateLists()
@@ -281,21 +343,36 @@ private:
             if (cv::contourArea(contour) > p_min_area_ && cv::contourArea(contour) < p_max_area_) {
                 cv::Rect rect = cv::boundingRect(contour);
 
-                cv::rectangle(filtered, rect, cv::Scalar(0, 255, 0), 2);
-
-                //Skip detection if rectangles horizonal len is greater than twice the vertical len
-                if (rect.width > rect.height * 2) {
-                    continue;
-                }
-
-                RCLCPP_DEBUG(this->get_logger(), "Detected object at (%d,%d) with size %d, %d",
-                            rect.x, rect.y, rect.width, rect.height);
                 yolov8_msgs::msg::BoundingBox2D bbox;
                 bbox.center.position.x = rect.x + rect.width / 2.0;  // Center X
                 bbox.center.position.y = rect.y + rect.height / 2.0; // Center Y
                 bbox.size.x = rect.width;  // Width of the bounding box
                 bbox.size.y = rect.height; // Height of the bounding box
 
+                //Skip detection if rectangles horizonal len is greater than twice the vertical len
+                if (rect.width / rect.height >= p_wh_ratio_) {
+                    continue;
+                }
+
+                if (rect.height / rect.width >= p_black_hw_ratio_ && (p_class_name_ == "black")) {
+                    continue;
+                }
+
+                //If the center is above the boundary line, ignore it.
+                if (bbox.center.position.y <= p_upper_boundary_ * 480 && (p_class_name_ == "black" || p_class_name_ == "blue")) {
+                    continue;
+                }
+
+                //If the center is below the boundary line, ignore it.
+                if (bbox.center.position.y >= p_lower_boundary_ * 480 && (p_class_name_ == "black" || p_class_name_ == "blue")) {
+                    continue;
+                }
+
+                cv::rectangle(filtered, rect, cv::Scalar(0, 255, 0), 2);
+
+                RCLCPP_DEBUG(this->get_logger(), "Detected object at (%d,%d) with size %d, %d",
+                            rect.x, rect.y, rect.width, rect.height);
+                
                 yolov8_msgs::msg::Detection det;
                 det.class_id = 100;
                 det.class_name = p_class_name_;
@@ -326,11 +403,20 @@ private:
     std::string output_img_topic_;
     std::string output_det_topic_;
     std::string config_file_name_;
+
+    //BBox selection criteria
     int p_min_area_;
     int p_max_area_;
+    double p_wh_ratio_;
+    double p_black_hw_ratio_;
+    double p_lower_boundary_;
+    double p_upper_boundary_;
+
     std::string p_class_name_;
     std::vector<int> lower_hsv_list_;
     std::vector<int> upper_hsv_list_;
+
+    //HSV values
     int p_hue_min0_;
     int p_sat_min0_;
     int p_val_min0_;
