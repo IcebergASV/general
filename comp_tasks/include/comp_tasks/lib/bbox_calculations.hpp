@@ -28,5 +28,6 @@ namespace bbox_calculations
     BoundingBox2D mergeBoundingBoxes(const BoundingBox2D& a, const BoundingBox2D& b);
     DetectionArray mergeOverlappingDetections(const DetectionArray& bboxes);
     double getAverageXCenter(const yolov8_msgs::msg::DetectionArray& bboxes);
+    double getAngleBetween2SameTargets(const yolov8_msgs::msg::DetectionArray& bboxes, std::string target_class_name, double cam_fov, double cam_res_x);
 }
 #endif // BBOXCALCULATIONS_H

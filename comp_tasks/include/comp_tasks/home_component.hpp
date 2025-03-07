@@ -30,9 +30,8 @@ private:
     int p_max_consec_recoveries_;
     double p_time_to_stop_before_recovery_;
     double p_time_between_recovery_actions_;
-    std::string p_black_buoy_str_;
     std::string p_state_;
-    enum States {STOPPED, RECOVERING, HEADING_TO_TARGET }; 
+    enum States {RECOVERING, HEADING_TO_TARGET }; 
     States state_;
     double gate_x_;
     double gate_y_;

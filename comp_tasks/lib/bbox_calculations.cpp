@@ -83,52 +83,52 @@ namespace bbox_calculations
       return merged;
   }
 
-  // Function to merge overlapping bounding boxes
-  DetectionArray mergeOverlappingDetections(const DetectionArray& bboxes) {
-      DetectionArray merged_bboxes;
-      std::vector<bool> merged_flags(bboxes.detections.size(), false);
+  std::vector<yolov8_msgs::msg::Detection> mergeOverlappingDetections(const std::vector<yolov8_msgs::msg::Detection>& bboxes) {
+    std::vector<yolov8_msgs::msg::Detection> merged_bboxes;
+    std::vector<bool> merged_flags(bboxes.size(), false);
 
-      for (size_t i = 0; i < bboxes.detections.size(); ++i) {
-          if (merged_flags[i]) continue;
-          Detection merged_detection = bboxes.detections[i];
-          
-          for (size_t j = i + 1; j < bboxes.detections.size(); ++j) {
-              if (merged_flags[j]) continue;
-              
-              if (isOverlapping(merged_detection.bbox, bboxes.detections[j].bbox)) {
-                  merged_detection.bbox = mergeBoundingBoxes(merged_detection.bbox, bboxes.detections[j].bbox);
-                  merged_flags[j] = true; // Mark as merged
-              }
-          }
-          merged_bboxes.detections.push_back(merged_detection);
-      }
-      return merged_bboxes;
-  }
+    for (size_t i = 0; i < bboxes.size(); ++i) {
+        if (merged_flags[i]) continue;
+        yolov8_msgs::msg::Detection merged_detection = bboxes[i];
+        
+        for (size_t j = i + 1; j < bboxes.size(); ++j) {
+            if (merged_flags[j]) continue;
+            
+            if (isOverlapping(merged_detection.bbox, bboxes[j].bbox)) {
+                merged_detection.bbox = mergeBoundingBoxes(merged_detection.bbox, bboxes[j].bbox);
+                merged_flags[j] = true; // Mark as merged
+            }
+        }
+        merged_bboxes.push_back(merged_detection);
+    }
+    return merged_bboxes;
+}
 
-  double getAverageXCenter(const yolov8_msgs::msg::DetectionArray& bboxes) {
-    if (bboxes.detections.empty()) {
+  double getAverageXCenter(const std::vector<yolov8_msgs::msg::Detection>& bboxes) {
+    if (bboxes.empty()) {
         return 0.0;  // Return 0 if there are no detections
     }
 
     double sum_x_center = 0.0;
-    for (const auto& detection : bboxes.detections) {
-        double x_center = detection.bbox.center.position.x;
+    for (const auto& box : bboxes) {
+        double x_center = box.bbox.center.position.x;
         sum_x_center += x_center;
     }
 
-    return sum_x_center / bboxes.detections.size();
+    return sum_x_center / bboxes.size();
   }
 
-  double getAngleBetween2SameTargets(const yolov8_msgs::msg::DetectionArray bboxes, std::string bbox_selection, std::string target_class_name, double cam_fov, double cam_res_x, double angle_from_target)
+  double getAngleBetween2SameTargets(const yolov8_msgs::msg::DetectionArray& bboxes, std::string target_class_name, double cam_fov, double cam_res_x)
   {
-    DetectionArray merged_bboxes = mergeOverlappingDetections(bboxes);
+    std::vector<yolov8_msgs::msg::Detection> filtered_detections = extractTargetDetections(bboxes, target_class_name, target_class_name);
+    std::vector<yolov8_msgs::msg::Detection> merged_bboxes = mergeOverlappingDetections(filtered_detections);
 
     if (merged_bboxes.size() == 0)
     {
       RCLCPP_ERROR(logger, "No targets detected - wp will be empty"); //TODO THROW AN ERROR - should never get here
     }
 
-    int average_pixel = getAverageXCenter(merged_bboxes) 
+    int average_pixel = getAverageXCenter(merged_bboxes);
     double angle = bbox_calculations::pixelToAngle(cam_fov, cam_res_x, average_pixel);
     angle = angle - M_PI/2;
     return angle;
