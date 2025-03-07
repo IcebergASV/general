@@ -319,7 +319,11 @@ namespace comp_tasks
     geometry_msgs::msg::PoseStamped wp = task_lib::relativePolarToLocalCoords(dist, angle, current_local_pose_);
     return wp;
   }
-
+  void Task::publishRecoveryPoint()
+  {
+    RCLCPP_INFO(this->get_logger(), "Publishing recovery point %f, %f", p_recovery_lat_, p_recovery_lon_);
+    publishGlobalWP(p_recovery_lat_, p_recovery_lon_, "recovery_pnt");
+  }
   void Task::publishStartPoint()
   {
     RCLCPP_INFO(this->get_logger(), "Publishing start point %f, %f", p_start_lat_, p_start_lon_);
