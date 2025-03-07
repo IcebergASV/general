@@ -7,22 +7,22 @@
     hue_max1: 180
     sat_min0: 100
     sat_max0: 255
-    sat_min1: 55
+    sat_min1: 105
     sat_max1: 255
     val_min0: 100
     val_max0: 255
     val_min1: 55
     val_max1: 255
-    min_area: 50
-    max_area: 500
+    min_area: 40
+    max_area: 1000
 /blue:
   ros__parameters:
     class_name: blue
     hue_min0: 102
     hue_max0: 120
-    sat_min0: 95
+    sat_min0: 80
     sat_max0: 200
-    val_min0: 125
+    val_min0: 110
     val_max0: 255
     min_area: 50
     max_area: 500
@@ -30,10 +30,21 @@
   ros__parameters:
     class_name: green
     hue_min0: 50
-    hue_max0: 85
+    hue_max0: 80
     sat_min0: 55
     sat_max0: 255
     val_min0: 50
     val_max0: 255
     min_area: 50
+    max_area: 1000
+/black:
+  ros__parameters:
+    class_name: black
+    hue_min0: 95
+    hue_max0: 180
+    sat_min0: 23
+    sat_max0: 100
+    val_min0: 21
+    val_max0: 92
+    min_area: 40
     max_area: 500
