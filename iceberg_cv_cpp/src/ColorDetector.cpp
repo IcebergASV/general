@@ -68,8 +68,8 @@ public:
       if (params[0].get_name() == "class_name") { p_class_name_ = params[0].as_string();}
       else if (params[0].get_name() == "min_area") { p_min_area_ = params[0].as_int(); updateYamlParam("min_area", params[0].as_int());}
       else if (params[0].get_name() == "max_area") { p_max_area_ = params[0].as_int(); updateYamlParam("max_area", params[0].as_int());}
-      else if (params[0].get_name() == "wh_ratio") { p_wh_ratio_ = params[0].as_double(); updateYamlParam("wh_ratio", params[0].as_double());}
-      else if (params[0].get_name() == "hw_ratio") { p_black_hw_ratio_ = params[0].as_double(); updateYamlParam("hw_ratio", params[0].as_double());}
+      else if (params[0].get_name() == "wh_ratio") { p_wh_ratio_ = params[0].as_double(); updateDoubleYamlParam("wh_ratio", params[0].as_double());}
+      else if (params[0].get_name() == "hw_ratio") { p_black_hw_ratio_ = params[0].as_double(); updateDoubleYamlParam("hw_ratio", params[0].as_double());}
       else if (params[0].get_name() == "upper_limit_boundary") {p_upper_boundary_ = params[0].as_double(); setHSV(); updateDoubleYamlParam("upper_limit_boundary", params[0].as_double());}
       else if (params[0].get_name() == "lower_limit_boundary") {p_lower_boundary_ = params[0].as_double(); setHSV(); updateDoubleYamlParam("lower_limit_boundary", params[0].as_double());}
       else if (params[0].get_name() == "hue_max0") {p_hue_max0_ = params[0].as_int(); setHSV(); updateYamlParam("hue_max0", params[0].as_int());}
