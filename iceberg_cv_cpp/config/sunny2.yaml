@@ -14,6 +14,10 @@
     val_min1: 55
     val_max1: 255
     min_area: 75
+    max_area: 500
+    wh_ratio: 1.4
+    upper_limit_boundary: 0.33
+    lower_limit_boundary: 0.66
 /blue:
   ros__parameters:
     class_name: blue
@@ -24,6 +28,10 @@
     val_min0: 60
     val_max0: 200
     min_area: 75
+    max_area: 500
+    wh_ratio: 1.4
+    upper_limit_boundary: 0.33
+    lower_limit_boundary: 0.66
 /green:
   ros__parameters:
     class_name: green
@@ -34,4 +42,23 @@
     val_min0: 65
     val_max0: 255
     min_area: 75
+    max_area: 500
+    wh_ratio: 1.4
+    upper_limit_boundary: 0.33
+    lower_limit_boundary: 0.66
+/black:
+  ros__parameters:
+    class_name: black
+    hue_min0: 95
+    hue_max0: 180
+    sat_min0: 23
+    sat_max0: 100
+    val_min0: 21
+    val_max0: 92
+    min_area: 40
+    max_area: 500
+    wh_ratio: 1.4
+    hw_ratio: 1.5
+    upper_limit_boundary: 0.33
+    lower_limit_boundary: 0.66
 
