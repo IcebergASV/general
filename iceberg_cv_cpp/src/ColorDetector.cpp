@@ -282,6 +282,12 @@ private:
             if (cv::contourArea(contour) > p_min_area_ && cv::contourArea(contour) < p_max_area_) {
                 cv::Rect rect = cv::boundingRect(contour);
 
+                yolov8_msgs::msg::BoundingBox2D bbox;
+                bbox.center.position.x = rect.x + rect.width / 2.0;  // Center X
+                bbox.center.position.y = rect.y + rect.height / 2.0; // Center Y
+                bbox.size.x = rect.width;  // Width of the bounding box
+                bbox.size.y = rect.height; // Height of the bounding box
+
                 //Skip detection if rectangles horizonal len is greater than twice the vertical len
                 if (rect.width / rect.height >= 1.4) {
                     continue;
@@ -301,12 +307,7 @@ private:
 
                 RCLCPP_DEBUG(this->get_logger(), "Detected object at (%d,%d) with size %d, %d",
                             rect.x, rect.y, rect.width, rect.height);
-                yolov8_msgs::msg::BoundingBox2D bbox;
-                bbox.center.position.x = rect.x + rect.width / 2.0;  // Center X
-                bbox.center.position.y = rect.y + rect.height / 2.0; // Center Y
-                bbox.size.x = rect.width;  // Width of the bounding box
-                bbox.size.y = rect.height; // Height of the bounding box
-
+                
                 yolov8_msgs::msg::Detection det;
                 det.class_id = 100;
                 det.class_name = p_class_name_;
