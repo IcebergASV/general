@@ -60,6 +60,80 @@ namespace bbox_calculations
     return angle;
   }
 
+  // Helper function to check if two bounding boxes overlap
+  bool isOverlapping(const BoundingBox2D& a, const BoundingBox2D& b) {
+      return (a.center.position.x - a.size.x / 2 < b.center.position.x + b.size.x / 2 &&
+              a.center.position.x + a.size.x / 2 > b.center.position.x - b.size.x / 2 &&
+              a.center.position.y - a.size.y / 2 < b.center.position.y + b.size.y / 2 &&
+              a.center.position.y + a.size.y / 2 > b.center.position.y - b.size.y / 2);
+  }
+
+  // Function to merge two bounding boxes
+  BoundingBox2D mergeBoundingBoxes(const BoundingBox2D& a, const BoundingBox2D& b) {
+      double min_x = std::min(a.center.position.x - a.size.x / 2, b.center.position.x - b.size.x / 2);
+      double max_x = std::max(a.center.position.x + a.size.x / 2, b.center.position.x + b.size.x / 2);
+      double min_y = std::min(a.center.position.y - a.size.y / 2, b.center.position.y - b.size.y / 2);
+      double max_y = std::max(a.center.position.y + a.size.y / 2, b.center.position.y + b.size.y / 2);
+      
+      BoundingBox2D merged;
+      merged.center.position.x = (min_x + max_x) / 2;
+      merged.center.position.y = (min_y + max_y) / 2;
+      merged.size.x = max_x - min_x;
+      merged.size.y = max_y - min_y;
+      return merged;
+  }
+
+  // Function to merge overlapping bounding boxes
+  DetectionArray mergeOverlappingDetections(const DetectionArray& bboxes) {
+      DetectionArray merged_bboxes;
+      std::vector<bool> merged_flags(bboxes.detections.size(), false);
+
+      for (size_t i = 0; i < bboxes.detections.size(); ++i) {
+          if (merged_flags[i]) continue;
+          Detection merged_detection = bboxes.detections[i];
+          
+          for (size_t j = i + 1; j < bboxes.detections.size(); ++j) {
+              if (merged_flags[j]) continue;
+              
+              if (isOverlapping(merged_detection.bbox, bboxes.detections[j].bbox)) {
+                  merged_detection.bbox = mergeBoundingBoxes(merged_detection.bbox, bboxes.detections[j].bbox);
+                  merged_flags[j] = true; // Mark as merged
+              }
+          }
+          merged_bboxes.detections.push_back(merged_detection);
+      }
+      return merged_bboxes;
+  }
+
+  double getAverageXCenter(const yolov8_msgs::msg::DetectionArray& bboxes) {
+    if (bboxes.detections.empty()) {
+        return 0.0;  // Return 0 if there are no detections
+    }
+
+    double sum_x_center = 0.0;
+    for (const auto& detection : bboxes.detections) {
+        double x_center = detection.bbox.center.position.x;
+        sum_x_center += x_center;
+    }
+
+    return sum_x_center / bboxes.detections.size();
+  }
+
+  double getAngleBetween2SameTargets(const yolov8_msgs::msg::DetectionArray bboxes, std::string bbox_selection, std::string target_class_name, double cam_fov, double cam_res_x, double angle_from_target)
+  {
+    DetectionArray merged_bboxes = mergeOverlappingDetections(bboxes);
+
+    if (merged_bboxes.size() == 0)
+    {
+      RCLCPP_ERROR(logger, "No targets detected - wp will be empty"); //TODO THROW AN ERROR - should never get here
+    }
+
+    int average_pixel = getAverageXCenter(merged_bboxes) 
+    double angle = bbox_calculations::pixelToAngle(cam_fov, cam_res_x, average_pixel);
+    angle = angle - M_PI/2;
+    return angle;
+  }
+
   double getAngleToLargestTarget(const yolov8_msgs::msg::DetectionArray bboxes, std::string target_label, double cam_fov, double cam_res_x)
   {
     std::vector<yolov8_msgs::msg::Detection> targets = filterAndSort(bboxes, "LARGEST", target_label, target_label);

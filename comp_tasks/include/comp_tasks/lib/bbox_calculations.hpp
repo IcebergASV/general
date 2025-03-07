@@ -6,7 +6,11 @@
 #include <cmath>
 #include <rclcpp/logging.hpp>
 #include "yolov8_msgs/msg/detection_array.hpp"
+#include "yolov8_msgs/msg/bounding_box2_d.hpp"
 
+using yolov8_msgs::msg::DetectionArray;
+using yolov8_msgs::msg::Detection;
+using yolov8_msgs::msg::BoundingBox2D;
 namespace bbox_calculations
 {
     rclcpp::Logger logger = rclcpp::get_logger("bbox_calculations_logger");
@@ -21,6 +25,8 @@ namespace bbox_calculations
     std::vector<yolov8_msgs::msg::Detection> getLargest(const yolov8_msgs::msg::DetectionArray detection_array);
     std::vector<yolov8_msgs::msg::Detection> sortLeftToRight(const yolov8_msgs::msg::DetectionArray detection_array);
     bool isLeft(const yolov8_msgs::msg::DetectionArray bboxes, std::string target_label, double cam_fov, double cam_res_x);
-
+    BoundingBox2D mergeBoundingBoxes(const BoundingBox2D& a, const BoundingBox2D& b);
+    DetectionArray mergeOverlappingDetections(const DetectionArray& bboxes);
+    double getAverageXCenter(const yolov8_msgs::msg::DetectionArray& bboxes);
 }
 #endif // BBOXCALCULATIONS_H
