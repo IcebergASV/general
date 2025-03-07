@@ -46,6 +46,25 @@
     min_dist_from_bay_b4_return: 10.0
     remove_wp_within_dist: 1.2
     state: SENDING_START_PNT
+/home:
+  ros__parameters:
+    distance_to_move: 20.0
+    angle_from_target: 15.0
+    camera_res_x: 640
+    camera_fov: 70
+    finish_lat: 63.4411718
+    finish_lon: 10.4237096
+    recovery_behaviour: RECOVERY_PNT
+    time_to_pause_search: 1.00
+    time_between_recovery_actions: 2.0
+    red_buoy_label: red
+    green_buoy_label: green
+    second_red_buoy_label: black_buoy
+    black_buoy_label: black
+    frame_stack_size: 10
+    bbox_selection: LARGEST
+    max_consec_recoveries: 1
+    state: RECOVERING
 /task_controller:
   ros__parameters:
     tasks: m

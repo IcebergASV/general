@@ -36,6 +36,7 @@ namespace comp_tasks
     else if (params[0].get_name() == "second_green_buoy_label") { p_second_green_buoy_str_ = params[0].as_string(); updateYamlParam("second_green_buoy_label", params[0].as_string());}
     else if (params[0].get_name() == "blue_buoy_label") { p_blue_buoy_str_ = params[0].as_string(); updateYamlParam("blue_buoy_label", params[0].as_string());}
     else if (params[0].get_name() == "second_blue_buoy_label") { p_second_blue_buoy_str_ = params[0].as_string(); updateYamlParam("second_blue_buoy_label", params[0].as_string());}    
+    else if (params[0].get_name() == "black_buoy_label") { p_black_buoy_str_ = params[0].as_string(); updateYamlParam("black_buoy_label", params[0].as_string());}    
     else if (params[0].get_name() == "frame_stack_size") { p_frame_stack_size_ = params[0].as_int(); updateYamlParam("frame_stack_size", params[0].as_int());}
     else if (params[0].get_name() == "bbox_selection") { p_bbox_selection_ = params[0].as_string(); updateYamlParam("bbox_selection", params[0].as_string());}
     else if (params[0].get_name() == "time_to_pause_search") { p_time_to_pause_search_ = params[0].as_double(); updateYamlParam("time_to_pause_search", params[0].as_double());}
@@ -85,6 +86,7 @@ namespace comp_tasks
     Task::getStringParam("green_buoy_label", p_green_buoy_str_, "green_buoy", "Green buoy label");
     Task::getStringParam("second_red_buoy_label", p_second_red_buoy_str_, "red_buoy", "Additional red buoy label");
     Task::getStringParam("blue_buoy_label", p_blue_buoy_str_, "blue_buoy", "Blue buoy label");
+    Task::getStringParam("black_buoy_label", p_black_buoy_str_, "black_buoy", "Black buoy label");
     Task::getStringParam("second_blue_buoy_label", p_second_blue_buoy_str_, "blue_buoy", "Additional blue buoy label");
     Task::getStringParam("second_green_buoy_label", p_second_green_buoy_str_, "green_buoy", "Additional green buoy label");
     Task::getParam<int>("frame_stack_size", p_frame_stack_size_, 0, "Number of frames to stack before calculating angle");
@@ -147,6 +149,58 @@ namespace comp_tasks
     current_local_pose_ = *msg;
   }
 
+  void Task::updateYamlParamForDiffNode(const std::string &paramName, double newValue, std::string node_name, std::string filename) {
+    if (isActive()){
+      try {
+          std::string nodeName = "/" + node_name;
+          std::filesystem::path current_file(__FILE__); 
+          std::filesystem::path package_path = current_file.parent_path().parent_path();
+
+          std::string file_path = package_path.string() + "/config/" + filename;
+
+          // Load the YAML file
+          YAML::Node config = YAML::LoadFile(file_path);
+    
+          // Check if the node and parameter exist
+          if (!config[nodeName]) {
+              std::cerr << "Error: Node " << nodeName << " not found in YAML file." << std::endl;
+              return;
+          }
+
+          // Check if the node and parameter exist
+          if (!config[nodeName] || !config[nodeName]["ros__parameters"] || !config[nodeName]["ros__parameters"][paramName]) {
+              std::cerr << "Error: Parameter " << paramName << " not found in YAML file." << std::endl;
+              return;
+          }
+    
+            // Update the parameter value
+          std::ostringstream oss;
+          oss << std::fixed << std::setprecision(10) << newValue;
+          config[nodeName]["ros__parameters"][paramName] = oss.str();
+
+    
+          // Write back to file
+          std::ofstream outFile(file_path);
+          if (!outFile) {
+              std::cerr << "Error: Unable to open file for writing." << std::endl;
+              return;
+          }
+          outFile << config;
+          outFile.close();
+    
+          std::cout << "Successfully updated " << paramName << " to "<< newValue << std::endl;
+      } catch (const std::exception &e) {
+          std::cerr << "Exception: " << e.what() << std::endl;
+      }
+    }
+  }
+
+  void Task::setReturnToHomePnt()
+  {
+    updateYamlParamForDiffNode("recovery_lat", this->current_global_pose_.latitude, "home", "gps_points.yaml");
+    updateYamlParamForDiffNode("recovery_lon", this->current_global_pose_.longitude, "home", "gps_points.yaml");
+  }
+
   void Task::stateCallback(const mavros_msgs::msg::State::SharedPtr msg)
   {
     mavros_msgs::msg::State current_state = *msg;
@@ -160,6 +214,9 @@ namespace comp_tasks
     if (in_guided_ && !prev_guided)
     {
       RCLCPP_INFO(this->get_logger(), "In GUIDED");
+      if(this->get_name() == std::string("maneuvering")){
+        setReturnToHomePnt();
+      }
     }
     else if (!in_guided_)
     {
@@ -216,6 +273,23 @@ namespace comp_tasks
       RCLCPP_DEBUG(this->get_logger(), "Publishing waypoint towards gate");
       wp_reached_ = false;
       double angle = bbox_calculations::getAngleBetween2DiffTargets(detections, p_bbox_selection_, p_red_buoy_str_, p_second_red_buoy_str_,p_green_buoy_str_, p_second_green_buoy_str_, p_camera_fov_, p_camera_res_x_, p_angle_from_target_);
+      wp = task_lib::relativePolarToLocalCoords(p_distance_to_move_, angle, current_local_pose_);
+      publishLocalWP(wp.pose.position.x, wp.pose.position.y);
+    }
+    else{
+      RCLCPP_WARN(this->get_logger(), "Task not activated - not publishing waypoint towards gate");
+    }
+    return wp.pose.position;
+  }
+
+  //Returns 0, 0 if no valid detections
+  geometry_msgs::msg::Point Task::publishWPTowardsBlackBuoyGate(const yolov8_msgs::msg::DetectionArray& detections)
+  {
+    geometry_msgs::msg::PoseStamped wp;
+    if (activated_){
+      RCLCPP_DEBUG(this->get_logger(), "Publishing waypoint towards gate");
+      wp_reached_ = false;
+      double angle = bbox_calculations::getAngleBetween2SameTargets(detections, p_black_buoy_str_, p_camera_fov_, p_camera_res_x_);
       wp = task_lib::relativePolarToLocalCoords(p_distance_to_move_, angle, current_local_pose_);
       publishLocalWP(wp.pose.position.x, wp.pose.position.y);
     }

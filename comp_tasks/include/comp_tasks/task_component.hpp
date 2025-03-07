@@ -49,6 +49,7 @@ protected:
     void publishBehaviourStatus(std::string str_msg);
     void publishSearchStatus(std::string str_msg);
     void publishStateStatus(std::string str_msg);
+    geometry_msgs::msg::Point publishWPTowardsBlackBuoyGate(const yolov8_msgs::msg::DetectionArray& detections);
     geometry_msgs::msg::Point publishWPTowardsGate(const yolov8_msgs::msg::DetectionArray& detections);
     geometry_msgs::msg::PoseStamped publishWPTowardsLargestTarget(const yolov8_msgs::msg::DetectionArray& detections, std::string target_label, double angle);
     geometry_msgs::msg::PoseStamped getWPTowardsLargestTarget(const yolov8_msgs::msg::DetectionArray& detections, std::string target_label, double offset_angle, double dist);
@@ -59,6 +60,9 @@ protected:
     bool isActive();
     virtual void executeRecoveryBehaviour();
     void signalTaskFinish(); // TODO
+    void setReturnToHomePnt();
+
+    void updateYamlParamForDiffNode(const std::string &paramName, double newValue, std::string node_name, std::string filename);
     virtual void taskLogic(const yolov8_msgs::msg::DetectionArray& detections) = 0;
     virtual rclcpp_lifecycle::node_interfaces::LifecycleNodeInterface::CallbackReturn on_configure(const rclcpp_lifecycle::State &);
     rclcpp_lifecycle::node_interfaces::LifecycleNodeInterface::CallbackReturn on_activate(const rclcpp_lifecycle::State &);
@@ -104,6 +108,7 @@ protected:
     std::string p_second_blue_buoy_str_;
     std::string p_second_red_buoy_str_;
     std::string p_second_green_buoy_str_;
+    std::string p_black_buoy_str_;
     int p_frame_stack_size_;
     double p_time_to_pause_search_;
 
