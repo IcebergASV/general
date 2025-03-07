@@ -18,6 +18,11 @@ public:
         ColorDetector::getStringParam("lighting", config_file_name_, "", "params file name");
         RCLCPP_INFO(this->get_logger(), "Lighting params set to: %s", config_file_name_.c_str());
         ColorDetector::getStringParam("class_name", p_class_name_, "", "Class name");
+        ColorDetector::getDoubleParam("wh_ratio", p_wh_ratio_, 1.4, "Width to height ratio");
+        ColorDetector::getDoubleParam("hw_ratio", p_black_hw_ratio_, 1.5, "Black height to width ratio");
+        ColorDetector::getDoubleParam("upper_limit_boundary", p_upper_boundary_, 0.33, "The top boundary line");
+        ColorDetector::getDoubleParam("lower_limit_boundary", p_lower_boundary_, 0.66, "The bottom bounday line");
+
         ColorDetector::getIntParam("min_area", p_min_area_, 1, "Minimum pixel area");
         ColorDetector::getIntParam("max_area", p_max_area_, 1, "Maximum pixel area");
         ColorDetector::getIntParam("hue_min0", p_hue_min0_, -1, "Lower HSV 1");
@@ -63,7 +68,8 @@ public:
       if (params[0].get_name() == "class_name") { p_class_name_ = params[0].as_string();}
       else if (params[0].get_name() == "min_area") { p_min_area_ = params[0].as_int(); updateYamlParam("min_area", params[0].as_int());}
       else if (params[0].get_name() == "max_area") { p_max_area_ = params[0].as_int(); updateYamlParam("max_area", params[0].as_int());}
-      else if (params[0].get_name() == "wh_ratio") { p_wh_ratio_ = params[0].as_int(); updateYamlParam("wh_ratio", params[0].as_int());}
+      else if (params[0].get_name() == "wh_ratio") { p_wh_ratio_ = params[0].as_double(); updateYamlParam("wh_ratio", params[0].as_double());}
+      else if (params[0].get_name() == "hw_ratio") { p_black_hw_ratio_ = params[0].as_double(); updateYamlParam("hw_ratio", params[0].as_double());}
       else if (params[0].get_name() == "hue_max0") {p_hue_max0_ = params[0].as_int(); setHSV(); updateYamlParam("hue_max0", params[0].as_int());}
       else if (params[0].get_name() == "sat_max0") {p_sat_max0_ = params[0].as_int(); setHSV(); updateYamlParam("sat_max0", params[0].as_int());}
       else if (params[0].get_name() == "val_max0") {p_val_max0_ = params[0].as_int(); setHSV(); updateYamlParam("val_max0", params[0].as_int());}
@@ -166,6 +172,18 @@ private:
         RCLCPP_INFO(this->get_logger(), param_log_output.c_str());
    
         return;
+    }
+
+    void getDoubleParam(std::string param_name, double& param, double default_value, std::string desc)
+    {
+      auto param_desc = rcl_interfaces::msg::ParameterDescriptor{};
+      param_desc.description = desc;
+      this->declare_parameter<double>(param_name, default_value, param_desc);
+      this->get_parameter(param_name, param);
+      std::string param_log_output = param_name + ": " + std::to_string(param);
+      RCLCPP_INFO(this->get_logger(), param_log_output.c_str()); 
+
+      return;
     }
 
     void populateLists()
@@ -289,17 +307,21 @@ private:
                 bbox.size.y = rect.height; // Height of the bounding box
 
                 //Skip detection if rectangles horizonal len is greater than twice the vertical len
-                if (rect.width / rect.height >= 1.4) {
+                if (rect.width / rect.height >= p_wh_ratio_) {
+                    continue;
+                }
+
+                if (rect.height / rect.width >= p_black_hw_ratio_ && (p_class_name_ == "black")) {
                     continue;
                 }
 
                 //If the center is above the boundary line, ignore it.
-                if (bbox.center.position.y <= 0.33 * 480 && (p_class_name_ == "black" || p_class_name_ == "blue")) {
+                if (bbox.center.position.y <= p_upper_boundary_ * 480 && (p_class_name_ == "black" || p_class_name_ == "blue")) {
                     continue;
                 }
 
                 //If the center is below the boundary line, ignore it.
-                if (bbox.center.position.y >= 0.66 * 480 && (p_class_name_ == "black" || p_class_name_ == "blue")) {
+                if (bbox.center.position.y >= p_lower_boundary_ * 480 && (p_class_name_ == "black" || p_class_name_ == "blue")) {
                     continue;
                 }
 
@@ -342,7 +364,10 @@ private:
     //BBox selection criteria
     int p_min_area_;
     int p_max_area_;
-    int p_wh_ratio_;
+    double p_wh_ratio_;
+    double p_black_hw_ratio_;
+    double p_lower_boundary_;
+    double p_upper_boundary_;
 
     std::string p_class_name_;
     std::vector<int> lower_hsv_list_;
