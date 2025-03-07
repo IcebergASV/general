@@ -51,6 +51,7 @@ namespace comp_tasks
     first_seen_bay_pose_.pose.position.y = 0;
     last_seen_bay_pose_.pose.position.x = 0;
     last_seen_bay_pose_.pose.position.y = 0;
+    sent_start_pnt_ = false;
 
     return rclcpp_lifecycle::node_interfaces::LifecycleNodeInterface::CallbackReturn::SUCCESS;
   }
@@ -88,6 +89,7 @@ namespace comp_tasks
     wp_reached_ = false;
     wp_cnt_ = 0;
     detection_frame_cnt_ = 0;
+    sent_start_pnt_ = false;
     if (str_state == "SENDING_START_PNT")
     {
       node_state_ = "SENDING_START_PNT";
@@ -299,14 +301,25 @@ namespace comp_tasks
           RCLCPP_DEBUG(this->get_logger(), "SENDING_START_PNT"); 
           publishStateStatus("SENDING_START_PNT");
           publishSearchStatus("");
-          if (p_use_start_point_)
+          if (wp_reached_ && sent_start_pnt_)
+          {
+            publishRecoveryPoint();
+            node_state_ = "MANEUVER_THRU_BAY";
+            state_ = States::MANEUVER_THRU_BAY;
+          }
+          if (p_use_start_point_ && !sent_start_pnt_)
           {
             publishBehaviourStatus("Going to start point");
             publishStartPoint();
+            wp_reached_ = false;
+            sent_start_pnt_ = true;
           }
-          setTimerDuration(p_time_to_find_bay_, "time to find bay");
-          node_state_ = "MANEUVER_THRU_BAY";
-          state_ = States::MANEUVER_THRU_BAY;
+          if (!p_use_start_point_){
+            setTimerDuration(p_time_to_find_bay_, "time to find bay");
+            node_state_ = "MANEUVER_THRU_BAY";
+            state_ = States::MANEUVER_THRU_BAY;
+          }
+
           break;
         }
         case States::MANEUVER_THRU_BAY: 
