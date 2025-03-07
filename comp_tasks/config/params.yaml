@@ -67,4 +67,4 @@
     state: RECOVERING
 /task_controller:
   ros__parameters:
-    tasks: m
+    tasks: s
