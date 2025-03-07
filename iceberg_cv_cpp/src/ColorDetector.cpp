@@ -70,8 +70,8 @@ public:
       else if (params[0].get_name() == "max_area") { p_max_area_ = params[0].as_int(); updateYamlParam("max_area", params[0].as_int());}
       else if (params[0].get_name() == "wh_ratio") { p_wh_ratio_ = params[0].as_double(); updateYamlParam("wh_ratio", params[0].as_double());}
       else if (params[0].get_name() == "hw_ratio") { p_black_hw_ratio_ = params[0].as_double(); updateYamlParam("hw_ratio", params[0].as_double());}
-      else if (params[0].get_name() == "upper_limit_bounary") {p_upper_boundary_ = params[0].as_double(); setHSV(); updateYamlParam("upper_limit_boundary", params[0].as_double());}
-      else if (params[0].get_name() == "lower_limit_boundary") {p_lower_boundary_ = params[0].as_double(); setHSV(); updateYamlParam("lower_limit_boundary", params[0].as_double());}
+      else if (params[0].get_name() == "upper_limit_boundary") {p_upper_boundary_ = params[0].as_double(); setHSV(); updateDoubleYamlParam("upper_limit_boundary", params[0].as_double());}
+      else if (params[0].get_name() == "lower_limit_boundary") {p_lower_boundary_ = params[0].as_double(); setHSV(); updateDoubleYamlParam("lower_limit_boundary", params[0].as_double());}
       else if (params[0].get_name() == "hue_max0") {p_hue_max0_ = params[0].as_int(); setHSV(); updateYamlParam("hue_max0", params[0].as_int());}
       else if (params[0].get_name() == "sat_max0") {p_sat_max0_ = params[0].as_int(); setHSV(); updateYamlParam("sat_max0", params[0].as_int());}
       else if (params[0].get_name() == "val_max0") {p_val_max0_ = params[0].as_int(); setHSV(); updateYamlParam("val_max0", params[0].as_int());}
@@ -138,6 +138,47 @@ private:
             std::cerr << "Exception: " << e.what() << std::endl;
         }
     }
+
+    void updateDoubleYamlParam(const std::string &paramName, double newValue) {
+        try {
+            std::string nodeName = "/" + std::string(this->get_name());
+            std::filesystem::path current_file(__FILE__); 
+            std::filesystem::path package_path = current_file.parent_path().parent_path();
+
+            std::string file_path = package_path.string() + "/config/" + config_file_name_;
+
+            // Load the YAML file
+            YAML::Node config = YAML::LoadFile(file_path);
+    
+            // Check if the node and parameter exist
+            if (!config[nodeName]) {
+                std::cerr << "Error: Node " << nodeName << " not found in YAML file." << std::endl;
+                return;
+            }
+
+            // Check if the node and parameter exist
+            if (!config[nodeName] || !config[nodeName]["ros__parameters"] || !config[nodeName]["ros__parameters"][paramName]) {
+                std::cerr << "Error: Parameter " << paramName << " not found in YAML file." << std::endl;
+                return;
+            }
+    
+            config[nodeName]["ros__parameters"][paramName] = newValue;
+    
+            // Write back to file
+            std::ofstream outFile(file_path);
+            if (!outFile) {
+                std::cerr << "Error: Unable to open file for writing." << std::endl;
+                return;
+            }
+            outFile << config;
+            outFile.close();
+    
+            std::cout << "Successfully updated " << paramName << " to "<< newValue << std::endl;
+        } catch (const std::exception &e) {
+            std::cerr << "Exception: " << e.what() << std::endl;
+        }
+    }
+
     void getIntParam(std::string param_name, int& param, int default_value, std::string desc)
     {
         auto param_desc = rcl_interfaces::msg::ParameterDescriptor{};

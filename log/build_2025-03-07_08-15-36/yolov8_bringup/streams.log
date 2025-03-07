@@ -1,0 +1,44 @@
+[0.021s] Invoking command in '/home/robert/Projects/ros_ws/src/general/build/yolov8_bringup': AMENT_PREFIX_PATH=/home/robert/Projects/ros_ws/src/general/install/yolov8_ros:/home/robert/Projects/ros_ws/src/general/install/yolov8_msgs:${AMENT_PREFIX_PATH} CMAKE_PREFIX_PATH=/home/robert/Projects/ros_ws/src/general/install/yolov8_msgs:/opt/ros/humble LD_LIBRARY_PATH=/home/robert/Projects/ros_ws/src/general/install/yolov8_msgs/lib:${LD_LIBRARY_PATH} PYTHONPATH=/home/robert/Projects/ros_ws/src/general/install/yolov8_ros/lib/python3.10/site-packages:/home/robert/Projects/ros_ws/src/general/install/yolov8_msgs/local/lib/python3.10/dist-packages:${PYTHONPATH} /usr/bin/cmake /home/robert/Projects/ros_ws/src/general/yolov8_ros/yolov8_bringup -DCMAKE_INSTALL_PREFIX=/home/robert/Projects/ros_ws/src/general/install/yolov8_bringup
+[0.121s] -- The C compiler identification is GNU 11.4.0
+[0.214s] -- The CXX compiler identification is GNU 11.4.0
+[0.225s] -- Detecting C compiler ABI info
+[0.336s] -- Detecting C compiler ABI info - done
+[0.352s] -- Check for working C compiler: /usr/bin/cc - skipped
+[0.352s] -- Detecting C compile features
+[0.353s] -- Detecting C compile features - done
+[0.359s] -- Detecting CXX compiler ABI info
+[0.543s] -- Detecting CXX compiler ABI info - done
+[0.574s] -- Check for working CXX compiler: /usr/bin/c++ - skipped
+[0.574s] -- Detecting CXX compile features
+[0.576s] -- Detecting CXX compile features - done
+[0.581s] -- Found ament_cmake: 1.3.11 (/opt/ros/humble/share/ament_cmake/cmake)
+[0.868s] -- Found Python3: /usr/bin/python3 (found version "3.10.12") found components: Interpreter 
+[1.144s] -- Configuring done
+[1.149s] -- Generating done
+[1.151s] -- Build files have been written to: /home/robert/Projects/ros_ws/src/general/build/yolov8_bringup
+[1.158s] Invoked command in '/home/robert/Projects/ros_ws/src/general/build/yolov8_bringup' returned '0': AMENT_PREFIX_PATH=/home/robert/Projects/ros_ws/src/general/install/yolov8_ros:/home/robert/Projects/ros_ws/src/general/install/yolov8_msgs:${AMENT_PREFIX_PATH} CMAKE_PREFIX_PATH=/home/robert/Projects/ros_ws/src/general/install/yolov8_msgs:/opt/ros/humble LD_LIBRARY_PATH=/home/robert/Projects/ros_ws/src/general/install/yolov8_msgs/lib:${LD_LIBRARY_PATH} PYTHONPATH=/home/robert/Projects/ros_ws/src/general/install/yolov8_ros/lib/python3.10/site-packages:/home/robert/Projects/ros_ws/src/general/install/yolov8_msgs/local/lib/python3.10/dist-packages:${PYTHONPATH} /usr/bin/cmake /home/robert/Projects/ros_ws/src/general/yolov8_ros/yolov8_bringup -DCMAKE_INSTALL_PREFIX=/home/robert/Projects/ros_ws/src/general/install/yolov8_bringup
+[1.161s] Invoking command in '/home/robert/Projects/ros_ws/src/general/build/yolov8_bringup': AMENT_PREFIX_PATH=/home/robert/Projects/ros_ws/src/general/install/yolov8_ros:/home/robert/Projects/ros_ws/src/general/install/yolov8_msgs:${AMENT_PREFIX_PATH} CMAKE_PREFIX_PATH=/home/robert/Projects/ros_ws/src/general/install/yolov8_msgs:/opt/ros/humble LD_LIBRARY_PATH=/home/robert/Projects/ros_ws/src/general/install/yolov8_msgs/lib:${LD_LIBRARY_PATH} PYTHONPATH=/home/robert/Projects/ros_ws/src/general/install/yolov8_ros/lib/python3.10/site-packages:/home/robert/Projects/ros_ws/src/general/install/yolov8_msgs/local/lib/python3.10/dist-packages:${PYTHONPATH} /usr/bin/cmake --build /home/robert/Projects/ros_ws/src/general/build/yolov8_bringup -- -j12 -l12
+[1.225s] Invoked command in '/home/robert/Projects/ros_ws/src/general/build/yolov8_bringup' returned '0': AMENT_PREFIX_PATH=/home/robert/Projects/ros_ws/src/general/install/yolov8_ros:/home/robert/Projects/ros_ws/src/general/install/yolov8_msgs:${AMENT_PREFIX_PATH} CMAKE_PREFIX_PATH=/home/robert/Projects/ros_ws/src/general/install/yolov8_msgs:/opt/ros/humble LD_LIBRARY_PATH=/home/robert/Projects/ros_ws/src/general/install/yolov8_msgs/lib:${LD_LIBRARY_PATH} PYTHONPATH=/home/robert/Projects/ros_ws/src/general/install/yolov8_ros/lib/python3.10/site-packages:/home/robert/Projects/ros_ws/src/general/install/yolov8_msgs/local/lib/python3.10/dist-packages:${PYTHONPATH} /usr/bin/cmake --build /home/robert/Projects/ros_ws/src/general/build/yolov8_bringup -- -j12 -l12
+[1.228s] Invoking command in '/home/robert/Projects/ros_ws/src/general/build/yolov8_bringup': AMENT_PREFIX_PATH=/home/robert/Projects/ros_ws/src/general/install/yolov8_ros:/home/robert/Projects/ros_ws/src/general/install/yolov8_msgs:${AMENT_PREFIX_PATH} CMAKE_PREFIX_PATH=/home/robert/Projects/ros_ws/src/general/install/yolov8_msgs:/opt/ros/humble LD_LIBRARY_PATH=/home/robert/Projects/ros_ws/src/general/install/yolov8_msgs/lib:${LD_LIBRARY_PATH} PYTHONPATH=/home/robert/Projects/ros_ws/src/general/install/yolov8_ros/lib/python3.10/site-packages:/home/robert/Projects/ros_ws/src/general/install/yolov8_msgs/local/lib/python3.10/dist-packages:${PYTHONPATH} /usr/bin/cmake --install /home/robert/Projects/ros_ws/src/general/build/yolov8_bringup
+[1.243s] -- Install configuration: ""
+[1.243s] -- Installing: /home/robert/Projects/ros_ws/src/general/install/yolov8_bringup/share/yolov8_bringup//launch
+[1.243s] -- Installing: /home/robert/Projects/ros_ws/src/general/install/yolov8_bringup/share/yolov8_bringup//launch/yolov8.launch.py
+[1.243s] -- Installing: /home/robert/Projects/ros_ws/src/general/install/yolov8_bringup/share/yolov8_bringup//launch/yolov10.launch.py
+[1.244s] -- Installing: /home/robert/Projects/ros_ws/src/general/install/yolov8_bringup/share/yolov8_bringup//launch/yolov8_3d.launch.py
+[1.244s] -- Installing: /home/robert/Projects/ros_ws/src/general/install/yolov8_bringup/share/yolov8_bringup//launch/yolov9.launch.py
+[1.245s] -- Installing: /home/robert/Projects/ros_ws/src/general/install/yolov8_bringup/share/ament_index/resource_index/package_run_dependencies/yolov8_bringup
+[1.245s] -- Installing: /home/robert/Projects/ros_ws/src/general/install/yolov8_bringup/share/ament_index/resource_index/parent_prefix_path/yolov8_bringup
+[1.246s] -- Installing: /home/robert/Projects/ros_ws/src/general/install/yolov8_bringup/share/yolov8_bringup/environment/ament_prefix_path.sh
+[1.246s] -- Installing: /home/robert/Projects/ros_ws/src/general/install/yolov8_bringup/share/yolov8_bringup/environment/ament_prefix_path.dsv
+[1.246s] -- Installing: /home/robert/Projects/ros_ws/src/general/install/yolov8_bringup/share/yolov8_bringup/environment/path.sh
+[1.246s] -- Installing: /home/robert/Projects/ros_ws/src/general/install/yolov8_bringup/share/yolov8_bringup/environment/path.dsv
+[1.247s] -- Installing: /home/robert/Projects/ros_ws/src/general/install/yolov8_bringup/share/yolov8_bringup/local_setup.bash
+[1.247s] -- Installing: /home/robert/Projects/ros_ws/src/general/install/yolov8_bringup/share/yolov8_bringup/local_setup.sh
+[1.247s] -- Installing: /home/robert/Projects/ros_ws/src/general/install/yolov8_bringup/share/yolov8_bringup/local_setup.zsh
+[1.248s] -- Installing: /home/robert/Projects/ros_ws/src/general/install/yolov8_bringup/share/yolov8_bringup/local_setup.dsv
+[1.248s] -- Installing: /home/robert/Projects/ros_ws/src/general/install/yolov8_bringup/share/yolov8_bringup/package.dsv
+[1.248s] -- Installing: /home/robert/Projects/ros_ws/src/general/install/yolov8_bringup/share/ament_index/resource_index/packages/yolov8_bringup
+[1.248s] -- Installing: /home/robert/Projects/ros_ws/src/general/install/yolov8_bringup/share/yolov8_bringup/cmake/yolov8_bringupConfig.cmake
+[1.249s] -- Installing: /home/robert/Projects/ros_ws/src/general/install/yolov8_bringup/share/yolov8_bringup/cmake/yolov8_bringupConfig-version.cmake
+[1.249s] -- Installing: /home/robert/Projects/ros_ws/src/general/install/yolov8_bringup/share/yolov8_bringup/package.xml
+[1.254s] Invoked command in '/home/robert/Projects/ros_ws/src/general/build/yolov8_bringup' returned '0': AMENT_PREFIX_PATH=/home/robert/Projects/ros_ws/src/general/install/yolov8_ros:/home/robert/Projects/ros_ws/src/general/install/yolov8_msgs:${AMENT_PREFIX_PATH} CMAKE_PREFIX_PATH=/home/robert/Projects/ros_ws/src/general/install/yolov8_msgs:/opt/ros/humble LD_LIBRARY_PATH=/home/robert/Projects/ros_ws/src/general/install/yolov8_msgs/lib:${LD_LIBRARY_PATH} PYTHONPATH=/home/robert/Projects/ros_ws/src/general/install/yolov8_ros/lib/python3.10/site-packages:/home/robert/Projects/ros_ws/src/general/install/yolov8_msgs/local/lib/python3.10/dist-packages:${PYTHONPATH} /usr/bin/cmake --install /home/robert/Projects/ros_ws/src/general/build/yolov8_bringup
