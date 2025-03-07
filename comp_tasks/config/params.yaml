@@ -9,13 +9,13 @@
     recovery_behaviour: RECOVERY_PNT
     time_to_pause_search: 1.00
     time_between_recovery_actions: 2.0
-    time_to_stop_before_recovery: 100.0
+    time_to_stop_before_recovery: 30.0
     red_buoy_label: red
     green_buoy_label: green
     second_red_buoy_label: black_buoy
     second_green_buoy_label: yellow_buoy
-    frame_stack_size: 10
-    bbox_selection: LARGEST
+    frame_stack_size: 20
+    bbox_selection: INNERMOST
     max_consec_recoveries: 1
     state: STOPPED
 /speed:
@@ -34,7 +34,7 @@
     frame_stack_size: 10
     bbox_selection: LARGEST
     use_start_point: 1
-    use_finish_point: 1
+    use_finish_point: 0
     time_to_pause_search: 1.000
     time_to_find_bay: 1000.0
     max_time_between_bay_detections: 20.000
