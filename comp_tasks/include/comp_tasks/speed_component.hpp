@@ -57,6 +57,7 @@ private:
     bool passed_buoy_left_;
     yolov8_msgs::msg::DetectionArray return_route_detections_;
     yolov8_msgs::msg::DetectionArray calculated_route_detections_;
+    bool sent_start_pnt_;
 
 };
 

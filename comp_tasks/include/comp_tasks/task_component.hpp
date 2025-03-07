@@ -45,6 +45,7 @@ protected:
     void bboxCallback(const yolov8_msgs::msg::DetectionArray::SharedPtr msg);
     void wpReachedCallback(const mavros_msgs::msg::WaypointReached msg);
     void publishFinishPoint();
+    void publishRecoveryPoint();
     void publishStartPoint();
     void publishBehaviourStatus(std::string str_msg);
     void publishSearchStatus(std::string str_msg);
