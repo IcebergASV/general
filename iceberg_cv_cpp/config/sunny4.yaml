@@ -14,7 +14,7 @@
     val_min1: 55
     val_max1: 255
     min_area: 40
-    max_area: 1000
+    max_area: 1500
 /blue:
   ros__parameters:
     class_name: blue
