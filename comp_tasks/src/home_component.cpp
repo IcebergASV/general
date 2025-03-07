@@ -20,6 +20,7 @@ namespace comp_tasks
     Home::getParam<double>("time_between_recovery_actions", p_time_between_recovery_actions_, 0.0, "Miliseconds between executing a recovery action (like sending a waypoint)");
     Home::getParam<double>("time_to_stop_before_recovery", p_time_to_stop_before_recovery_, 0.0, "Miliseconds to stop robot before switching to recovery state if no targets found");    
     Home::getStringParam("state", p_state_, "STOPPED", "State machine state");
+    Home::getStringParam("black_buoy_str", p_black_buoy_str_, "black", "Black buoy label");
     on_set_parameters_callback_handle_ = this->add_on_set_parameters_callback(std::bind(&Home::param_callback, this, std::placeholders::_1));
     setState(p_state_);
     if (p_time_to_stop_before_recovery_ == 0.0)
@@ -31,6 +32,7 @@ namespace comp_tasks
       setTimerDuration(p_time_to_stop_before_recovery_, "time to stop before recovery");
     }
     node_state_ = "STOPPED";
+    p_recovery_behaviour_ == "RECOVERY_PNT"
 
     return rclcpp_lifecycle::node_interfaces::LifecycleNodeInterface::CallbackReturn::SUCCESS;
   }
@@ -44,6 +46,7 @@ namespace comp_tasks
     else if (params[0].get_name() == "time_between_recovery_actions") { p_time_between_recovery_actions_ = params[0].as_double(); updateYamlParam("time_between_recovery_actions", params[0].as_double());}
     else if (params[0].get_name() == "time_to_stop_before_recovery") { p_time_to_stop_before_recovery_ = params[0].as_double(); updateYamlParam("time_to_stop_before_recovery", params[0].as_double());}
     else if (params[0].get_name() == "state") { setState(params[0].as_string()); updateYamlParam("state", params[0].as_string());}
+    else if (params[0].get_name() == "black_buoy_str") { setState(params[0].as_string()); updateYamlParam("black_buoy_str", params[0].as_string());}
     else {
       RCLCPP_ERROR(this->get_logger(), "Invalid Param manuevering: %s", params[0].get_name().c_str());
       result.successful = false;
@@ -60,13 +63,7 @@ namespace comp_tasks
     wp_reached_ = false;
     wp_cnt_ = 0;
     detection_frame_cnt_ = 0;
-
-    if (str_state == "STOPPED")
-    {
-      node_state_ = "STOPPED";
-      setTimerDuration(p_time_to_stop_before_recovery_, "time to stop before recovery");
-      state_ = States::STOPPED;
-    }
+    
     else if (str_state == "RECOVERING")
     {
       node_state_ = "RECOVERING";
@@ -85,16 +82,6 @@ namespace comp_tasks
     }
   }
 
-  void Home::checkIfFinished()
-  {
-    if (p_max_consec_recoveries_ < 1)
-    {
-      signalTaskFinish();
-    }
-    else {
-      p_max_consec_recoveries_--;
-    }
-  }
 
   void Home::executeRecoveryBehaviour() //Overwritten recovery behaviour function
   {
@@ -147,35 +134,13 @@ namespace comp_tasks
     {
       switch (state_)
       {
-        case States::STOPPED: // parameterize - don't go to this state at all in 0 secs
-        {
-          RCLCPP_DEBUG(this->get_logger(), "STOPPED"); 
-          publishSearchStatus("Searching");
-          publishBehaviourStatus("Stopped");
-          publishStateStatus("STOPPED");
-          if (bbox_calculations::hasDesiredDetections(detections, target_class_names_))
-          {
-            handleDetections(detections);
-            node_state_= "HEADING_TO_TARGET";
-            state_ = States::HEADING_TO_TARGET;
-          }
-          else if(timer_expired_)
-          {
-            executeRecoveryBehaviour();
-            setTimerDuration(p_time_between_recovery_actions_, "time between recovery actions");
-            node_state_ = "RECOVERING";
-            state_ = States::RECOVERING;
-          }
-          break;
-        }
-
         case States::RECOVERING: // parameterize recovery behaviour & whether it does a recovery
         {
           RCLCPP_DEBUG(this->get_logger(), "RECOVERING"); 
           publishSearchStatus("Searching");
           publishBehaviourStatus("Recovering with " + p_recovery_behaviour_);
           publishStateStatus("RECOVERING");
-          if (bbox_calculations::hasDesiredDetections(detections, target_class_names_))
+          if (bbox_calculations::hasDesiredDetections(detections, {p_black_buoy_str_}))
           {
             handleDetections(detections);
             node_state_ = "HEADING_TO_TARGET";
@@ -183,7 +148,6 @@ namespace comp_tasks
           }
           else if(timer_expired_)
           {
-            checkIfFinished();
             executeRecoveryBehaviour();
             setTimerDuration(p_time_between_recovery_actions_, "time between recovery actions");
           }
@@ -200,24 +164,16 @@ namespace comp_tasks
           {
             publishSearchStatus("Searching");
 
-
-            if (bbox_calculations::hasDesiredDetections(detections, target_class_names_))
+            if (bbox_calculations::hasDesiredDetections(detections, {p_black_buoy_str_}))
             {
               handleDetections(detections);
             }
-            else if (p_time_to_stop_before_recovery_ == 0)
+            else
             {
               executeRecoveryBehaviour();
               setTimerDuration(p_time_between_recovery_actions_, "time between recovery actions");
               node_state_ = "RECOVERING";
               state_ = States::RECOVERING;
-            }
-            else
-            {
-              RCLCPP_DEBUG(this->get_logger(), "No targets found, stopping"); 
-              setTimerDuration(p_time_to_stop_before_recovery_, "time to stop before recovery");
-              node_state_ = "STOPPED";
-              state_ = States::STOPPED;
             }
           }
           else if (wp_reached_)
@@ -225,19 +181,11 @@ namespace comp_tasks
             std::string str_cnt = std::to_string(wp_cnt_);
             //publishBehaviourStatus("WP " + str_cnt + " Reached"); // TODO this gets overwritten too fast to see i think
 
-            if (p_time_to_stop_before_recovery_ == 0)
-            {
-              executeRecoveryBehaviour();
-              setTimerDuration(p_time_between_recovery_actions_, "time between recovery actions");
-              node_state_ = "RECOVERING";
-              state_ = States::RECOVERING;
-            }
-            else
-            {
-              setTimerDuration(p_time_to_stop_before_recovery_, "time to stop before recovery");
-              node_state_ = "STOPPED";
-              state_ = States::STOPPED;
-            }
+            executeRecoveryBehaviour();
+            setTimerDuration(p_time_between_recovery_actions_, "time between recovery actions");
+            node_state_ = "RECOVERING";
+            state_ = States::RECOVERING;
+            
           }
           else
           {

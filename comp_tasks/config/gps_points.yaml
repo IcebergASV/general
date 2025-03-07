@@ -22,3 +22,11 @@ maneuvering:
     finish_lon:  149.1649066
     recovery_lat:  -35.3635661
     recovery_lon:  149.1649066
+home:
+  ros__parameters:
+    start_lat:  -35.3635664
+    start_lon:  149.1649064
+    finish_lat:  -35.3635661
+    finish_lon:  149.1649066
+    recovery_lat:  -35.3635661
+    recovery_lon:  149.1649066
