@@ -1,4 +1,4 @@
-speed:
+/speed:
   ros__parameters:
     start_lat:  -35.3633534
     start_lon:  149.1653456
@@ -6,7 +6,7 @@ speed:
     finish_lon:  149.1649064
     recovery_lat:  -35.3635661
     recovery_lon:  149.1649066
-docking:
+/docking:
   ros__parameters:
     start_lat:  -35.3635664
     start_lon:  149.1649065
@@ -14,7 +14,7 @@ docking:
     finish_lon:  149.1649064
     recovery_lat:  -35.3635661
     recovery_lon:  149.1649066
-maneuvering:
+/maneuvering:
   ros__parameters:
     start_lat:  -35.3635664
     start_lon:  149.1649064
@@ -22,7 +22,7 @@ maneuvering:
     finish_lon:  149.1649066
     recovery_lat:  -35.3635661
     recovery_lon:  149.1649066
-home:
+/home:
   ros__parameters:
     start_lat:  -35.3635664
     start_lon:  149.1649064
