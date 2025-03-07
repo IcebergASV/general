@@ -37,10 +37,10 @@
     use_finish_point: 1
     time_to_pause_search: 1.000
     time_to_find_bay: 1000.0
-    max_time_between_bay_detections: 10.000
-    max_time_between_buoy_detections: 10.0
+    max_time_between_bay_detections: 20.000
+    max_time_between_buoy_detections: 20.0
     buoy_offset_angle: 0.0
-    estimated_buoy_dist: 100.0
+    estimated_buoy_dist: 10.0
     buoy_circling_radius: 4.000
     num_pnts_on_semicircle: 2
     min_dist_from_bay_b4_return: 10.0
@@ -67,4 +67,4 @@
     state: RECOVERING
 /task_controller:
   ros__parameters:
-    tasks: s
+    tasks: msh
