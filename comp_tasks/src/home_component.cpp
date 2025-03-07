@@ -22,14 +22,7 @@ namespace comp_tasks
     Home::getStringParam("state", p_state_, "STOPPED", "State machine state");
     on_set_parameters_callback_handle_ = this->add_on_set_parameters_callback(std::bind(&Home::param_callback, this, std::placeholders::_1));
     setState(p_state_);
-    if (p_time_to_stop_before_recovery_ == 0.0)
-    {
-      timer_expired_ = true;
-    }
-    else 
-    {
-      setTimerDuration(p_time_to_stop_before_recovery_, "time to stop before recovery");
-    }
+    timer_expired_ = true;
     node_state_ = "STOPPED";
     p_recovery_behaviour_ == "RECOVERY_PNT";
 
@@ -106,7 +99,7 @@ namespace comp_tasks
 
   void Home::handleDetections(const yolov8_msgs::msg::DetectionArray& detections)
   {
-    geometry_msgs::msg::Point p = publishWPTowardsGate(detections);
+    publishWPTowardsBlackBuoyGate(detections);
 
     if (p_time_to_pause_search_ != 0.0)
     {
@@ -115,12 +108,6 @@ namespace comp_tasks
     else
     {
       timer_expired_ = true;
-    }
-
-    if (bbox_calculations::hasGate(detections, p_red_buoy_str_, p_second_red_buoy_str_, p_green_buoy_str_, p_second_green_buoy_str_))
-    {
-      gate_x_ = p.x;
-      gate_y_ = p.y;
     }
 
     publishSearchStatus("Found");

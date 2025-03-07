@@ -20,7 +20,7 @@ namespace bbox_calculations
 
     if (left_targets.size() == 0 && right_targets.size() == 0)
     {
-      RCLCPP_ERROR(logger, "No targets detected - wp will be empty"); //TODO THROW AN ERROR - should never get here
+      RCLCPP_ERROR(logger, "2Diff Targets: No targets detected - wp will be empty"); //TODO THROW AN ERROR - should never get here
     }
 
     double angle;
@@ -90,19 +90,31 @@ namespace bbox_calculations
     for (size_t i = 0; i < bboxes.size(); ++i) {
         if (merged_flags[i]) continue;
         yolov8_msgs::msg::Detection merged_detection = bboxes[i];
-        
+        bool has_overlap = false;
+
         for (size_t j = i + 1; j < bboxes.size(); ++j) {
             if (merged_flags[j]) continue;
             
             if (isOverlapping(merged_detection.bbox, bboxes[j].bbox)) {
                 merged_detection.bbox = mergeBoundingBoxes(merged_detection.bbox, bboxes[j].bbox);
                 merged_flags[j] = true; // Mark as merged
+                has_overlap = true;
             }
         }
+        
         merged_bboxes.push_back(merged_detection);
+        merged_flags[i] = has_overlap; // Mark current box as merged only if it was combined
     }
+
+    // Add remaining unmerged boxes
+    for (size_t i = 0; i < bboxes.size(); ++i) {
+        if (!merged_flags[i]) {
+            merged_bboxes.push_back(bboxes[i]);
+        }
+    }
+    
     return merged_bboxes;
-}
+  }
 
   double getAverageXCenter(const std::vector<yolov8_msgs::msg::Detection>& bboxes) {
     if (bboxes.empty()) {
@@ -121,11 +133,14 @@ namespace bbox_calculations
   double getAngleBetween2SameTargets(const yolov8_msgs::msg::DetectionArray& bboxes, std::string target_class_name, double cam_fov, double cam_res_x)
   {
     std::vector<yolov8_msgs::msg::Detection> filtered_detections = extractTargetDetections(bboxes, target_class_name, target_class_name);
+    RCLCPP_WARN(logger, "Black Detections: %ld", filtered_detections.size());
+
     std::vector<yolov8_msgs::msg::Detection> merged_bboxes = mergeOverlappingDetections(filtered_detections);
+    RCLCPP_WARN(logger, "Merged Black Detections: %ld", merged_bboxes.size());
 
     if (merged_bboxes.size() == 0)
     {
-      RCLCPP_ERROR(logger, "No targets detected - wp will be empty"); //TODO THROW AN ERROR - should never get here
+      RCLCPP_ERROR(logger, "2SameTargets: No targets detected - wp will be empty"); //TODO THROW AN ERROR - should never get here
     }
 
     int average_pixel = getAverageXCenter(merged_bboxes);
@@ -139,7 +154,7 @@ namespace bbox_calculations
     std::vector<yolov8_msgs::msg::Detection> targets = filterAndSort(bboxes, "LARGEST", target_label, target_label);
     if (targets.size() <= 0)
     {
-      RCLCPP_ERROR(logger, "No targets detected - wp will be empty"); //TODO THROW AN ERROR - should never get here
+      RCLCPP_ERROR(logger, "AngletoLargest: No targets detected - wp will be empty"); //TODO THROW AN ERROR - should never get here
     }
     double angle = bbox_calculations::pixelToAngle(cam_fov, cam_res_x, targets[0].bbox.center.position.x);
     angle = angle - M_PI/2; // TODO Test
@@ -240,7 +255,7 @@ bool hasGate(const yolov8_msgs::msg::DetectionArray& detection_array, std::strin
 
   if (left_targets.size() == 0 && right_targets.size() == 0)
   {
-    RCLCPP_ERROR(logger, "No targets detected - wp will be empty"); //TODO THROW AN ERROR - should never get here
+    RCLCPP_ERROR(logger, "hasGate: No targets detected - wp will be empty"); //TODO THROW AN ERROR - should never get here
   }
 
   if ((right_targets.size() > 0) && (left_targets.size() > 0))// move in between innermost red and green
