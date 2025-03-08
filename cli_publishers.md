@@ -17,11 +17,18 @@ ros2 topic pub /icebergcv/detections yolov8_msgs/DetectionArray "{header: {stamp
   {class_id: 7, class_name: 'green', score: 0.6200227737426758, id: '', bbox: {center: {position: {x: 540.1787109375, y: 120.41123962402344}, theta: 0.0}, size: {x: 20.108551025390625, y: 20.4189453125}}, bbox3d: {center: {position: {x: 0.0, y: 0.0, z: 0.0}, orientation: {x: 0.0, y: 0.0, z: 0.0, w: 1.0}}, size: {x: 0.0, y: 0.0, z: 0.0}, frame_id: ''}, mask: {height: 0, width: 0, data: []}, keypoints: {data: []}, keypoints3d: {data: [], frame_id: ''}}]}"
 
 
+ros2 topic pub /icebergcv/detections yolov8_msgs/DetectionArray "{header: {stamp: {sec: 1728147972, nanosec: 302901855}, frame_id: 'camera_color_optical_frame'}, detections: [{class_id: 7, class_name: 'green', score: 0.6200227737426758, id: '', bbox: {center: {position: {x: 100.1787109375, y: 100.23962402344}, theta: 0.0}, size: {x: 20.108551025390625, y: 20.4189453125}}, bbox3d: {center: {position: {x: 0.0, y: 0.0, z: 0.0}, orientation: {x: 0.0, y: 0.0, z: 0.0, w: 1.0}}, size: {x: 0.0, y: 0.0, z: 0.0}, frame_id: ''}, mask: {height: 0, width: 0, data: []}, keypoints: {data: []}, keypoints3d: {data: [], frame_id: ''}}]}"
+
 ros2 topic pub /icebergcv/detections yolov8_msgs/DetectionArray "{header: {stamp: {sec: 1728147972, nanosec: 302901855}, frame_id: 'camera_color_optical_frame'}, detections: []}"
 
 ros2 topic pub /icebergcv/detections yolov8_msgs/DetectionArray "{header: {stamp: {sec: 1728147972, nanosec: 302901855}, frame_id: 'camera_color_optical_frame'}, detections: [{class_id: 7, class_name: 'blue', score: 0.6200227737426758, id: '', bbox: {center: {position: {x: 340.1787109375, y: 237.41123962402344}, theta: 0.0}, size: {x: 16.108551025390625, y: 18.4189453125}}, bbox3d: {center: {position: {x: 0.0, y: 0.0, z: 0.0}, orientation: {x: 0.0, y: 0.0, z: 0.0, w: 1.0}}, size: {x: 0.0, y: 0.0, z: 0.0}, frame_id: ''}, mask: {height: 0, width: 0, data: []}, keypoints: {data: []}, keypoints3d: {data: [], frame_id: ''}}]}"
 
 ros2 topic pub /yolo/detections yolov8_msgs/DetectionArray "{header: {stamp: {sec: 1728147972, nanosec: 302901855}, frame_id: 'camera_color_optical_frame'}, detections: [{class_id: 7, class_name: 'red_buoy', score: 0.6200227737426758, id: '', bbox: {center: {position: {x: 100.1787109375, y: 237.41123962402344}, theta: 0.0}, size: {x: 16.108551025390625, y: 18.4189453125}}, bbox3d: {center: {position: {x: 0.0, y: 0.0, z: 0.0}, orientation: {x: 0.0, y: 0.0, z: 0.0, w: 1.0}}, size: {x: 0.0, y: 0.0, z: 0.0}, frame_id: ''}, mask: {height: 0, width: 0, data: []}, keypoints: {data: []}, keypoints3d: {data: [], frame_id: ''}}]}"
+
+
+ros2 topic pub /icebergcv/detections yolov8_msgs/DetectionArray "{header: {stamp: {sec: 1728147972, nanosec: 302901855}, frame_id: 'camera_color_optical_frame'}, detections: [{class_id: 7, class_name: 'black', score: 0.6200227737426758, id: '', bbox: {center: {position: {x: 100.1787109375, y: 100.23962402344}, theta: 0.0}, size: {x: 20.108551025390625, y: 20.4189453125}}, bbox3d: {center: {position: {x: 0.0, y: 0.0, z: 0.0}, orientation: {x: 0.0, y: 0.0, z: 0.0, w: 1.0}}, size: {x: 0.0, y: 0.0, z: 0.0}, frame_id: ''}, mask: {height: 0, width: 0, data: []}, keypoints: {data: []}, keypoints3d: {data: [], frame_id: ''}},
+
+  {class_id: 7, class_name: 'black', score: 0.6200227737426758, id: '', bbox: {center: {position: {x: 110.1787109375, y: 120.41123962402344}, theta: 0.0}, size: {x: 20.108551025390625, y: 20.4189453125}}, bbox3d: {center: {position: {x: 0.0, y: 0.0, z: 0.0}, orientation: {x: 0.0, y: 0.0, z: 0.0, w: 1.0}}, size: {x: 0.0, y: 0.0, z: 0.0}, frame_id: ''}, mask: {height: 0, width: 0, data: []}, keypoints: {data: []}, keypoints3d: {data: [], frame_id: ''}}]}"
 
 
 ## Velocity SP

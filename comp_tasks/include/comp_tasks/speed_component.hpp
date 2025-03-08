@@ -33,6 +33,7 @@ private:
     void updateGateRoute(std::vector<geometry_msgs::msg::Point>& route);
     
     int p_use_start_point_;
+    int p_use_finish_point_;
     double p_time_to_find_bay_;
     double p_max_time_between_bay_detections_;
     double p_max_time_between_buoy_detections_;
@@ -56,6 +57,7 @@ private:
     bool passed_buoy_left_;
     yolov8_msgs::msg::DetectionArray return_route_detections_;
     yolov8_msgs::msg::DetectionArray calculated_route_detections_;
+    bool sent_start_pnt_;
 
 };
 

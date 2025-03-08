@@ -138,6 +138,47 @@ target_link_libraries(maneuvering_composition
   yaml-cpp
 )
 
+add_library(home_component SHARED src/home_component.cpp)
+target_compile_definitions(home_component PRIVATE "COMPOSITION_BUILDING_DLL")
+ament_target_dependencies(home_component
+  "rclcpp"
+  "rclcpp_components"
+  "std_msgs"
+  "mavros_msgs"
+  "geographic_msgs"
+  "comp_tasks_interfaces"
+  "yolov8_msgs"
+  "tf2"
+  "tf2_geometry_msgs"
+  "rclcpp_lifecycle"
+  "yaml-cpp")
+rclcpp_components_register_nodes(home_component "comp_tasks::Home")
+set(node_plugins "comp_tasks::Home;$<TARGET_FILE:home_component>\n")
+install(TARGETS
+  home_component
+  ARCHIVE DESTINATION lib
+  LIBRARY DESTINATION lib
+  RUNTIME DESTINATION bin)
+
+# Add executable for home
+add_executable(home_composition
+  src/home_composition.cpp)
+target_link_libraries(home_composition
+home_component)
+ament_target_dependencies(home_composition
+  rclcpp)
+install(TARGETS
+  home_composition
+  DESTINATION lib/${PROJECT_NAME})
+
+target_link_libraries(home_composition
+  ${YAML_CPP_LIBRARIES}
+  task_component
+  libtask_lib
+  libbbox_calculations
+  yaml-cpp
+)
+
 add_library(speed_component SHARED src/speed_component.cpp)
 target_compile_definitions(speed_component PRIVATE "COMPOSITION_BUILDING_DLL")
 ament_target_dependencies(speed_component

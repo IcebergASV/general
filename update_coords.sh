@@ -27,8 +27,10 @@ update_yaml() {
         FULL_NODE_NAME="docking"
     elif [[ "$NODE_NAME" == "s" ]]; then
         FULL_NODE_NAME="speed"
+    elif [[ "$NODE_NAME" == "h" ]]; then
+        FULL_NODE_NAME="home"
     else
-        echo "Invalid node name. Use 'm' (maneuvering), 'n' (nav channel), 'd' (docking), or 's' (speed challenge)"
+        echo "Invalid node name. Use 'm' (maneuvering), 'n' (nav channel), 'd' (docking), or 's' (speed challenge), 'h' (home)"
         exit 1
     fi
 
@@ -59,16 +61,16 @@ update_yaml() {
     # Update the correct field based on the node name and identifier
     if [[ "$IDENTIFIER" == "r" ]]; then
         # Update the recovery_lat and recovery_lon values
-        sed -i "/^$FULL_NODE_NAME:/,/^[^ ]/s/^\(\s*recovery_lat: \).*/\1 $LAT/" "$YAML_FILE"
-        sed -i "/^$FULL_NODE_NAME:/,/^[^ ]/s/^\(\s*recovery_lon: \).*/\1 $LON/" "$YAML_FILE"
+        sed -i "/^\s*\/\?$FULL_NODE_NAME:/,/^[^ ]/s/^\(\s*recovery_lat: \).*/\1 $LAT/" "$YAML_FILE"
+        sed -i "/^\s*\/\?$FULL_NODE_NAME:/,/^[^ ]/s/^\(\s*recovery_lon: \).*/\1 $LON/" "$YAML_FILE"
     elif [[ "$IDENTIFIER" == "s" ]]; then
         # Update the finish_lat and finish_lon values
-        sed -i "/^$FULL_NODE_NAME:/,/^[^ ]/s/^\(\s*start_lat: \).*/\1 $LAT/" "$YAML_FILE"
-        sed -i "/^$FULL_NODE_NAME:/,/^[^ ]/s/^\(\s*start_lon: \).*/\1 $LON/" "$YAML_FILE"
+        sed -i "/^\s*\/\?$FULL_NODE_NAME:/,/^[^ ]/s/^\(\s*start_lat: \).*/\1 $LAT/" "$YAML_FILE"
+        sed -i "/^\s*\/\?$FULL_NODE_NAME:/,/^[^ ]/s/^\(\s*start_lon: \).*/\1 $LON/" "$YAML_FILE"
     elif [[ "$IDENTIFIER" == "f" ]]; then
         # Update the finish_lat and finish_lon values
-        sed -i "/^$FULL_NODE_NAME:/,/^[^ ]/s/^\(\s*finish_lat: \).*/\1 $LAT/" "$YAML_FILE"
-        sed -i "/^$FULL_NODE_NAME:/,/^[^ ]/s/^\(\s*finish_lon: \).*/\1 $LON/" "$YAML_FILE"
+        sed -i "/^\s*\/\?$FULL_NODE_NAME:/,/^[^ ]/s/^\(\s*finish_lat: \).*/\1 $LAT/" "$YAML_FILE"
+        sed -i "/^\s*\/\?$FULL_NODE_NAME:/,/^[^ ]/s/^\(\s*finish_lon: \).*/\1 $LON/" "$YAML_FILE"
     else
         echo "Invalid identifier. Use 'r' (recovery), 's' (start), or 'f' (finish)."
         exit 1

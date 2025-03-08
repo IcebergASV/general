@@ -81,6 +81,9 @@ namespace comp_tasks
         case 's':
             node_name_ = "speed";
             break;
+        case 'h':
+            node_name_ = "home";
+            break;
         default:
         {
             RCLCPP_ERROR(this->get_logger(), "Invalid Node Name");
