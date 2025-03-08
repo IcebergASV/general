@@ -1,6 +1,6 @@
 #include "comp_tasks/lib/task_lib.hpp"
 #include "tf2_geometry_msgs/tf2_geometry_msgs.hpp"
-
+#include <GeographicLib/LocalCartesian.hpp>
 
 namespace task_lib
 {
@@ -106,6 +106,46 @@ void orderPointsRightToLeft(std::vector<geometry_msgs::msg::Point>& points,
         RCLCPP_INFO(logger, "Robot is %fm away from target", dist);
         return false;
     }
+
+    bool isClose(const geographic_msgs::msg::GeoPoint& origin, const geographic_msgs::msg::GeoPoint& current, const geographic_msgs::msg::GeoPoint& target, double dist)
+    {
+        std::unique_ptr<GeographicLib::LocalCartesian> enu_converter_;
+
+        //Initialize enu_converter
+        double lat_ref_ = origin.latitude;
+        double lon_ref_ = origin.longitude;
+        double alt_ref_ = origin.altitude;
+
+        // Initialize the ENU converter with the reference origin
+        enu_converter_ = std::make_unique<GeographicLib::LocalCartesian>(
+            lat_ref_, lon_ref_, alt_ref_, GeographicLib::Geocentric::WGS84()
+        );
+
+        
+        // Convert the current global coordinates to local ENU
+        double lat = current.latitude;  // Assuming X stores latitude
+        double lon = current.longitude;  // Assuming Y stores longitude
+        double alt = current.altitude;  // Assuming Z stores altitude
+
+        double x_local, y_local, z_local;
+        enu_converter_->Forward(lat, lon, alt, x_local, y_local, z_local);
+
+        // Convert the target global coordinates to local ENU
+        double lat_target = target.latitude;  // Assuming X stores latitude
+        double lon_target = target.longitude;  // Assuming Y stores longitude
+        double alt_target = target.altitude;  // Assuming Z stores altitude
+
+        double x_local_target, y_local_target, z_local_target;
+        enu_converter_->Forward(lat_target, lon_target, alt_target, x_local_target, y_local_target, z_local_target);
+
+        // Calculate the distance between the current and target points
+        double distance = std::sqrt(std::pow(x_local_target - x_local, 2) + std::pow(y_local_target - y_local, 2));
+
+        // Check if we are within the specified distance
+        return (distance <= dist);
+    }
+
+
     double haversine(double lat1, double lon1, double lat2, double lon2)
     {
         // distance between latitudes

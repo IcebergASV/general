@@ -75,6 +75,8 @@ ament_target_dependencies(libtask_lib
   "tf2_geometry_msgs"
 )
 
+target_link_libraries(libtask_lib ${GeographicLib_LIBRARIES})
+
 ## Declare a C++ library
 add_library(liblidar_calculations
   lib/lidar_calculations.cpp
