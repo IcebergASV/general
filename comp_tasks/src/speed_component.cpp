@@ -31,6 +31,7 @@ namespace comp_tasks
     Task::on_configure(rclcpp_lifecycle::State());
   
     Speed::getParam<double>("time_to_find_bay", p_time_to_find_bay_, 0.0, "Max time to find first detection with bay before timing out");
+    Speed::getParam<double>("time_between_start_wps", p_time_between_start_wps_, 0.0, "Time to wait before sending second wp ater first");
     Speed::getParam<double>("max_time_between_bay_detections", p_max_time_between_bay_detections_, 0.0, "Max time to search for bay before moving on");
     Speed::getParam<double>("max_time_between_buoy_detections", p_max_time_between_buoy_detections_, 0.0, "Max time to search for blue buoy before turning around");
     Speed::getParam<double>("buoy_offset_angle", p_buoy_offset_angle_, 0.0, "Angle to offset by when heading to a target in degrees, negative is to the left, positive to the right");
@@ -64,6 +65,7 @@ namespace comp_tasks
     else if (params[0].get_name() == "use_start_point") { p_use_start_point_ = params[0].as_int(); updateYamlParam("use_start_point", params[0].as_int());}
     else if (params[0].get_name() == "use_finish_point") { p_use_finish_point_ = params[0].as_int(); updateYamlParam("use_finish_point", params[0].as_int());}
     else if (params[0].get_name() == "time_to_find_bay") { p_time_to_find_bay_ = params[0].as_double(); updateYamlParam("time_to_find_bay", params[0].as_double());}
+    else if (params[0].get_name() == "time_between_start_wps") { p_time_between_start_wps_ = params[0].as_double(); updateYamlParam("time_between_start_wps", params[0].as_double());}
     else if (params[0].get_name() == "max_time_between_bay_detections") { p_max_time_between_bay_detections_ = params[0].as_double(); updateYamlParam("max_time_between_bay_detections", params[0].as_double());}
     else if (params[0].get_name() == "max_time_between_buoy_detections") { p_max_time_between_buoy_detections_ = params[0].as_double(); updateYamlParam("max_time_between_buoy_detections", params[0].as_double());} 
     else if (params[0].get_name() == "buoy_offset_angle") { p_buoy_offset_angle_ = params[0].as_double(); updateYamlParam("buoy_offset_angle", params[0].as_double());}
@@ -301,9 +303,10 @@ namespace comp_tasks
           RCLCPP_DEBUG(this->get_logger(), "SENDING_START_PNT"); 
           publishStateStatus("SENDING_START_PNT");
           publishSearchStatus("");
-          if (wp_reached_ && sent_start_pnt_)
+          if ((wp_reached_ | timer_expired_ )&& sent_start_pnt_)
           {
             publishRecoveryPoint();
+            setTimerDuration(p_time_to_find_bay_, "time to find bay");
             node_state_ = "MANEUVER_THRU_BAY";
             state_ = States::MANEUVER_THRU_BAY;
           }
@@ -313,6 +316,7 @@ namespace comp_tasks
             publishStartPoint();
             wp_reached_ = false;
             sent_start_pnt_ = true;
+            setTimerDuration(p_time_between_start_wps_, "time bt start wps");
           }
           if (!p_use_start_point_){
             setTimerDuration(p_time_to_find_bay_, "time to find bay");
