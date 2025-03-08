@@ -12,7 +12,7 @@ namespace bbox_calculations
       return angle;
   }
 
-  double getAngleBetween2DiffTargets(const yolov8_msgs::msg::DetectionArray bboxes, std::string bbox_selection, std::string left_target_class_name1, std::string left_target_class_name2, std::string right_target_class_name1, std::string right_target_class_name2, double cam_fov, double cam_res_x, double angle_from_target)
+  double getAngleBetween2DiffTargets(const yolov8_msgs::msg::DetectionArray bboxes, std::string bbox_selection, std::string left_target_class_name1, std::string left_target_class_name2, std::string right_target_class_name1, std::string right_target_class_name2, double cam_fov, double cam_res_x, double angle_from_target, double offset)
   {
 
     std::vector<yolov8_msgs::msg::Detection> left_targets = filterAndSort(bboxes, bbox_selection, left_target_class_name1, left_target_class_name2);
@@ -50,7 +50,14 @@ namespace bbox_calculations
         RCLCPP_WARN(logger, "Expected %s on the left and %s on the right but detected the opposite, heading between them anyways",left_target_class_name1.c_str(), right_target_class_name1.c_str() ); // TODO get it to go to recovery if this happens or turn around
       }
       angle = (left_angle + right_angle)/2;
-      RCLCPP_INFO(logger, "Detected %s at %f degrees and %s at %f degrees, heading towards %f degrees", left_target_class_name1.c_str(), left_angle*180/M_PI, right_target_class_name1.c_str(), right_angle*180/M_PI, angle*180/M_PI);
+      if (offset == 0.0)
+      {
+        RCLCPP_INFO(logger, "Detected %s at %f degrees and %s at %f degrees, heading towards %f degrees", left_target_class_name1.c_str(), left_angle*180/M_PI, right_target_class_name1.c_str(), right_angle*180/M_PI, angle*180/M_PI);
+      }
+      else{
+        angle = angle + (offset*(M_PI/180));
+        RCLCPP_INFO(logger, "Detected %s at %f degrees and %s at %f degrees, heading towards %f degrees (offset of %f)", left_target_class_name1.c_str(), left_angle*180/M_PI, right_target_class_name1.c_str(), right_angle*180/M_PI, angle*180/M_PI, offset);
+      }
     }
     else 
     {

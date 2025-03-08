@@ -274,10 +274,7 @@ namespace comp_tasks
     if (activated_){
       RCLCPP_DEBUG(this->get_logger(), "Publishing waypoint towards gate");
       wp_reached_ = false;
-      double angle = bbox_calculations::getAngleBetween2DiffTargets(detections, p_bbox_selection_, p_red_buoy_str_, p_second_red_buoy_str_,p_green_buoy_str_, p_second_green_buoy_str_, p_camera_fov_, p_camera_res_x_, p_angle_from_target_);
-      RCLCPP_INFO(this->get_logger(), "Angle: %f, offset %f", angle*(180/M_PI), p_target_offset_);
-      angle = angle + (p_target_offset_ * (M_PI/180));
-      RCLCPP_INFO(this->get_logger(), "offset angle: %f", angle*(180/M_PI));
+      double angle = bbox_calculations::getAngleBetween2DiffTargets(detections, p_bbox_selection_, p_red_buoy_str_, p_second_red_buoy_str_,p_green_buoy_str_, p_second_green_buoy_str_, p_camera_fov_, p_camera_res_x_, p_angle_from_target_, p_target_offset_);
       wp = task_lib::relativePolarToLocalCoords(p_distance_to_move_, angle, current_local_pose_);
       publishLocalWP(wp.pose.position.x, wp.pose.position.y);
     }
