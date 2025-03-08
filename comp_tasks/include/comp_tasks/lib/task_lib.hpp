@@ -13,6 +13,8 @@
 #include "geometry_msgs/msg/point.hpp"
 #include <fstream>
 #include <vector>
+#include <GeographicLib/LocalCartesian.hpp>
+
 namespace task_lib
 {
     rclcpp::Logger logger = rclcpp::get_logger("task_lib_logger");
@@ -21,6 +23,7 @@ namespace task_lib
     bool inHold(const mavros_msgs::msg::State& state);
     bool inManual(const mavros_msgs::msg::State& state);
     bool isReached(double lat, double lon, const geographic_msgs::msg::GeoPoseStamped& global_pose, double max_dist);
+    bool isClose(const geographic_msgs::msg::GeoPoint& origin, const geographic_msgs::msg::GeoPoint& current, const geographic_msgs::msg::GeoPoint& target, double dist);
     double haversine(double lat1, double lon1, double lat2, double lon2);
     geometry_msgs::msg::PoseStamped relativePolarToLocalCoords(double radius, double angle, geometry_msgs::msg::PoseStamped local_pose);
     double quaternionToHeading(const geometry_msgs::msg::Quaternion q);
