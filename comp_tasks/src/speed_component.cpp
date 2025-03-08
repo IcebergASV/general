@@ -301,7 +301,7 @@ namespace comp_tasks
           RCLCPP_DEBUG(this->get_logger(), "SENDING_START_PNT"); 
           publishStateStatus("SENDING_START_PNT");
           publishSearchStatus("");
-          if (wp_reached_ && sent_start_pnt_)
+          if ((wp_reached_ | timer_expired_ )&& sent_start_pnt_)
           {
             publishRecoveryPoint();
             node_state_ = "MANEUVER_THRU_BAY";
@@ -313,6 +313,7 @@ namespace comp_tasks
             publishStartPoint();
             wp_reached_ = false;
             sent_start_pnt_ = true;
+            setTimerDuration(p_max_time_between_buoy_detections_, "max time between buoy detections");
           }
           if (!p_use_start_point_){
             setTimerDuration(p_time_to_find_bay_, "time to find bay");
