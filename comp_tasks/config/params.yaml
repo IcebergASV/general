@@ -14,7 +14,7 @@
     green_buoy_label: green
     second_red_buoy_label: black_buoy
     second_green_buoy_label: yellow_buoy
-    frame_stack_size: 10
+    frame_stack_size: 20
     bbox_selection: INNERMOST
     max_consec_recoveries: 1
     state: STOPPED
