@@ -1,7 +1,7 @@
 /speed:
   ros__parameters:
-    start_lat:  -35.3632787
-    start_lon:  149.1652601
+    start_lat: -35.3632787
+    start_lon: 149.1652601
     finish_lat: -35.3635664
     finish_lon: 149.1649064
     recovery_lat: -35.3635661
@@ -28,5 +28,5 @@
     start_lon: 149.1649064
     finish_lat: -35.3635661
     finish_lon: 149.1649066
-    recovery_lat: -35.3635661
-    recovery_lon: 149.1649066
+    recovery_lat: -35.3650159000
+    recovery_lon: 149.1662059000
