@@ -18,6 +18,7 @@
     bbox_selection: INNERMOST
     max_consec_recoveries: 1
     state: STOPPED
+    target_offset: 0.0
 /speed:
   ros__parameters:
     distance_to_move: 20.0
@@ -46,6 +47,7 @@
     min_dist_from_bay_b4_return: 10.0
     remove_wp_within_dist: 1.2
     state: SENDING_START_PNT
+    target_offset: 0.0
 /home:
   ros__parameters:
     distance_to_move: 20.0
@@ -65,6 +67,7 @@
     bbox_selection: LARGEST
     max_consec_recoveries: 1
     state: RECOVERING
+    target_offset: 0.0
 /task_controller:
   ros__parameters:
     tasks: msh

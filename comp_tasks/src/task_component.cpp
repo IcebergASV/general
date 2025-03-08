@@ -40,6 +40,7 @@ namespace comp_tasks
     else if (params[0].get_name() == "frame_stack_size") { p_frame_stack_size_ = params[0].as_int(); updateYamlParam("frame_stack_size", params[0].as_int());}
     else if (params[0].get_name() == "bbox_selection") { p_bbox_selection_ = params[0].as_string(); updateYamlParam("bbox_selection", params[0].as_string());}
     else if (params[0].get_name() == "time_to_pause_search") { p_time_to_pause_search_ = params[0].as_double(); updateYamlParam("time_to_pause_search", params[0].as_double());}
+    else if (params[0].get_name() == "target_offset") { p_target_offset_ = params[0].as_double(); updateYamlParam("target_offset", params[0].as_double());}
     else {
       result.successful = false;
       return result;
@@ -92,6 +93,7 @@ namespace comp_tasks
     Task::getParam<int>("frame_stack_size", p_frame_stack_size_, 0, "Number of frames to stack before calculating angle");
     Task::getStringParam("bbox_selection", p_bbox_selection_, "LARGEST", "Selectes either largest or innermost bounding boxes");
     Task::getParam<double>("time_to_pause_search", p_time_to_pause_search_, 0.0, "Miliseconds to wait after finding a target before starting to search for new ones");
+    Task::getParam<double>("target_offset", p_target_offset_, 0.0, "Miliseconds to wait after finding a target before starting to search for new ones");
 
     return rclcpp_lifecycle::node_interfaces::LifecycleNodeInterface::CallbackReturn::SUCCESS;
   }
