@@ -137,7 +137,7 @@ namespace bbox_calculations
     return sum_x_center / bboxes.size();
   }
 
-  double getAngleBetween2SameTargets(const yolov8_msgs::msg::DetectionArray& bboxes, std::string target_class_name, double cam_fov, double cam_res_x)
+  double getAngleBetween2SameTargets(const yolov8_msgs::msg::DetectionArray& bboxes, std::string target_class_name, double cam_fov, double cam_res_x, double offset)
   {
     std::vector<yolov8_msgs::msg::Detection> filtered_detections = extractTargetDetections(bboxes, target_class_name, target_class_name);
     RCLCPP_WARN(logger, "Black Detections: %ld", filtered_detections.size());
@@ -152,6 +152,14 @@ namespace bbox_calculations
 
     int average_pixel = getAverageXCenter(merged_bboxes);
     double angle = bbox_calculations::pixelToAngle(cam_fov, cam_res_x, average_pixel);
+    if (offset == 0.0)
+    {
+      RCLCPP_INFO(logger, "Detected %s, heading towards %f degrees", target_class_name.c_str(), angle*180/M_PI);
+    }
+    else{
+      angle = angle + (offset*(M_PI/180));
+      RCLCPP_INFO(logger, "Detected %s, heading towards %f degrees (offset of %f)", target_class_name.c_str(), angle*180/M_PI, offset);
+    }
     angle = angle - M_PI/2;
     return angle;
   }
