@@ -120,37 +120,37 @@ install(TARGETS task_controller_composition DESTINATION lib/${PROJECT_NAME})
 # ----------------------------
 # Retrace components
 # ----------------------------
-add_library(retrace_component SHARED src/utils/retrace_component.cpp)
-target_compile_definitions(retrace_component PRIVATE "COMPOSITION_BUILDING_DLL")
-ament_target_dependencies(retrace_component
-  rclcpp
-  rclcpp_components
-  std_msgs
-  mavros_msgs
-  geographic_msgs
-  comp_tasks_interfaces
-  yolov8_msgs
-  tf2
-  tf2_geometry_msgs
-  rclcpp_lifecycle
-  yaml-cpp
-)
-rclcpp_components_register_nodes(retrace_component "comp_tasks::Retrace")
-install(TARGETS retrace_component
-  ARCHIVE DESTINATION lib
-  LIBRARY DESTINATION lib
-  RUNTIME DESTINATION bin
-)
-
-add_executable(retrace_composition src/utils/retrace_composition.cpp)
-ament_target_dependencies(retrace_composition rclcpp)
-target_link_libraries(retrace_composition
-  retrace_component
-  task_component
-  libtask_lib
-  yaml-cpp
-)
-install(TARGETS retrace_composition DESTINATION lib/${PROJECT_NAME})
+#add_library(retrace_component SHARED src/utils/retrace_component.cpp)
+#target_compile_definitions(retrace_component PRIVATE "COMPOSITION_BUILDING_DLL")
+#ament_target_dependencies(retrace_component
+#  rclcpp
+#  rclcpp_components
+#  std_msgs
+#  mavros_msgs
+#  geographic_msgs
+#  comp_tasks_interfaces
+#  yolov8_msgs
+#  tf2
+#  tf2_geometry_msgs
+#  rclcpp_lifecycle
+#  yaml-cpp
+#)
+#rclcpp_components_register_nodes(retrace_component "comp_tasks::Retrace")
+#install(TARGETS retrace_component
+#  ARCHIVE DESTINATION lib
+#  LIBRARY DESTINATION lib
+#  RUNTIME DESTINATION bin
+#)
+#
+#add_executable(retrace_composition src/utils/retrace_composition.cpp)
+#ament_target_dependencies(retrace_composition rclcpp)
+#target_link_libraries(retrace_composition
+#  retrace_component
+#  task_component
+#  libtask_lib
+#  yaml-cpp
+#)
+#install(TARGETS retrace_composition DESTINATION lib/${PROJECT_NAME})
 
 # ----------------------------
 # Home component
