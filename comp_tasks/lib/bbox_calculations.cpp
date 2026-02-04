@@ -1,4 +1,4 @@
-#include "comp_tasks/lib/bbox_calculations.hpp"
+#include "lib/bbox_calculations.hpp"
 
 namespace bbox_calculations
 {

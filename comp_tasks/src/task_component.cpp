@@ -1,6 +1,6 @@
-#include "comp_tasks/task_component.hpp"
-#include "comp_tasks/lib/bbox_calculations.hpp"
-#include "comp_tasks/lib/task_lib.hpp"
+#include "task_component.hpp"
+#include "lib/bbox_calculations.hpp"
+#include "lib/task_lib.hpp"
 
 namespace comp_tasks
 {

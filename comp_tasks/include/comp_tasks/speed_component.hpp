@@ -2,7 +2,7 @@
 #define speed_HPP
 
 #include <rclcpp/rclcpp.hpp>
-#include <comp_tasks/task_component.hpp>
+#include <task_component.hpp>
 #include "yolov8_msgs/msg/detection_array.hpp"
 #include "geometry_msgs/msg/point.hpp"
 

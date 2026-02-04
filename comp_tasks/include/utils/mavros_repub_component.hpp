@@ -2,7 +2,7 @@
 #define MAVROS_REPUB_HPP
 
 #include <rclcpp/rclcpp.hpp>
-#include <comp_tasks/task_component.hpp>
+#include <task_component.hpp>
 
 using std::placeholders::_1;
 

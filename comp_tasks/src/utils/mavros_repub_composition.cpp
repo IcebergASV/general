@@ -1,6 +1,6 @@
 #include <memory>
 
-#include "comp_tasks/mavros_repub_component.hpp"
+#include "utils/mavros_repub_component.hpp"
 #include "rclcpp/rclcpp.hpp"
 
 int main(int argc, char *argv[]) 

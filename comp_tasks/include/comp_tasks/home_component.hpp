@@ -4,7 +4,7 @@
 #include <rclcpp/rclcpp.hpp>
 #include <std_msgs/msg/int32.hpp>
 #include <std_msgs/msg/float64.hpp>
-#include <comp_tasks/task_component.hpp>
+#include <task_component.hpp>
 #include "yolov8_msgs/msg/detection_array.hpp"
 
 using std::placeholders::_1;

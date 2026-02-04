@@ -1,6 +1,6 @@
 #include "comp_tasks/speed_component.hpp"
-#include "comp_tasks/lib/bbox_calculations.hpp"
-#include "comp_tasks/lib/task_lib.hpp"
+#include "lib/bbox_calculations.hpp"
+#include "lib/task_lib.hpp"
 bool isWithinDistance(const geometry_msgs::msg::Point& p1, const geometry_msgs::msg::Point& p2, double dist) {
   double dx = p1.x - p2.x;
   double dy = p1.y - p2.y;
